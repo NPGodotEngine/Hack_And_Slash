@@ -11,6 +11,9 @@ export var movement_speed := 250.0
 # and less the smooth of player motion
 export (float, 0.1, 1.0) var drag_factor := 0.5
 
+# Player skin visual
+onready var skin := $Skin
+
 # Player current velocity
 var velocity := Vector2.ZERO
 
@@ -29,3 +32,11 @@ func _physics_process(_delta: float) -> void:
 
     # Move player
     velocity = move_and_slide(velocity)
+
+    # Update skin 
+    var global_mouse_position := get_global_mouse_position()
+
+    if global_mouse_position.x < global_position.x:
+        skin.face_left()
+    else:
+        skin.face_right() 
