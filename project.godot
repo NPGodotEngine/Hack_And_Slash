@@ -9,25 +9,25 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node2D",
-"class": "ActiveSkill",
-"language": "GDScript",
-"path": "res://Skills/ActiveSkills/ActiveSkill.gd"
-}, {
-"base": "Position2D",
-"class": "ActiveSkillHolder",
-"language": "GDScript",
-"path": "res://Skills/ActiveSkillHolder/ActiveSkillHolder.gd"
-}, {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
 "path": "res://Player/Player.gd"
+}, {
+"base": "Node2D",
+"class": "Skill",
+"language": "GDScript",
+"path": "res://Skills/Skill.gd"
+}, {
+"base": "Node2D",
+"class": "SkillManager",
+"language": "GDScript",
+"path": "res://Skills/SkillManager/SkillManager.gd"
 } ]
 _global_script_class_icons={
-"ActiveSkill": "",
-"ActiveSkillHolder": "",
-"Player": ""
+"Player": "",
+"Skill": "",
+"SkillManager": ""
 }
 
 [application]

@@ -2,7 +2,7 @@
 # and implement shoot_skill method then call
 # start_cool_down method at right time to 
 # begin cool down 
-class_name ActiveSkill
+class_name Skill
 extends Node2D
 
 # CoolDown duration of skill
@@ -17,6 +17,9 @@ onready var cool_dwon_timer := $CoolDownTimer
 # Is skill ready to be used
 var is_skill_ready: bool = true
 
+# The object that own this skill
+var executer = null
+
 func _ready() -> void:
     cool_dwon_timer.wait_time = cooldown_duration
     cool_dwon_timer.one_shot = true
@@ -29,6 +32,10 @@ func _exit_tree() -> void:
 func _on_cool_down_timer_timeout() -> void:
     is_skill_ready = true
 
+# Setup skill
+func setup(skill_owner) -> void:
+    executer = skill_owner
+
 # Begin skill cool down 
 func start_cool_down() -> void:
     is_skill_ready = false
@@ -39,6 +46,6 @@ func start_cool_down() -> void:
 
     cool_dwon_timer.start()
 
-# Shoot skill
-func shoot_skill() -> void:
+# Execute skill
+func execute() -> void:
     pass
