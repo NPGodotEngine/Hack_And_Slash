@@ -9,7 +9,7 @@ func execute() -> void:
     var projectile_instance = projectile.instance()
     get_tree().current_scene.add_child(projectile_instance)
     projectile_instance.direction = (get_global_mouse_position() - executer.global_position).normalized()
-    projectile_instance.damage = damage
+    projectile_instance.damage = get_damage_output()
     projectile_instance.global_position = executer.global_position
 
     start_cool_down()

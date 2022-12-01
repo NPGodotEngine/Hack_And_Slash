@@ -8,8 +8,6 @@
 script = ExtResource( 2 )
 projectile = ExtResource( 3 )
 
-[node name="CoolDownTimer" type="Timer" parent="."]
-
 [node name="Sprite" type="Sprite" parent="."]
 visible = false
 texture = ExtResource( 1 )

@@ -7,6 +7,5 @@
 [node name="IceSkill" instance=ExtResource( 2 )]
 projectile = ExtResource( 1 )
 
-[node name="Sprite" parent="." index="1"]
-visible = false
+[node name="Sprite" parent="." index="0"]
 texture = ExtResource( 3 )

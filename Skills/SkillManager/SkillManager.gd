@@ -14,10 +14,17 @@ func _ready() -> void:
 	for i in active_skills.size():
 		var skill: Skill = active_skills[i]
 		add_child(skill)
-		skill.setup(owner)
+		skill.setup(get_parent())
 		
 # Execute a skill by index
 func execute_skill(index:int) -> void:
 	var skill: Skill = active_skills[index]
 	if skill.is_skill_ready:
 		skill.execute()
+
+# Get skill by index
+func get_skill_by(index:int) -> Skill:
+	if active_skills and active_skills.size() > 0 and index < active_skills.size():
+		return active_skills[index]
+	
+	return null

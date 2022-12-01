@@ -4,6 +4,9 @@ extends KinematicBody2D
 # Player movement speed
 export var movement_speed := 250.0
 
+# Player damage
+export (int) var damage = 10
+
 # How fast can player turn from 
 # one direction to another
 #
