@@ -17,10 +17,10 @@ func _ready() -> void:
 		skill.setup(get_parent())
 		
 # Execute a skill by index
-func execute_skill(index:int) -> void:
+func execute_skill(index:int, position:Vector2, direction:Vector2) -> void:
 	var skill: Skill = active_skills[index]
 	if skill.is_skill_ready:
-		skill.execute()
+		skill.execute(position, direction)
 
 # Get skill by index
 func get_skill_by(index:int) -> Skill:

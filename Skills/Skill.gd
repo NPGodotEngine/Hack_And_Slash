@@ -30,7 +30,7 @@ var cool_dwon_timer: Timer = null
 var is_skill_ready: bool = true
 
 # The object that own this skill
-var executer = null
+var skill_owner = null
 
 func _ready() -> void:
     # create a cool down timer
@@ -53,8 +53,8 @@ func _on_cool_down_timer_timeout() -> void:
     emit_signal("cool_down_ended")
 
 # Setup skill
-func setup(skill_owner) -> void:
-    executer = skill_owner
+func setup(skill_executer) -> void:
+    skill_owner = skill_executer
 
 # Begin skill cool down 
 func start_cool_down() -> void:
@@ -72,13 +72,14 @@ func start_cool_down() -> void:
 func get_damage_output() -> int:
     # caculate amplified damage
     var amplified_damage: int = 0
-    if executer and "damage" in executer:
-        amplified_damage = int(executer.damage * damage_amplifier)
+    if skill_owner and "damage" in skill_owner:
+        amplified_damage = int(skill_owner.damage * damage_amplifier)
     
     var damage_output = int(damage + amplified_damage)
 
     return damage_output
 
 # Execute skill
-func execute() -> void:
+# with global position and direction
+func execute(position:Vector2, direction:Vector2) -> void:
     pass

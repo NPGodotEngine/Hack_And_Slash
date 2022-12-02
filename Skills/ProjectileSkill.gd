@@ -3,14 +3,14 @@ extends Skill
 # Projectile that skill will instantiate and shoot
 export (PackedScene) var projectile: PackedScene = null
 
-func execute() -> void:
+func execute(position:Vector2, direction:Vector2) -> void:
     assert(projectile , "project tile not given")
         
     var projectile_instance = projectile.instance()
     get_tree().current_scene.add_child(projectile_instance)
-    projectile_instance.direction = (get_global_mouse_position() - executer.global_position).normalized()
+    projectile_instance.direction = direction
     projectile_instance.damage = get_damage_output()
-    projectile_instance.global_position = executer.global_position
+    projectile_instance.global_position = position
 
     start_cool_down()
 

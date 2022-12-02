@@ -17,6 +17,9 @@ export (float, 0.1, 1.0) var drag_factor := 0.5
 # Player skin visual
 onready var skin := $Skin
 
+# Fire position
+onready var fire_position := $Pointer/Position2D
+
 # Active skill holder
 onready var skill_manager: SkillManager = $SkillManager
 
@@ -57,7 +60,8 @@ func _execute_skills() -> void:
     assert(skill_manager, "skill manager missing")
 
     # Execute skills
+    var direction = (get_global_mouse_position() - fire_position.global_position).normalized()
     if Input.is_action_pressed("primary"): 
-        skill_manager.execute_skill(0)
+        skill_manager.execute_skill(0, fire_position.global_position, direction)
     if Input.is_action_pressed("secondary"):
-        skill_manager.execute_skill(1)
+        skill_manager.execute_skill(1, fire_position.global_position, direction)
