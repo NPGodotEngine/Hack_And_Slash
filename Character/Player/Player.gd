@@ -1,11 +1,11 @@
+# A class for player controlled character
+##
+# Manage visual, skills, movement, input
 class_name Player
-extends KinematicBody2D
+extends Character
 
 # Player movement speed
 export var movement_speed := 250.0
-
-# Player damage
-export (int) var damage = 10
 
 # How fast can player turn from 
 # one direction to another
@@ -20,11 +20,23 @@ onready var skin := $Skin
 # Fire position
 onready var fire_position := $Pointer/Position2D
 
+onready var health_bar := $HealthBar
+
 # Active skill holder
 onready var skill_manager: SkillManager = $SkillManager
 
 # Player current velocity
 var velocity := Vector2.ZERO
+
+func _ready() -> void:
+    ._ready()
+
+    connect("health_changed", self, "_on_health_changed")
+    connect("max_health_changed", self, "_on_max_health_changed")
+    connect("take_damage", self, "_on_take_damage")
+    connect("die", self, "_on_die")
+
+    _update_health_bar()
 
 func _physics_process(_delta: float) -> void:
     _move()
@@ -59,9 +71,33 @@ func _update_skin() -> void:
 func _execute_skills() -> void:
     assert(skill_manager, "skill manager missing")
 
-    # Execute skills
+    # get shooting direction
     var direction = (get_global_mouse_position() - fire_position.global_position).normalized()
+
+    # execute skills 
     if Input.is_action_pressed("primary"): 
         skill_manager.execute_skill(0, fire_position.global_position, direction)
     if Input.is_action_pressed("secondary"):
         skill_manager.execute_skill(1, fire_position.global_position, direction)
+
+func _update_health_bar() -> void:
+    health_bar.min_value = float(0)
+    health_bar.max_value = float(max_health)
+    health_bar.value = float(health)
+
+func _on_health_changed(_from_health:int, _to_health:int) -> void:
+    _update_health_bar()
+
+func _on_max_health_changed(_from_max_health:int, _to_max_health:int) -> void:
+    _update_health_bar()
+
+func _on_take_damage(_amount:int) -> void:
+    _update_health_bar()
+
+func _on_die(_character:Character) -> void:
+    print("player die %d / %d" %[health, max_health])
+
+# for testing health bar
+# func _unhandled_input(event: InputEvent) -> void:
+#     if event.is_action_pressed("ui_down"): 
+#         take_damge(20)
