@@ -81,5 +81,5 @@ func get_damage_output() -> int:
 
 # Execute skill
 # with global position and direction
-func execute(position:Vector2, direction:Vector2) -> void:
+func execute(_position:Vector2, _direction:Vector2) -> void:
     pass
