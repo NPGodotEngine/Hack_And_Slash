@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Bullets/IceBullet/IceBullet.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Skills/IceSkill/IceBullet/IceBullet.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Skills/FireSkill/FireSkill.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/Icel_ball.png" type="Texture" id=3]
 

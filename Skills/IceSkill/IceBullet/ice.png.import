@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ice.png-f7e14374225f6c8c6f773342221b815d.stex"
+path="res://.import/ice.png-5ac4d8d0de4b22b501bff4b815cce083.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Bullets/IceBullet/ice.png"
-dest_files=[ "res://.import/ice.png-f7e14374225f6c8c6f773342221b815d.stex" ]
+source_file="res://Skills/IceSkill/IceBullet/ice.png"
+dest_files=[ "res://.import/ice.png-5ac4d8d0de4b22b501bff4b815cce083.stex" ]
 
 [params]
 

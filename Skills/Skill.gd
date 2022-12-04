@@ -14,14 +14,11 @@ signal cool_down_ended()
 # CoolDown duration of skill
 export (float) var cooldown_duration := 1.0
 
-# Skill base damage
-export (int) var damage := 10
-
-# Skill damage amplifier
+# Skill damage multiplier
 # base on its owner's damage
 # E.g 1.0 = 100% of its owner's damage
 # E.g 0.75 = 75% of its owner's damage
-export (float) var damage_amplifier := 1.0
+export (float) var damage_multiplier := 1.0
 
 # CoolDown timer
 var cool_dwon_timer: Timer = null
@@ -69,13 +66,13 @@ func start_cool_down() -> void:
     emit_signal("cool_down_started")
 
 # Get total damage output from this skill
+# Scaled from skill owner's damage 
 func get_damage_output() -> int:
     # caculate amplified damage
-    var amplified_damage: int = 0
+    var damage_output = 0
     if skill_owner and "damage" in skill_owner:
-        amplified_damage = int(skill_owner.damage * damage_amplifier)
-    
-    var damage_output = int(damage + amplified_damage)
+        # owner's damage * multiplier
+        damage_output = int(skill_owner.damage * damage_multiplier)
 
     return damage_output
 

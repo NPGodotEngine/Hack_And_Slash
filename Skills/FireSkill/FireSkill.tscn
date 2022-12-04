@@ -2,10 +2,11 @@
 
 [ext_resource path="res://Assets/Fire_ball.png" type="Texture" id=1]
 [ext_resource path="res://Skills/ProjectileSkill.gd" type="Script" id=2]
-[ext_resource path="res://Bullets/FireBullet/FireBullet.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Skills/FireSkill/FireBullet/FireBullet.tscn" type="PackedScene" id=3]
 
 [node name="FireSkill" type="Node2D"]
 script = ExtResource( 2 )
+damage_multiplier = 2.0
 projectile = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="."]
