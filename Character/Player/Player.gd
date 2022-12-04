@@ -28,76 +28,90 @@ onready var skill_manager: SkillManager = $SkillManager
 # Player current velocity
 var velocity := Vector2.ZERO
 
-func _ready() -> void:
-    ._ready()
+func setup() -> void:
+	.setup()
+	
+	connect("health_changed", self, "_on_health_changed")
+	connect("max_health_changed", self, "_on_max_health_changed")
+	connect("take_damage", self, "_on_take_damage")
+	connect("die", self, "_on_die")
 
-    connect("health_changed", self, "_on_health_changed")
-    connect("max_health_changed", self, "_on_max_health_changed")
-    connect("take_damage", self, "_on_take_damage")
-    connect("die", self, "_on_die")
+	_update_health_bar()
 
-    _update_health_bar()
+	print("level:%d, exp:%d, next_exp:%d" % [level, current_exp, next_level_exp_requried])
 
-func _physics_process(_delta: float) -> void:
-    _move()
-    _update_skin()
-    _execute_skills()
+func physics_tick(_delta: float) -> void:
+	_move()
+	_update_skin()
+	_execute_skills()
 
 func _move() -> void:
-    # Get direction from input
-    var direction: Vector2 = Vector2(
-        Input.get_axis("move_left", "move_right"),
-        Input.get_axis("move_up", "move_down")
-    ).normalized()
+	# Get direction from input
+	var direction: Vector2 = Vector2(
+		Input.get_axis("move_left", "move_right"),
+		Input.get_axis("move_up", "move_down")
+	).normalized()
 
-    # Smoothing player turing direction
-    var desired_velocity := direction * movement_speed
-    var steering_velocity = desired_velocity - velocity
-    steering_velocity  = steering_velocity * drag_factor
-    velocity += steering_velocity
+	# Smoothing player turing direction
+	var desired_velocity := direction * movement_speed
+	var steering_velocity = desired_velocity - velocity
+	steering_velocity  = steering_velocity * drag_factor
+	velocity += steering_velocity
 
-    # Move player
-    velocity = move_and_slide(velocity)
+	# Move player
+	velocity = move_and_slide(velocity)
 
 func _update_skin() -> void:
-    # Update skin 
-    var global_mouse_position := get_global_mouse_position()
+	# Update skin 
+	var global_mouse_position := get_global_mouse_position()
 
-    if global_mouse_position.x < global_position.x:
-        skin.face_left()
-    else:
-        skin.face_right()
+	if global_mouse_position.x < global_position.x:
+		skin.face_left()
+	else:
+		skin.face_right()
 
 func _execute_skills() -> void:
-    assert(skill_manager, "skill manager missing")
+	assert(skill_manager, "skill manager missing")
 
-    # get shooting direction
-    var direction = (get_global_mouse_position() - fire_position.global_position).normalized()
+	# get shooting direction
+	var direction = (get_global_mouse_position() - fire_position.global_position).normalized()
 
-    # execute skills 
-    if Input.is_action_pressed("primary"): 
-        skill_manager.execute_skill(0, fire_position.global_position, direction)
-    if Input.is_action_pressed("secondary"):
-        skill_manager.execute_skill(1, fire_position.global_position, direction)
+	# execute skills 
+	if Input.is_action_pressed("primary"): 
+		skill_manager.execute_skill(0, fire_position.global_position, direction)
+	if Input.is_action_pressed("secondary"):
+		skill_manager.execute_skill(1, fire_position.global_position, direction)
 
 func _update_health_bar() -> void:
-    health_bar.min_value = float(0)
-    health_bar.max_value = float(max_health)
-    health_bar.value = float(health)
+	health_bar.min_value = float(0)
+	health_bar.max_value = float(max_health)
+	health_bar.value = float(health)
 
 func _on_health_changed(_from_health:int, _to_health:int) -> void:
-    _update_health_bar()
+	_update_health_bar()
 
 func _on_max_health_changed(_from_max_health:int, _to_max_health:int) -> void:
-    _update_health_bar()
+	_update_health_bar()
 
 func _on_take_damage(_amount:int) -> void:
-    _update_health_bar()
+	_update_health_bar()
 
 func _on_die(_character:Character) -> void:
-    print("player die %d / %d" %[health, max_health])
+	print("player die %d / %d" %[health, max_health])
 
-# for testing health bar
+# # for testing health bar
 # func _unhandled_input(event: InputEvent) -> void:
-#     if event.is_action_pressed("ui_down"): 
-#         take_damge(20)
+# 	var logging: bool = false
+
+# 	if event.is_action_pressed("ui_down"): 
+# 		add_exp(randi() % 10 + 1)
+# 		logging = true
+	
+# 	if event.is_action_pressed("ui_left"):
+# 		take_damge(randi()% 10 + 1)
+# 		logging = true
+
+# 	if logging:
+# 		print("level:%d, max_level:%d exp:%d, next_exp:%d, health:%d, max_health:%d, dead:%s" % 
+# 			[level, get_max_level(), current_exp, next_level_exp_requried, health, max_health, is_dead])
+	
