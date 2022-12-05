@@ -41,6 +41,12 @@ const MAX_LEVEL = 10
 # Start level
 const START_LEVEL = 1
 
+# Max critical strike chance
+const MAX_CRITICAL_STRIKE_CHANCE = 1.0
+
+# Min critical strike chance
+const MIN_CRITICAL_STRIKE_CHANCE = 0.0
+
 
 # Current level
 export (int) var _level: int = START_LEVEL setget _set_level
@@ -104,7 +110,7 @@ export (float) var _critical_strike_multiplier = 1.0
 ##
 # The chance this character can hit a
 # critical strike
-export (float) var _critical_strike_chance = 0.0
+export (float) var _critical_strike_chance = MIN_CRITICAL_STRIKE_CHANCE
 
 
 
@@ -280,4 +286,21 @@ func add_exp(amount:int) -> void:
 		
 # Get next level exp requried by current level
 func get_next_level_exp_required(current_level:int) -> int:
-	return (current_level - 1 + current_level) * _constant_exp      
+	return (current_level - 1 + current_level) * _constant_exp
+
+# If character produce critical strike
+## 
+# RGN base each calls
+# Call this for each attacks
+func is_critical() -> bool:
+	if is_equal_approx(_critical_strike_chance, 0.0):
+		return false
+	
+	# RNG
+	randomize()
+	var rolled_chance = rand_range(MIN_CRITICAL_STRIKE_CHANCE, MAX_CRITICAL_STRIKE_CHANCE)
+	if (rolled_chance < _critical_strike_chance and 
+		is_equal_approx(rolled_chance, _critical_strike_chance)):
+		return true
+
+	return false
