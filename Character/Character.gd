@@ -30,73 +30,149 @@ signal take_damage(amount)
 # Emit when character die
 signal die(character)
 
+# Emit when damage changed
+signal damage_changed(from_damage, to_damage)
+
+
+
 # Max level
 const MAX_LEVEL = 10
 
-# Current level
-export (int) var level = 1 setget _set_level
+# Start level
+const START_LEVEL = 1
 
-func _set_level(value:int) -> void:
-	var old_level = level
-	level = int(max(1, min(value, MAX_LEVEL)))
-	emit_signal("level_changed", old_level, level)
-	if level == MAX_LEVEL:
-		emit_signal("max_level_reached", level, MAX_LEVEL)
+
+# Current level
+export (int) var _level: int = START_LEVEL setget _set_level
+
+
 
 # Base health
+##
 # Character's base health 
 # Use as base reference
-export (int) var base_heatlh = 100
+export (int) var _base_health = 100
 
-# Current health
-export (int) var health = 100 setget _set_health
-
-# Set character health
-func _set_health(value:int) -> void:
-	# make sure health is between 0 ~ max health
-	var new_health = int(min(max(0, value), max_health))
-	var old_health = health
-	health = new_health
-	emit_signal("health_changed", old_health, new_health)
+# Constant value for scaling up 
+# character's max health
+export (int) var _add_health_per_level = 10
 
 # Max health
-export (int) var max_health = 100 setget _set_max_health
+var _max_health: int setget _set_max_health
 
-func _set_max_health(value:int) -> void:
-	var old_max_health = max_health
-	max_health = value
-	emit_signal("max_health_changed", old_max_health, max_health)
+# Current health
+var _health: int = _base_health setget _set_health
 
-# Add health to player for level up
-export (int) var add_health_per_level = 10
 
-# Base experience
-# Use as reference
-export (int) var base_exp = 10
 
-# Current experience
-export (int) var current_exp = 0 setget _set_current_exp
 
-func _set_current_exp(value:int) -> void:
-	var old_exp = current_exp
-	current_exp = max(0, value)
-	emit_signal("current_exp_changed", old_exp, current_exp)
-
-# Damage
-export (int) var damage = 10
+# Constant experience
+##
+# Constant for scaling up next level exp requirement
+export (int) var _constant_exp = 10
 
 # Next experience required to level up
-var next_level_exp_requried: int = 0 setget _set_next_level_exp_required
+var _next_level_exp_requried: int = (get_next_level_exp_required(_level)) setget _set_next_level_exp_required
 
-func _set_next_level_exp_required(value:int) -> void:
-	var old_exp_required = next_level_exp_requried
-	next_level_exp_requried = int(max(0, value))
-	emit_signal("next_level_exp_required_changed", old_exp_required, next_level_exp_requried)
+# Current experience
+var _current_exp: int = 0 setget _set_current_exp
+
+
+
+
+# Base damage
+##
+# Character's base damage 
+export (int) var _base_damage = 10
+
+# Constant value for scaling up character's
+# additional damage
+export (int) var _add_damage_per_level = 10
+
+# Current damage
+var _damage: int = _base_damage setget _set_damage
+
+
+
+# Critical strike multiplier
+##
+# Multiply incoming damage
+# if critical hit on this character
+export (float) var _critical_strike_multiplier = 1.0
+
+# Critical strike chance
+##
+# The chance this character can hit a
+# critical strike
+export (float) var _critical_strike_chance = 0.0
+
+
 
 # Is character dead
-var is_dead: bool = false
+var _is_dead:bool = false setget _set_is_dead
 
+
+
+## Getter Setter ##
+func _set_level(value:int) -> void:
+	if value == _level: return
+
+	var old_level = _level
+	_level = int(max(START_LEVEL, min(value, MAX_LEVEL)))
+	emit_signal("level_changed", old_level, _level)
+	if _level == MAX_LEVEL:
+		emit_signal("max_level_reached", _level, MAX_LEVEL)
+
+func _set_health(value:int) -> void:
+	if value == _health: return
+
+	var old_health = _health
+	# make sure health is between 0 ~ max health
+	_health = int(min(max(0, value), _max_health))
+	emit_signal("health_changed", old_health, _health)
+
+func _set_max_health(value:int) -> void:
+	if value == _max_health: return
+
+	var old_max_health = _max_health
+	_max_health = value
+	emit_signal("max_health_changed", old_max_health, _max_health)
+
+func _set_current_exp(value:int) -> void:
+	if value == _current_exp: return
+
+	var old_exp = _current_exp
+	_current_exp = int(max(0, value))
+	emit_signal("current_exp_changed", old_exp, _current_exp)
+
+func _set_next_level_exp_required(value:int) -> void:
+	if value == _next_level_exp_requried: return 
+
+	var old_exp_required = _next_level_exp_requried
+	_next_level_exp_requried = int(max(0, value))
+	emit_signal("next_level_exp_required_changed", old_exp_required, _next_level_exp_requried)
+
+func _set_damage(value:int) -> void:
+	if value == _damage: return
+
+	var old_damage = _damage
+	_damage = int(max(0, value))
+	emit_signal("damage_changed", old_damage, _damage)
+
+func _set_is_dead(value:bool) -> void:
+	if value == _is_dead: return
+
+	_is_dead = value
+	if _is_dead:
+		die()
+		emit_signal("die", self)
+## Getter Setter ##
+
+
+
+## Override ##
 func _ready() -> void:
+	# make sure character is ready before setup
 	yield(self, "ready")
 	setup()
 	
@@ -104,22 +180,25 @@ func _process(delta: float) -> void:
 	process_tick(delta)
 
 func _physics_process(delta: float) -> void:
-	if health <= 0 and not is_dead: 
-		die()
+	if _health <= 0 and not _is_dead: 
+		_set_is_dead(true)
 		return 
 
 	physics_tick(delta)
+## Override ##
+
+
 
 # Setup character
 func setup() -> void:
-	# calculate max health
-	self.max_health = base_heatlh + get_health_per_level(level)
+	# calculate max health and set max health
+	_set_max_health(_base_health + get_additional_health_by_level(_level))
 	
-	# set health to max health
-	self.health = max_health
+	# set current health to max health
+	_set_health(_max_health)
 
 	# set exp required to next level
-	self.next_level_exp_requried = get_next_level_exp_required(level)
+	_set_next_level_exp_required(get_next_level_exp_required(_level))
 
 # Character process tick
 func process_tick(_delta) -> void:
@@ -132,63 +211,73 @@ func physics_tick(_delta: float) -> void:
 # Character take damage
 func take_damge(amount:int) -> void:
 	# if character is dead do nothing
-	if is_dead: return
+	if _is_dead: return
 
 	# set new health
-	self.health = health - amount
+	_set_health(_health - amount)
+
 	emit_signal("take_damage", amount)
 
 # Character die
 func die() -> void:
-	if is_dead: return 
-		
-	is_dead = true
-	emit_signal("die", self)
+	pass
 
 # Heal character
 func heal(amount:int) -> void:
-	if is_dead: return
+	if _is_dead: return
 	
-	self.health = max(0, min(health + amount, max_health))
+	var new_health: int = int(max(0, min(_health + amount, _max_health)))
+	_set_health(new_health)
+
+# Get amount of additional damage by character's current level
+# This exclude character's base damage
+func get_additional_damage_by_level(current_level:int) -> int:
+	current_level = int(max(1, min(current_level, MAX_LEVEL)))
+	return (current_level - 1) * _add_damage_per_level 
 
 # Get amount of additional health by character's current level
 # This exclude character's base health
-func get_health_per_level(current_level:int) -> int:
+func get_additional_health_by_level(current_level:int) -> int:
 	current_level = int(max(1, min(current_level, MAX_LEVEL))) 
-	return (current_level - 1) * add_health_per_level
+	return (current_level - 1) * _add_health_per_level
 
 # Increase level
 func level_up(amount:int = 1) -> void:
-	if is_dead: return 
+	if _is_dead: return 
 
-	self.level += amount
-	self.next_level_exp_requried = get_next_level_exp_required(level)
-	self.max_health = base_heatlh + get_health_per_level(level)
-	heal(max_health)
+	_set_level(_level + amount)
 
-# Get character's max level
-func get_max_level() -> int:
-	return MAX_LEVEL
+	# increase next level experience requirement
+	_set_next_level_exp_required(get_next_level_exp_required(_level))
+	
+	# increase max health
+	_set_max_health(_base_health + get_additional_health_by_level(_level)) 
+
+	heal(_max_health)
+
+	# increase current damage
+	_set_damage(_base_damage + get_additional_damage_by_level(_level))
 
 # If character is at max level
-func is_max_level() -> bool:
-	return level == MAX_LEVEL
+func is_max_level_reached() -> bool:
+	return _level == MAX_LEVEL
 
 # Add exp to character
 func add_exp(amount:int) -> void:
-	if is_max_level() or is_dead: return
+	if is_max_level_reached() or _is_dead: return
 	
 	# level up
-	var total_exp = current_exp + amount
-	while total_exp >= next_level_exp_requried and not is_max_level():
+	var total_exp = _current_exp + amount
+	while (total_exp >= _next_level_exp_requried and 
+			not is_max_level_reached()):
 		level_up()
 	
 	# set current exp
-	if is_max_level():
-		self.current_exp = next_level_exp_requried
+	if is_max_level_reached():
+		_set_current_exp(_next_level_exp_requried)
 	else:
-		self.current_exp = total_exp
+		_set_current_exp(total_exp)
 		
 # Get next level exp requried by current level
 func get_next_level_exp_required(current_level:int) -> int:
-	return (level - 1 + current_level) * base_exp        
+	return (current_level - 1 + current_level) * _constant_exp      

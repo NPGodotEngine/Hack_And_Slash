@@ -4,6 +4,8 @@
 class_name Player
 extends Character
 
+# warning-ignore-all:RETURN_VALUE_DISCARDED
+
 # Player movement speed
 export var movement_speed := 250.0
 
@@ -38,7 +40,7 @@ func setup() -> void:
 
 	_update_health_bar()
 
-	print("level:%d, exp:%d, next_exp:%d" % [level, current_exp, next_level_exp_requried])
+	self.level = 2
 
 func physics_tick(_delta: float) -> void:
 	_move()
@@ -84,8 +86,8 @@ func _execute_skills() -> void:
 
 func _update_health_bar() -> void:
 	health_bar.min_value = float(0)
-	health_bar.max_value = float(max_health)
-	health_bar.value = float(health)
+	health_bar.max_value = float(_max_health)
+	health_bar.value = float(_health)
 
 func _on_health_changed(_from_health:int, _to_health:int) -> void:
 	_update_health_bar()
@@ -97,21 +99,21 @@ func _on_take_damage(_amount:int) -> void:
 	_update_health_bar()
 
 func _on_die(_character:Character) -> void:
-	print("player die %d / %d" %[health, max_health])
+	print("player die %d / %d" %[_health, _max_health])
 
 # # for testing health bar
 # func _unhandled_input(event: InputEvent) -> void:
-# 	var logging: bool = false
 
 # 	if event.is_action_pressed("ui_down"): 
 # 		add_exp(randi() % 10 + 1)
-# 		logging = true
+# 		logging()
 	
 # 	if event.is_action_pressed("ui_left"):
 # 		take_damge(randi()% 10 + 1)
-# 		logging = true
+# 		logging()
 
-# 	if logging:
-# 		print("level:%d, max_level:%d exp:%d, next_exp:%d, health:%d, max_health:%d, dead:%s" % 
-# 			[level, get_max_level(), current_exp, next_level_exp_requried, health, max_health, is_dead])
+# func logging() -> void:
+# 	print("level:%d, max_level:%d exp:%d, next_exp:%d, health:%d, max_health:%d, damage:%d, dead:%s" % 
+# 			[_level, MAX_LEVEL, _current_exp, _next_level_exp_requried, _health, _max_health, _damage, _is_dead])
+		
 	
