@@ -25,7 +25,7 @@ signal health_changed(from_health, to_health)
 signal max_health_changed(from_max_health, to_meax_health)
 
 # Emit when taking damage
-signal take_damage(hit_damage)
+signal take_damage(hit_damage, total_damage)
 
 # Emit when character die
 signal die(character)
@@ -112,6 +112,8 @@ export (float) var _max_critical_strike_chance = 1.0
 # critical strike
 export (float, 0.0, 1.0) var _critical_strike_chance = _min_critical_strike_chance
 
+export (PackedScene) var _damage_label_tscn = preload("res://Interface/HUD/DamageLabel.tscn")
+export (Vector2) var _damage_label_offset = Vector2.ZERO 
 
 
 # Is character dead
@@ -226,12 +228,32 @@ func take_damage(hit_damage:HitDamage) -> void:
 	# if character is dead do nothing
 	if _is_dead: return
 
+	var total_damage = hit_damage.damage
+
+	# if critical hit
+	if hit_damage.is_critical:
+		total_damage *= _critical_strike_multiplier
+	
+	# Instance a damage label
+	var damage_label = _damage_label_tscn.instance()
+	if damage_label:
+		add_child(damage_label)
+		damage_label.global_position = global_position + _damage_label_offset
+		damage_label.set_damage(
+			total_damage,
+			hit_damage.is_critical, 
+			hit_damage.color_of_damage,
+			Color.black,
+			"-",
+			" (Crit)" if hit_damage.is_critical else ""
+		)
+
 	# set new health
-	_set_health(_health - hit_damage.damage)
+	_set_health(_health - total_damage)
 
-	emit_signal("take_damage", hit_damage)
+	emit_signal("take_damage", hit_damage, total_damage)
 
-	print("%s take damage: %d" % [self.name, hit_damage.damage])
+	print("%s take damage: %d, critical: %s" % [self.name, total_damage, hit_damage.is_critical])
 
 # Character die
 func die() -> void:
@@ -301,7 +323,7 @@ func is_critical() -> bool:
 	# RNG
 	randomize()
 	var rolled_chance = rand_range(_min_critical_strike_chance, _max_critical_strike_chance)
-	if (rolled_chance < _critical_strike_chance and 
+	if (rolled_chance < _critical_strike_chance or 
 		is_equal_approx(rolled_chance, _critical_strike_chance)):
 		return true
 

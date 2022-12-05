@@ -5,7 +5,7 @@
 [ext_resource path="res://Assets/Icel_ball.png" type="Texture" id=3]
 
 [node name="IceSkill" instance=ExtResource( 2 )]
-cooldown_duration = 0.5
+cooldown_duration = 0.2
 damage_multiplier = 1.0
 projectile = ExtResource( 1 )
 

@@ -93,7 +93,7 @@ func _on_health_changed(_from_health:int, _to_health:int) -> void:
 func _on_max_health_changed(_from_max_health:int, _to_max_health:int) -> void:
 	_update_health_bar()
 
-func _on_take_damage(hit_damage:HitDamage) -> void:
+func _on_take_damage(hit_damage:HitDamage, total_damage:int) -> void:
 	_update_health_bar()
 
 func _on_die(_character:Character) -> void:
