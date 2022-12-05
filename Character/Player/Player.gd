@@ -107,7 +107,14 @@ func _on_die(_character:Character) -> void:
 # 		logging()
 	
 # 	if event.is_action_pressed("ui_left"):
-# 		take_damge(randi()% 10 + 1)
+# 		var crit = randi()%2
+# 		var hit_damage = HitDamage.new().init(
+# 			null, 
+# 			null, 
+# 			randi()%10+1, 
+# 			crit,
+# 			Color.red if crit else Color.white)
+# 		take_damage(hit_damage)
 # 		logging()
 
 # func logging() -> void:
