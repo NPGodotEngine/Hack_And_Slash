@@ -25,7 +25,7 @@ signal health_changed(from_health, to_health)
 signal max_health_changed(from_max_health, to_meax_health)
 
 # Emit when taking damage
-signal take_damage(amount)
+signal take_damage(hit_damage)
 
 # Emit when character die
 signal die(character)
@@ -40,12 +40,6 @@ const MAX_LEVEL = 10
 
 # Start level
 const START_LEVEL = 1
-
-# Max critical strike chance
-const MAX_CRITICAL_STRIKE_CHANCE = 1.0
-
-# Min critical strike chance
-const MIN_CRITICAL_STRIKE_CHANCE = 0.0
 
 
 # Current level
@@ -106,11 +100,17 @@ var _damage: int = _base_damage setget _set_damage
 # if critical hit on this character
 export (float) var _critical_strike_multiplier = 1.0
 
+# Minimum critical strike chance
+export (float) var _min_critical_strike_chance = 0.0
+
+# Maximum critical strike chance
+export (float) var _max_critical_strike_chance = 1.0
+
 # Critical strike chance
 ##
 # The chance this character can hit a
 # critical strike
-export (float) var _critical_strike_chance = MIN_CRITICAL_STRIKE_CHANCE
+export (float, 0.0, 1.0) var _critical_strike_chance = _min_critical_strike_chance
 
 
 
@@ -197,6 +197,10 @@ func _physics_process(delta: float) -> void:
 
 # Setup character
 func setup() -> void:
+	_update_config()
+
+# Update character's configuration
+func _update_config() -> void:
 	# calculate max health and set max health
 	_set_max_health(_base_health + get_additional_health_by_level(_level))
 	
@@ -205,6 +209,9 @@ func setup() -> void:
 
 	# set exp required to next level
 	_set_next_level_exp_required(get_next_level_exp_required(_level))
+
+	# increase current damage
+	_set_damage(_base_damage + get_additional_damage_by_level(_level))
 
 # Character process tick
 func process_tick(_delta) -> void:
@@ -215,14 +222,16 @@ func physics_tick(_delta: float) -> void:
 	pass
 
 # Character take damage
-func take_damge(amount:int) -> void:
+func take_damage(hit_damage:HitDamage) -> void:
 	# if character is dead do nothing
 	if _is_dead: return
 
 	# set new health
-	_set_health(_health - amount)
+	_set_health(_health - hit_damage.damage)
 
-	emit_signal("take_damage", amount)
+	emit_signal("take_damage", hit_damage)
+
+	print("%s take damage: %d" % [self.name, hit_damage.damage])
 
 # Character die
 func die() -> void:
@@ -253,16 +262,9 @@ func level_up(amount:int = 1) -> void:
 
 	_set_level(_level + amount)
 
-	# increase next level experience requirement
-	_set_next_level_exp_required(get_next_level_exp_required(_level))
-	
-	# increase max health
-	_set_max_health(_base_health + get_additional_health_by_level(_level)) 
+	_update_config()
 
 	heal(_max_health)
-
-	# increase current damage
-	_set_damage(_base_damage + get_additional_damage_by_level(_level))
 
 # If character is at max level
 func is_max_level_reached() -> bool:
@@ -298,7 +300,7 @@ func is_critical() -> bool:
 	
 	# RNG
 	randomize()
-	var rolled_chance = rand_range(MIN_CRITICAL_STRIKE_CHANCE, MAX_CRITICAL_STRIKE_CHANCE)
+	var rolled_chance = rand_range(_min_critical_strike_chance, _max_critical_strike_chance)
 	if (rolled_chance < _critical_strike_chance and 
 		is_equal_approx(rolled_chance, _critical_strike_chance)):
 		return true

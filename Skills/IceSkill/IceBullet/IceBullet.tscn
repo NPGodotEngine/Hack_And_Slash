@@ -4,6 +4,7 @@
 [ext_resource path="res://Skills/FireSkill/FireBullet/FireBullet.tscn" type="PackedScene" id=2]
 
 [node name="IceBullet" instance=ExtResource( 2 )]
+collision_mask = 6
 
 [node name="Skin" parent="." index="0"]
 texture = ExtResource( 1 )

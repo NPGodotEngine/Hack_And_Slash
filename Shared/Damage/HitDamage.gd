@@ -8,7 +8,7 @@ extends Reference
 var attacker = null
 
 # Skill
-var skill: Skill = null
+var skill = null
 
 # Damage
 var damage: int = 0

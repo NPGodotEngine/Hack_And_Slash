@@ -6,23 +6,23 @@ extends Character
 
 # warning-ignore-all:RETURN_VALUE_DISCARDED
 
-# Player movement speed
-export var movement_speed := 250.0
+# Player movement _speed
+export var _movement_speed := 250.0
 
 # How fast can player turn from 
 # one direction to another
 #
 # The higher the value the faster player can turn
 # and less the smooth of player motion
-export (float, 0.1, 1.0) var drag_factor := 0.5
+export (float, 0.1, 1.0) var _drag_factor := 0.5
 
 # Player skin visual
-onready var skin := $Skin
+onready var _skin := $Skin
 
 # Fire position
-onready var fire_position := $Pointer/Position2D
+onready var _fire_position := $Pointer/Position2D
 
-onready var health_bar := $HealthBar
+onready var _health_bar := $HealthBar
 
 # Active skill holder
 onready var skill_manager: SkillManager = $SkillManager
@@ -40,8 +40,6 @@ func setup() -> void:
 
 	_update_health_bar()
 
-	self.level = 2
-
 func physics_tick(_delta: float) -> void:
 	_move()
 	_update_skin()
@@ -55,9 +53,9 @@ func _move() -> void:
 	).normalized()
 
 	# Smoothing player turing direction
-	var desired_velocity := direction * movement_speed
+	var desired_velocity := direction * _movement_speed
 	var steering_velocity = desired_velocity - velocity
-	steering_velocity  = steering_velocity * drag_factor
+	steering_velocity  = steering_velocity * _drag_factor
 	velocity += steering_velocity
 
 	# Move player
@@ -68,26 +66,26 @@ func _update_skin() -> void:
 	var global_mouse_position := get_global_mouse_position()
 
 	if global_mouse_position.x < global_position.x:
-		skin.face_left()
+		_skin.face_left()
 	else:
-		skin.face_right()
+		_skin.face_right()
 
 func _execute_skills() -> void:
 	assert(skill_manager, "skill manager missing")
 
 	# get shooting direction
-	var direction = (get_global_mouse_position() - fire_position.global_position).normalized()
+	var direction = (get_global_mouse_position() - _fire_position.global_position).normalized()
 
 	# execute skills 
 	if Input.is_action_pressed("primary"): 
-		skill_manager.execute_skill(0, fire_position.global_position, direction)
+		skill_manager.execute_skill(0, _fire_position.global_position, direction)
 	if Input.is_action_pressed("secondary"):
-		skill_manager.execute_skill(1, fire_position.global_position, direction)
+		skill_manager.execute_skill(1, _fire_position.global_position, direction)
 
 func _update_health_bar() -> void:
-	health_bar.min_value = float(0)
-	health_bar.max_value = float(_max_health)
-	health_bar.value = float(_health)
+	_health_bar.min_value = float(0)
+	_health_bar.max_value = float(_max_health)
+	_health_bar.value = float(_health)
 
 func _on_health_changed(_from_health:int, _to_health:int) -> void:
 	_update_health_bar()
@@ -95,7 +93,7 @@ func _on_health_changed(_from_health:int, _to_health:int) -> void:
 func _on_max_health_changed(_from_max_health:int, _to_max_health:int) -> void:
 	_update_health_bar()
 
-func _on_take_damage(_amount:int) -> void:
+func _on_take_damage(hit_damage:HitDamage) -> void:
 	_update_health_bar()
 
 func _on_die(_character:Character) -> void:
