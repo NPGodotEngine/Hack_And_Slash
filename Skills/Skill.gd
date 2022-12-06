@@ -85,3 +85,9 @@ func get_hit_damage() -> HitDamage:
 # with global position and direction
 func execute(_position:Vector2, _direction:Vector2) -> void:
 	pass
+
+# Cancel skill execution
+##
+# Specific to skill that need to warm up
+func cancel_execution() -> void:
+	pass

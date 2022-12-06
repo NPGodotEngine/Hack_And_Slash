@@ -79,8 +79,13 @@ func _execute_skills() -> void:
 	# execute skills 
 	if Input.is_action_pressed("primary"): 
 		skill_manager.execute_skill(0, _fire_position.global_position, direction)
+	elif Input.is_action_just_released("primary"):
+		skill_manager.cancel_skill_execution(0)
+
 	if Input.is_action_pressed("secondary"):
 		skill_manager.execute_skill(1, _fire_position.global_position, direction)
+	elif Input.is_action_just_released("secondary"):
+		skill_manager.cancel_skill_execution(1)
 
 func _update_health_bar() -> void:
 	_health_bar.min_value = float(0)

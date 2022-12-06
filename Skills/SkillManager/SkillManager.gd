@@ -22,6 +22,11 @@ func execute_skill(index:int, position:Vector2, direction:Vector2) -> void:
 	if skill.is_skill_ready:
 		skill.execute(position, direction)
 
+# Cancel a skill by index
+func cancel_skill_execution(index:int) -> void:
+	var skill: Skill = active_skills[index]
+	skill.cancel_execution()
+
 # Get skill by index
 func get_skill_by(index:int) -> Skill:
 	if active_skills and active_skills.size() > 0 and index < active_skills.size():
