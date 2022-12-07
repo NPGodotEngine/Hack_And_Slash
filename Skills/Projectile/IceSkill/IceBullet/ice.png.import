@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/fire.png-bef16f6ab05f653aa37be7fd87dbdc6c.stex"
+path="res://.import/ice.png-f59ee3229027f0fd96d893fee5a3cbeb.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Skills/FireSkill/FireBullet/fire.png"
-dest_files=[ "res://.import/fire.png-bef16f6ab05f653aa37be7fd87dbdc6c.stex" ]
+source_file="res://Skills/Projectile/IceSkill/IceBullet/ice.png"
+dest_files=[ "res://.import/ice.png-f59ee3229027f0fd96d893fee5a3cbeb.stex" ]
 
 [params]
 
