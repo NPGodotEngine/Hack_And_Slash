@@ -1,31 +1,51 @@
+# ProjectileSkill extended from Skill
+##
+# Designed specific to shooting projectile
+class_name ProjectileSkill
 extends Skill
 
-# Projectile that skill will instantiate and shoot
-export (PackedScene) var projectile: PackedScene = null
+# Projectile this skill will use to instantiate and shoot
+export (PackedScene) var projectile_scene: PackedScene = null
 
-func execute(position:Vector2, direction:Vector2) -> void:
-    assert(projectile , "projectile not given")
-        
-    var projectile_instance: Projectile = projectile.instance()
-    get_tree().current_scene.add_child(projectile_instance)
-    projectile_instance.direction = direction
-    projectile_instance.hit_damage = get_hit_damage()
-    projectile_instance.global_position = position
+# Speed that will be applied to projectile
+export (float) var projectile_speed := 200.0 
 
-    start_cool_down()
+# Penetration that will be applied to projectile
+export (float, 0.0, 1.0) var projectile_penetration := 0.0
 
-func get_hit_damage() -> HitDamage:
-    var is_critical = false
-    var character: Character = skill_owner as Character
-    if character:
-        is_critical = character.is_critical()
+# Life span tha will be applied to projectile
+export (float) var projectile_life_span := 3.0
+
+# Maximum of projectil size can shoot at time
+export (int) var max_projectile_size := 1
+
+# Currnt projectile count can shoot at time
+var projectile_count: int = 1 setget _no_set, get_projectile_count
+
+## Getter Setter ##
+func _no_set(_value) -> void:
+    push_warning("Set property not allowed")
+    return
+
+func get_projectile_count() -> int:
+    projectile_count = 1
+
+    # scale projectile count base on character level
+    # otherwise default to 1
+    if skill_owner and skill_owner is Character:
+        var scale: float = skill_owner._level * skill_owner.MAX_LEVEL / 100.0 
+        var count: int = int(round(max_projectile_size * scale))
+        count = int(min(max(1, count), max_projectile_size))
+        projectile_count = count
     
-    return HitDamage.new().init(
-        skill_owner,
-        self,
-        get_damage_output(),
-        is_critical,
-        Color.white if not is_critical else Color.red
-    )
+    return projectile_count
+## Getter Setter ##
+
+## Override ##
+func execute(_position:Vector2, _direction:Vector2) -> void:
+    assert(projectile_scene , "projectile_scene is null")
+## Override ##
+
+
     
 

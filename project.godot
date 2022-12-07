@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Skills/Projectile/Projectile.gd"
 }, {
+"base": "Skill",
+"class": "ProjectileSkill",
+"language": "GDScript",
+"path": "res://Skills/Projectile/ProjectileSkill.gd"
+}, {
 "base": "Node2D",
 "class": "Skill",
 "language": "GDScript",
@@ -50,6 +55,7 @@ _global_script_class_icons={
 "HitDamage": "",
 "Player": "",
 "Projectile": "",
+"ProjectileSkill": "",
 "Skill": "",
 "SkillManager": ""
 }

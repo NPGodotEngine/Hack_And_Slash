@@ -40,6 +40,8 @@ func setup() -> void:
 
 	_update_health_bar()
 
+	logging()
+
 func physics_tick(_delta: float) -> void:
 	_move()
 	_update_skin()
@@ -98,32 +100,32 @@ func _on_health_changed(_from_health:int, _to_health:int) -> void:
 func _on_max_health_changed(_from_max_health:int, _to_max_health:int) -> void:
 	_update_health_bar()
 
-func _on_take_damage(hit_damage:HitDamage, total_damage:int) -> void:
+func _on_take_damage(_hit_damage:HitDamage, _total_damage:int) -> void:
 	_update_health_bar()
 
 func _on_die(_character:Character) -> void:
 	print("player die %d / %d" %[_health, _max_health])
 
-# # for testing health bar
-# func _unhandled_input(event: InputEvent) -> void:
+# for testing health bar
+func _unhandled_input(event: InputEvent) -> void:
 
-# 	if event.is_action_pressed("ui_down"): 
-# 		add_exp(randi() % 10 + 1)
-# 		logging()
+	if event.is_action_pressed("ui_down"): 
+		add_exp(randi() % 10 + 1)
+		logging()
 	
-# 	if event.is_action_pressed("ui_left"):
-# 		var crit = randi()%2
-# 		var hit_damage = HitDamage.new().init(
-# 			null, 
-# 			null, 
-# 			randi()%10+1, 
-# 			crit,
-# 			Color.red if crit else Color.white)
-# 		take_damage(hit_damage)
-# 		logging()
+	if event.is_action_pressed("ui_left"):
+		var crit = randi()%2
+		var hit_damage = HitDamage.new().init(
+			null, 
+			null, 
+			randi()%10+1, 
+			crit,
+			Color.red if crit else Color.white)
+		take_damage(hit_damage)
+		logging()
 
-# func logging() -> void:
-# 	print("level:%d, max_level:%d exp:%d, next_exp:%d, health:%d, max_health:%d, damage:%d, dead:%s" % 
-# 			[_level, MAX_LEVEL, _current_exp, _next_level_exp_requried, _health, _max_health, _damage, _is_dead])
+func logging() -> void:
+	print("level:%d, max_level:%d exp:%d, next_exp:%d, health:%d, max_health:%d, damage:%d, dead:%s" % 
+			[_level, MAX_LEVEL, _current_exp, _next_level_exp_requried, _health, _max_health, _damage, _is_dead])
 		
 	

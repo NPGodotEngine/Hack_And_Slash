@@ -79,7 +79,20 @@ func get_damage_output() -> int:
 
 # Get hit damage
 func get_hit_damage() -> HitDamage:
-	return null
+	var is_critical = false
+	# check if it is critical hit
+	var character: Character = skill_owner as Character
+	if character:
+		is_critical = character.is_critical()
+	
+	# return hit damage information
+	return HitDamage.new().init(
+		skill_owner,
+		self,
+		get_damage_output(),
+		is_critical,
+		Color.white if not is_critical else Color.red
+	)
 
 # Execute skill
 # with global position and direction
