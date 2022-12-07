@@ -19,13 +19,14 @@ func _ready() -> void:
 # Execute a skill by index
 func execute_skill(index:int, position:Vector2, direction:Vector2) -> void:
 	var skill: Skill = active_skills[index]
-	if skill.is_skill_ready:
+	if skill and skill.is_skill_ready:
 		skill.execute(position, direction)
 
 # Cancel a skill by index
 func cancel_skill_execution(index:int) -> void:
 	var skill: Skill = active_skills[index]
-	skill.cancel_execution()
+	if skill:
+		skill.cancel_execution()
 
 # Get skill by index
 func get_skill_by(index:int) -> Skill:
