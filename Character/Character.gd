@@ -321,11 +321,6 @@ func is_critical() -> bool:
 	if is_equal_approx(_critical_strike_chance, 0.0):
 		return false
 	
-	# RNG
-	randomize()
-	var rolled_chance = rand_range(_min_critical_strike_chance, _max_critical_strike_chance)
-	if (rolled_chance < _critical_strike_chance or 
-		is_equal_approx(rolled_chance, _critical_strike_chance)):
-		return true
-
-	return false
+	# check if critical
+	return Utils.is_in_threshold(_critical_strike_chance, 
+	_min_critical_strike_chance, _max_critical_strike_chance)
