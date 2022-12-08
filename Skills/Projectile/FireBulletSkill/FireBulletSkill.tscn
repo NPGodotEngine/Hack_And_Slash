@@ -10,7 +10,7 @@ cooldown_duration = 0.7
 damage_multiplier = 1.5
 projectile_scene = ExtResource( 2 )
 projectile_speed = 600.0
-projectile_penetration = 0.7
+projectile_penetration = 0.25
 projectile_life_span = 1.5
 max_projectile_size = 3
 
