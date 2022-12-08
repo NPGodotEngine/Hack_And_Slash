@@ -36,7 +36,6 @@ func _ready() -> void:
 	add_child(cool_dwon_timer)
 
 	# setup cool down timer
-	cool_dwon_timer.wait_time = cooldown_duration
 	cool_dwon_timer.one_shot = true
 	var _ret = cool_dwon_timer.connect("timeout", self, "_on_cool_down_timer_timeout")
 
@@ -61,7 +60,7 @@ func start_cool_down() -> void:
 	if cool_dwon_timer.time_left > 0:
 		return
 
-	cool_dwon_timer.start()
+	cool_dwon_timer.start(cooldown_duration)
 
 	emit_signal("cool_down_started")
 
