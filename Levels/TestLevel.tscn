@@ -30,3 +30,8 @@ _critical_strike_chance = 0.173
 position = Vector2( 559, 447 )
 collision_mask = 3
 _base_health = 10000
+
+[node name="Dummy2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 662, 493 )
+collision_mask = 3
+_base_health = 10000

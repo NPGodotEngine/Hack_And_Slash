@@ -18,6 +18,9 @@ var direction := Vector2.ZERO
 # Hit damage
 var hit_damage: HitDamage = null
 
+# Penetration chance
+var penetration_chance: float = 0.0
+
 ## Getter Setter ##
 func set_life_span(value:float) -> void:
     if not is_inside_tree() or not _life_span_timer:
@@ -26,6 +29,9 @@ func set_life_span(value:float) -> void:
     _life_span_timer.start(life_span)
 ## Getter Setter ##
 
+
+
+## Override ##
 func _ready() -> void:
     # warning-ignore:RETURN_VALUE_DISCARDED 
     
@@ -42,11 +48,42 @@ func _exit_tree() -> void:
         _life_span_timer.disconnect("timeout", self, "queue_free")
         
 func _physics_process(delta: float) -> void:
+    _move_projectile(delta)
+## Override ##
+
+
+## Singal callback ##
+func _on_body_entered(body:Node) -> void:
+    _on_projectile_hit_body(body)
+## Singal callback ##
+
+
+# Move projectile
+##
+# Move projectile straight line direction
+# or subclass override to behave differently
+func _move_projectile(delta:float) -> void:
     var velocity := direction.normalized() * speed * delta
     global_rotation = direction.angle()
     global_position += velocity
 
-func _on_body_entered(body:Node) -> void:
+# Can this projectile penetrate the target
+func _is_penetrated() -> bool:
+    if is_equal_approx(penetration_chance, 0.0): return false
+    
+    # RNG
+    randomize()
+    var rolled_chance = rand_range(0.0001, 1.0)
+    if (rolled_chance < penetration_chance or 
+        is_equal_approx(rolled_chance, penetration_chance)):
+        return true
+    return false
+
+# Call when this projectile hit a physics body
+func _on_projectile_hit_body(body:Node) -> void:
     if body.has_method("take_damage"):
         body.take_damage(hit_damage)
-    queue_free()
+    
+    # free projectile if not penetrated
+    if not _is_penetrated():
+        queue_free()

@@ -20,6 +20,7 @@ func execute(position:Vector2, direction:Vector2) -> void:
         bullet.hit_damage = self.get_hit_damage()
         bullet.speed = self.projectile_speed
         bullet.life_span = self.projectile_life_span
+        bullet.penetration_chance = self.projectile_penetration
 
     start_cool_down()
 
