@@ -1,7 +1,10 @@
 class_name Projectile
 extends Area2D
 
-# warning-ignore:RETURN_VALUE_DISCARDED
+# warning-ignore-all:RETURN_VALUE_DISCARDED 
+
+# Emit when projectile hit a body
+signal on_projectile_hit(body)
 
 # Bullet _speed
 var _speed := 200.0
@@ -13,7 +16,7 @@ var _life_span := 3.0
 var _life_span_timer: Timer = null
 
 # Bullet travel direction
-var _direction := Vector2.ZERO
+var _direction: Vector2 = Vector2.ZERO
 
 # Hit damage
 var _hit_damage: HitDamage = null
@@ -36,15 +39,13 @@ func set_life_span(value:float) -> void:
 
 ## Override ##
 func _ready() -> void:
-    # warning-ignore:RETURN_VALUE_DISCARDED 
-    
     _life_span_timer = Timer.new()
     _life_span_timer.name = "LifeSpanTimer"
     add_child(_life_span_timer)
     _life_span_timer.one_shot = true
     _life_span_timer.connect("timeout", self, "queue_free")
 
-    connect("body_entered", self, "_on_body_entered")
+    connect("body_entered", self, "_on_projectile_hit_body")
 
 func _exit_tree() -> void:
     if _life_span_timer:
@@ -101,6 +102,7 @@ func _is_penetrated() -> bool:
 # Call when this projectile hit a physics body
 func _on_projectile_hit_body(body:Node) -> void:
     if body.has_method("take_damage"):
+        emit_signal("on_projectile_hit", body)
         body.take_damage(_hit_damage)
     
     # free projectile if not penetrated

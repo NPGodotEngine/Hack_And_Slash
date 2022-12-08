@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Skills/Projectile/FireBulletSkill/FireBulletSkill.gd" type="Script" id=1]
 [ext_resource path="res://Skills/Projectile/FireBulletSkill/FireBullet/FireBullet.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/Fire_ball.png" type="Texture" id=3]
+[ext_resource path="res://Skills/Projectile/FireBulletSkill/FlamePool/FlamePool.tscn" type="PackedScene" id=4]
 
 [node name="FireBulletSkill" type="Node2D"]
 script = ExtResource( 1 )
@@ -13,6 +14,8 @@ projectile_speed = 600.0
 projectile_penetration = 0.25
 projectile_life_span = 1.5
 max_projectile_size = 3
+_flame_pool_scene = ExtResource( 4 )
+_flame_pool_damage_interval = 0.3
 
 [node name="Sprite" type="Sprite" parent="."]
 visible = false

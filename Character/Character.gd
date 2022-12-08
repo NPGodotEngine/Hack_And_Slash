@@ -238,7 +238,7 @@ func take_damage(hit_damage:HitDamage) -> void:
 	if _damage_label_tscn:
 		var damage_label = _damage_label_tscn.instance()
 		if damage_label:
-			add_child(damage_label)
+			call_deferred("add_child", damage_label)
 			damage_label.global_position = global_position + _damage_label_offset
 			damage_label.set_damage(
 				total_damage,
