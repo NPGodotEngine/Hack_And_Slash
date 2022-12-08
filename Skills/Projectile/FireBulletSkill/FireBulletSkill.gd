@@ -9,7 +9,7 @@ func execute(position:Vector2, direction:Vector2) -> void:
     var face_dir: Vector2 = get_global_mouse_position() - skill_owner.global_position
 
     # use fan shape for shooting projectile
-    var shoot_dirs = get_fan_shooting_style(face_dir, deg2rad(max_shooting_angle), self.projectile_count)
+    var shoot_dirs = get_arc_shooting_style(face_dir, deg2rad(max_shooting_angle), self.projectile_count)
 
     # shoot projectiles
     for dir in shoot_dirs:
@@ -24,7 +24,10 @@ func execute(position:Vector2, direction:Vector2) -> void:
     start_cool_down()
 
 # Return vector2 as direction for each projectiles
-func get_fan_shooting_style(direction:Vector2, max_angle_radian:float, projectile_count:int) -> Array:
+##
+# `direction` is tha facing direction
+# `max_angle_radian` the total angle in radian for shooting bullet in arc
+func get_arc_shooting_style(direction:Vector2, max_angle_radian:float, projectile_count:int) -> Array:
     # return direction if only 1 projectile
     if projectile_count == 1: return [direction.normalized()]
 
