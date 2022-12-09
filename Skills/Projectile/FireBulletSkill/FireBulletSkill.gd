@@ -31,7 +31,7 @@ func execute(position:Vector2, direction:Vector2) -> void:
     for dir in shoot_dirs:
         var bullet: Projectile = self.projectile_scene.instance()
         get_tree().current_scene.add_child(bullet)
-        bullet.setup(self, dir, skill_owner.global_position)
+        bullet.setup(self, dir, skill_owner.global_position, projectile_speed)
         bullet.connect("on_projectile_hit", self, "_on_projectile_hit")
 
     start_cool_down()

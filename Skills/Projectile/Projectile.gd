@@ -67,14 +67,16 @@ func _on_body_entered(body:Node) -> void:
 ##
 # `skill` the skill fire this projectile
 # `direction` the direction this projectile is flying
-# `position` global position this projectile start 
-func setup(skill:Skill, direction:Vector2, position:Vector2) -> void:
+# `position` global position this projectile start
+# `speed` projectile speed 
+func setup(skill:Skill, direction:Vector2, position:Vector2, speed:float) -> void:
     if not is_inside_tree():
         yield(self, "ready")
     
     _skill = skill
     _direction = direction
     global_position = position
+    _speed = speed
     _hit_damage = _skill.get_hit_damage()
     _speed = _skill.projectile_speed
     _life_span = _skill.projectile_life_span

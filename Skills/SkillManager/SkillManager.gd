@@ -5,8 +5,8 @@ extends Node2D
 
 # List of active skills 
 var active_skills: Array = [
-	preload("res://Skills/Projectile/FireBulletSkill/FireBulletSkill.tscn").instance()
-	# preload("res://Skills/IceSkill/IceBulletSkill.tscn").instance()
+	# preload("res://Skills/Projectile/FireBulletSkill/FireBulletSkill.tscn").instance()
+	preload("res://Skills/Projectile/CryoBulletSkill/CryoBulletSkill.tscn").instance()
 ]
 
 func _ready() -> void:

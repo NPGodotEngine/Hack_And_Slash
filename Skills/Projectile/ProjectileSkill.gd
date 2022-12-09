@@ -16,10 +16,12 @@ export (float, 0.0, 1.0) var projectile_penetration := 0.0
 # Life span tha will be applied to projectile
 export (float) var projectile_life_span := 3.0
 
-# Maximum of projectil size can shoot at time
+# Maximum of projectil size can shoot
+# projectile count will not excee this value
 export (int) var max_projectile_size := 1
 
 # Currnt projectile count can shoot at time
+# The value is scaled base on character's level
 var projectile_count: int = 1 setget _no_set, get_projectile_count
 
 ## Getter Setter ##

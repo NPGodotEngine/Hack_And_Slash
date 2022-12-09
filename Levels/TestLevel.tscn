@@ -23,6 +23,7 @@ shape = SubResource( 1 )
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 202, 344 )
 collision_mask = 7
+_level = 5
 _base_damage = 12
 _critical_strike_chance = 0.17
 
