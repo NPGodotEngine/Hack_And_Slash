@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Skills/Projectile/FireBulletSkill/FlamePool/FlamePool.gd"
 }, {
+"base": "Area2D",
+"class": "FreezePool",
+"language": "GDScript",
+"path": "res://Skills/Projectile/CryoBulletSkill/FreezePool/FreezePool.gd"
+}, {
 "base": "Reference",
 "class": "HitDamage",
 "language": "GDScript",
@@ -64,6 +69,7 @@ _global_script_class_icons={
 "CryoBullet": "",
 "DamageLabel": "",
 "FlamePool": "",
+"FreezePool": "",
 "HitDamage": "",
 "Player": "",
 "Projectile": "",

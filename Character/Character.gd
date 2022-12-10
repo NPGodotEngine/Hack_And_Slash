@@ -345,6 +345,8 @@ func take_damage(hit_damage:HitDamage) -> void:
 
 # Character die
 func die() -> void:
+	set_process(false)
+	set_physics_process(false)
 	_set_health(0)
 	pass
 
@@ -359,13 +361,13 @@ func heal(amount:int) -> void:
 # This exclude character's base damage
 func get_additional_damage_by_level(current_level:int) -> int:
 	current_level = int(max(1, min(current_level, MAX_LEVEL)))
-	return (current_level - 1) * _add_damage_per_level 
+	return current_level * _add_damage_per_level 
 
 # Get amount of additional health by character's current level
 # This exclude character's base health
 func get_additional_health_by_level(current_level:int) -> int:
 	current_level = int(max(1, min(current_level, MAX_LEVEL))) 
-	return (current_level - 1) * _add_health_per_level
+	return current_level * _add_health_per_level
 
 # Increase level
 func level_up(amount:int = 1) -> void:

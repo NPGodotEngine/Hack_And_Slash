@@ -28,11 +28,13 @@ _base_damage = 12
 _critical_strike_chance = 0.17
 
 [node name="Dummy" parent="." instance=ExtResource( 3 )]
-position = Vector2( 559, 447 )
-collision_mask = 3
-_base_health = 10000
+position = Vector2( 868, 109 )
+_level = 5
+_movement_speed = 150.0
+_base_health = 900
+_follow_player = true
+_distance_to_player = 50.0
 
 [node name="Dummy2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 662, 493 )
-collision_mask = 3
-_base_health = 10000
+position = Vector2( 866, 513 )
+_base_health = 900

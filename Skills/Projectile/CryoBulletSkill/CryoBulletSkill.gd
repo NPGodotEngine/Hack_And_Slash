@@ -14,6 +14,18 @@ export (CurveTexture) var projectile_acc_curve
 # Max angle of bullet spread both min and max
 export (float) var spread_angle = 15.0
 
+# Freeze pool scene
+export (PackedScene) var _freeze_pool_scene = null
+
+# Freeze pool speed reduction 
+export (float, 0.0, 1.0) var _freeze_pool_speed_reduction = 0.5
+
+# Freeze pool life span 
+export (float) var _freeze_pool_life_span = 3.0 
+
+# Freeze pool spawn chance
+export (float, 0.0, 1.0) var _freeze_pool_spawn_chance = 0.1
+
 # Fire interval
 export (float) var fire_interval = 0.3
 
@@ -104,10 +116,24 @@ func _shoot_bullet() -> void:
     get_tree().current_scene.add_child(bullet)
     bullet.setup(self, spread_direction, skill_owner.global_position, projectile_speed)
     bullet.configure_movement(projectile_acc_curve.curve, max_projectile_speed)
+    bullet.connect("on_projectile_hit", self, "_on_projectile_hit")
 
 # Refill bullets
 func _refill_bullets() -> void:
     _bullet_left = self.projectile_count
+
+func _on_projectile_hit(body:Node) -> void:
+    assert(_freeze_pool_scene, "freeze_pool_scene is null")
+
+    if _freeze_pool_scene and can_spawn_freeze_pool():
+        var freeze_pool: FreezePool = _freeze_pool_scene.instance()
+        get_tree().current_scene.call_deferred("add_child", freeze_pool)
+        freeze_pool.setup(_freeze_pool_life_span, _freeze_pool_speed_reduction)
+        freeze_pool.global_position = body.global_position
+
+func can_spawn_freeze_pool() -> bool:
+    if is_equal_approx(_freeze_pool_spawn_chance, 0.0): return false
+    return Utils.is_in_threshold(_freeze_pool_spawn_chance, 0.0001, 1.0)
 
 # Return a vector2 with random direction in spread angle
 ##
