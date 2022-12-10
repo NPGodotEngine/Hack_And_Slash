@@ -153,14 +153,24 @@ func _no_set(_value) -> void:
     push_warning("Set property not allowed")
     return
 
+# Set movement speed reduction
+##
+# Cap value if it is not between min and max
 func set_movement_speed_reduction(value:float) -> void:
 	# Cap value between min and max
 	var new_reduction: float = max(min(value, MAX_MOVEMENT_SPEED_REDUCTION), MIN_MOVEMENT_SPEED_REDUCTION)
 	movement_speed_reduction = new_reduction
 
+# Get scaled movement speed
+##
+# Speed is included speed reduction 
 func get_movement_speed() -> float:
 	return _movement_speed * (1.0 - movement_speed_reduction)
 
+# Set character's level
+##
+# Cap value if it is not between min and max
+# Emit signal `level_changed`
 func _set_level(value:int) -> void:
 	if value == _level: return
 
@@ -170,6 +180,10 @@ func _set_level(value:int) -> void:
 	if _level == MAX_LEVEL:
 		emit_signal("max_level_reached", _level, MAX_LEVEL)
 
+# Set character's current health
+##
+# Cap value if it is not between 0.0 and max
+# Emit signal `health_changed` 
 func _set_health(value:int) -> void:
 	if value == _health: return
 
@@ -178,6 +192,9 @@ func _set_health(value:int) -> void:
 	_health = int(min(max(0, value), _max_health))
 	emit_signal("health_changed", old_health, _health)
 
+# Set character's max health
+##
+# Emit signal `max_health_changed`
 func _set_max_health(value:int) -> void:
 	if value == _max_health: return
 
@@ -185,6 +202,10 @@ func _set_max_health(value:int) -> void:
 	_max_health = value
 	emit_signal("max_health_changed", old_max_health, _max_health)
 
+# Set character's current experience
+##
+# Cap value if it is < 0
+# Emit signal `current_exp_changed`
 func _set_current_exp(value:int) -> void:
 	if value == _current_exp: return
 
@@ -192,6 +213,10 @@ func _set_current_exp(value:int) -> void:
 	_current_exp = int(max(0, value))
 	emit_signal("current_exp_changed", old_exp, _current_exp)
 
+# Set character's next level exp requried
+##
+# Cap value if it is < 0.0
+# Emit signal `next_level_exp_required_changed`
 func _set_next_level_exp_required(value:int) -> void:
 	if value == _next_level_exp_requried: return 
 
@@ -199,6 +224,10 @@ func _set_next_level_exp_required(value:int) -> void:
 	_next_level_exp_requried = int(max(0, value))
 	emit_signal("next_level_exp_required_changed", old_exp_required, _next_level_exp_requried)
 
+# Set character's damage
+##
+# Cap value if it is < 0.0
+# Emit signal `damage_changed` 
 func _set_damage(value:int) -> void:
 	if value == _damage: return
 
@@ -206,6 +235,9 @@ func _set_damage(value:int) -> void:
 	_damage = int(max(0, value))
 	emit_signal("damage_changed", old_damage, _damage)
 
+# Set character's dead state
+##
+# Emit signal `die`
 func _set_is_dead(value:bool) -> void:
 	if value == _is_dead: return
 
@@ -313,6 +345,7 @@ func take_damage(hit_damage:HitDamage) -> void:
 
 # Character die
 func die() -> void:
+	_set_health(0)
 	pass
 
 # Heal character
