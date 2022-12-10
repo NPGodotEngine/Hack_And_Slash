@@ -116,7 +116,7 @@ func _shoot_bullet() -> void:
     get_tree().current_scene.add_child(bullet)
     bullet.setup(self, spread_direction, skill_owner.global_position, projectile_speed)
     bullet.configure_movement(projectile_acc_curve.curve, max_projectile_speed)
-    bullet.connect("on_projectile_hit", self, "_on_projectile_hit")
+    bullet.connect("on_projectile_hit", self, "_on_projectile_hit", [], CONNECT_ONESHOT)
 
 # Refill bullets
 func _refill_bullets() -> void:

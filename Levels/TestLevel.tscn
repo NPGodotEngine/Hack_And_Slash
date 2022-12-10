@@ -31,7 +31,7 @@ _critical_strike_chance = 0.17
 position = Vector2( 868, 109 )
 _level = 5
 _movement_speed = 150.0
-_base_health = 900
+_base_health = 9000
 _follow_player = true
 _distance_to_player = 50.0
 
