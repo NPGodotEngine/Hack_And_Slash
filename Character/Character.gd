@@ -47,6 +47,33 @@ export (int) var _level: int = START_LEVEL setget _set_level
 
 
 
+# Max movement speed reduction
+const MAX_MOVEMENT_SPEED_REDUCTION = 0.9
+
+# Min movement speed reduction
+const MIN_MOVEMENT_SPEED_REDUCTION = 0.0
+
+# Character's basic movement _speed
+export var _movement_speed := 250.0
+
+# How fast can player turn from 
+# one direction to another
+#
+# The higher the value the faster player can turn
+# and less the smooth of player motion
+export (float, 0.1, 1.0) var _drag_factor := 0.5
+
+# Scaled movement speed
+# that is included movement speed reudction
+var movement_speed: float = _movement_speed setget _no_set, get_movement_speed
+
+# Total movement speed reduction
+##
+# Value is between min and max usually
+# is 0.0 ~ 1.0 but depend on min max setting
+var movement_speed_reduction: float = 0.0 setget set_movement_speed_reduction
+
+
 # Base health
 ##
 # Character's base health 
@@ -122,6 +149,18 @@ var _is_dead:bool = false setget _set_is_dead
 
 
 ## Getter Setter ##
+func _no_set(_value) -> void:
+    push_warning("Set property not allowed")
+    return
+
+func set_movement_speed_reduction(value:float) -> void:
+	# Cap value between min and max
+	var new_reduction: float = max(min(value, MAX_MOVEMENT_SPEED_REDUCTION), MIN_MOVEMENT_SPEED_REDUCTION)
+	movement_speed_reduction = new_reduction
+
+func get_movement_speed() -> float:
+	return _movement_speed * (1.0 - movement_speed_reduction)
+
 func _set_level(value:int) -> void:
 	if value == _level: return
 
@@ -220,8 +259,24 @@ func process_tick(_delta) -> void:
 	pass
 
 # Character physics tick
-func physics_tick(_delta: float) -> void:
+func physics_tick(delta: float) -> void:
+	move_character(delta)
+
+# Move character
+func move_character(_delta:float) -> void:
 	pass
+
+# Add amount of reduction to movement speed reduction
+##
+# The ideal value for amount is between 0.1 ~ 0.9
+func add_movement_speed_reduction(amount:float) -> void:
+	set_movement_speed_reduction(movement_speed_reduction + amount)
+
+# Remove amount of reduction to movement speed reduction
+##
+# The ideal value for amount is between 0.1 ~ 0.9
+func remove_movement_speed_reduction(amount:float) -> void:
+	set_movement_speed_reduction(movement_speed_reduction - amount)
 
 # Character take damage
 func take_damage(hit_damage:HitDamage) -> void:

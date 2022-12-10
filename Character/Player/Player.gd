@@ -6,16 +6,6 @@ extends Character
 
 # warning-ignore-all:RETURN_VALUE_DISCARDED
 
-# Player movement _speed
-export var _movement_speed := 250.0
-
-# How fast can player turn from 
-# one direction to another
-#
-# The higher the value the faster player can turn
-# and less the smooth of player motion
-export (float, 0.1, 1.0) var _drag_factor := 0.5
-
 # Player skin visual
 onready var _skin := $Skin
 
@@ -42,12 +32,13 @@ func setup() -> void:
 
 	logging()
 
-func physics_tick(_delta: float) -> void:
-	_move()
+func physics_tick(delta: float) -> void:
+	.physics_tick(delta)
+
 	_update_skin()
 	_execute_skills()
 
-func _move() -> void:
+func move_character(_delta:float) -> void:
 	# Get direction from input
 	var direction: Vector2 = Vector2(
 		Input.get_axis("move_left", "move_right"),
@@ -55,7 +46,7 @@ func _move() -> void:
 	).normalized()
 
 	# Smoothing player turing direction
-	var desired_velocity := direction * _movement_speed
+	var desired_velocity := direction * get_movement_speed()
 	var steering_velocity = desired_velocity - velocity
 	steering_velocity  = steering_velocity * _drag_factor
 	velocity += steering_velocity
@@ -127,5 +118,6 @@ func _unhandled_input(event: InputEvent) -> void:
 func logging() -> void:
 	print("level:%d, max_level:%d exp:%d, next_exp:%d, health:%d, max_health:%d, damage:%d, dead:%s" % 
 			[_level, MAX_LEVEL, _current_exp, _next_level_exp_requried, _health, _max_health, _damage, _is_dead])
+	print("movement_speed:%f, speed:%f, movement_reduction:%f" % [_movement_speed, get_movement_speed(), movement_speed_reduction])
 		
 	
