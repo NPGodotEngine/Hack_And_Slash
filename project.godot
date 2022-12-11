@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Interface/HUD/DamageLabel.gd"
 }, {
+"base": "Projectile",
+"class": "FireBullet",
+"language": "GDScript",
+"path": "res://Skills/Projectile/FireBulletSkill/FireBullet/FireBullet.gd"
+}, {
 "base": "Area2D",
 "class": "FlamePool",
 "language": "GDScript",
@@ -68,6 +73,7 @@ _global_script_class_icons={
 "Character": "",
 "CryoBullet": "",
 "DamageLabel": "",
+"FireBullet": "",
 "FlamePool": "",
 "FreezePool": "",
 "HitDamage": "",

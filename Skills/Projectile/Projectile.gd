@@ -4,7 +4,7 @@ extends Area2D
 # warning-ignore-all:RETURN_VALUE_DISCARDED 
 
 # Emit when projectile hit a body
-signal on_projectile_hit(body)
+signal on_projectile_hit(projectile, body)
 
 # Bullet _speed
 var _speed := 200.0
@@ -104,7 +104,7 @@ func _is_penetrated() -> bool:
 # Call when this projectile hit a physics body
 func _on_projectile_hit_body(body:Node) -> void:
     if body.has_method("take_damage"):
-        emit_signal("on_projectile_hit", body)
+        emit_signal("on_projectile_hit", self, body)
         body.take_damage(_hit_damage)
     
     # free projectile if not penetrated

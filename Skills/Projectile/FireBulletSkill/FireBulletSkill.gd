@@ -36,9 +36,9 @@ func execute(position:Vector2, direction:Vector2) -> void:
 
     start_cool_down()
 
-func _on_projectile_hit(body:Node) -> void:
+func _on_projectile_hit(_projectile:Projectile, body:Node) -> void:
     assert(_flame_pool_scene, "flame_pool_scene is null")
-
+    
     if _flame_pool_scene and can_spawn_flame_pool():
         var flame_pool: FlamePool = _flame_pool_scene.instance()
         get_tree().current_scene.call_deferred("add_child", flame_pool)

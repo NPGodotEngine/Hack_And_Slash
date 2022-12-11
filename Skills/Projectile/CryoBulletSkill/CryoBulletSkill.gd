@@ -122,7 +122,7 @@ func _shoot_bullet() -> void:
 func _refill_bullets() -> void:
     _bullet_left = self.projectile_count
 
-func _on_projectile_hit(body:Node) -> void:
+func _on_projectile_hit(_projectile:CryoBullet, body:Node) -> void:
     assert(_freeze_pool_scene, "freeze_pool_scene is null")
 
     if _freeze_pool_scene and can_spawn_freeze_pool():
