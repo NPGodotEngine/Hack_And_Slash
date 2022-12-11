@@ -113,10 +113,11 @@ func _shoot_bullet() -> void:
 
     # shoot projectile
     var bullet: CryoBullet = projectile_scene.instance()
-    get_tree().current_scene.add_child(bullet)
-    bullet.setup(self, spread_direction, skill_owner.global_position, projectile_speed)
+    get_tree().current_scene.call_deferred("add_child", bullet)
+    bullet.setup(self, spread_direction, skill_owner.global_position, projectile_speed,
+        get_hit_damage(), projectile_life_span, projectile_penetration_chance)
     bullet.configure_movement(projectile_acc_curve.curve, max_projectile_speed)
-    bullet.connect("on_projectile_hit", self, "_on_projectile_hit", [], CONNECT_ONESHOT)
+    bullet.connect("on_projectile_hit", self, "_on_projectile_hit")
 
 # Refill bullets
 func _refill_bullets() -> void:

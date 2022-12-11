@@ -2,9 +2,6 @@ extends ProjectileSkill
 
 # warning-ignore-all:RETURN_VALUE_DISCARDED
 
-# Max angle to spread bullet 
-export (float) var max_shooting_angle = 15.0
-
 # Flame pool that leave on ground when
 # bullet hit 
 export (PackedScene) var _flame_pool_scene = null
@@ -18,32 +15,87 @@ export (float) var _flame_pool_damage_interval = 1.0
 # Flame pool spawn chance
 export (float, 0.0, 1.0) var _flame_pool_spawn_chance = 0.1
 
+# Number of time left bullet can do split
+# Dcrease 1 for each spawn bullets
+export (int) var init_bullet_split_count_left = 1
+
+# Number of splits can bullet do
+# when it hit something
+export (int) var bullet_split = 2
+
+# Splited angle for a bullet
+# that is about to split
+export (float) var splits_angle_deg = 10.0
+
 func execute(position:Vector2, direction:Vector2) -> void:
     .execute(position, direction)
 
     # get facing direction
     var face_dir: Vector2 = get_global_mouse_position() - skill_owner.global_position
-
-    # use arc shape for shooting projectile
-    var shoot_dirs = get_arc_shooting_style(face_dir, deg2rad(max_shooting_angle), self.projectile_count)
-
-    # shoot projectiles
-    for dir in shoot_dirs:
-        var bullet: Projectile = self.projectile_scene.instance()
-        get_tree().current_scene.add_child(bullet)
-        bullet.setup(self, dir, skill_owner.global_position, projectile_speed)
-        bullet.connect("on_projectile_hit", self, "_on_projectile_hit", [], CONNECT_ONESHOT)
+    _spawn_bullet(face_dir, skill_owner.global_position, init_bullet_split_count_left)
 
     start_cool_down()
 
-func _on_projectile_hit(_projectile:Projectile, body:Node) -> void:
+func _on_projectile_hit(projectile:FireBullet, body:Node) -> void:
     assert(_flame_pool_scene, "flame_pool_scene is null")
-    
+
+    # Spanw flame pool
     if _flame_pool_scene and can_spawn_flame_pool():
-        var flame_pool: FlamePool = _flame_pool_scene.instance()
-        get_tree().current_scene.call_deferred("add_child", flame_pool)
-        flame_pool.setup(get_hit_damage(), _flame_pool_life_span, _flame_pool_damage_interval)
-        flame_pool.global_position = body.global_position
+        _spawn_flame_pool(body.global_position)
+    
+    # if projectile has not splits left
+    if projectile.split_count_left == 0: return
+    
+    # splits projectiles
+    # get arc angle directions for each splitted bullets
+    var n_splits: int = 0
+    if skill_owner and skill_owner is Character:
+        var character: Character = skill_owner as Character
+        n_splits = int(round(projectile.n_splits * (float(character._level) / float(character.MAX_LEVEL))))
+
+    var arc_dirs = get_arc_shooting_style(projectile.get_projectile_direction(), 
+                                deg2rad(splits_angle_deg), 
+                                n_splits)
+    
+    # Spawn bullets
+    for dir in arc_dirs:
+        _spawn_bullet(dir, projectile.global_position, 
+                        projectile.split_count_left - 1,
+                        [body])
+
+    # remove old projectile
+    # if it splitted
+    if n_splits > 0:    
+        projectile.queue_free()
+
+
+# Spawn a bullet at global position
+##
+# `direction` face direction
+# `position` global position
+# `splits_left` number of time left for this bullet to
+# be able to split
+# `ignored_bodies` bodies that will be ignored by this bullet
+# usually is the bodies had been hitted so it will not be
+# damaged twice
+func _spawn_bullet(direction:Vector2, position:Vector2, splits_left:int,
+        ignored_bodies:Array = []) -> void:
+    var bullet: FireBullet = self.projectile_scene.instance()
+    get_tree().current_scene.call_deferred("add_child", bullet)
+    bullet.setup(self, direction, position, projectile_speed, 
+            get_hit_damage(), projectile_life_span, 
+            projectile_penetration_chance)
+    bullet.add_ignored_bodies(ignored_bodies)
+    bullet.split_count_left = splits_left
+    bullet.n_splits = bullet_split
+    bullet.connect("on_projectile_hit", self, "_on_projectile_hit")
+
+# Spawn a flame pool at global position
+func _spawn_flame_pool(position:Vector2) -> void:
+    var flame_pool: FlamePool = _flame_pool_scene.instance()
+    get_tree().current_scene.call_deferred("add_child", flame_pool)
+    flame_pool.setup(get_hit_damage(), _flame_pool_life_span, _flame_pool_damage_interval)
+    flame_pool.global_position = position
 
 # Can spawn a flaming pool
 func can_spawn_flame_pool() -> bool:
@@ -54,7 +106,10 @@ func can_spawn_flame_pool() -> bool:
 ##
 # `direction` is tha facing direction
 # `max_angle_radian` the total angle in radian for shooting bullet in arc
+# `projectile_count` number of projectiles
 func get_arc_shooting_style(direction:Vector2, max_angle_radian:float, projectile_count:int) -> Array:
+    if projectile_count <= 0: return []
+
     # return direction if only 1 projectile
     if projectile_count == 1: return [direction.normalized()]
 

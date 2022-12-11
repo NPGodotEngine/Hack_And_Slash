@@ -10,8 +10,8 @@ export (PackedScene) var projectile_scene: PackedScene = null
 # Speed that will be applied to projectile
 export (float) var projectile_speed := 200.0 
 
-# Penetration that will be applied to projectile
-export (float, 0.0, 1.0) var projectile_penetration := 0.0
+# Penetration chance that will be applied to projectile
+export (float, 0.0, 1.0) var projectile_penetration_chance := 0.0
 
 # Life span tha will be applied to projectile
 export (float) var projectile_life_span := 3.0

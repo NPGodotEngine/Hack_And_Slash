@@ -27,6 +27,12 @@ var _penetration_chance: float = 0.0
 # Skill that shoot this projectile
 var _skill: Skill = null
 
+# Projectile's current velocity
+var _velocity: Vector2 = Vector2.ZERO
+
+# Bodies to ignored by projectile
+var _ignored_bodies: Array = []
+
 ## Getter Setter ##
 func set_life_span(value:float) -> void:
     if not is_inside_tree() or not _life_span_timer:
@@ -56,12 +62,6 @@ func _physics_process(delta: float) -> void:
 ## Override ##
 
 
-## Singal callback ##
-func _on_body_entered(body:Node) -> void:
-    _on_projectile_hit_body(body)
-## Singal callback ##
-
-
 # Setup projectile
 # Call this in order to setup projectile
 ##
@@ -69,7 +69,8 @@ func _on_body_entered(body:Node) -> void:
 # `direction` the direction this projectile is flying
 # `position` global position this projectile start
 # `speed` projectile speed 
-func setup(skill:Skill, direction:Vector2, position:Vector2, speed:float) -> void:
+func setup(skill:Skill, direction:Vector2, position:Vector2, speed:float, 
+        hit_damage:HitDamage, life_span:float, penetration:float) -> void:
     if not is_inside_tree():
         yield(self, "ready")
     
@@ -77,22 +78,21 @@ func setup(skill:Skill, direction:Vector2, position:Vector2, speed:float) -> voi
     _direction = direction
     global_position = position
     _speed = speed
-    _hit_damage = _skill.get_hit_damage()
-    _speed = _skill.projectile_speed
-    _life_span = _skill.projectile_life_span
-    _penetration_chance = _skill.projectile_penetration
+    _hit_damage = hit_damage
+    _life_span = life_span
+    _penetration_chance = penetration
 
     # start life span timer
     _life_span_timer.start(_life_span)
 
 # Move projectile
 ##
-# Move projectile straight line direction
+# Move projectile straight line direction by default
 # or subclass override to behave differently
 func _move_projectile(delta:float) -> void:
-    var velocity := _direction.normalized() * _speed * delta
+    _velocity = _direction.normalized() * _speed * delta
     global_rotation = _direction.angle()
-    global_position += velocity
+    global_position += _velocity
 
 # Can this projectile penetrate the target
 func _is_penetrated() -> bool:
@@ -101,8 +101,25 @@ func _is_penetrated() -> bool:
     # check if penetrated
     return Utils.is_in_threshold(_penetration_chance, 0.0001, 1.0)
 
+# Return a normalized projectile's direction
+func get_projectile_direction() -> Vector2:
+    return _direction.normalized()
+
+func add_ignored_bodies(bodies:Array) -> void:
+    for body in bodies:
+        if body is Node:
+            _ignored_bodies.append(body)
+        else:
+            assert(false, "%s can not be added as it is not a Node" % body.name)
+
 # Call when this projectile hit a physics body
 func _on_projectile_hit_body(body:Node) -> void:
+    if _ignored_bodies.has(body): return
+
+    if not body is Character:
+        queue_free()
+        return
+
     if body.has_method("take_damage"):
         emit_signal("on_projectile_hit", self, body)
         body.take_damage(_hit_damage)
