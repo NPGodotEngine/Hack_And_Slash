@@ -4,16 +4,15 @@
 [ext_resource path="res://Assets/Trail.png" type="Texture" id=3]
 
 [sub_resource type="Curve" id=1]
-_data = [ Vector2( 0, 0.690909 ), 0.0, 0.0, 0, 0, Vector2( 0.99654, 0.506818 ), 0.0, 0.0, 0, 0 ]
+_data = [ Vector2( 0, 0.218182 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="Gradient" id=2]
-offsets = PoolRealArray( 0, 0.44186, 0.577519, 0.74031, 0.879845, 1 )
-colors = PoolColorArray( 0, 0, 0, 0, 0, 0, 0, 0.352941, 0, 0, 0, 0.721569, 0, 0, 0, 0.831373, 0.685714, 0.685714, 0.685714, 0.872093, 1, 1, 1, 1 )
+offsets = PoolRealArray( 0, 0.275194, 0.806202, 1 )
+colors = PoolColorArray( 0, 0, 0, 0, 0, 0, 0, 0.278431, 0, 0, 0, 1, 1, 1, 1, 1 )
 
 [node name="SomkeTrail" type="Line2D"]
-position = Vector2( 35, 167 )
 points = PoolVector2Array( 3, -4 )
-width = 30.0
+width = 15.0
 width_curve = SubResource( 1 )
 default_color = Color( 0.4, 0.501961, 1, 1 )
 gradient = SubResource( 2 )

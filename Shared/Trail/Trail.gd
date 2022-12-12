@@ -11,13 +11,11 @@ var _ticks := 0.0
 
 func _ready():
 	clear_points()
-
+	set_as_toplevel(true)
 
 func _process(delta):
-	global_position += Vector2.RIGHT * 50.0 * delta
-
 	if _ticks >=  1 / frame_per_seconds:
-		add_point(position)
+		add_point(global_position if not get_parent() else get_parent().global_position)
 		if points.size() > max_points:
 			remove_point(0)
 			_ticks = 0.0
