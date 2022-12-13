@@ -17,7 +17,6 @@ script = ExtResource( 3 )
 cooldown_duration = 2.0
 damage_multiplier = 1.7
 projectile_scene = ExtResource( 4 )
-projectile_speed = 200.0
 projectile_penetration_chance = 0.12
 projectile_life_span = 2.0
 max_projectile_size = 4

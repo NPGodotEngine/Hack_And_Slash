@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Trail.png" type="Texture" id=1]
+[ext_resource path="res://Shared/Trail/Trail.gd" type="Script" id=2]
+
+[sub_resource type="Curve" id=1]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0, 0.232558, 0.434109, 0.689922, 0.864341, 1 )
+colors = PoolColorArray( 0.635742, 0.738388, 0.847656, 1, 0.478973, 0.652726, 0.839844, 1, 0.302704, 0.571167, 0.851563, 1, 0.0463562, 0.441283, 0.847656, 1, 0, 0, 0, 0.754993, 0, 0, 0, 0.682353 )
+
+[node name="IceTrail" type="Line2D"]
+points = PoolVector2Array( 1, -1 )
+width_curve = SubResource( 1 )
+gradient = SubResource( 2 )
+texture = ExtResource( 1 )
+texture_mode = 2
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+script = ExtResource( 2 )
