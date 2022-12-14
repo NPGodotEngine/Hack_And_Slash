@@ -89,12 +89,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Shared/Trail/Trail.gd"
 }, {
-"base": "Node",
+"base": "Component",
 "class": "Weapon",
 "language": "GDScript",
 "path": "res://Weapons/Weapon.gd"
 }, {
-"base": "Node",
+"base": "Component",
 "class": "WeaponManager",
 "language": "GDScript",
 "path": "res://Weapons/WeaponManager/WeaponManager.gd"

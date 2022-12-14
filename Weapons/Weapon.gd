@@ -4,7 +4,7 @@
 # reload method at right time to 
 # begin reloading process 
 class_name Weapon
-extends Node
+extends Component
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 # warning-ignore-all: UNUSED_ARGUMENT
@@ -52,7 +52,7 @@ func _on_reloading_timer_timeout() -> void:
 
 # Setup weapon
 func setup() -> void:
-	pass
+	.setup()
 
 # Begin weapon reloading process 
 func start_reloading() -> void:

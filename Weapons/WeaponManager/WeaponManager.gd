@@ -1,7 +1,7 @@
 # A class holde 2 weapons both primary and
 # secondary and manage weapons
 class_name WeaponManager
-extends Node
+extends Component
 
 var weapon_library: Array = [
 	preload("res://Weapons/Projectile/FireWeapon/FireWeapon.tscn"),
@@ -14,6 +14,7 @@ var weapon_slots: Array = []
 
 # Setup weapon manager
 func setup() -> void:
+	.setup()
 	# add preset weapons as child
 	for weapon_scene in weapon_library:
 		var weapon: Weapon = weapon_scene.instance()
