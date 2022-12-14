@@ -5,25 +5,39 @@ class_name HitDamage
 extends Reference
 
 # Attacker
-var attacker = null
+var _attacker = null
 
-# Skill
-var skill = null
+# Weapon
+var _weapon = null
 
 # Damage
-var damage: int = 0
+var _damage: int = 0
 
 # Is this a critical damage
-var is_critical: bool = false
+var _is_critical: bool = false
+
+# Critical strike multiplier 
+var _critical_multiplier: float = 0.0
 
 # Color of damage number
-var color_of_damage: Color = Color.white
+var _color_of_damage: Color = Color.white
 
 # Initialization
-func init(_attacker, _skill, _damage:int, _is_critical:bool, _color_of_damage:Color) -> HitDamage:
-    self.attacker = _attacker
-    self.skill = _skill
-    self.damage = _damage
-    self.is_critical = _is_critical
-    self.color_of_damage = _color_of_damage
+func init(attacker, weapon, damage:int, is_critical:bool, critical_multiplier:float, color_of_damage:Color) -> HitDamage:
+    _attacker = attacker
+    _weapon = weapon
+    _damage = damage
+    _is_critical = is_critical
+    _critical_multiplier = critical_multiplier
+    _color_of_damage = color_of_damage
+    return self
+
+# Create a generic HitDamage
+func get_default() -> HitDamage:
+    _attacker = null
+    _weapon = null
+    _damage = 0
+    _is_critical = false
+    _critical_multiplier = 0.0
+    _color_of_damage = Color.white
     return self

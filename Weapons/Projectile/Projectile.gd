@@ -35,8 +35,6 @@ var _ignored_bodies: Array = []
 
 ## Getter Setter ##
 func set_life_span(value:float) -> void:
-    if not is_inside_tree() or not _life_span_timer:
-        yield(self, "ready")
     _life_span = value
     _life_span_timer.start(_life_span)
 ## Getter Setter ##
@@ -71,9 +69,7 @@ func _physics_process(delta: float) -> void:
 # `speed` projectile speed 
 func setup(weapon:Weapon, direction:Vector2, position:Vector2, speed:float, 
         hit_damage:HitDamage, life_span:float, penetration:float) -> void:
-    if not is_inside_tree():
-        yield(self, "ready")
-    
+    yield(self, "ready")
     _weapon = weapon
     _direction = direction
     global_position = position

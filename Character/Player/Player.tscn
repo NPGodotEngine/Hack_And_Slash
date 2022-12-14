@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Character/Player/Pointer.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Pointer.png" type="Texture" id=2]
@@ -8,6 +8,9 @@
 [ext_resource path="res://Assets/Character_dummy.png" type="Texture" id=6]
 [ext_resource path="res://Assets/Bar_progress.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Bar_under.png" type="Texture" id=8]
+[ext_resource path="res://Components/LevelExp/LevelExpComp.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Components/Health/HealthComp.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Components/Damage/DamageComp.tscn" type="PackedScene" id=11]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 14.0
@@ -15,7 +18,6 @@ height = 24.0
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 4 )
-_critical_strike_chance = 0.521
 
 [node name="Skin" type="Sprite" parent="."]
 position = Vector2( 0, -14 )
@@ -25,8 +27,6 @@ script = ExtResource( 3 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -14 )
 shape = SubResource( 1 )
-
-[node name="WeaponManager" parent="." instance=ExtResource( 5 )]
 
 [node name="Gun" type="Node2D" parent="."]
 position = Vector2( 0, -14 )
@@ -52,3 +52,11 @@ value = 100.0
 texture_under = ExtResource( 8 )
 texture_progress = ExtResource( 7 )
 nine_patch_stretch = true
+
+[node name="HealthComp" parent="." instance=ExtResource( 10 )]
+
+[node name="LevelExpComp" parent="." instance=ExtResource( 9 )]
+
+[node name="DamageComp" parent="." instance=ExtResource( 11 )]
+
+[node name="WeaponManager" parent="." instance=ExtResource( 5 )]

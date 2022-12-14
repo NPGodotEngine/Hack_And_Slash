@@ -27,6 +27,9 @@ export (int) var bullet_split = 2
 # that is about to split
 export (float) var splits_angle_deg = 10.0
 
+# Critical strike component
+onready var _critical_strike_comp: CriticalStrikeComp = $CriticalStrikeComp
+
 func execute(position:Vector2, direction:Vector2) -> void:
     .execute(position, direction)
 
@@ -34,6 +37,18 @@ func execute(position:Vector2, direction:Vector2) -> void:
     _spawn_bullet(direction.normalized(), position, init_bullet_split_count_left)
 
     start_reloading()
+
+func get_hit_damage() -> HitDamage:
+    var is_critical: bool = _critical_strike_comp.is_critical()
+
+    return HitDamage.new().init(
+        get_parent().get_manager_owner(),
+        self,
+        get_damage_output(),
+        is_critical,
+        _critical_strike_comp.critical_strike_multiplier,
+        Color.white if not is_critical else Color.red
+    )
 
 func _on_projectile_hit(projectile:FireBullet, body:Node) -> void:
     assert(_flame_pool_scene, "flame_pool_scene is null")
@@ -48,9 +63,9 @@ func _on_projectile_hit(projectile:FireBullet, body:Node) -> void:
     # splits projectiles
     # get arc angle directions for each splitted bullets
     var n_splits: int = 0
-    var character: Character = get_parent().get_manager_owner()
-    if character:
-        n_splits = int(round(projectile.n_splits * (float(character._level) / float(character.MAX_LEVEL))))
+    var level_exp_comp: LevelExpComp = get_parent().get_manager_owner().get_component_by_name("LevelExpComp")
+    if level_exp_comp:
+        n_splits = int(round(projectile.n_splits * (float(level_exp_comp._level) / float(level_exp_comp._max_level))))
 
     var arc_dirs = get_arc_shooting_style(projectile.get_projectile_direction(), 
                                 deg2rad(splits_angle_deg), 
@@ -81,6 +96,7 @@ func _spawn_bullet(direction:Vector2, position:Vector2, splits_left:int,
         ignored_bodies:Array = []) -> void:
     var bullet: FireBullet = self.projectile_scene.instance()
     get_tree().current_scene.call_deferred("add_child", bullet)
+
     bullet.setup(self, direction, position, projectile_speed, 
             get_hit_damage(), projectile_life_span, 
             projectile_penetration_chance)

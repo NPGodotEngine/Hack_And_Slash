@@ -27,9 +27,7 @@ func _process(delta: float) -> void:
 
 func set_damage(damage:int, critical:bool, color:Color = Color.white, 
     outline_color:Color = Color.black, prefix:String = "-", suffix:String = "") -> void:
-    if not _label:
-        yield(self, "ready")
-
+    yield(self, "ready")
     _label.text = prefix + str(damage) + suffix
     _label.set("custom_colors/font_color", color)
     _label.set("custom_colors/font_outline_modulate", outline_color)

@@ -36,9 +36,9 @@ func get_projectile_count() -> int:
 
     # scale projectile count base on character level
     # otherwise default to 1
-    var character: Character = get_parent().get_manager_owner()
-    if character:
-        var scale: float = character._level * character.MAX_LEVEL / 100.0 
+    var level_exp_comp: LevelExpComp = get_parent().get_manager_owner().get_component_by_name("LevelExpComp")
+    if level_exp_comp:
+        var scale: float = level_exp_comp._level * level_exp_comp._max_level / 100.0 
         var count: int = int(round(max_projectile_size * scale))
         count = int(min(max(1, count), max_projectile_size))
         projectile_count = count

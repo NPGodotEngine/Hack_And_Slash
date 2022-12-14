@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Components/Damage/DamageComp.gd" type="Script" id=1]
+
+[node name="DamageComp" type="Node"]
+script = ExtResource( 1 )

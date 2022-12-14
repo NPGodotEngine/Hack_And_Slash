@@ -72,28 +72,24 @@ func get_damage_output() -> int:
 	# caculate multiplied damage
 	var damage_output = 0
 	
-	var character: Character = get_parent().get_manager_owner()
-	if character:
+	var damage_comp: DamageComp = get_parent().get_manager_owner().get_component_by_name("DamageComp")
+
+	if damage_comp:
 		# owner's damage * multiplier
-		damage_output = int(character._damage * damage_multiplier)
+		damage_output = int(damage_comp.damage * damage_multiplier)
 
 	return damage_output
 
 # Get hit damage
 func get_hit_damage() -> HitDamage:
-	var is_critical = false
-	# check if it is critical hit
-	var character: Character = get_parent().get_manager_owner()
-	if character:
-		is_critical = character.is_critical()
-	
 	# return hit damage information
 	return HitDamage.new().init(
 		get_parent().get_manager_owner(),
 		self,
 		get_damage_output(),
-		is_critical,
-		Color.white if not is_critical else Color.red
+		false,
+		0.0,
+		Color.white
 	)
 
 # Execute weapon

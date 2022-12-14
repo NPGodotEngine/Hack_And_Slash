@@ -3,29 +3,24 @@
 class_name WeaponManager
 extends Node
 
-# Hold list of weapons 
-var weapon_slots: Array = [
-	preload("res://Weapons/Projectile/FireWeapon/FireWeapon.tscn").instance(),
-	preload("res://Weapons/Projectile/CryoWeapon/CryoWeapon.tscn").instance()
+var weapon_library: Array = [
+	preload("res://Weapons/Projectile/FireWeapon/FireWeapon.tscn"),
+	preload("res://Weapons/Projectile/CryoWeapon/CryoWeapon.tscn")
 ]
 
-# Weapon manager's owner
-var manager_owner = null
-
-func _ready() -> void:
-	# add preset weapons as child
-	for i in weapon_slots.size():
-		var weapon: Weapon = weapon_slots[i]
-		add_child(weapon)
+# Hold list of weapons 
+var weapon_slots: Array = []
+	
 
 # Setup weapon manager
-func setup(mgr_owner) -> void:
-	if not is_inside_tree():
-		yield(self, "ready")
-	manager_owner = mgr_owner	
-	for i in weapon_slots.size():
-		var weapon: Weapon = weapon_slots[i]
+func setup() -> void:
+	# add preset weapons as child
+	for weapon_scene in weapon_library:
+		var weapon: Weapon = weapon_scene.instance()
+		add_child(weapon)
+		weapon_slots.append(weapon)
 		weapon.setup()
+		
 		
 # Execute a weapon by index
 ##
@@ -63,4 +58,4 @@ func get_weapon_by(index:int):
 
 # Get owner that own this weapon manager
 func get_manager_owner():
-	return manager_owner
+	return get_parent()
