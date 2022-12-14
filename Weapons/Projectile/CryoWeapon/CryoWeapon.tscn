@@ -1,0 +1,19 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Weapons/Projectile/CryoWeapon/CryoWeapon.gd" type="Script" id=1]
+[ext_resource path="res://Weapons/Projectile/CryoWeapon/CryoBullet/CryoBullet.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Weapons/Projectile/CryoWeapon/FreezePool/FreezePool.tscn" type="PackedScene" id=3]
+
+[sub_resource type="Curve" id=1]
+min_value = 0.1
+_data = [ Vector2( 0, 0.109091 ), 0.0, 0.0, 0, 0, Vector2( 0.241993, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=2]
+curve = SubResource( 1 )
+
+[node name="CryoWeapon" type="Node"]
+script = ExtResource( 1 )
+projectile_scene = ExtResource( 2 )
+max_projectile_size = 3
+projectile_acc_curve = SubResource( 2 )
+_freeze_pool_scene = ExtResource( 3 )

@@ -414,3 +414,10 @@ func is_critical() -> bool:
 	# check if critical
 	return Utils.is_in_threshold(_critical_strike_chance, 
 	_min_critical_strike_chance, _max_critical_strike_chance)
+
+# Return normalized Vector2 of character's shooting direction
+##
+# `normalized` if direction need to normalized, default is `true`
+func get_shooting_direction(normalized:bool=true) -> Vector2:
+	var direction: Vector2 = (get_global_mouse_position() - global_position) 
+	return direction.normalized() if normalized else direction

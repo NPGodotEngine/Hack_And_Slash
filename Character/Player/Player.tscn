@@ -4,7 +4,7 @@
 [ext_resource path="res://Assets/Pointer.png" type="Texture" id=2]
 [ext_resource path="res://Character/Player/PlayerSkin.gd" type="Script" id=3]
 [ext_resource path="res://Character/Player/Player.gd" type="Script" id=4]
-[ext_resource path="res://Skills/SkillManager/SkillManager.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Weapons/WeaponManager/WeaponManager.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/Character_dummy.png" type="Texture" id=6]
 [ext_resource path="res://Assets/Bar_progress.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Bar_under.png" type="Texture" id=8]
@@ -26,18 +26,17 @@ script = ExtResource( 3 )
 position = Vector2( 0, -14 )
 shape = SubResource( 1 )
 
-[node name="SkillManager" parent="." instance=ExtResource( 5 )]
-position = Vector2( 0, -11 )
+[node name="WeaponManager" parent="." instance=ExtResource( 5 )]
 
-[node name="Pointer" type="Node2D" parent="."]
+[node name="Gun" type="Node2D" parent="."]
 position = Vector2( 0, -14 )
 script = ExtResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="Pointer"]
+[node name="Sprite" type="Sprite" parent="Gun"]
 position = Vector2( 10, 0 )
 texture = ExtResource( 2 )
 
-[node name="Position2D" type="Position2D" parent="Pointer"]
+[node name="Position2D" type="Position2D" parent="Gun"]
 position = Vector2( 20, 0 )
 
 [node name="HealthBar" type="TextureProgress" parent="."]

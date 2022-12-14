@@ -1,8 +1,10 @@
-# ProjectileSkill extended from Skill
+# ProjectileWeapon extended from Weapon
 ##
 # Designed specific to shooting projectile
-class_name ProjectileSkill
-extends Skill
+class_name ProjectileWeapon
+extends Weapon
+
+# warning-ignore-all: UNUSED_ARGUMENT
 
 # Projectile this skill will use to instantiate and shoot
 export (PackedScene) var projectile_scene: PackedScene = null
@@ -34,8 +36,9 @@ func get_projectile_count() -> int:
 
     # scale projectile count base on character level
     # otherwise default to 1
-    if skill_owner and skill_owner is Character:
-        var scale: float = skill_owner._level * skill_owner.MAX_LEVEL / 100.0 
+    var character: Character = get_parent().get_manager_owner()
+    if character:
+        var scale: float = character._level * character.MAX_LEVEL / 100.0 
         var count: int = int(round(max_projectile_size * scale))
         count = int(min(max(1, count), max_projectile_size))
         projectile_count = count
@@ -43,8 +46,9 @@ func get_projectile_count() -> int:
     return projectile_count
 ## Getter Setter ##
 
+
 ## Override ##
-func execute(_position:Vector2, _direction:Vector2) -> void:
+func execute(position:Vector2, direction:Vector2) -> void:
     assert(projectile_scene , "projectile_scene is null")
 ## Override ##
 

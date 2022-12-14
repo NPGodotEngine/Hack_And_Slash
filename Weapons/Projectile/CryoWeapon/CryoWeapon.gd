@@ -1,4 +1,4 @@
-extends ProjectileSkill
+extends ProjectileWeapon
 
 # warning-ignore-all:RETURN_VALUE_DISCARDED
 
@@ -38,6 +38,9 @@ var _bullet_left: int = 0
 # Is in fire interval
 var _is_in_interval: bool = false
 
+var _shoot_direction: Vector2
+var _shoot_position: Vector2
+
 ## Getter Setter ##
 func set_max_projectile_speed(value:float) -> void:
     # make sure we have at least equal to projectile basic speed
@@ -45,8 +48,8 @@ func set_max_projectile_speed(value:float) -> void:
 ## Getter Setter ##
 
 ## Override ##
-func setup(skill_executer) -> void:
-    .setup(skill_executer)
+func setup() -> void:
+    .setup()
 
     # refill bullet
     _refill_bullets()
@@ -69,10 +72,12 @@ func execute(position:Vector2, direction:Vector2) -> void:
 
     # make first shot
     if not _is_in_interval:
+        _shoot_direction = direction.normalized()
+        _shoot_position = position
         _on_fire_a_projectile()
 
-func _on_cool_down_timer_timeout() -> void:
-    ._on_cool_down_timer_timeout()
+func _on_reloading_timer_timeout() -> void:
+    ._on_reloading_timer_timeout()
 
     # refill bullet
     _refill_bullets()
@@ -92,8 +97,8 @@ func _on_fire_a_projectile():
     # no bullet left to shoot
     if _bullet_left == 0:
         _is_in_interval = false
-        # start skill cool down if no bullets left
-        start_cool_down()
+        # start reloading if no bullets left
+        start_reloading()
         _fire_interval_timer.stop()
     else:
         # have bullet left then wait until next shot
@@ -103,18 +108,13 @@ func _on_fire_a_projectile():
 
 # Shoot one bullet
 func _shoot_bullet() -> void:
-    var global_mouse_position = get_global_mouse_position()
-
-    # get direction
-    var face_direction = (global_mouse_position - skill_owner.global_position).normalized()
-
     # get random spread direction
-    var spread_direction = get_random_spread_direction(face_direction, spread_angle)
+    var spread_direction = get_random_spread_direction(_shoot_direction, spread_angle)
 
     # shoot projectile
     var bullet: CryoBullet = projectile_scene.instance()
     get_tree().current_scene.call_deferred("add_child", bullet)
-    bullet.setup(self, spread_direction, skill_owner.global_position, projectile_speed,
+    bullet.setup(self, spread_direction, _shoot_position, projectile_speed,
         get_hit_damage(), projectile_life_span, projectile_penetration_chance)
     bullet.configure_movement(projectile_acc_curve.curve, max_projectile_speed)
     bullet.connect("on_projectile_hit", self, "_on_projectile_hit")

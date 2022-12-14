@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Assets/FireParticale.png" type="Texture" id=1]
-[ext_resource path="res://Skills/Projectile/FireBulletSkill/FlamePool/FlamePool.gd" type="Script" id=2]
+[ext_resource path="res://Weapons/Projectile/FireWeapon/FlamePool/FlamePool.gd" type="Script" id=2]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0.00487805, 1 )

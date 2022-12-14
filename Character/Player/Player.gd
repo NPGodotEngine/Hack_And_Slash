@@ -10,18 +10,24 @@ extends Character
 onready var _skin := $Skin
 
 # Fire position
-onready var _fire_position := $Pointer/Position2D
+onready var _fire_position := $Gun/Position2D
+
+# Gun
+onready var _gun := $Gun
 
 onready var _health_bar := $HealthBar
 
-# Active skill holder
-onready var skill_manager: SkillManager = $SkillManager
+# Weapon manager
+onready var weapon_manager: WeaponManager = $WeaponManager
 
 # Player current velocity
 var velocity := Vector2.ZERO
 
 func setup() -> void:
 	.setup()
+
+	# setup weapon_manager
+	weapon_manager.setup(self)
 	
 	connect("health_changed", self, "_on_health_changed")
 	connect("max_health_changed", self, "_on_max_health_changed")
@@ -64,21 +70,21 @@ func _update_skin() -> void:
 		_skin.face_right()
 
 func _execute_skills() -> void:
-	assert(skill_manager, "skill manager missing")
+	assert(weapon_manager, "weapon manager missing")
 
 	# get shooting direction
 	var direction = (get_global_mouse_position() - _fire_position.global_position).normalized()
 
 	# execute skills 
 	if Input.is_action_pressed("primary"): 
-		skill_manager.execute_skill(0, _fire_position.global_position, direction)
+		weapon_manager.execute_weapon(0, _fire_position.global_position, direction)
 	elif Input.is_action_just_released("primary"):
-		skill_manager.cancel_skill_execution(0)
+		weapon_manager.cancel_weapon_execution(0)
 
 	if Input.is_action_pressed("secondary"):
-		skill_manager.execute_skill(1, _fire_position.global_position, direction)
+		weapon_manager.execute_weapon(1, _fire_position.global_position, direction)
 	elif Input.is_action_just_released("secondary"):
-		skill_manager.cancel_skill_execution(1)
+		weapon_manager.cancel_weapon_execution(1)
 
 func _update_health_bar() -> void:
 	_health_bar.min_value = float(0)

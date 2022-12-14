@@ -24,8 +24,8 @@ var _hit_damage: HitDamage = null
 # Penetration chance
 var _penetration_chance: float = 0.0
 
-# Skill that shoot this projectile
-var _skill: Skill = null
+# Weapon that shoot this projectile
+var _weapon: Weapon = null
 
 # Projectile's current velocity
 var _velocity: Vector2 = Vector2.ZERO
@@ -65,16 +65,16 @@ func _physics_process(delta: float) -> void:
 # Setup projectile
 # Call this in order to setup projectile
 ##
-# `skill` the skill fire this projectile
+# `weapon` the weapon fire this projectile
 # `direction` the direction this projectile is flying
 # `position` global position this projectile start
 # `speed` projectile speed 
-func setup(skill:Skill, direction:Vector2, position:Vector2, speed:float, 
+func setup(weapon:Weapon, direction:Vector2, position:Vector2, speed:float, 
         hit_damage:HitDamage, life_span:float, penetration:float) -> void:
     if not is_inside_tree():
         yield(self, "ready")
     
-    _skill = skill
+    _weapon = weapon
     _direction = direction
     global_position = position
     _speed = speed
@@ -105,6 +105,7 @@ func _is_penetrated() -> bool:
 func get_projectile_direction() -> Vector2:
     return _direction.normalized()
 
+# Add bodies that can be ignored by this projectile
 func add_ignored_bodies(bodies:Array) -> void:
     for body in bodies:
         if body is Node:

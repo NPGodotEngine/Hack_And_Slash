@@ -1,4 +1,4 @@
-extends ProjectileSkill
+extends ProjectileWeapon
 
 # warning-ignore-all:RETURN_VALUE_DISCARDED
 
@@ -31,10 +31,9 @@ func execute(position:Vector2, direction:Vector2) -> void:
     .execute(position, direction)
 
     # get facing direction
-    var face_dir: Vector2 = get_global_mouse_position() - skill_owner.global_position
-    _spawn_bullet(face_dir, skill_owner.global_position, init_bullet_split_count_left)
+    _spawn_bullet(direction.normalized(), position, init_bullet_split_count_left)
 
-    start_cool_down()
+    start_reloading()
 
 func _on_projectile_hit(projectile:FireBullet, body:Node) -> void:
     assert(_flame_pool_scene, "flame_pool_scene is null")
@@ -49,8 +48,8 @@ func _on_projectile_hit(projectile:FireBullet, body:Node) -> void:
     # splits projectiles
     # get arc angle directions for each splitted bullets
     var n_splits: int = 0
-    if skill_owner and skill_owner is Character:
-        var character: Character = skill_owner as Character
+    var character: Character = get_parent().get_manager_owner()
+    if character:
         n_splits = int(round(projectile.n_splits * (float(character._level) / float(character.MAX_LEVEL))))
 
     var arc_dirs = get_arc_shooting_style(projectile.get_projectile_direction(), 
