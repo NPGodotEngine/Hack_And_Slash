@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Component",
+"class": "Attachment",
+"language": "GDScript",
+"path": "res://Components/Attachments/Attachment.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Character",
 "language": "GDScript",
@@ -89,6 +94,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Shared/Trail/Trail.gd"
 }, {
+"base": "Attachment",
+"class": "Trigger",
+"language": "GDScript",
+"path": "res://Components/Attachments/Triggers/Trigger.gd"
+}, {
 "base": "Component",
 "class": "Weapon",
 "language": "GDScript",
@@ -100,6 +110,7 @@ _global_script_classes=[ {
 "path": "res://Weapons/WeaponManager/WeaponManager.gd"
 } ]
 _global_script_class_icons={
+"Attachment": "",
 "Character": "",
 "Component": "",
 "CriticalStrikeComp": "",
@@ -116,6 +127,7 @@ _global_script_class_icons={
 "Projectile": "",
 "ProjectileWeapon": "",
 "Trail": "",
+"Trigger": "",
 "Weapon": "",
 "WeaponManager": ""
 }
