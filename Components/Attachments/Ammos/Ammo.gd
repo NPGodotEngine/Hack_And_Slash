@@ -5,10 +5,19 @@ extends Attachment
 # warning-ignore-all: UNUSED_ARGUMENT
 
 
+# Emit when ammo depleted
 signal ammo_depleted(ammo_count, round_per_clip)
+
+# Emit when ammo count has changed
 signal ammo_count_changed(ammo_count, round_per_clip)
+
+# Emit when begin reloading
 signal begin_reloading(ammo_count, round_per_clip)
+
+# Emit when reloading end
 signal end_reloading(ammo_count, round_per_clip)
+
+
 
 # How many rounds per clip
 export (int, 1, 5000) var rounds_per_clip = 10
@@ -54,13 +63,13 @@ func setup() -> void:
 
     _set_round_left(rounds_per_clip)
 
-# Shoot ammo
+# Return a list of bullet instances
 ##
 # `round_per_shot` number of round per this shot
-# `from_position` bullet start global position
-# `to_position` bullet end global position
-func shoot_ammo(from_position:Vector2, to_position:Vector2, 
-    rounds_per_shot:int = 1) -> void:
+func get_ammo(rounds_per_shot:int = 1) -> Array:
+    if _round_left == 0:
+        reload_ammo()
+
     assert(bullet_scene, "bullet scene is missing")
     assert(rounds_per_shot >= 0, 
         "rounds per shot can't be negative value, %d was given" % rounds_per_shot)
@@ -68,6 +77,16 @@ func shoot_ammo(from_position:Vector2, to_position:Vector2,
     # adjust rounds_per_shot if it is over total rounds left
     # in clip
     rounds_per_shot = int(min(_round_left, rounds_per_shot))
+
+    var ammos: Array = []
+
+    for _shot in rounds_per_shot:
+        var bullet = bullet_scene.instance()
+        ammos.append(bullet)
+    
+    _set_round_left(_round_left - rounds_per_shot)
+
+    return ammos
 
     
 # Reload ammo
