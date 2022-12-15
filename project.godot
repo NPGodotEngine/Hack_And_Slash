@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Attachment",
+"class": "Ammo",
+"language": "GDScript",
+"path": "res://Components/Attachments/Ammos/Ammo.gd"
+}, {
 "base": "Component",
 "class": "Attachment",
 "language": "GDScript",
@@ -110,6 +115,7 @@ _global_script_classes=[ {
 "path": "res://Weapons/WeaponManager/WeaponManager.gd"
 } ]
 _global_script_class_icons={
+"Ammo": "",
 "Attachment": "",
 "Character": "",
 "Component": "",
