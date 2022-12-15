@@ -9,88 +9,115 @@ extends Component
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 # warning-ignore-all: UNUSED_ARGUMENT
 
-# Signal for reloading started
-signal reloading_started()
+# Damage component
+onready var _damage_comp: DamageComp = $DamageComp
 
-# Signal for reloading ended
-signal reloading_ended()
+# Accuracy component
+onready var _accuracy_comp: AccuracyComp = $AccuracyComp
 
-# Reloading duration of the weapon
-export (float) var reloading_duration := 1.0
+# List of weapon attachments 
+var _attachments: Array = []
 
-# Weapon damage multiplier
-# base on its owner's damage
-# E.g 1.0 = 100% of its owner's damage
-# E.g 0.75 = 75% of its owner's damage
-export (float) var damage_multiplier := 1.0
+# Weapon damage
+##
+# Return weapon's damage * all 
+# attachments' damage multiplier(cap between 0.1 ~ 1.0)
+##
+# The minimum of damage is 10% of weapon's damage
+var weapon_damage: int setget , get_weapon_damage
 
-# Reloading timer
-var reloading_timer: Timer = null
+# Weapon accuracy
+##
+# Return weapon's accuracy + all 
+# attachments' accuracy and then
+# cap between 0.0 ~ 1.0
+var weapon_accuracy: float setget , get_weapon_accuracy
 
-# Is weapon ready to be used
-var is_weapon_ready: bool = true
 
-func _ready() -> void:
-	# create a reloading timer
-	reloading_timer = Timer.new()
-	reloading_timer.name = "ReloadingTimer"
-	add_child(reloading_timer)
+## Getter Setter ##
 
-	
-	# setup reloading timer
-	reloading_timer.one_shot = true
-	reloading_timer.connect("timeout", self, "_on_reloading_timer_timeout")
 
-func _exit_tree() -> void:
-	if reloading_timer:
-		reloading_timer.disconnect("timeout", self, "_on_reloading_timer_timeout")
+# Return weapon's total damage output
+# The minimum is 10% of weapon's damage
+func get_weapon_damage() -> int:
+	var weapon_base_damage: int = _damage_comp.damage
+	var multiplier: float = calculate_attachments_dmg_multiplier()
+	multiplier = min(max(0.1, multiplier), 1.0)
 
-# Called when reloading timer timeout
-func _on_reloading_timer_timeout() -> void:
-	is_weapon_ready = true
-	emit_signal("reloading_ended")
+	if is_equal_approx(multiplier, 0.0):
+		return weapon_base_damage
+	return int(weapon_base_damage * multiplier)
+
+# Return weapon's total accuracy in between
+# 0.0 ~ 1.0
+func get_weapon_accuracy() -> float:
+	var weapon_base_accuracy: float = _accuracy_comp.accuracy 
+	var att_accuracy: float = calculate_attachments_accuracy()
+	var acc = weapon_base_accuracy + att_accuracy
+	acc = min(max(0.0, acc), 1.0)
+
+	return acc
+## Getter Setter ##
 
 # Setup weapon
 func setup() -> void:
 	.setup()
 
-# Begin weapon reloading process 
-func start_reloading() -> void:
-	is_weapon_ready = false
+	assert(_damage_comp, 
+		"Weapon required a damage compoent as child with name \"DamageComp\"")
+	assert(_accuracy_comp, 
+		"Weapon required a accuracy compoent as child with name \"DamageComp\"")
 
-	# Don't start timer if during reloading
-	if reloading_timer.time_left > 0:
-		return
+	collection_attachments()
 
-	reloading_timer.start(reloading_duration)
+	assert(get_attachment_by_type(Global.AttachmentType.STOCK), 
+		"Weapon required a stock attachment as child")
+	assert(get_attachment_by_type(Global.AttachmentType.TRIGGER), 
+	"Weapon required a trigger attachment as child")
+	assert(get_attachment_by_type(Global.AttachmentType.AMMO), 
+	"Weapon required a ammo attachment as child")
+	assert(get_attachment_by_type(Global.AttachmentType.BARREL), 
+	"Weapon required a barrel attachment as child")
 
-	emit_signal("reloading_started")
+# Find all attachments and
+# store in attachment list
+func collection_attachments() -> void:
+	_attachments.clear()
 
-# Get total damage output from this weapon
-# Scaled from weapon owner's damage 
-func get_damage_output() -> int:
-	# caculate multiplied damage
-	var damage_output = 0
+	for child in get_children():
+		if child is Attachment:
+			_attachments.append(child)	
+
+# Get attachment by type, return null if not found
+##
+# `att_type` `AttachmentType` in Global.gd
+func get_attachment_by_type(att_type:int) -> Attachment:
+	for i in _attachments.size():
+		var att = _attachments[i] as Attachment
+		if att.attachment_type & att_type:
+			return att
+	return null
+
+# Return damage from all attachments
+func calculate_attachments_dmg_multiplier() -> float:
+	var dmg_multiplier: float = 0.0
+
+	for i in _attachments.size():
+		var att:Attachment = _attachments[i]
+		if att:
+			dmg_multiplier += att.damage_multiplier
 	
-	var damage_comp: DamageComp = get_parent().get_manager_owner().get_component_by_name("DamageComp")
+	return dmg_multiplier
 
-	if damage_comp:
-		# owner's damage * multiplier
-		damage_output = int(damage_comp.damage * damage_multiplier)
+func calculate_attachments_accuracy() -> float:
+	var total_acc: float = 0.0
 
-	return damage_output
-
-# Get hit damage
-func get_hit_damage() -> HitDamage:
-	# return hit damage information
-	return HitDamage.new().init(
-		get_parent().get_manager_owner(),
-		self,
-		get_damage_output(),
-		false,
-		0.0,
-		Color.white
-	)
+	for i in _attachments.size():
+		var att:Attachment = _attachments[i]
+		if att:
+			total_acc += att.accuracy
+	
+	return total_acc
 
 # Execute weapon
 ##
@@ -103,4 +130,17 @@ func execute(position:Vector2, direction:Vector2) -> void:
 ##
 # Specific to weapon that need to warm up
 func cancel_execution() -> void:
+	pass
+
+# Execute weapon's alternative fire
+##
+# `position` global position for weapon to shoot from 
+# `direction` for weapon's projectile to travel
+func execute_alt(position:Vector2, direction:Vector2) -> void:
+	pass
+
+# Cancel weapon's alternative fire execution
+##
+# Specific to weapon that need to warm up
+func cancel_alt_execution() -> void:
 	pass

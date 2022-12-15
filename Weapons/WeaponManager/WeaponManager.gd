@@ -10,7 +10,15 @@ var weapon_library: Array = [
 
 # Hold list of weapons 
 var weapon_slots: Array = []
-	
+
+# Current index point to the weapon
+var current_weapon_index: int = 0 setget set_current_weapon_index
+
+
+func set_current_weapon_index(value:int) -> void:
+	var old_weapon_index = current_weapon_index
+	current_weapon_index = min(max(0, value), weapon_slots.size()-1)
+	# TODO: switch weapon
 
 # Setup weapon manager
 func setup() -> void:
@@ -23,28 +31,37 @@ func setup() -> void:
 		weapon.setup()
 		
 		
-# Execute a weapon by index
+# Execute current weapon's main fire
 ##
-# `index` index of weapon in weapon slots
 # `position` global position for weapon to shoot
 # `direction` if weapon shoot a projectile then this direction can be used
-func execute_weapon(index:int, position:Vector2, direction:Vector2) -> void:
-	if index >= weapon_slots.size(): return 
-
-	var weapon: Weapon = weapon_slots[index]
-	if weapon and weapon.is_weapon_ready:
+func execute_weapon(position:Vector2, direction:Vector2) -> void:
+	var weapon: Weapon = weapon_slots[current_weapon_index]
+	if weapon:
 		weapon.execute(position, direction)
 
-# Cancel a weapon execution by index
+# Cancel current weapon's main fire
 ##
 # Mainly for weapon requried warm up
-# `index` index of weapon in weapon slots
-func cancel_weapon_execution(index:int) -> void:
-	if index >= weapon_slots.size(): return 
-
-	var weapon: Weapon = weapon_slots[index]
+func cancel_weapon_execution() -> void:
+	var weapon: Weapon = weapon_slots[current_weapon_index]
 	if weapon:
 		weapon.cancel_execution()
+
+# Excute current weapon's alternative fire
+##
+# `position` global position for weapon to shoot
+# `direction` if weapon shoot a projectile then this direction can be used
+func execute_weapon_alt(position:Vector2, direction:Vector2) -> void:
+	var weapon: Weapon = weapon_slots[current_weapon_index]
+	if weapon:
+		weapon.execute_alt(position, direction)
+
+# Cancel current weapon's alternative fire 
+func cancel_weapon_alt_execution() -> void:
+	var weapon: Weapon = weapon_slots[current_weapon_index]
+	if weapon:
+		weapon.cancel_alt_execution()
 
 # Get weapon by index
 ##

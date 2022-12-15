@@ -147,16 +147,16 @@ func _execute_weapons() -> void:
 	# get shooting direction
 	var direction = (get_global_mouse_position() - _fire_position.global_position).normalized()
 
-	# execute skills 
+	# execute weapon 
 	if Input.is_action_pressed("primary"): 
-		weapon_manager.execute_weapon(0, _fire_position.global_position, direction)
+		weapon_manager.execute_weapon(_fire_position.global_position, direction)
 	elif Input.is_action_just_released("primary"):
-		weapon_manager.cancel_weapon_execution(0)
+		weapon_manager.cancel_weapon_execution()
 
 	if Input.is_action_pressed("secondary"):
-		weapon_manager.execute_weapon(1, _fire_position.global_position, direction)
+		weapon_manager.execute_weapon_alt(_fire_position.global_position, direction)
 	elif Input.is_action_just_released("secondary"):
-		weapon_manager.cancel_weapon_execution(1)
+		weapon_manager.cancel_weapon_alt_execution()
 
 func _update_health_bar() -> void:
 	_health_bar.min_value = float(0)
