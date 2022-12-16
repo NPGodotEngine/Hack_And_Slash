@@ -4,13 +4,14 @@
 [ext_resource path="res://Assets/Pointer.png" type="Texture" id=2]
 [ext_resource path="res://Character/Player/PlayerSkin.gd" type="Script" id=3]
 [ext_resource path="res://Character/Player/Player.gd" type="Script" id=4]
-[ext_resource path="res://Weapons/WeaponManager/WeaponManager.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Components/WeaponManager/WeaponManager.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/Character_dummy.png" type="Texture" id=6]
 [ext_resource path="res://Assets/Bar_progress.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Bar_under.png" type="Texture" id=8]
 [ext_resource path="res://Components/LevelExp/LevelExpComp.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Components/Health/HealthComp.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Components/Damage/DamageComp.tscn" type="PackedScene" id=11]
+
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 14.0

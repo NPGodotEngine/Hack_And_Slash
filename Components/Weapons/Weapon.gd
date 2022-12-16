@@ -2,7 +2,8 @@
 # Any weapons must subclass of this class
 # and implement execute method then call
 # reload method at right time to 
-# begin reloading process 
+# begin reloading process
+tool 
 class_name Weapon
 extends Component
 
@@ -33,6 +34,11 @@ var weapon_damage: int setget , get_weapon_damage
 # cap between 0.0 ~ 1.0
 var weapon_accuracy: float setget , get_weapon_accuracy
 
+var stock: Attachment = null
+var trigger: Trigger = null
+var ammo: Ammo = null
+var barrel: Attachment = null
+
 
 ## Getter Setter ##
 
@@ -57,9 +63,34 @@ func get_weapon_accuracy() -> float:
 	acc = min(max(0.0, acc), 1.0)
 
 	return acc
+
 ## Getter Setter ##
 
-# Setup weapon
+## Override ##
+func _get_configuration_warning() -> String:
+	var dmg_comp = get_node("DamageComp") as DamageComp
+	if dmg_comp == null:
+		return "Weapon must have a damage component with name DamageComp"
+	
+	var acc_comp = get_node("AccuracyComp") as AccuracyComp
+	if acc_comp == null:
+		return "Weapon must have a accuracy component with name AccuracyComp"
+
+	collection_attachments()
+	for a in _attachments:
+		print(a.name)
+		print(a.attachment_type)
+	if get_attachment_by_type(Global.AttachmentType.STOCK) == null:
+		return "Weapon must have 1 stock attachment"
+	if get_attachment_by_type(Global.AttachmentType.TRIGGER) == null:
+		return "Weapon must have 1 trigger attachemd"
+	if get_attachment_by_type(Global.AttachmentType.AMMO) == null:
+		return "Weapon must have 1 ammo attachemd"
+	if get_attachment_by_type(Global.AttachmentType.BARREL) == null:
+		return "Weapon must have 1 barrel attachemd"
+
+	return ""
+
 func setup() -> void:
 	.setup()
 
@@ -78,6 +109,24 @@ func setup() -> void:
 	"Weapon required a ammo attachment as child")
 	assert(get_attachment_by_type(Global.AttachmentType.BARREL), 
 	"Weapon required a barrel attachment as child")
+
+	stock = get_attachment_by_type(Global.AttachmentType.STOCK)
+
+	trigger = get_attachment_by_type(Global.AttachmentType.TRIGGER)
+	trigger.connect("trigger_pulled", self, "_on_trigger_pulled")
+
+	ammo = get_attachment_by_type(Global.AttachmentType.AMMO)
+	ammo.connect("ammo_depleted", self, "_on_ammo_depleted")
+	ammo.connect("ammo_count_changed", self, "_on_ammo_count_changed")
+	ammo.connect("begin_reloading", self, "_on_begin_reloading")
+	ammo.connect("end_reloading", self, "_on_end_reloading")
+
+	barrel = get_attachment_by_type(Global.AttachmentType.BARREL)
+
+	for att in _attachments:
+		(att as Attachment).setup()
+	
+## Override ##
 
 # Find all attachments and
 # store in attachment list
@@ -121,10 +170,12 @@ func calculate_attachments_accuracy() -> float:
 
 # Execute weapon
 ##
-# `position` global position for weapon to shoot from 
+# `from_position` global position for weapon to shoot from
+# `to_position` global position for weapon to shoot to
 # `direction` for weapon's projectile to travel
-func execute(position:Vector2, direction:Vector2) -> void:
-	pass
+func execute(from_position:Vector2, to_position:Vector2, direction:Vector2) -> void:
+	if trigger:
+		trigger.pull_trigger()
 
 # Cancel weapon execution
 ##
@@ -134,13 +185,44 @@ func cancel_execution() -> void:
 
 # Execute weapon's alternative fire
 ##
-# `position` global position for weapon to shoot from 
+# `from_position` global position for weapon to shoot from
+# `to_position` global position for weapon to shoot to
 # `direction` for weapon's projectile to travel
-func execute_alt(position:Vector2, direction:Vector2) -> void:
+func execute_alt(from_position:Vector2, to_position:Vector2, direction:Vector2) -> void:
 	pass
 
 # Cancel weapon's alternative fire execution
 ##
 # Specific to weapon that need to warm up
 func cancel_alt_execution() -> void:
+	pass
+
+
+# Active this weapon
+func active() -> void:
+	pass
+
+# Inactive this weapon
+func inactive() -> void:
+	pass
+
+func _on_trigger_pulled() -> void:
+	print("trigger pulled")
+	ammo.reload_ammo()
+	pass
+
+func _on_ammo_depleted(ammo_count:int, round_per_clip:int) -> void:
+	print("ammo depleted %d %d" % [ammo_count, round_per_clip])
+	pass
+
+func _on_ammo_count_changed(ammo_count:int, round_per_clip:int) -> void:
+	print("ammo count changed %d %d" % [ammo_count, round_per_clip])
+	pass
+
+func _on_begin_reloading(ammo_count:int, round_per_clip:int) -> void:
+	print("begin reloading %d %d" % [ammo_count, round_per_clip])
+	pass
+
+func _on_end_reloading(ammo_count:int, round_per_clip:int) -> void:
+	print("end reloading %d %d" % [ammo_count, round_per_clip])
 	pass

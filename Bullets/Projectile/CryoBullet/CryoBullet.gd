@@ -10,7 +10,13 @@ var _acceleration_curve: Curve
 # Max speed of bullet
 var _max_speed: float = _speed
 
+onready var detection_area = $DetectionArea
+
+
 ## Override ##
+func _ready() -> void:
+    detection_area.connect("body_entered", self, "_on_bullet_hit_body")
+	
 func _move_projectile(delta:float) -> void:
 	var current_speed: float = get_current_speed()
 
@@ -19,6 +25,22 @@ func _move_projectile(delta:float) -> void:
 	global_rotation = _direction.angle()
 	global_position += _velocity
 ## Override ##
+
+# Call when this projectile hit a physics body
+func _on_bullet_hit_body(body:Node) -> void:
+    if _ignored_bodies.has(body): return
+
+    if not body is Character:
+        queue_free()
+        return
+
+    if body.has_method("take_damage"):
+        emit_signal("on_projectile_hit", self, body)
+        body.take_damage(_hit_damage)
+    
+    # free projectile if not penetrated
+    if not _is_penetrated():
+        queue_free()
 
 
 # Get current speed

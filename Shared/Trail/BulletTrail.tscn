@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Shared/Trail/SmokeTrail.tscn" type="PackedScene" id=1]
+
+[node name="BulletTrail" instance=ExtResource( 1 )]
+points = PoolVector2Array(  )

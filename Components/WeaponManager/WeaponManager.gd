@@ -3,9 +3,10 @@
 class_name WeaponManager
 extends Component
 
+signal weapon_index_changed(from_index, to_index)
+
 var weapon_library: Array = [
-	preload("res://Weapons/Projectile/FireWeapon/FireWeapon.tscn"),
-	preload("res://Weapons/Projectile/CryoWeapon/CryoWeapon.tscn")
+	preload("res://Components/Weapons/STDWeapon.tscn"),
 ]
 
 # Hold list of weapons 
@@ -15,10 +16,24 @@ var weapon_slots: Array = []
 var current_weapon_index: int = 0 setget set_current_weapon_index
 
 
+## Getter Setter ##
+
+
 func set_current_weapon_index(value:int) -> void:
 	var old_weapon_index = current_weapon_index
-	current_weapon_index = min(max(0, value), weapon_slots.size()-1)
-	# TODO: switch weapon
+	current_weapon_index = int(min(max(0, value), weapon_slots.size()-1))
+
+	# disable previous weapon
+	var previous_weapon: Weapon = weapon_slots[old_weapon_index]
+	previous_weapon.inactive()
+
+	# enable current weapon
+	var current_weapon: Weapon = weapon_slots[current_weapon_index]
+	current_weapon.active()
+
+	emit_signal("weapon_index_changed", old_weapon_index, current_weapon_index)
+## Getter Setter ##
+	
 
 # Setup weapon manager
 func setup() -> void:
@@ -33,12 +48,13 @@ func setup() -> void:
 		
 # Execute current weapon's main fire
 ##
-# `position` global position for weapon to shoot
-# `direction` if weapon shoot a projectile then this direction can be used
-func execute_weapon(position:Vector2, direction:Vector2) -> void:
+# `from_position` global position for weapon to shoot from
+# `to_position` global position for weapon to shoot to
+func execute_weapon(from_position:Vector2, to_position:Vector2) -> void:
 	var weapon: Weapon = weapon_slots[current_weapon_index]
 	if weapon:
-		weapon.execute(position, direction)
+		var direction: Vector2 = to_position - from_position
+		weapon.execute(from_position, to_position, direction.normalized())
 
 # Cancel current weapon's main fire
 ##
@@ -50,12 +66,13 @@ func cancel_weapon_execution() -> void:
 
 # Excute current weapon's alternative fire
 ##
-# `position` global position for weapon to shoot
-# `direction` if weapon shoot a projectile then this direction can be used
-func execute_weapon_alt(position:Vector2, direction:Vector2) -> void:
+# `from_position` global position for weapon to shoot from
+# `to_position` global position for weapon to shoot to
+func execute_weapon_alt(from_position:Vector2, to_position:Vector2) -> void:
 	var weapon: Weapon = weapon_slots[current_weapon_index]
 	if weapon:
-		weapon.execute_alt(position, direction)
+		var direction: Vector2 = to_position - from_position
+		weapon.execute_alt(from_position, to_position, direction)
 
 # Cancel current weapon's alternative fire 
 func cancel_weapon_alt_execution() -> void:

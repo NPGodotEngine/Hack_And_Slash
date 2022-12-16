@@ -15,3 +15,22 @@ enum AttachmentType {
     ALT = 16
 }
 
+# Bullet type
+enum BulletType {
+    PROJECTILE = 1,
+    BEAM = 2
+}
+
+# Add object to current scene tree
+##
+# `object` object to be added to scene tree
+# `deferrd` if `true` then object will be added to scene tree next frame
+# otherwise `false` add object immediatelly default is `true`
+func add_to_scene_tree(object:Node, deferrd:bool = true) -> void:
+    if object:
+        var scene: Node = get_tree().current_scene
+        if deferrd:
+            scene.call_deferred("add_child", object)
+        else:
+            scene.add_child(object)
+

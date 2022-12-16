@@ -28,7 +28,7 @@ func _ready() -> void:
     _burst_timer.connect("timeout", self, "_on_burst_timer_timeout")
 
 func setup() -> void:
-    setup()
+    .setup()
 
     # make sure we have equal amount of burst to setting
     _burst_left = number_of_bursts

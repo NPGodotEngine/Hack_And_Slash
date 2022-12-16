@@ -149,12 +149,12 @@ func _execute_weapons() -> void:
 
 	# execute weapon 
 	if Input.is_action_pressed("primary"): 
-		weapon_manager.execute_weapon(_fire_position.global_position, direction)
+		weapon_manager.execute_weapon(_fire_position.global_position, get_global_mouse_position())
 	elif Input.is_action_just_released("primary"):
 		weapon_manager.cancel_weapon_execution()
 
 	if Input.is_action_pressed("secondary"):
-		weapon_manager.execute_weapon_alt(_fire_position.global_position, direction)
+		weapon_manager.execute_weapon_alt(_fire_position.global_position, get_global_mouse_position())
 	elif Input.is_action_just_released("secondary"):
 		weapon_manager.cancel_weapon_alt_execution()
 

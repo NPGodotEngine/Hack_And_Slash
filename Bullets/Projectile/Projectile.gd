@@ -1,7 +1,9 @@
 class_name Projectile
-extends Area2D
+extends Bullet
 
 # warning-ignore-all:RETURN_VALUE_DISCARDED 
+# warning-ignore-all:UNUSED_SIGNAL 
+# warning-ignore-all:UNUSED_ARGUMENT 
 
 # Emit when projectile hit a body
 signal on_projectile_hit(projectile, body)
@@ -21,11 +23,8 @@ var _direction: Vector2 = Vector2.ZERO
 # Hit damage
 var _hit_damage: HitDamage = null
 
-# Penetration chance
+# Penetration chance 0.0 ~ 1.0
 var _penetration_chance: float = 0.0
-
-# Weapon that shoot this projectile
-var _weapon: Weapon = null
 
 # Projectile's current velocity
 var _velocity: Vector2 = Vector2.ZERO
@@ -33,29 +32,28 @@ var _velocity: Vector2 = Vector2.ZERO
 # Bodies to ignored by projectile
 var _ignored_bodies: Array = []
 
-## Getter Setter ##
-func set_life_span(value:float) -> void:
-    _life_span = value
-    _life_span_timer.start(_life_span)
-## Getter Setter ##
-
 
 
 ## Override ##
 func _ready() -> void:
+    if Engine.editor_hint: return
+
     _life_span_timer = Timer.new()
     _life_span_timer.name = "LifeSpanTimer"
     add_child(_life_span_timer)
     _life_span_timer.one_shot = true
     _life_span_timer.connect("timeout", self, "queue_free")
 
-    connect("body_entered", self, "_on_projectile_hit_body")
-
 func _exit_tree() -> void:
     if _life_span_timer:
         _life_span_timer.disconnect("timeout", self, "queue_free")
-        
+
+func _process(delta: float) -> void:
+    if Engine.editor_hint:
+        update_configuration_warning()
+
 func _physics_process(delta: float) -> void:
+    if Engine.editor_hint: return
     _move_projectile(delta)
 ## Override ##
 
@@ -63,23 +61,25 @@ func _physics_process(delta: float) -> void:
 # Setup projectile
 # Call this in order to setup projectile
 ##
-# `weapon` the weapon fire this projectile
-# `direction` the direction this projectile is flying
-# `position` global position this projectile start
-# `speed` projectile speed 
-func setup(weapon:Weapon, direction:Vector2, position:Vector2, speed:float, 
-        hit_damage:HitDamage, life_span:float, penetration:float) -> void:
-    yield(self, "ready")
-    _weapon = weapon
-    _direction = direction
-    global_position = position
+# `from_position` global position this projectile start
+# `to_position` global position this projectile will travel to
+# `speed` projectile speed
+# `hit_damage` `HitDamage` this projectile will use
+# `life_span` How long this projectile will live
+# `penetration` penetration chance for this projectile 0.0 ~ 1.0
+func setup(from_position:Vector2, to_position:Vector2, speed:float, 
+        hit_damage:HitDamage, life_span:float, penetration_chance:float) -> void:
+    global_position = from_position
+    _direction = (to_position - from_position).normalized() 
     _speed = speed
     _hit_damage = hit_damage
     _life_span = life_span
-    _penetration_chance = penetration
+    _penetration_chance = penetration_chance
 
-    # start life span timer
-    _life_span_timer.start(_life_span)
+    if not _life_span_timer:
+        yield(self, "ready") 
+        # start life span timer
+        _life_span_timer.start(_life_span)
 
 # Move projectile
 ##
@@ -109,18 +109,3 @@ func add_ignored_bodies(bodies:Array) -> void:
         else:
             assert(false, "%s can not be added as it is not a Node" % body.name)
 
-# Call when this projectile hit a physics body
-func _on_projectile_hit_body(body:Node) -> void:
-    if _ignored_bodies.has(body): return
-
-    if not body is Character:
-        queue_free()
-        return
-
-    if body.has_method("take_damage"):
-        emit_signal("on_projectile_hit", self, body)
-        body.take_damage(_hit_damage)
-    
-    # free projectile if not penetrated
-    if not _is_penetrated():
-        queue_free()
