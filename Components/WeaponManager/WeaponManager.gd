@@ -1,5 +1,4 @@
-# A class holde 2 weapons both primary and
-# secondary and manage weapons
+# A class holde number of weapons
 class_name WeaponManager
 extends Component
 
@@ -43,6 +42,7 @@ func setup() -> void:
 		var weapon: Weapon = weapon_scene.instance()
 		add_child(weapon)
 		weapon_slots.append(weapon)
+		weapon.weapon_manager = self
 		weapon.setup()
 		
 		
@@ -91,6 +91,12 @@ func get_weapon_by(index:int):
 	
 	return null
 
-# Get owner that own this weapon manager
+# Get owner that own this weapon's manager
 func get_manager_owner():
 	return get_parent()
+
+
+static func find_weapon_owner(weapon:Weapon):
+	if weapon:
+		return weapon.get_parent().get_manager_owner()
+	return null

@@ -1,3 +1,4 @@
+tool
 class_name Trail
 extends Line2D
 

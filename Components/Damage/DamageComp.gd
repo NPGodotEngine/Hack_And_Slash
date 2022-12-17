@@ -8,6 +8,9 @@ signal damage_changed(from_damage, to_damage)
 # Current damage
 export (int) var damage: int = 10 setget set_damage
 
+# Color for damage
+export (Color) var damage_color: Color = Color.white
+
 ## Getter Setter ##
 
 

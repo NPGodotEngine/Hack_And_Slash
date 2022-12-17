@@ -2,6 +2,9 @@ extends Trigger
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 
+# Duration before next trigger pull from last trigger pulled
+export (float, 0.1, 10) var trigger_duration: float = 1.0
+
 # Trigger timer
 var _trigger_timer: Timer = null
 
@@ -22,7 +25,7 @@ func pull_trigger() -> void:
     _is_trigger_ready = false
 
     # time until next pull ready
-    _trigger_timer.start(pull_duration)
+    _trigger_timer.start(trigger_duration)
     emit_signal("trigger_pulled")
 
 func _on_trigger_timer_timeout() -> void:

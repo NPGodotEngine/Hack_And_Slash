@@ -7,8 +7,7 @@ extends Attachment
 # Emit when trigger pulled successful
 signal trigger_pulled()
 
-# Duration before next trigger pull from last trigger pulled
-export (float, 0.1, 10) var pull_duration = 1.0
+
 
 # Pull trigger
 ##

@@ -26,6 +26,9 @@ export (float) var min_critical_strike_chance = 0.0 setget set_min_critical_stri
 # Maximum critical strike chance
 export (float) var max_critical_strike_chance = 1.0 setget set_max_critical_strike_chance
 
+# Color of critical strike
+export (Color) var critical_strike_color: Color = Color.red
+
 # Critical strike chance
 ##
 # The chance to hit a
@@ -68,5 +71,5 @@ func is_critical() -> bool:
 		return false
 	
 	# check if critical
-	return Utils.is_in_threshold(critical_strike_chance, 
+	return Global.is_in_threshold(critical_strike_chance, 
 	min_critical_strike_chance, max_critical_strike_chance)

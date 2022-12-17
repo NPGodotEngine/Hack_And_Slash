@@ -1,25 +1,32 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://Components/Weapons/Weapon.gd" type="Script" id=1]
+[ext_resource path="res://Components/Weapons/STDWeapon.gd" type="Script" id=1]
 [ext_resource path="res://Components/Attachments/Stocks/STDStock.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Components/Attachments/Triggers/AutoTrigger.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Components/Attachments/Barrels/STDBarrel.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Components/Attachments/Ammos/STDAmmo.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Components/Damage/DamageComp.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Components/Accuracy/AccuracyComp.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Components/CriticalStrike/CriticalStrikeComp.tscn" type="PackedScene" id=8]
 
 [node name="STDWeapon" type="Node"]
 script = ExtResource( 1 )
 
 [node name="DamageComp" parent="." instance=ExtResource( 6 )]
-damage = 100
 
 [node name="AccuracyComp" parent="." instance=ExtResource( 7 )]
+accuracy = 0.7
+
+[node name="CriticalStrikeComp" parent="." instance=ExtResource( 8 )]
+critical_strike_chance = 0.5
 
 [node name="STDStock" parent="." instance=ExtResource( 2 )]
 
 [node name="STDBarrel" parent="." instance=ExtResource( 4 )]
 
-[node name="AutoTrigger" parent="." instance=ExtResource( 3 )]
-
 [node name="STDAmmo" parent="." instance=ExtResource( 5 )]
+rounds_per_clip = 30
+bullet_speed = 600.0
+
+[node name="AutoTrigger" parent="." instance=ExtResource( 3 )]
+trigger_duration = 0.2

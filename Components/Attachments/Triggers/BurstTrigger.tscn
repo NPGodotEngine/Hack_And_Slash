@@ -5,3 +5,4 @@
 [node name="BurstTrigger" type="Node"]
 script = ExtResource( 1 )
 attachment_type = 2
+burst_duration = 0.5

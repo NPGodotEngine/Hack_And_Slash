@@ -39,6 +39,9 @@ var _round_left: int = 0 setget _set_round_left
 # Timer for reload
 var _reload_timer: Timer = null
 
+# is ammo reloading
+var _is_reloading: bool = false
+
 
 
 ## Getter Setter##
@@ -82,10 +85,6 @@ func setup() -> void:
 # `rounds_per_shot` number of rounds to shoot at once, usually is one
 func shoot_ammo(from_position:Vector2, to_position:Vector2, 
 	hit_damage:HitDamage, rounds_per_shot:int = 1) -> void:
-	if _round_left == 0:
-		reload_ammo()
-		return
-	
 	assert(bullet_scene, "bullet scene is missing")
 	assert(rounds_per_shot >= 0, 
 		"rounds per shot can't be negative value, %d was given" % rounds_per_shot)
@@ -96,24 +95,24 @@ func shoot_ammo(from_position:Vector2, to_position:Vector2,
 	
 # Reload ammo
 func reload_ammo() -> void:
+	# if is reloading
+	if _is_reloading: return
+		
 	# don't reload if clip is full
 	if _round_left == rounds_per_clip: return
 	
 	# begin reloading process
+	_is_reloading = true
 	_reload_timer.start(reload_duration)
 	emit_signal("begin_reloading", 0, rounds_per_clip)
 
-# Cancel ammo action
-##
-# Usually do noting but for ammo
-# like beam this can tell beam ammo
-# to stop
 func cancel_action() -> void:
 	pass
 
 func _on_reload_timer_timeout() -> void:
 	# refill clip
 	_set_round_left(rounds_per_clip)
+	_is_reloading = false
 	emit_signal("end_reloading", _round_left, rounds_per_clip)
 
 

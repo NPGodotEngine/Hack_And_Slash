@@ -95,7 +95,7 @@ func _is_penetrated() -> bool:
     if is_equal_approx(_penetration_chance, 0.0): return false
     
     # check if penetrated
-    return Utils.is_in_threshold(_penetration_chance, 0.0001, 1.0)
+    return Global.is_in_threshold(_penetration_chance, 0.0001, 1.0)
 
 # Return a normalized projectile's direction
 func get_projectile_direction() -> Vector2:

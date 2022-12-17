@@ -16,6 +16,9 @@ onready var _damage_comp: DamageComp = $DamageComp
 # Accuracy component
 onready var _accuracy_comp: AccuracyComp = $AccuracyComp
 
+# Critical strike component
+onready var _critical_strike_comp: CriticalStrikeComp = $CriticalStrikeComp
+
 # List of weapon attachments 
 var _attachments: Array = []
 
@@ -38,6 +41,10 @@ var stock: Attachment = null
 var trigger: Trigger = null
 var ammo: Ammo = null
 var barrel: Attachment = null
+var alt: Attachment = null
+
+# Weapon manager manage this weapon
+var weapon_manager = null
 
 
 ## Getter Setter ##
@@ -45,6 +52,9 @@ var barrel: Attachment = null
 
 # Return weapon's total damage output
 # The minimum is 10% of weapon's damage
+##
+# Weapon's damage * multiplier from all attachments
+# Multiplier is capped between 0.1 ~ 1.0
 func get_weapon_damage() -> int:
 	var weapon_base_damage: int = _damage_comp.damage
 	var multiplier: float = calculate_attachments_dmg_multiplier()
@@ -58,7 +68,7 @@ func get_weapon_damage() -> int:
 # 0.0 ~ 1.0
 func get_weapon_accuracy() -> float:
 	var weapon_base_accuracy: float = _accuracy_comp.accuracy 
-	var att_accuracy: float = calculate_attachments_accuracy()
+	var att_accuracy: float = calculate_attachments_accuracy_multiplier()
 	var acc = weapon_base_accuracy + att_accuracy
 	acc = min(max(0.0, acc), 1.0)
 
@@ -75,6 +85,10 @@ func _get_configuration_warning() -> String:
 	var acc_comp = get_node("AccuracyComp") as AccuracyComp
 	if acc_comp == null:
 		return "Weapon must have a accuracy component with name AccuracyComp"
+
+	var critical_comp = get_node("CriticalStrikeComp") as CriticalStrikeComp
+	if critical_comp == null:
+		return "Weapon must have a critical strike component with name CriticalStrikeComp"
 
 	collection_attachments()
 	for a in _attachments:
@@ -94,10 +108,13 @@ func _get_configuration_warning() -> String:
 func setup() -> void:
 	.setup()
 
+	assert(weapon_manager, "Weapon %s is not held by a WeaponManager" % name)
 	assert(_damage_comp, 
 		"Weapon required a damage compoent as child with name \"DamageComp\"")
 	assert(_accuracy_comp, 
 		"Weapon required a accuracy compoent as child with name \"DamageComp\"")
+	assert(_critical_strike_comp, 
+	"Weapon required a critical strike compoent as child with name \"CriticalStrikeComp\"")
 
 	collection_attachments()
 
@@ -123,8 +140,15 @@ func setup() -> void:
 
 	barrel = get_attachment_by_type(Global.AttachmentType.BARREL)
 
+	_damage_comp.connect("damage_changed", self, "_on_damage_changed")
+	_accuracy_comp.connect("accuracy_changed", self, "_on_accuracy_changed")
+
+	# setup all attachements
 	for att in _attachments:
 		(att as Attachment).setup()
+
+	_damage_comp.setup()
+	_accuracy_comp.setup()
 	
 ## Override ##
 
@@ -147,7 +171,7 @@ func get_attachment_by_type(att_type:int) -> Attachment:
 			return att
 	return null
 
-# Return damage from all attachments
+# Return damage from combination of all attachments
 func calculate_attachments_dmg_multiplier() -> float:
 	var dmg_multiplier: float = 0.0
 
@@ -158,13 +182,14 @@ func calculate_attachments_dmg_multiplier() -> float:
 	
 	return dmg_multiplier
 
-func calculate_attachments_accuracy() -> float:
+# Return accuracy from combination of all attachments
+func calculate_attachments_accuracy_multiplier() -> float:
 	var total_acc: float = 0.0
 
 	for i in _attachments.size():
 		var att:Attachment = _attachments[i]
 		if att:
-			total_acc += att.accuracy
+			total_acc += att.accuracy_multiplier
 	
 	return total_acc
 
@@ -174,8 +199,7 @@ func calculate_attachments_accuracy() -> float:
 # `to_position` global position for weapon to shoot to
 # `direction` for weapon's projectile to travel
 func execute(from_position:Vector2, to_position:Vector2, direction:Vector2) -> void:
-	if trigger:
-		trigger.pull_trigger()
+	pass
 
 # Cancel weapon execution
 ##
@@ -208,7 +232,6 @@ func inactive() -> void:
 
 func _on_trigger_pulled() -> void:
 	print("trigger pulled")
-	ammo.reload_ammo()
 	pass
 
 func _on_ammo_depleted(ammo_count:int, round_per_clip:int) -> void:
@@ -225,4 +248,10 @@ func _on_begin_reloading(ammo_count:int, round_per_clip:int) -> void:
 
 func _on_end_reloading(ammo_count:int, round_per_clip:int) -> void:
 	print("end reloading %d %d" % [ammo_count, round_per_clip])
+	pass
+
+func _on_damage_changed(from, to) -> void:
+	pass
+
+func _on_accuracy_changed(from, to) -> void:
 	pass
