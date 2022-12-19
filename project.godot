@@ -44,7 +44,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Components/CriticalStrike/CriticalStrikeComp.gd"
 }, {
-"base": "Projectile",
+"base": "Reference",
 "class": "CryoBullet",
 "language": "GDScript",
 "path": "res://Bullets/Projectile/CryoBullet/CryoBullet.gd"
@@ -59,17 +59,17 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Interface/HUD/DamageLabel.gd"
 }, {
-"base": "Projectile",
+"base": "Reference",
 "class": "FireBullet",
 "language": "GDScript",
 "path": "res://Bullets/Projectile/FireBullet/FireBullet.gd"
 }, {
-"base": "Area2D",
+"base": "Reference",
 "class": "FlamePool",
 "language": "GDScript",
 "path": "res://Shared/FlamePool/FlamePool.gd"
 }, {
-"base": "Area2D",
+"base": "Reference",
 "class": "FreezePool",
 "language": "GDScript",
 "path": "res://Shared/FreezePool/FreezePool.gd"
@@ -94,7 +94,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Character/Player/Player.gd"
 }, {
-"base": "Bullet",
+"base": "Reference",
 "class": "Projectile",
 "language": "GDScript",
 "path": "res://Bullets/Projectile/Projectile.gd"
@@ -109,12 +109,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Components/Attachments/Triggers/Trigger.gd"
 }, {
-"base": "Component",
+"base": "Reference",
 "class": "Weapon",
 "language": "GDScript",
 "path": "res://Components/Weapons/Weapon.gd"
 }, {
-"base": "Component",
+"base": "Reference",
 "class": "WeaponManager",
 "language": "GDScript",
 "path": "res://Components/WeaponManager/WeaponManager.gd"
@@ -207,4 +207,5 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
+2d/snapping/use_gpu_pixel_snap=true
 environment/default_environment="res://default_env.tres"
