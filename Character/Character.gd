@@ -15,6 +15,9 @@ signal take_damage(hit_damage, total_damage)
 # Emit when character die
 signal die(character)
 
+# Emit when character's velocity has changed
+signal character_velocity_changed(prev_velocity, velocity)
+
 
 
 # Max movement speed reduction
@@ -52,12 +55,21 @@ var is_dead:bool = false setget set_is_dead
 # Components in character
 var character_comps: Array = []
 
+# Player current velocity
+var velocity := Vector2.ZERO setget set_velocity
+
 ## Getter Setter ##
 
 
 func _no_set(_value) -> void:
     push_warning("Set property not allowed")
     return
+
+# Set character's velocity
+func set_velocity(value:Vector2) -> void:
+	var old_velocity: Vector2 = velocity
+	velocity = value
+	emit_signal("character_velocity_changed", old_velocity, velocity)
 
 # Set movement speed reduction
 ##

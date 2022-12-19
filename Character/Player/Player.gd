@@ -7,6 +7,7 @@ extends Character
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 # warning-ignore-all: UNUSED_ARGUMENT
 
+
 # Constant value for scaling up 
 # character's max health
 export (int) var _add_health_per_level = 10
@@ -16,7 +17,7 @@ export (int) var _add_health_per_level = 10
 export (int) var _add_damage_per_level = 10
 
 # Player skin visual
-onready var _skin := $Skin
+onready var _skin := $CharacterSkin
 
 # Fire position
 onready var _fire_position := $Gun/Position2D
@@ -35,9 +36,6 @@ onready var _damage_comp: DamageComp = $DamageComp
 
 export (PackedScene) var _damage_label_scene = preload("res://Interface/HUD/DamageLabel.tscn")
 export (Vector2) var _damage_label_offset = Vector2.ZERO 
-
-# Player current velocity
-var velocity := Vector2.ZERO
 
 
 
@@ -88,7 +86,8 @@ func move_character(_delta:float) -> void:
 	velocity += steering_velocity
 
 	# Move player
-	velocity = move_and_slide(velocity)
+	var vel = move_and_slide(velocity)
+	set_velocity(vel)
 
 func take_damage(hit_damage:HitDamage) -> void:
 	.take_damage(hit_damage)
@@ -143,9 +142,6 @@ func _update_skin() -> void:
 
 func _execute_weapons() -> void:
 	assert(weapon_manager, "weapon manager missing")
-
-	# get shooting direction
-	var direction = (get_global_mouse_position() - _fire_position.global_position).normalized()
 
 	# execute weapon 
 	if Input.is_action_pressed("primary"): 

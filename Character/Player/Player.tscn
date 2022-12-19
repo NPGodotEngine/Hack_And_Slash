@@ -1,36 +1,283 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Character/Player/Pointer.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Pointer.png" type="Texture" id=2]
 [ext_resource path="res://Character/Player/PlayerSkin.gd" type="Script" id=3]
 [ext_resource path="res://Character/Player/Player.gd" type="Script" id=4]
 [ext_resource path="res://Components/WeaponManager/WeaponManager.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Assets/Character_dummy.png" type="Texture" id=6]
 [ext_resource path="res://Assets/Bar_progress.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Bar_under.png" type="Texture" id=8]
 [ext_resource path="res://Components/LevelExp/LevelExpComp.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Components/Health/HealthComp.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Components/Damage/DamageComp.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Assets/Marine/Marine_spritesheet.png" type="Texture" id=12]
 
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("ShoulderFront:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -12, -2 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ShoulderBack:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 11, -7 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Torso:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "idle"
+length = 1.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("ShoulderFront:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.7, 1.5 ),
+"transitions": PoolRealArray( -2, 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( -12, -2 ), Vector2( -12, -4 ), Vector2( -12, -2 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ShoulderBack:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.7, 1.5 ),
+"transitions": PoolRealArray( -2, 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( 11, -7 ), Vector2( 11, -9 ), Vector2( 11, -7 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Torso:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5, 1.5 ),
+"transitions": PoolRealArray( -2, 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -3 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("kneeFront:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -3, 10 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("kneeFront:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("KneeBack:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 7, 10 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("KneeBack:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "run"
+length = 1.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("kneeFront:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 0.9 ),
+"transitions": PoolRealArray( 1, 0.2, 1, 0.2 ),
+"update": 0,
+"values": [ Vector2( -3, 10 ), Vector2( 6, 6 ), Vector2( 7, 10 ), Vector2( -3, 10 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("kneeFront:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 0.9 ),
+"transitions": PoolRealArray( 1, 0.2, 1, 0.2 ),
+"update": 0,
+"values": [ 0.0, 0.0, 0.0, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("KneeBack:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 0.9 ),
+"transitions": PoolRealArray( 1, 0.2, 1, 0.2 ),
+"update": 0,
+"values": [ Vector2( 7, 10 ), Vector2( -4, 10 ), Vector2( -4, 10 ), Vector2( 4, 6 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("KneeBack:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 0.9 ),
+"transitions": PoolRealArray( 1, 0.2, 1, 0.2 ),
+"update": 0,
+"values": [ 0.0, 0.0, 0.0, 0.0 ]
+}
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 14.0
-height = 24.0
+radius = 19.0
+height = 26.0
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 4 )
 
-[node name="Skin" type="Sprite" parent="."]
-position = Vector2( 0, -14 )
-texture = ExtResource( 6 )
+[node name="CharacterSkin" type="Node2D" parent="."]
 script = ExtResource( 3 )
 
+[node name="Torso" type="Sprite" parent="CharacterSkin"]
+texture = ExtResource( 12 )
+region_enabled = true
+region_rect = Rect2( 150, 22, 19, 20 )
+
+[node name="Head" type="Sprite" parent="CharacterSkin/Torso"]
+position = Vector2( -3, -23 )
+texture = ExtResource( 12 )
+region_enabled = true
+region_rect = Rect2( 147, 81, 26, 30 )
+
+[node name="Backpack" type="Sprite" parent="CharacterSkin/Torso"]
+show_behind_parent = true
+position = Vector2( -22, -8 )
+texture = ExtResource( 12 )
+region_enabled = true
+region_rect = Rect2( 22, 145, 19, 30 )
+
+[node name="ShoulderFront" type="Sprite" parent="CharacterSkin"]
+position = Vector2( -12, -2 )
+texture = ExtResource( 12 )
+region_enabled = true
+region_rect = Rect2( 20, 16, 24, 32 )
+
+[node name="ShoulderBack" type="Sprite" parent="CharacterSkin"]
+show_behind_parent = true
+position = Vector2( 11, -7 )
+texture = ExtResource( 12 )
+region_enabled = true
+region_rect = Rect2( 87, 148, 18, 24 )
+
+[node name="kneeFront" type="Sprite" parent="CharacterSkin"]
+position = Vector2( -3, 10 )
+texture = ExtResource( 12 )
+region_enabled = true
+region_rect = Rect2( 91, 27, 10, 10 )
+
+[node name="FeetFront" type="Sprite" parent="CharacterSkin/kneeFront"]
+show_behind_parent = true
+position = Vector2( 2, 8 )
+texture = ExtResource( 12 )
+region_enabled = true
+region_rect = Rect2( 22, 90, 19, 11 )
+
+[node name="KneeBack" type="Sprite" parent="CharacterSkin"]
+show_behind_parent = true
+position = Vector2( 7, 10 )
+texture = ExtResource( 12 )
+region_enabled = true
+region_rect = Rect2( 91, 91, 10, 10 )
+
+[node name="FeetBack" type="Sprite" parent="CharacterSkin/KneeBack"]
+show_behind_parent = true
+position = Vector2( 2, 8 )
+texture = ExtResource( 12 )
+region_enabled = true
+region_rect = Rect2( 150, 154, 19, 11 )
+
+[node name="UpperAnimator" type="AnimationPlayer" parent="CharacterSkin"]
+autoplay = "idle"
+anims/RESET = SubResource( 2 )
+anims/idle = SubResource( 3 )
+
+[node name="LowerAnimator" type="AnimationPlayer" parent="CharacterSkin"]
+anims/RESET = SubResource( 4 )
+anims/run = SubResource( 5 )
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -14 )
+position = Vector2( 1, -6 )
 shape = SubResource( 1 )
 
 [node name="Gun" type="Node2D" parent="."]
-position = Vector2( 0, -14 )
+position = Vector2( 6, -1 )
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="Gun"]

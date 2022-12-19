@@ -17,8 +17,6 @@ onready var _health_comp: HealthComp = $HealthComp
 
 var _target: Character = null
 
-# current velocity
-var velocity := Vector2.ZERO
 
 func setup() -> void:
 	.setup()
@@ -109,7 +107,8 @@ func follow_player(_delta:float):
 	velocity += steering_velocity
 
 	# Move player
-	velocity = move_and_slide(velocity)
+	var vel = move_and_slide(velocity)
+	set_velocity(vel)
 
 
 func _on_detect_player(body:Node) -> void:
