@@ -2,5 +2,5 @@
 
 [ext_resource path="res://Components/Damage/DamageComp.gd" type="Script" id=1]
 
-[node name="DamageComp" type="Node"]
+[node name="DamageComp" type="Node2D"]
 script = ExtResource( 1 )

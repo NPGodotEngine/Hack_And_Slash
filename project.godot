@@ -34,7 +34,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Character/Character.gd"
 }, {
-"base": "Node",
+"base": "Node2D",
 "class": "Component",
 "language": "GDScript",
 "path": "res://Components/Component.gd"

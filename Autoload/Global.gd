@@ -49,4 +49,3 @@ func is_in_threshold(threshold, from_range, to_range) -> bool:
         is_equal_approx(rolled_chance, threshold)):
         return true
     return false
-

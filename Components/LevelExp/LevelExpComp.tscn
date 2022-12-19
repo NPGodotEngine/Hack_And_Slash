@@ -2,5 +2,5 @@
 
 [ext_resource path="res://Components/LevelExp/LevelExp.gd" type="Script" id=1]
 
-[node name="LevelExpComp" type="Node"]
+[node name="LevelExpComp" type="Node2D"]
 script = ExtResource( 1 )
