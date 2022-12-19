@@ -107,8 +107,7 @@ func follow_player(_delta:float):
 	velocity += steering_velocity
 
 	# Move player
-	var vel = move_and_slide(velocity)
-	set_velocity(vel)
+	velocity = move_and_slide(velocity)
 
 
 func _on_detect_player(body:Node) -> void:

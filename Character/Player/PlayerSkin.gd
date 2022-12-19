@@ -12,17 +12,18 @@ func _ready() -> void:
     _character = get_parent()
     assert(_character, "PlayerSkin must be a child of Character")
 
-    _character.connect("character_velocity_changed", self, "_on_character_velocity_changed")
-
     upper_body_animator.play("idle")
 
-func _on_character_velocity_changed(prev_velocity, velocity) -> void:
-    if Vector2.ZERO.is_equal_approx(velocity):
-        upper_body_animator.play("idle")
-        lower_body_animator.stop()
-        lower_body_animator.seek(0)
+func _physics_process(delta: float) -> void:
+    if abs(_character.velocity.x) <= 0.1 and abs(_character.velocity.y) <= 0.1:
+        if not upper_body_animator.is_playing():
+            upper_body_animator.play("idle")
+        if lower_body_animator.is_playing():
+            lower_body_animator.advance(lower_body_animator.current_animation_length)
+            lower_body_animator.stop()
     else:
-        upper_body_animator.stop()
-        upper_body_animator.seek(0)
-        lower_body_animator.play("run")
+        if upper_body_animator.is_playing():
+            upper_body_animator.stop()
+        if not lower_body_animator.is_playing():
+            lower_body_animator.play("run", -1 , 1.5)
 

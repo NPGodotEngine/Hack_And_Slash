@@ -86,8 +86,7 @@ func move_character(_delta:float) -> void:
 	velocity += steering_velocity
 
 	# Move player
-	var vel = move_and_slide(velocity)
-	set_velocity(vel)
+	velocity = move_and_slide(velocity)
 
 func take_damage(hit_damage:HitDamage) -> void:
 	.take_damage(hit_damage)
