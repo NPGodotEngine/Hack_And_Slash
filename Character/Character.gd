@@ -20,7 +20,7 @@ signal die(character)
 ##
 # Final scaled speed would be capped to this value
 # if it is greater than this value
-export (float) var max_movement_speed: float = 900.0
+export (float) var max_movement_speed: float = 400.0
 
 # Character's min movement speed
 ##
@@ -39,7 +39,7 @@ export (float, 0.1, 1.0) var drag_factor: float = 0.5
 ##
 # Get this value will return a movement speed
 # scaled by movement speed multiplier
-export (float) var movement_speed: float = 250.0 setget , get_movement_speed
+export (float) var movement_speed: float = 200.0 setget , get_movement_speed
 
 # Total movement speed multiplier
 ##
