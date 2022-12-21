@@ -103,7 +103,7 @@ func follow_player(_delta:float):
 	var desired_dist: float = dist_to_target - _distance_to_player
 	var desired_velocity: Vector2 = direction.normalized() * get_movement_speed() * sign(desired_dist)
 	var steering_velocity = desired_velocity - velocity
-	steering_velocity  = steering_velocity * _drag_factor
+	steering_velocity  = steering_velocity * drag_factor
 	velocity += steering_velocity
 
 	# Move player

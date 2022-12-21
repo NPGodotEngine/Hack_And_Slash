@@ -82,7 +82,7 @@ func move_character(_delta:float) -> void:
 	# Smoothing player turing direction
 	var desired_velocity := direction * get_movement_speed()
 	var steering_velocity = desired_velocity - velocity
-	steering_velocity  = steering_velocity * _drag_factor
+	steering_velocity  = steering_velocity * drag_factor
 	velocity += steering_velocity
 
 	# Move player
@@ -247,9 +247,9 @@ func logging() -> void:
 			_health_comp.max_health, 
 			_damage_comp.damage, 
 			is_dead])
-	print("movement_speed:%f, speed:%f, movement_reduction:%f" % [
-		_movement_speed, 
+	print("base_movement_speed:%f, speed:%f, movement_multiplier:%f" % [
+		movement_speed, 
 		get_movement_speed(), 
-		movement_speed_reduction])
+		movement_speed_multiplier])
 		
 	

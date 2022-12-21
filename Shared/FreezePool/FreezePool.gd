@@ -42,14 +42,14 @@ func _on_body_entered(body:Node) -> void:
 		body is Character):
 		_body_contacts.append(body)
 		var character: Character = body as Character
-		character.add_movement_speed_reduction(speed_reduction)
+		character.increase_speed_multiplier(speed_reduction)
 
 func _on_body_exited(body:Node) -> void:
 	if _body_contacts.has(body):
 		_body_contacts.erase(body)
 		if is_instance_valid(body):
 			var character: Character = body as Character
-			character.remove_movement_speed_reduction(speed_reduction)
+			character.decrease_speed_multiplier(speed_reduction)
 
 func _on_life_span_timeout() -> void:
 	for body in _body_contacts:

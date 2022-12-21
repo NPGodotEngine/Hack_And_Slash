@@ -16,32 +16,36 @@ signal take_damage(hit_damage, total_damage)
 signal die(character)
 
 
+# Character's max movement speed
+##
+# Final scaled speed would be capped to this value
+# if it is greater than this value
+export (float) var max_movement_speed: float = 900.0
 
-# Max movement speed reduction
-const MAX_MOVEMENT_SPEED_REDUCTION = 0.9
-
-# Min movement speed reduction
-const MIN_MOVEMENT_SPEED_REDUCTION = 0.0
-
-# Character's basic movement _speed
-export var _movement_speed := 250.0
+# Character's min movement speed
+##
+# Final scaled speed would be capped to this value
+# if it is lower than this value
+export (float) var min_movement_speed: float = 0.0
 
 # How fast can player turn from 
 # one direction to another
 #
 # The higher the value the faster player can turn
 # and less the smooth of player motion
-export (float, 0.1, 1.0) var _drag_factor := 0.5
+export (float, 0.1, 1.0) var drag_factor: float = 0.5
 
-# Scaled movement speed
-# that is included movement speed reudction
-var movement_speed: float = _movement_speed setget _no_set, get_movement_speed
+# Character movement speed
+##
+# Get this value will return a movement speed
+# scaled by movement speed multiplier
+export (float) var movement_speed: float = 250.0 setget , get_movement_speed
 
-# Total movement speed reduction
+# Total movement speed multiplier
 ##
 # Value is between min and max usually
 # is 0.0 ~ 1.0 but depend on min max setting
-var movement_speed_reduction: float = 0.0 setget set_movement_speed_reduction
+var movement_speed_multiplier: float = 0.0 setget set_movement_speed_multiplier
 
 
 # Is character dead
@@ -58,23 +62,20 @@ var velocity := Vector2.ZERO
 ## Getter Setter ##
 
 
-func _no_set(_value) -> void:
-    push_warning("Set property not allowed")
-    return
-
-# Set movement speed reduction
+# Set movement speed multiplier
 ##
 # Cap value if it is not between min and max
-func set_movement_speed_reduction(value:float) -> void:
+func set_movement_speed_multiplier(value:float) -> void:
 	# Cap value between min and max
-	var new_reduction: float = max(min(value, MAX_MOVEMENT_SPEED_REDUCTION), MIN_MOVEMENT_SPEED_REDUCTION)
-	movement_speed_reduction = new_reduction
+	movement_speed_multiplier = value
 
 # Get scaled movement speed
 ##
-# Speed is included speed reduction 
+# Speed is included speed multiplier 
 func get_movement_speed() -> float:
-	return _movement_speed * (1.0 - movement_speed_reduction)
+	var speed: float = movement_speed + movement_speed * movement_speed_multiplier
+	speed =  min(max(min_movement_speed, speed), max_movement_speed)
+	return speed
 
 ## Getter Setter ##
 
@@ -144,17 +145,17 @@ func die() -> void:
 	set_process(false)
 	set_physics_process(false)
 
-# Add amount of reduction to movement speed reduction
+# Increase amount of speed multiplier
 ##
-# The ideal value for amount is between 0.1 ~ 0.9
-func add_movement_speed_reduction(amount:float) -> void:
-	set_movement_speed_reduction(movement_speed_reduction + amount)
+# The ideal value for amount is between -1.0 ~ 1.0
+func increase_speed_multiplier(amount:float) -> void:
+	set_movement_speed_multiplier(movement_speed_multiplier + amount)
 
-# Remove amount of reduction to movement speed reduction
+# Decrease amount of speed multiplier
 ##
-# The ideal value for amount is between 0.1 ~ 0.9
-func remove_movement_speed_reduction(amount:float) -> void:
-	set_movement_speed_reduction(movement_speed_reduction - amount)
+# The ideal value for amount is between -1.0 ~ 1.0
+func decrease_speed_multiplier(amount:float) -> void:
+	set_movement_speed_multiplier(movement_speed_multiplier - amount)
 
 # Return normalized Vector2 of character's shooting direction
 ##

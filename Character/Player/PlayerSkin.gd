@@ -6,6 +6,7 @@ extends Node2D
 onready var upper_body_animator: AnimationPlayer = $UpperAnimator
 onready var lower_body_animator: AnimationPlayer = $LowerAnimator
 
+# Character this skin belong to
 var _character: Character = null
 
 func _ready() -> void:
@@ -19,11 +20,12 @@ func _physics_process(delta: float) -> void:
         if not upper_body_animator.is_playing():
             upper_body_animator.play("idle")
         if lower_body_animator.is_playing():
-            lower_body_animator.advance(lower_body_animator.current_animation_length)
+            lower_body_animator.seek(0, true)
             lower_body_animator.stop()
     else:
         if upper_body_animator.is_playing():
+            upper_body_animator.seek(0, true)
             upper_body_animator.stop()
         if not lower_body_animator.is_playing():
-            lower_body_animator.play("run", -1 , 1.5)
+            lower_body_animator.play("run")
 
