@@ -2,7 +2,7 @@ class_name Attachment
 extends Component
 
 # Attachment type
-export (Global.AttachmentType) var attachment_type = Global.AttachmentType.STOCK
+var attachment_type: int = Global.AttachmentType.STOCK
 
 # Attachment damage multiplier
 export (float, -1.0, 1.0) var damage_multiplier = 0.0

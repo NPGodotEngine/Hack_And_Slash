@@ -127,6 +127,14 @@ func setup() -> void:
 	assert(get_attachment_by_type(Global.AttachmentType.BARREL), 
 	"Weapon required a barrel attachment as child")
 
+	# setup all attachements
+	for att in _attachments:
+		(att as Attachment).setup()
+
+	# setup all components
+	_damage_comp.setup()
+	_accuracy_comp.setup()
+
 	stock = get_attachment_by_type(Global.AttachmentType.STOCK)
 
 	trigger = get_attachment_by_type(Global.AttachmentType.TRIGGER)
@@ -142,13 +150,6 @@ func setup() -> void:
 
 	_damage_comp.connect("damage_changed", self, "_on_damage_changed")
 	_accuracy_comp.connect("accuracy_changed", self, "_on_accuracy_changed")
-
-	# setup all attachements
-	for att in _attachments:
-		(att as Attachment).setup()
-
-	_damage_comp.setup()
-	_accuracy_comp.setup()
 	
 ## Override ##
 

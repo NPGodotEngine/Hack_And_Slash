@@ -112,10 +112,7 @@ func _physics_process(delta: float) -> void:
 
 # Setup character
 func setup() -> void:
-	for child in get_children():
-		if child is Component:
-			character_comps.append(child)
-			child.setup()
+	pass
 
 # Get character component by name
 func get_component_by_name(comp_name:String) -> Component:

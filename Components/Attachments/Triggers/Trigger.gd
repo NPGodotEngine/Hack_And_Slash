@@ -7,7 +7,8 @@ extends Attachment
 # Emit when trigger pulled successful
 signal trigger_pulled()
 
-
+func _ready() -> void:
+    attachment_type = Global.AttachmentType.TRIGGER
 
 # Pull trigger
 ##

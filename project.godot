@@ -109,12 +109,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Components/Attachments/Triggers/Trigger.gd"
 }, {
-"base": "Reference",
+"base": "Component",
 "class": "Weapon",
 "language": "GDScript",
 "path": "res://Components/Weapons/Weapon.gd"
 }, {
-"base": "Reference",
+"base": "Component",
 "class": "WeaponManager",
 "language": "GDScript",
 "path": "res://Components/WeaponManager/WeaponManager.gd"

@@ -1,3 +1,4 @@
+tool
 extends Trigger
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
@@ -12,6 +13,8 @@ var _trigger_timer: Timer = null
 var _is_trigger_ready: bool = true
 
 func _ready() -> void:
+    if Engine.editor_hint: return
+
     _trigger_timer = Timer.new()
     add_child(_trigger_timer)
     _trigger_timer.one_shot = true

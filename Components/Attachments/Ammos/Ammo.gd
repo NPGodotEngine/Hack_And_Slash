@@ -66,6 +66,8 @@ func _get_configuration_warning() -> String:
 	return ""
 
 func _ready() -> void:
+	attachment_type = Global.AttachmentType.AMMO
+
 	_reload_timer = Timer.new()
 	add_child(_reload_timer)
 	_reload_timer.one_shot = true

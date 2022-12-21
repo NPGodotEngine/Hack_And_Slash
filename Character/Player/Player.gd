@@ -44,8 +44,11 @@ export (Vector2) var _damage_label_offset = Vector2.ZERO
 func setup() -> void:
 	.setup()
 
-	# setup weapon_manager
+	# setup components
 	weapon_manager.setup()
+	_health_comp.setup()
+	_level_exp_comp.setup()
+	_damage_comp.setup()
 	
 	# components' signal
 	_level_exp_comp.connect("level_up", self, "_on_level_up")
