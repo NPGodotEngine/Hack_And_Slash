@@ -1,3 +1,4 @@
+tool
 extends Attachment
 
 func _ready() -> void:

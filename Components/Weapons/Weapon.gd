@@ -91,9 +91,9 @@ func _get_configuration_warning() -> String:
 		return "Weapon must have a critical strike component with name CriticalStrikeComp"
 
 	collection_attachments()
-	for a in _attachments:
-		print(a.name)
-		print(a.attachment_type)
+	# for a in _attachments:
+	# 	print(a.name)
+	# 	print(a.attachment_type)
 	if get_attachment_by_type(Global.AttachmentType.STOCK) == null:
 		return "Weapon must have 1 stock attachment"
 	if get_attachment_by_type(Global.AttachmentType.TRIGGER) == null:
