@@ -4,15 +4,14 @@ extends Component
 
 signal weapon_index_changed(from_index, to_index)
 
-var weapon_library: Array = [
-	preload("res://Components/Weapons/STDWeapon.tscn"),
-]
 
 # Hold list of weapons 
 var weapon_slots: Array = []
 
 # Current index point to the weapon
-var current_weapon_index: int = 0 setget set_current_weapon_index
+var current_weapon_index: int = -1 setget set_current_weapon_index
+
+var weapon_blueprint = preload("res://Components/Weapons/WeaponBlueprint.tscn")
 
 
 ## Getter Setter ##
@@ -20,11 +19,16 @@ var current_weapon_index: int = 0 setget set_current_weapon_index
 
 func set_current_weapon_index(value:int) -> void:
 	var old_weapon_index = current_weapon_index
-	current_weapon_index = int(min(max(0, value), weapon_slots.size()-1))
+	current_weapon_index = wrapi(value, 0, weapon_slots.size() - 1)
+
+	if current_weapon_index >= weapon_slots.size():
+		current_weapon_index = -1 
+		return 
 
 	# disable previous weapon
-	var previous_weapon: Weapon = weapon_slots[old_weapon_index]
-	previous_weapon.inactive()
+	if old_weapon_index >= 0:
+		var previous_weapon: Weapon = weapon_slots[old_weapon_index]
+		previous_weapon.inactive()
 
 	# enable current weapon
 	var current_weapon: Weapon = weapon_slots[current_weapon_index]
@@ -37,20 +41,14 @@ func set_current_weapon_index(value:int) -> void:
 # Setup weapon manager
 func setup() -> void:
 	.setup()
-	# add preset weapons as child
-	for weapon_scene in weapon_library:
-		var weapon: Weapon = weapon_scene.instance()
-		add_child(weapon)
-		weapon_slots.append(weapon)
-		weapon.weapon_manager = self
-		weapon.setup()
-		
 		
 # Execute current weapon's main fire
 ##
 # `from_position` global position for weapon to shoot from
 # `to_position` global position for weapon to shoot to
 func execute_weapon(from_position:Vector2, to_position:Vector2) -> void:
+	if weapon_slots.size() <= 0: return
+
 	var weapon: Weapon = weapon_slots[current_weapon_index]
 	if weapon:
 		var direction: Vector2 = to_position - from_position
@@ -60,6 +58,8 @@ func execute_weapon(from_position:Vector2, to_position:Vector2) -> void:
 ##
 # Mainly for weapon requried warm up
 func cancel_weapon_execution() -> void:
+	if weapon_slots.size() <= 0: return
+
 	var weapon: Weapon = weapon_slots[current_weapon_index]
 	if weapon:
 		weapon.cancel_execution()
@@ -69,6 +69,8 @@ func cancel_weapon_execution() -> void:
 # `from_position` global position for weapon to shoot from
 # `to_position` global position for weapon to shoot to
 func execute_weapon_alt(from_position:Vector2, to_position:Vector2) -> void:
+	if weapon_slots.size() <= 0: return
+
 	var weapon: Weapon = weapon_slots[current_weapon_index]
 	if weapon:
 		var direction: Vector2 = to_position - from_position
@@ -76,6 +78,8 @@ func execute_weapon_alt(from_position:Vector2, to_position:Vector2) -> void:
 
 # Cancel current weapon's alternative fire 
 func cancel_weapon_alt_execution() -> void:
+	if weapon_slots.size() <= 0: return
+
 	var weapon: Weapon = weapon_slots[current_weapon_index]
 	if weapon:
 		weapon.cancel_alt_execution()
@@ -91,12 +95,52 @@ func get_weapon_by(index:int):
 	
 	return null
 
+func add_weapon(new_weapon:Weapon, make_current:bool=false) -> void:
+	add_child(new_weapon)
+	weapon_slots.append(new_weapon)
+	new_weapon.weapon_manager = self
+	new_weapon.setup()
+	if make_current:
+		set_current_weapon_index(weapon_slots.size() - 1)
+
+func remove_weapon_by(index:int) -> void:
+	index = wrapi(index, 0, weapon_slots.size() - 1)
+	var weapon: Weapon = weapon_slots[index]
+	weapon.inactive()
+	weapon_slots.erase(weapon)
+	remove_child(weapon)
+	if index <= current_weapon_index:
+		set_current_weapon_index(current_weapon_index)
+
 # Get owner that own this weapon's manager
 func get_manager_owner():
 	return get_parent()
+	
+func save(save_game:SaveGame) -> void:
+	var state: Dictionary = {
+		"weapons": [],
+	}
+	for slot in weapon_slots:
+		var weapon: Weapon = slot
+		var weapon_state: Dictionary = weapon.get_component_state()
+		state["weapons"].append({
+			"name": weapon.name,
+			"state": weapon_state,
+		})
+	save_game.data["weapon_manager_"+name] = state
 
+func load(save_game:SaveGame) -> void:
+	for weapon in weapon_slots:
+		remove_child(weapon)
+	weapon_slots.clear()
 
-static func find_weapon_owner(weapon:Weapon):
-	if weapon:
-		return weapon.get_parent().get_manager_owner()
-	return null
+	var state: Dictionary = save_game.data["weapon_manager_"+name]
+	var weapons: Array = state["weapons"]
+	
+	for weapon in weapons:
+		var name: String = weapon["name"]
+		var weapon_state: Dictionary = weapon["state"]
+		var new_weapon:Weapon = weapon_blueprint.instance()
+		new_weapon.name = name
+		new_weapon.apply_component_state(weapon_state)
+		add_weapon(new_weapon)

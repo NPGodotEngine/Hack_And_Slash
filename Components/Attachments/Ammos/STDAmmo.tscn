@@ -1,9 +1,0 @@
-[gd_scene load_steps=3 format=2]
-
-[ext_resource path="res://Components/Attachments/Ammos/STDAmmo.gd" type="Script" id=1]
-[ext_resource path="res://Bullets/Projectile/STDBullet/STDBullet.tscn" type="PackedScene" id=2]
-
-[node name="STDAmmo" type="Node2D"]
-script = ExtResource( 1 )
-attachment_type = 4
-bullet_scene = ExtResource( 2 )

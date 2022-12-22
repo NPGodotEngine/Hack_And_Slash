@@ -62,6 +62,7 @@ func get_weapon_damage() -> int:
 
 	if is_equal_approx(multiplier, 0.0):
 		return weapon_base_damage
+	print("%d, %f" % [weapon_base_damage, multiplier])
 	return int(weapon_base_damage * multiplier)
 
 # Return weapon's total accuracy in between
@@ -132,8 +133,12 @@ func setup() -> void:
 		(att as Attachment).setup()
 
 	# setup all components
+	_damage_comp = $DamageComp
 	_damage_comp.setup()
+	_accuracy_comp = $AccuracyComp
 	_accuracy_comp.setup()
+	_critical_strike_comp = $CriticalStrikeComp
+	_critical_strike_comp.setup()
 
 	stock = get_attachment_by_type(Global.AttachmentType.STOCK)
 
@@ -256,3 +261,4 @@ func _on_damage_changed(from, to) -> void:
 
 func _on_accuracy_changed(from, to) -> void:
 	pass
+

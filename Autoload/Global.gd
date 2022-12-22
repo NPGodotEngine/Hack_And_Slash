@@ -49,3 +49,34 @@ func is_in_threshold(threshold, from_range, to_range) -> bool:
         is_equal_approx(rolled_chance, threshold)):
         return true
     return false
+
+# Return an absolute file path if found the specific file
+# in directories
+# This will search directories recursively
+##
+# `file_name`: file name with extension
+# `path`: directory path to search 
+func find_file_in_directory(file_name:String, path:String="res://"):
+    var absolute_file_path = null
+    var directory: Directory = Directory.new()
+    var dir_state: int = directory.open(path)
+    if not dir_state == OK:
+        push_error("Unable to open directory %s" % path)
+        return null
+
+    if directory.list_dir_begin(true, true) != OK:
+        push_error("Unable to open directory %s" % path)
+        return null
+
+    var file_or_dir: String = directory.get_next()
+    while file_or_dir != "":
+        if directory.current_is_dir():
+            absolute_file_path = find_file_in_directory(file_name, path.plus_file(file_or_dir))
+            if absolute_file_path != null: break
+        else:
+            if file_or_dir == file_name:
+                 absolute_file_path = path.plus_file(file_or_dir)
+                 break;
+        file_or_dir = directory.get_next()
+    
+    return absolute_file_path

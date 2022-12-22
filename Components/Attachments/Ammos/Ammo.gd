@@ -1,4 +1,3 @@
-tool
 class_name Ammo
 extends Attachment
 
@@ -28,11 +27,6 @@ export (int, 1, 5000) var rounds_per_clip: int = 10
 # Duration for reload ammo
 export (float, 0.1, 20.0) var reload_duration: float = 2.0
 
-# The actual bullet scene
-##
-# To be used to instantiate a new bullet
-export (PackedScene) var bullet_scene: PackedScene
-
 # Number of rounds left in a clip
 var _round_left: int = 0 setget _set_round_left
 
@@ -60,15 +54,8 @@ func _set_round_left(value:int) -> void:
 
 ## Override ##
 
-func _get_configuration_warning() -> String:
-	if not bullet_scene: return "bullet_scene is missing"
-	if not bullet_scene is PackedScene: return "bullet_scene is not a PackedScene"
-	return ""
-
 func _ready() -> void:
 	attachment_type = Global.AttachmentType.AMMO
-
-	if Engine.editor_hint: return
 		 
 	_reload_timer = Timer.new()
 	add_child(_reload_timer)
@@ -89,7 +76,6 @@ func setup() -> void:
 # `rounds_per_shot` number of rounds to shoot at once, usually is one
 func shoot_ammo(from_position:Vector2, to_position:Vector2, 
 	hit_damage:HitDamage, rounds_per_shot:int = 1) -> void:
-	assert(bullet_scene, "bullet scene is missing")
 	assert(rounds_per_shot >= 0, 
 		"rounds per shot can't be negative value, %d was given" % rounds_per_shot)
 

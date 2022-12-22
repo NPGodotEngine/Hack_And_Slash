@@ -1,6 +1,8 @@
 class_name DamageComp
 extends Component
 
+# warning-ignore-all: RETURN_VALUE_DISCARDED
+
 # Emit when damage changed
 signal damage_changed(from_damage, to_damage)
 
@@ -26,3 +28,10 @@ func set_damage(value:int) -> void:
 	emit_signal("damage_changed", old_damage, damage)
 
 ## Getter Setter ##
+
+
+
+func get_component_state(ignore_private:bool=true) -> Dictionary:
+	var state: Dictionary = .get_component_state(ignore_private)
+	state.erase("damage_color")
+	return state

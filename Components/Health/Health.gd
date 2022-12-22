@@ -1,6 +1,8 @@
 class_name HealthComp
 extends Component
 
+# warning-ignore-all: RETURN_VALUE_DISCARDED
+
 # Emit when health is 0
 signal health_depleted()
 
@@ -49,3 +51,9 @@ func set_max_health(value:int) -> void:
 	emit_signal("max_health_changed", old_max_health, max_health)
 
 ## Getter Setter ##
+
+func get_component_state(ignore_private:bool=true) -> Dictionary:
+	var state: Dictionary = .get_component_state(ignore_private)
+	state.erase("max_health")
+	state.erase("health")
+	return state

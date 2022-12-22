@@ -28,7 +28,6 @@ collision_mask = 7
 
 [node name="Dummy" parent="." instance=ExtResource( 3 )]
 position = Vector2( 868, 109 )
-_movement_speed = 150.0
 _follow_player = true
 _distance_to_player = 50.0
 

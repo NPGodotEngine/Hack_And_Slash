@@ -1,6 +1,8 @@
 class_name CriticalStrikeComp
 extends Component
 
+# warning-ignore-all: RETURN_VALUE_DISCARDED
+
 # Emit when critical strike multiplier changed
 signal critical_strike_multiplier_changed(from, to)
 
@@ -73,3 +75,8 @@ func is_critical() -> bool:
 	# check if critical
 	return Global.is_in_threshold(critical_strike_chance, 
 	min_critical_strike_chance, max_critical_strike_chance)
+
+func get_component_state(ignore_private:bool=true) -> Dictionary:
+    var state: Dictionary = .get_component_state(ignore_private)
+    state.erase("critical_strike_color")
+    return state

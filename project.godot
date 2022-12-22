@@ -99,6 +99,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Bullets/Projectile/Projectile.gd"
 }, {
+"base": "Resource",
+"class": "SaveGame",
+"language": "GDScript",
+"path": "res://Cores/SaveGame.gd"
+}, {
 "base": "Line2D",
 "class": "Trail",
 "language": "GDScript",
@@ -138,6 +143,7 @@ _global_script_class_icons={
 "LevelExpComp": "",
 "Player": "",
 "Projectile": "",
+"SaveGame": "",
 "Trail": "",
 "Trigger": "",
 "Weapon": "",
@@ -152,11 +158,16 @@ config/icon="res://icon.png"
 [autoload]
 
 Global="*res://Autoload/Global.gd"
+GameSaver="*res://Autoload/GameSaver.gd"
 
 [display]
 
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
+
+[global]
+
+game_version="0.0.1"
 
 [gui]
 

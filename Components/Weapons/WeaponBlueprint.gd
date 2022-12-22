@@ -80,5 +80,19 @@ func get_hit_damage() -> HitDamage:
     )
 
     return hit_damage
+
+func get_component_state(ignore_private:bool=true) -> Dictionary:
+    var state: Dictionary = {}
+
+    for node in get_children():
+        if node is Component:
+            var comp_state = node.get_component_state()
+            state[node.name] = comp_state
+    return state
+
+func apply_component_state(state:Dictionary) -> void:
+    for key in state:
+        var node: Component = get_node(key)
+        node.apply_component_state(state[key]) 
     
 
