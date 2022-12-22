@@ -76,7 +76,9 @@ func is_critical() -> bool:
 	return Global.is_in_threshold(critical_strike_chance, 
 	min_critical_strike_chance, max_critical_strike_chance)
 
-func get_component_state(ignore_private:bool=true) -> Dictionary:
-    var state: Dictionary = .get_component_state(ignore_private)
+func get_component_state(ignore_private:bool=true, property_prefix:String="_") -> Dictionary:
+    var state: Dictionary = .get_component_state(ignore_private, property_prefix)
+
+    # don't add critical_strike_color as state
     state.erase("critical_strike_color")
     return state

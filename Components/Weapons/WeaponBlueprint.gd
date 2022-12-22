@@ -1,3 +1,4 @@
+# WeaponBlueprint that extended from Weapon
 tool
 extends Weapon
 
@@ -81,7 +82,7 @@ func get_hit_damage() -> HitDamage:
 
     return hit_damage
 
-func get_component_state(ignore_private:bool=true) -> Dictionary:
+func get_component_state(ignore_private:bool=true, property_prefix:String="_") -> Dictionary:
     var state: Dictionary = {}
 
     for node in get_children():
