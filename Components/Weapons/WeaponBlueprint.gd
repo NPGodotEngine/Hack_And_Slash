@@ -4,25 +4,20 @@ extends Weapon
 
 # warning-ignore-all: UNUSED_ARGUMENT
 
-var _from_pos: Vector2 = Vector2.ZERO
-var _to_pos: Vector2 = Vector2.ZERO
-var _direction: Vector2 = Vector2.ZERO
+onready var _weapon_skin: WeaponSkin = $WeaponSkin
 
-func execute(from_position:Vector2, to_position:Vector2, direction:Vector2) -> void:
-    .execute(from_position, to_position, direction)
-    _from_pos = from_position
-    _to_pos = to_position
-    _direction = direction
+func execute() -> void:
+	.execute()
 
-    if trigger:
-        trigger.pull_trigger()
+	if trigger:
+		trigger.pull_trigger()
 
 
 func cancel_execution() -> void:
-    .cancel_execution()
+	.cancel_execution()
 
-func execute_alt(from_position:Vector2, to_position:Vector2, direction:Vector2) -> void:
-	.execute_alt(from_position, to_position, direction)
+func execute_alt() -> void:
+	.execute_alt()
 
 func cancel_alt_execution() -> void:
 	.cancel_alt_execution()
@@ -34,66 +29,70 @@ func inactive() -> void:
 	.inactive()
 
 func _on_trigger_pulled() -> void:
-    ._on_trigger_pulled()
+	._on_trigger_pulled()
 
-    var hit_damage: HitDamage = get_hit_damage()
-    var spread_direction: Vector2 = _accuracy_comp.get_random_spread(_direction, get_weapon_accuracy())
-    var to_new_pos: Vector2 =  spread_direction * _from_pos.distance_to(_to_pos) + _from_pos
-
-    if ammo:
-        ammo.shoot_ammo(_from_pos, to_new_pos, hit_damage)
+	for fire_position in _weapon_skin.fire_positions:
+		var hit_damage: HitDamage = get_hit_damage()
+		var global_mouse_pos: Vector2 = get_global_mouse_position()
+		var direction = global_mouse_pos - global_position
+		var spread_direction: Vector2 = _accuracy_comp.get_random_spread(direction, get_weapon_accuracy())
+		var to_new_pos: Vector2 =  (spread_direction * global_position.distance_to(global_mouse_pos) 
+														+ fire_position)
+		if ammo:
+			ammo.shoot_ammo(fire_position, to_new_pos, hit_damage)
 
 func _on_ammo_depleted(ammo_count:int, round_per_clip:int) -> void:
-    ._on_ammo_depleted(ammo_count, round_per_clip)
+	._on_ammo_depleted(ammo_count, round_per_clip)
 
-    if ammo:
-        ammo.reload_ammo()
+	if ammo:
+		ammo.reload_ammo()
 
 func _on_ammo_count_changed(ammo_count:int, round_per_clip:int) -> void:
-    ._on_ammo_count_changed(ammo_count, round_per_clip)
+	._on_ammo_count_changed(ammo_count, round_per_clip)
 
 func _on_begin_reloading(ammo_count:int, round_per_clip:int) -> void:
-    ._on_begin_reloading(ammo_count, round_per_clip)
+	._on_begin_reloading(ammo_count, round_per_clip)
 
 func _on_end_reloading(ammo_count:int, round_per_clip:int) -> void:
-    ._on_end_reloading(ammo_count, round_per_clip)
+	._on_end_reloading(ammo_count, round_per_clip)
 
 func _on_damage_changed(from, to) -> void:
-    ._on_damage_changed(from, to)
+	._on_damage_changed(from, to)
 
 func _on_accuracy_changed(from, to) -> void:
-    ._on_accuracy_changed(from, to)
+	._on_accuracy_changed(from, to)
 
 
 # Get hit damage from weapon
 func get_hit_damage() -> HitDamage:
-    var damage: int = get_weapon_damage()
-    var critical: bool = _critical_strike_comp.is_critical()
-    var color: Color = (_critical_strike_comp.critical_strike_color if critical 
-                                        else _damage_comp.damage_color)
-    var hit_damage: HitDamage = HitDamage.new().init(
-        weapon_manager.get_manager_owner(),
-        self,
-        damage,
-        critical,
-        _critical_strike_comp.critical_strike_multiplier,
-        color
-    )
+	var damage: int = get_weapon_damage()
+	var critical: bool = _critical_strike_comp.is_critical()
+	var color: Color = (_critical_strike_comp.critical_strike_color if critical 
+										else _damage_comp.damage_color)
+	var hit_damage: HitDamage = HitDamage.new().init(
+		weapon_manager.get_manager_owner(),
+		self,
+		damage,
+		critical,
+		_critical_strike_comp.critical_strike_multiplier,
+		color
+	)
 
-    return hit_damage
+	return hit_damage
 
 func get_component_state(ignore_private:bool=true, property_prefix:String="_") -> Dictionary:
-    var state: Dictionary = {}
+	var state: Dictionary = {}
 
-    for node in get_children():
-        if node is Component:
-            var comp_state = node.get_component_state()
-            state[node.name] = comp_state
-    return state
+	for node in get_children():
+		if node is Component:
+			var comp_state = node.get_component_state()
+			state[node.name] = comp_state
+
+	return state
 
 func apply_component_state(state:Dictionary) -> void:
-    for key in state:
-        var node: Component = get_node(key)
-        node.apply_component_state(state[key]) 
-    
+	for key in state:
+		var node: Component = get_node(key)
+		node.apply_component_state(state[key]) 
+	
 

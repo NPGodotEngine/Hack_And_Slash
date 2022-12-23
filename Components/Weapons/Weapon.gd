@@ -204,7 +204,7 @@ func calculate_attachments_accuracy_multiplier() -> float:
 # `from_position` global position for weapon to shoot from
 # `to_position` global position for weapon to shoot to
 # `direction` for weapon's projectile to travel
-func execute(from_position:Vector2, to_position:Vector2, direction:Vector2) -> void:
+func execute() -> void:
 	pass
 
 # Cancel weapon execution
@@ -218,7 +218,7 @@ func cancel_execution() -> void:
 # `from_position` global position for weapon to shoot from
 # `to_position` global position for weapon to shoot to
 # `direction` for weapon's projectile to travel
-func execute_alt(from_position:Vector2, to_position:Vector2, direction:Vector2) -> void:
+func execute_alt() -> void:
 	pass
 
 # Cancel weapon's alternative fire execution

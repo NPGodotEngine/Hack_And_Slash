@@ -43,6 +43,7 @@ func get_component_state(ignore_private:bool=true, property_prefix:String="_") -
         if ignore_private and key.begins_with(property_prefix):
             dict.erase(key)
 
+    dict["name"] = name
     return dict
 
 # Apply state dictionary to component

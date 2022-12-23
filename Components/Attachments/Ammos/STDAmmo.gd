@@ -11,7 +11,7 @@ export (float) var bullet_penetration_chance = 0.0
 # The actual bullet scene
 ##
 # To be used to instantiate a new bullet
-var bullet_scene: PackedScene = preload("res://Bullets/Projectile/STDBullet/STDBullet.tscn")
+onready var bullet_scene: PackedScene = preload("res://Bullets/Projectile/STDBullet/STDBullet.tscn")
 
 
 func shoot_ammo(from_position:Vector2, to_position:Vector2, hit_damage:HitDamage, rounds_per_shot:int = 1) -> void:

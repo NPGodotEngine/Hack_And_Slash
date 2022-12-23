@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Components/Attachments/Attachment.gd"
 }, {
+"base": "Component",
+"class": "BarrelSkin",
+"language": "GDScript",
+"path": "res://Components/Weapons/WeaponSkin/BarrelSkins/BarrelSkin.gd"
+}, {
 "base": "Node2D",
 "class": "Bullet",
 "language": "GDScript",
@@ -120,14 +125,25 @@ _global_script_classes=[ {
 "path": "res://Components/Weapons/Weapon.gd"
 }, {
 "base": "Component",
+"class": "WeaponBaseSkin",
+"language": "GDScript",
+"path": "res://Components/Weapons/WeaponSkin/WeaponBaseSkin.gd"
+}, {
+"base": "Component",
 "class": "WeaponManager",
 "language": "GDScript",
 "path": "res://Components/WeaponManager/WeaponManager.gd"
+}, {
+"base": "Component",
+"class": "WeaponSkin",
+"language": "GDScript",
+"path": "res://Components/Weapons/WeaponSkin/WeaponSkin.gd"
 } ]
 _global_script_class_icons={
 "AccuracyComp": "",
 "Ammo": "",
 "Attachment": "",
+"BarrelSkin": "",
 "Bullet": "",
 "Character": "",
 "Component": "",
@@ -147,7 +163,9 @@ _global_script_class_icons={
 "Trail": "",
 "Trigger": "",
 "Weapon": "",
-"WeaponManager": ""
+"WeaponBaseSkin": "",
+"WeaponManager": "",
+"WeaponSkin": ""
 }
 
 [application]

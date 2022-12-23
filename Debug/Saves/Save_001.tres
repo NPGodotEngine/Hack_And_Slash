@@ -13,6 +13,7 @@ data = {
 "state": {
 "AccuracyComp": {
 "accuracy": 0.7,
+"name": "AccuracyComp",
 "script_name": "AccuracyComp.gd",
 "spread_range_degree": 10.0
 },
@@ -25,6 +26,7 @@ data = {
 "bullet_speed": 200.0,
 "damage_multiplier": 0.0,
 "fill_ammo_when_start": true,
+"name": "Ammo",
 "reload_duration": 2.0,
 "rounds_per_clip": 10,
 "script_name": "STDAmmo.gd"
@@ -33,6 +35,7 @@ data = {
 "accuracy_multiplier": 0.0,
 "attachment_type": 8,
 "damage_multiplier": 0.0,
+"name": "Barrel",
 "script_name": "Barrel.gd"
 },
 "CriticalStrikeComp": {
@@ -40,24 +43,54 @@ data = {
 "critical_strike_multiplier": 1.0,
 "max_critical_strike_chance": 1.0,
 "min_critical_strike_chance": 0.0,
+"name": "CriticalStrikeComp",
 "script_name": "CriticalStrikeComp.gd"
 },
 "DamageComp": {
-"damage": 50,
+"damage": 10,
+"name": "DamageComp",
 "script_name": "DamageComp.gd"
 },
 "Stock": {
 "accuracy_multiplier": 0.0,
 "attachment_type": 1,
 "damage_multiplier": 0.0,
+"name": "Stock",
 "script_name": "Stock.gd"
 },
 "Trigger": {
 "accuracy_multiplier": 0.0,
 "attachment_type": 2,
 "damage_multiplier": 0.0,
+"name": "Trigger",
 "script_name": "AutoTrigger.gd",
 "trigger_duration": 1.0
+},
+"WeaponSkin": {
+"name": "WeaponSkin",
+"script_name": "WeaponSkin.gd",
+"weapon_base_skin": {
+"attachments": {
+"Ammo": {
+"name": "MarineGunAmmo",
+"script_name": "Component.gd"
+},
+"Barrel": {
+"name": "MarineGunBarrel",
+"script_name": "BarrelSkin.gd"
+},
+"Stock": {
+"name": "MarineGunStock",
+"script_name": "Component.gd"
+},
+"Trigger": {
+"name": "MarineGunTrigger",
+"script_name": "Component.gd"
+}
+},
+"name": "MarineGunBase",
+"script_name": "WeaponBaseSkin.gd"
+}
 }
 }
 } ]

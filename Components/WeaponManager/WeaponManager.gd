@@ -11,7 +11,7 @@ var weapon_slots: Array = []
 # Current index point to the weapon
 var current_weapon_index: int = -1 setget set_current_weapon_index
 
-var weapon_blueprint = preload("res://Components/Weapons/WeaponBlueprint.tscn")
+onready var weapon_blueprint = preload("res://Components/Weapons/WeaponBlueprint.tscn")
 
 
 ## Getter Setter ##
@@ -38,21 +38,40 @@ func set_current_weapon_index(value:int) -> void:
 ## Getter Setter ##
 	
 
+## Override ##
+
+
 # Setup weapon manager
 func setup() -> void:
 	.setup()
+
+func _physics_process(_delta: float) -> void:
+	var weapon: Weapon = get_weapon_by(current_weapon_index)
+	if weapon:
+		# Update weapon skin facing direction
+		var global_mouse_position := get_global_mouse_position()
+
+		if global_mouse_position.x < global_position.x:
+			weapon.scale.y = -1.0 * weapon.scale.abs().y
+		else:
+			weapon.scale.y = 1.0 * weapon.scale.abs().y
+
+		var point_dir: Vector2 = global_mouse_position - weapon.global_position
+		weapon.rotation = point_dir.angle()
 		
+## Override ##
+
+
 # Execute current weapon's main fire
 ##
 # `from_position` global position for weapon to shoot from
 # `to_position` global position for weapon to shoot to
-func execute_weapon(from_position:Vector2, to_position:Vector2) -> void:
+func execute_weapon() -> void:
 	if weapon_slots.size() <= 0: return
 
 	var weapon: Weapon = weapon_slots[current_weapon_index]
 	if weapon:
-		var direction: Vector2 = to_position - from_position
-		weapon.execute(from_position, to_position, direction.normalized())
+		weapon.execute()
 
 # Cancel current weapon's main fire
 ##
@@ -68,13 +87,12 @@ func cancel_weapon_execution() -> void:
 ##
 # `from_position` global position for weapon to shoot from
 # `to_position` global position for weapon to shoot to
-func execute_weapon_alt(from_position:Vector2, to_position:Vector2) -> void:
+func execute_weapon_alt() -> void:
 	if weapon_slots.size() <= 0: return
 
 	var weapon: Weapon = weapon_slots[current_weapon_index]
 	if weapon:
-		var direction: Vector2 = to_position - from_position
-		weapon.execute_alt(from_position, to_position, direction)
+		weapon.execute_alt()
 
 # Cancel current weapon's alternative fire 
 func cancel_weapon_alt_execution() -> void:
@@ -88,6 +106,7 @@ func cancel_weapon_alt_execution() -> void:
 ##
 # `index` index of weapon in weapon slots
 func get_weapon_by(index:int):
+	if index < 0: return null
 	if index >= weapon_slots.size(): return null
 		
 	if weapon_slots and weapon_slots.size() > 0 and index < weapon_slots.size():
@@ -141,6 +160,7 @@ func load(save_game:SaveGame) -> void:
 		var name: String = weapon["name"]
 		var weapon_state: Dictionary = weapon["state"]
 		var new_weapon:Weapon = weapon_blueprint.instance()
+		add_weapon(new_weapon)
+		new_weapon.setup()
 		new_weapon.name = name
 		new_weapon.apply_component_state(weapon_state)
-		add_weapon(new_weapon)
