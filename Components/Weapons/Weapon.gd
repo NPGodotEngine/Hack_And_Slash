@@ -11,18 +11,18 @@ extends Component
 # warning-ignore-all: UNUSED_ARGUMENT
 
 # Damage component
-onready var _damage_comp: DamageComp = $DamageComp
+onready var _damage_comp: DamageComp = (get_damage_comp())
 
 # Accuracy component
-onready var _accuracy_comp: AccuracyComp = $AccuracyComp
+onready var _accuracy_comp: AccuracyComp = (get_accuracy_comp())
 
 # Critical strike component
-onready var _critical_strike_comp: CriticalStrikeComp = $CriticalStrikeComp
+onready var _critical_strike_comp: CriticalStrikeComp = (get_critical_strike_comp())
 
 # Weapon skin
 ##
 # Skin for weapon visual
-onready var weapon_appearance: WeaponSkin = $WeaponSkin
+onready var weapon_appearance: WeaponSkin = (get_weapon_skin())
 
 # List of weapon attachments 
 var _attachments: Array = []
@@ -83,25 +83,61 @@ func get_weapon_accuracy() -> float:
 
 	return acc
 
+func get_damage_comp() -> DamageComp:
+	for node in get_children():
+		if node is DamageComp:
+			return node
+	var new_dmg = load("res://Components/Damage/DamageComp.tscn").instance()
+	add_child(new_dmg)
+	new_dmg.name = "Damage"
+	new_dmg.owner = self
+	return new_dmg
+
+func get_accuracy_comp() -> AccuracyComp:
+	for node in get_children():
+		if node is AccuracyComp:
+			return node
+	var new_acc = load("res://Components/Accuracy/AccuracyComp.tscn").instance()
+	add_child(new_acc)
+	new_acc.name = "Accuracy"
+	new_acc.owner = self
+	return new_acc
+
+func get_critical_strike_comp() -> CriticalStrikeComp:
+	for node in get_children():
+		if node is CriticalStrikeComp:
+			return node
+	var new_cs = load("res://Components/CriticalStrike/CriticalStrikeComp.tscn").instance()
+	add_child(new_cs)
+	new_cs.name = "CriticalStrike"
+	new_cs.owner = self
+	return new_cs
+
+func get_weapon_skin() -> WeaponSkin:
+	for node in get_children():
+		if node is WeaponSkin:
+			return node
+	var new_weapon_skin = load("res://Components/Weapons/WeaponSkin/WeaponSkin.tscn").instance()
+	add_child(new_weapon_skin)
+	new_weapon_skin.name = "WeaponSkin"
+	new_weapon_skin.owner = self
+	return new_weapon_skin
+
 ## Getter Setter ##
 
 ## Override ##
 func _get_configuration_warning() -> String:
-	var dmg_comp = get_node("DamageComp") as DamageComp
-	if dmg_comp == null:
-		return "Weapon must have a damage component with name DamageComp"
+	if get_damage_comp() == null:
+		return "Weapon must have a component as child with DamageComp script"
 	
-	var acc_comp = get_node("AccuracyComp") as AccuracyComp
-	if acc_comp == null:
-		return "Weapon must have a accuracy component with name AccuracyComp"
+	if get_accuracy_comp() == null:
+		return "Weapon must have a component as child with name AccuracyComp script"
 
-	var critical_comp = get_node("CriticalStrikeComp") as CriticalStrikeComp
-	if critical_comp == null:
-		return "Weapon must have a critical strike component with name CriticalStrikeComp"
+	if get_critical_strike_comp() == null:
+		return "Weapon must have a component as child with name CriticalStrikeComp script"
 
-	var weapon_skin = get_node("WeaponSkin") as WeaponSkin
-	if weapon_skin == null:
-		return "Weapon must have a weapon skin component with name WeaponSkin"
+	if get_weapon_skin() == null:
+		return "Weapon must have a component as child with name WeaponSkin script"
 
 	collection_attachments()
 	# for a in _attachments:
@@ -147,11 +183,8 @@ func setup() -> void:
 		(att as Attachment).setup()
 
 	# setup all components
-	_damage_comp = $DamageComp
 	_damage_comp.setup()
-	_accuracy_comp = $AccuracyComp
 	_accuracy_comp.setup()
-	_critical_strike_comp = $CriticalStrikeComp
 	_critical_strike_comp.setup()
 	
 	stock = get_attachment_by_type(Global.AttachmentType.STOCK)

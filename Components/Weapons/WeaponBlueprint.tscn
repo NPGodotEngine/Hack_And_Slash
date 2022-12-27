@@ -1,27 +1,24 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Components/Attachments/Triggers/AutoTrigger.gd" type="Script" id=1]
 [ext_resource path="res://Components/Attachments/Stocks/Stock.gd" type="Script" id=2]
 [ext_resource path="res://Components/Attachments/Ammos/STDAmmo.gd" type="Script" id=3]
 [ext_resource path="res://Components/Weapons/WeaponBlueprint.gd" type="Script" id=4]
 [ext_resource path="res://Components/Attachments/Barrels/Barrel.gd" type="Script" id=5]
-[ext_resource path="res://Components/Damage/DamageComp.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Components/Weapons/WeaponSkin/WeaponSkin.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Components/Accuracy/AccuracyComp.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Components/CriticalStrike/CriticalStrikeComp.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Components/Weapons/WeaponSkin/WeaponSkin.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Components/Weapons/WeaponSkin/WeaponSkin.gd" type="Script" id=10]
-[ext_resource path="res://Components/Weapons/WeaponSkin/BaseSkins/MarineGunBase.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Components/Weapons/WeaponSkin/WeaponSkin.gd" type="Script" id=9]
+[ext_resource path="res://Components/Damage/DamageComp.tscn" type="PackedScene" id=12]
 
 [node name="WeaponBlueprint" type="Node2D"]
 script = ExtResource( 4 )
 
-[node name="DamageComp" parent="." instance=ExtResource( 6 )]
+[node name="Damage" parent="." instance=ExtResource( 12 )]
 
-[node name="AccuracyComp" parent="." instance=ExtResource( 7 )]
-accuracy = 0.7
+[node name="Accuracy" parent="." instance=ExtResource( 7 )]
 
-[node name="CriticalStrikeComp" parent="." instance=ExtResource( 8 )]
-critical_strike_chance = 0.5
+[node name="CriticalStrike" parent="." instance=ExtResource( 8 )]
 
 [node name="Stock" type="Node2D" parent="."]
 script = ExtResource( 2 )
@@ -35,9 +32,5 @@ script = ExtResource( 5 )
 [node name="Ammo" type="Node2D" parent="."]
 script = ExtResource( 3 )
 
-[node name="WeaponSkin" parent="." instance=ExtResource( 9 )]
-script = ExtResource( 10 )
-
-[node name="WeaponBasePos" type="Position2D" parent="WeaponSkin"]
-
-[node name="MarineGunBase" parent="WeaponSkin/WeaponBasePos" instance=ExtResource( 11 )]
+[node name="WeaponSkin" type="Node2D" parent="." instance=ExtResource( 6 )]
+script = ExtResource( 9 )

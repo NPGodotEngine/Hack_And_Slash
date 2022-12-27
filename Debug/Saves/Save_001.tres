@@ -8,9 +8,9 @@ save_version = "0.0.1"
 data = {
 "WeaponManager": {
 "weapons": [ {
-"AccuracyComp": {
-"accuracy": 0.7,
-"name": "AccuracyComp",
+"Accuracy": {
+"accuracy": 0.5,
+"name": "Accuracy",
 "script_name": "AccuracyComp.gd",
 "spread_range_degree": 10.0
 },
@@ -26,17 +26,17 @@ data = {
 "name": "Barrel",
 "script_name": "Barrel.gd"
 },
-"CriticalStrikeComp": {
-"critical_strike_chance": 0.5,
+"CriticalStrike": {
+"critical_strike_chance": 0.0,
 "critical_strike_multiplier": 1.0,
 "max_critical_strike_chance": 1.0,
 "min_critical_strike_chance": 0.0,
-"name": "CriticalStrikeComp",
+"name": "CriticalStrike",
 "script_name": "CriticalStrikeComp.gd"
 },
-"DamageComp": {
+"Damage": {
 "damage": 10,
-"name": "DamageComp",
+"name": "Damage",
 "script_name": "DamageComp.gd"
 },
 "Stock": {
