@@ -48,3 +48,10 @@ func get_random_spread(face_dir:Vector2, accuracy_scaler:float = 1.0) -> Vector2
     direction = direction.rotated(rand_rotation)
 
     return direction
+
+func to_dictionary() -> Dictionary:
+    var state: Dictionary = .to_dictionary()
+    state["spread_range_degree"] = spread_range_degree
+    state["accuracy"] = accuracy
+    
+    return state

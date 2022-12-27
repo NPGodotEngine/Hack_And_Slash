@@ -1,16 +1,13 @@
-[gd_resource type="Resource" load_steps=3 format=2]
+[gd_resource type="Resource" load_steps=2 format=2]
 
 [ext_resource path="res://Cores/SaveGame.gd" type="Script" id=1]
-[ext_resource path="res://Bullets/Projectile/STDBullet/STDBullet.tscn" type="PackedScene" id=2]
 
 [resource]
 script = ExtResource( 1 )
 save_version = "0.0.1"
 data = {
-"weapon_manager_WeaponManager": {
+"WeaponManager": {
 "weapons": [ {
-"name": "WeaponBlueprint",
-"state": {
 "AccuracyComp": {
 "accuracy": 0.7,
 "name": "AccuracyComp",
@@ -19,21 +16,12 @@ data = {
 },
 "Ammo": {
 "accuracy_multiplier": 0.0,
-"attachment_type": 4,
-"bullet_life_span": 3.0,
-"bullet_penetration_chance": 0.0,
-"bullet_scene": ExtResource( 2 ),
-"bullet_speed": 200.0,
 "damage_multiplier": 0.0,
-"fill_ammo_when_start": true,
 "name": "Ammo",
-"reload_duration": 2.0,
-"rounds_per_clip": 10,
 "script_name": "STDAmmo.gd"
 },
 "Barrel": {
 "accuracy_multiplier": 0.0,
-"attachment_type": 8,
 "damage_multiplier": 0.0,
 "name": "Barrel",
 "script_name": "Barrel.gd"
@@ -53,18 +41,18 @@ data = {
 },
 "Stock": {
 "accuracy_multiplier": 0.0,
-"attachment_type": 1,
 "damage_multiplier": 0.0,
 "name": "Stock",
 "script_name": "Stock.gd"
 },
 "Trigger": {
 "accuracy_multiplier": 0.0,
-"attachment_type": 2,
+"burst_duration": 1.0,
 "damage_multiplier": 0.0,
 "name": "Trigger",
-"script_name": "AutoTrigger.gd",
-"trigger_duration": 1.0
+"number_of_bursts": 3,
+"script_name": "BurstTrigger.gd",
+"wait_to_next_burst": 1.0
 },
 "WeaponSkin": {
 "name": "WeaponSkin",
@@ -72,27 +60,28 @@ data = {
 "weapon_base_skin": {
 "attachments": {
 "Ammo": {
-"name": "MarineGunAmmo",
+"name": "RedAmmo",
 "script_name": "Component.gd"
 },
 "Barrel": {
-"name": "MarineGunBarrel",
+"name": "DoubleBarrel",
 "script_name": "BarrelSkin.gd"
 },
 "Stock": {
-"name": "MarineGunStock",
+"name": "DarkStock",
 "script_name": "Component.gd"
 },
 "Trigger": {
-"name": "MarineGunTrigger",
+"name": "FastTrigger",
 "script_name": "Component.gd"
 }
 },
-"name": "MarineGunBase",
+"name": "PurpleGunBase",
 "script_name": "WeaponBaseSkin.gd"
 }
-}
-}
+},
+"name": "WeaponBlueprint",
+"script_name": "WeaponBlueprint.gd"
 } ]
 }
 }

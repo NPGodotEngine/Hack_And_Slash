@@ -8,7 +8,9 @@ extends Attachment
 # Emit when trigger pulled successful
 signal trigger_pulled()
 
-func _ready() -> void:
+func _on_component_ready() -> void:
+    ._on_component_ready()
+
     attachment_type = Global.AttachmentType.TRIGGER
 
 # Pull trigger

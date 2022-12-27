@@ -19,3 +19,10 @@ export (float, -1.0, 1.0) var accuracy_multiplier = 0.0
 func cancel_action() -> void:
 	pass
 
+func to_dictionary() -> Dictionary:
+	var state: Dictionary = .to_dictionary()
+	state["damage_multiplier"] = damage_multiplier
+	state["accuracy_multiplier"] = accuracy_multiplier
+
+	return state
+

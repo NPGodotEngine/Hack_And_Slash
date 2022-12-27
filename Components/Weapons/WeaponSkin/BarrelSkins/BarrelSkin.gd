@@ -23,9 +23,4 @@ func get_fire_points() -> Array:
             points.append(node.global_position)
     return points
 
-func get_component_state(ignore_private: bool = true, property_prefix: String = "_") -> Dictionary:
-    var state: Dictionary = .get_component_state(ignore_private, property_prefix)
-    state.erase("fire_points")
-    return state
-
 

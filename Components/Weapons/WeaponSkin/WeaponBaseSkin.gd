@@ -9,63 +9,63 @@ onready var _trigger_pos: Position2D = $TriggerPos
 onready var _ammo_pos: Position2D = $AmmoPos
 onready var _barrel_pos: Position2D = $BarrelPos
 
-var stock_skin setget set_stock_skin, get_stock_skin
-var trigger_skin setget set_trigger_skin, get_trigger_skin
-var ammo_skin setget set_ammo_skin, get_ammo_skin
-var barrel_skin setget set_barrel_skin, get_barrel_skin
+var stock_skin: Component = null setget set_stock_skin, get_stock_skin
+var trigger_skin: Component = null setget set_trigger_skin, get_trigger_skin
+var ammo_skin: Component = null setget set_ammo_skin, get_ammo_skin
+var barrel_skin: Component = null setget set_barrel_skin, get_barrel_skin
 
 func get_stock_skin():
+    if _stock_pos == null: return null
     return _stock_pos.get_child(0)
 
 func get_trigger_skin():
+    if _trigger_pos == null: return null
     return _trigger_pos.get_child(0)
 
 func get_ammo_skin():
+    if _ammo_pos == null: return null
     return _ammo_pos.get_child(0)
 
 func get_barrel_skin():
+    if _barrel_pos == null: return null
     return _barrel_pos.get_child(0)
 
-func set_stock_skin(stock:Node2D) -> void:
+func set_stock_skin(new_stock_skin:Component) -> void:
     for node in _stock_pos.get_children():
-        remove_child(node)
-    _stock_pos.add_child(stock)
+        (node as Component).remove_from_parent()
+    _stock_pos.add_child(new_stock_skin)
 
-func set_trigger_skin(trigger:Node2D) -> void:
+func set_trigger_skin(new_trigger_skin:Component) -> void:
     for node in _trigger_pos.get_children():
-        remove_child(node)
-    _trigger_pos.add_child(trigger)
+        (node as Component).remove_from_parent()
+    _trigger_pos.add_child(new_trigger_skin)
 
-func set_ammo_skin(ammo:Node2D) -> void:
+func set_ammo_skin(new_ammoskin:Component) -> void:
     for node in _ammo_pos.get_children():
-        remove_child(node)
-    _ammo_pos.add_child(ammo)
+        (node as Component).remove_from_parent()
+    _ammo_pos.add_child(new_ammoskin)
 
-func set_barrel_skin(barrel:Node2D) -> void:
+func set_barrel_skin(new_barrel_skin:Component) -> void:
     for node in _barrel_pos.get_children():
-        remove_child(node)
-    _barrel_pos.add_child(barrel)
+        (node as Component).remove_from_parent()
+    _barrel_pos.add_child(new_barrel_skin)
 
-func get_component_state(ignore_private: bool = true, property_prefix: String = "_") -> Dictionary:
-    var skin_state: Dictionary = .get_component_state()
-    skin_state.erase("stock_skin")
-    skin_state.erase("trigger_skin")
-    skin_state.erase("ammo_skin")
-    skin_state.erase("barrel_skin")
+func to_dictionary() -> Dictionary:
+    var skin_state: Dictionary = .to_dictionary()
 
     var attachements_state = {}
-    attachements_state["Stock"] = _stock_pos.get_children()[0].get_component_state()
-    attachements_state["Trigger"] = _trigger_pos.get_children()[0].get_component_state()
-    attachements_state["Ammo"] = _ammo_pos.get_children()[0].get_component_state()
-    attachements_state["Barrel"] = _barrel_pos.get_children()[0].get_component_state()
+    attachements_state["Stock"] = _stock_pos.get_child(0).to_dictionary()
+    attachements_state["Trigger"] = _trigger_pos.get_child(0).to_dictionary()
+    attachements_state["Ammo"] = _ammo_pos.get_child(0).to_dictionary()
+    attachements_state["Barrel"] = _barrel_pos.get_child(0).to_dictionary()
 
     skin_state["attachments"] = attachements_state
 
     return skin_state
 
-func apply_component_state(state: Dictionary) -> void:
-    .apply_component_state(state)
-    var attachement_state = state["attachements"]
+func from_dictionary(state: Dictionary) -> void:
+    .from_dictionary(state)
+    var attachement_state = state["attachments"]
 
     var stock_name = attachement_state["Stock"]["name"] + ".tscn"
     var stock_skin_node = load(Global.find_file_in_directory(stock_name)).instance()

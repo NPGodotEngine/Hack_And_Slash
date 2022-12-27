@@ -31,9 +31,9 @@ func set_damage(value:int) -> void:
 
 
 
-func get_component_state(ignore_private:bool=true, property_prefix:String="_") -> Dictionary:
-	var state: Dictionary = .get_component_state(ignore_private, property_prefix)
+func to_dictionary() -> Dictionary:
+	var state: Dictionary = .to_dictionary()
 
-	# don't add damage_color as state
-	state.erase("damage_color")
+	state["damage"] = damage
+
 	return state

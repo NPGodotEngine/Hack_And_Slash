@@ -54,7 +54,9 @@ func _set_round_left(value:int) -> void:
 
 ## Override ##
 
-func _ready() -> void:
+func _on_component_ready() -> void:
+	._on_component_ready()
+	
 	attachment_type = Global.AttachmentType.AMMO
 		 
 	_reload_timer = Timer.new()

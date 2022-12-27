@@ -4,7 +4,10 @@ extends Weapon
 
 # warning-ignore-all: UNUSED_ARGUMENT
 
-onready var _weapon_skin: WeaponSkin = $WeaponSkin
+func setup() -> void:
+	.setup()
+
+	weapon_appearance.setup()
 
 func execute() -> void:
 	.execute()
@@ -31,7 +34,7 @@ func inactive() -> void:
 func _on_trigger_pulled() -> void:
 	._on_trigger_pulled()
 
-	for fire_position in _weapon_skin.fire_positions:
+	for fire_position in weapon_appearance.fire_positions:
 		var hit_damage: HitDamage = get_hit_damage()
 		var global_mouse_pos: Vector2 = get_global_mouse_position()
 		var direction = global_mouse_pos - global_position
@@ -80,19 +83,20 @@ func get_hit_damage() -> HitDamage:
 
 	return hit_damage
 
-func get_component_state(ignore_private:bool=true, property_prefix:String="_") -> Dictionary:
-	var state: Dictionary = {}
+func to_dictionary() -> Dictionary:
+	var state: Dictionary = .to_dictionary()
 
 	for node in get_children():
 		if node is Component:
-			var comp_state = node.get_component_state()
+			var comp_state = node.to_dictionary()
 			state[node.name] = comp_state
 
 	return state
 
-func apply_component_state(state:Dictionary) -> void:
+func from_dictionary(state:Dictionary) -> void:
+	.from_dictionary(state)
 	for key in state:
 		var node: Component = get_node(key)
-		node.apply_component_state(state[key]) 
+		node.from_dictionary(state[key])
 	
 

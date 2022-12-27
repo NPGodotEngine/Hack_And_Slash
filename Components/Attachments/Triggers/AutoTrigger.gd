@@ -12,8 +12,8 @@ var _trigger_timer: Timer = null
 # Is trigger ready to be pulled
 var _is_trigger_ready: bool = true
 
-func _ready() -> void:
-    if Engine.editor_hint: return
+func _on_component_ready() -> void:
+    ._on_component_ready()
 
     _trigger_timer = Timer.new()
     add_child(_trigger_timer)
@@ -33,4 +33,10 @@ func pull_trigger() -> void:
 
 func _on_trigger_timer_timeout() -> void:
     _is_trigger_ready = true
+
+func to_dictionary() -> Dictionary:
+    var state: Dictionary = .to_dictionary()
+    state["trigger_duration"] = trigger_duration
+    
+    return state
     

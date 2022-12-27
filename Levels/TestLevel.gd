@@ -14,6 +14,27 @@ func _ready() -> void:
                     for weapon_scene in weapon_library:
                         var weapon: Weapon = weapon_scene.instance()
                         node.add_weapon(weapon, true)
-            
-    print(GameSaver.save_game(1))
+                 
+    # print(GameSaver.save_game(1))
     print(GameSaver.load_saved_game(1))
+    change()
+
+func change() -> void:
+    var player: Player = null
+    for child in get_children():
+        if child is Player:
+            player = child
+    
+    # change weapon appearances
+    var weapon: Weapon = player.weapon_manager.get_weapon_by(0)
+    var weapon_skin: WeaponSkin = weapon.weapon_appearance
+    weapon_skin.ammo_skin = load("res://Components/Weapons/WeaponSkin/AmmoSkins/TestAmmo.tscn").instance()
+    weapon_skin.stock_skin = load("res://Components/Weapons/WeaponSkin/StockSkins/TestStock.tscn").instance()
+    weapon_skin.trigger_skin = load("res://Components/Weapons/WeaponSkin/TriggerSkins/TestTrigger.tscn").instance()
+    weapon_skin.barrel_skin = load("res://Components/Weapons/WeaponSkin/BarrelSkins/TestBarrel.tscn").instance()
+    weapon_skin.base_skin = load("res://Components/Weapons/WeaponSkin/BaseSkins/TestBase.tscn").instance()
+    
+    # # change weapon trigger script
+    # weapon.trigger.set_script(load("res://Components/Attachments/Triggers/BurstTrigger.gd"))
+    
+    print(GameSaver.save_game(1))

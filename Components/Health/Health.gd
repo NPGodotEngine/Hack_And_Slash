@@ -51,11 +51,3 @@ func set_max_health(value:int) -> void:
 	emit_signal("max_health_changed", old_max_health, max_health)
 
 ## Getter Setter ##
-
-func get_component_state(ignore_private:bool=true, property_prefix:String="_") -> Dictionary:
-	var state: Dictionary = .get_component_state(ignore_private, property_prefix)
-
-	# don't add max_health and health in state
-	state.erase("max_health")
-	state.erase("health")
-	return state

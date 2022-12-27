@@ -41,8 +41,9 @@ func _get_configuration_warning() -> String:
 
     return ""
 
-func _ready() -> void:
-    if Engine.editor_hint: return
+
+func _on_component_ready() -> void:
+    ._on_component_ready()
 
     _timer_per_burst = Timer.new()
     add_child(_timer_per_burst)
@@ -102,6 +103,14 @@ func _on_wait_next_burst_timer_timeout() -> void:
     _is_trigger_ready = true
     _is_bursting = false
     _is_wating_for_next_process = false
+
+func to_dictionary() -> Dictionary:
+    var state: Dictionary = .to_dictionary()
+    state["number_of_bursts"] = number_of_bursts
+    state["burst_duration"] = burst_duration
+    state["wait_to_next_burst"] = wait_to_next_burst
+    
+    return state
 
 
 

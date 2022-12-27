@@ -19,6 +19,11 @@ onready var _accuracy_comp: AccuracyComp = $AccuracyComp
 # Critical strike component
 onready var _critical_strike_comp: CriticalStrikeComp = $CriticalStrikeComp
 
+# Weapon skin
+##
+# Skin for weapon visual
+onready var weapon_appearance: WeaponSkin = $WeaponSkin
+
 # List of weapon attachments 
 var _attachments: Array = []
 
@@ -28,14 +33,14 @@ var _attachments: Array = []
 # attachments' damage multiplier(cap between 0.1 ~ 1.0)
 ##
 # The minimum of damage is 10% of weapon's damage
-var weapon_damage: int setget , get_weapon_damage
+var weapon_damage: int = 0 setget , get_weapon_damage
 
 # Weapon accuracy
 ##
 # Return weapon's accuracy + all 
 # attachments' accuracy and then
 # cap between 0.0 ~ 1.0
-var weapon_accuracy: float setget , get_weapon_accuracy
+var weapon_accuracy: float = 0.0 setget , get_weapon_accuracy
 
 var stock: Attachment = null
 var trigger: Trigger = null
@@ -50,12 +55,14 @@ var weapon_manager = null
 ## Getter Setter ##
 
 
+
 # Return weapon's total damage output
 # The minimum is 10% of weapon's damage
 ##
 # Weapon's damage * multiplier from all attachments
 # Multiplier is capped between 0.1 ~ 1.0
 func get_weapon_damage() -> int:
+	if _damage_comp == null: return 0
 	var weapon_base_damage: int = _damage_comp.damage
 	var multiplier: float = calculate_attachments_dmg_multiplier()
 	multiplier = min(max(0.1, multiplier), 1.0)
@@ -68,6 +75,7 @@ func get_weapon_damage() -> int:
 # Return weapon's total accuracy in between
 # 0.0 ~ 1.0
 func get_weapon_accuracy() -> float:
+	if _accuracy_comp == null: return 0.0
 	var weapon_base_accuracy: float = _accuracy_comp.accuracy 
 	var att_accuracy: float = calculate_attachments_accuracy_multiplier()
 	var acc = weapon_base_accuracy + att_accuracy
@@ -90,6 +98,10 @@ func _get_configuration_warning() -> String:
 	var critical_comp = get_node("CriticalStrikeComp") as CriticalStrikeComp
 	if critical_comp == null:
 		return "Weapon must have a critical strike component with name CriticalStrikeComp"
+
+	var weapon_skin = get_node("WeaponSkin") as WeaponSkin
+	if weapon_skin == null:
+		return "Weapon must have a weapon skin component with name WeaponSkin"
 
 	collection_attachments()
 	# for a in _attachments:
@@ -116,6 +128,8 @@ func setup() -> void:
 		"Weapon required a accuracy compoent as child with name \"DamageComp\"")
 	assert(_critical_strike_comp, 
 	"Weapon required a critical strike compoent as child with name \"CriticalStrikeComp\"")
+	assert(weapon_appearance, 
+	"Weapon required a weapon skin compoent as child with name \"WeaponSkin\"")
 
 	collection_attachments()
 
@@ -139,7 +153,7 @@ func setup() -> void:
 	_accuracy_comp.setup()
 	_critical_strike_comp = $CriticalStrikeComp
 	_critical_strike_comp.setup()
-
+	
 	stock = get_attachment_by_type(Global.AttachmentType.STOCK)
 
 	trigger = get_attachment_by_type(Global.AttachmentType.TRIGGER)

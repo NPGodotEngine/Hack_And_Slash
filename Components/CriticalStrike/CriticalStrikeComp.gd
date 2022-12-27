@@ -76,9 +76,12 @@ func is_critical() -> bool:
 	return Global.is_in_threshold(critical_strike_chance, 
 	min_critical_strike_chance, max_critical_strike_chance)
 
-func get_component_state(ignore_private:bool=true, property_prefix:String="_") -> Dictionary:
-    var state: Dictionary = .get_component_state(ignore_private, property_prefix)
+func to_dictionary() -> Dictionary:
+    var state: Dictionary = .to_dictionary()
 
-    # don't add critical_strike_color as state
-    state.erase("critical_strike_color")
+    state["critical_strike_multiplier"] = critical_strike_multiplier
+    state["min_critical_strike_chance"] = min_critical_strike_chance
+    state["max_critical_strike_chance"] = max_critical_strike_chance
+    state["critical_strike_chance"] = critical_strike_chance
+
     return state

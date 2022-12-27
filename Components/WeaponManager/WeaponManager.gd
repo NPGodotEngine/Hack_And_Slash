@@ -141,26 +141,19 @@ func save(save_game:SaveGame) -> void:
 	}
 	for slot in weapon_slots:
 		var weapon: Weapon = slot
-		var weapon_state: Dictionary = weapon.get_component_state()
-		state["weapons"].append({
-			"name": weapon.name,
-			"state": weapon_state,
-		})
-	save_game.data["weapon_manager_"+name] = state
+		var weapon_state: Dictionary = weapon.to_dictionary()
+		state["weapons"].append(weapon_state)
+	save_game.data[name] = state
 
 func load(save_game:SaveGame) -> void:
 	for weapon in weapon_slots:
-		remove_child(weapon)
+		(weapon as Component).remove_from_parent()
 	weapon_slots.clear()
 
-	var state: Dictionary = save_game.data["weapon_manager_"+name]
+	var state: Dictionary = save_game.data[name]
 	var weapons: Array = state["weapons"]
 	
-	for weapon in weapons:
-		var name: String = weapon["name"]
-		var weapon_state: Dictionary = weapon["state"]
-		var new_weapon:Weapon = weapon_blueprint.instance()
+	for weapon_state in weapons:
+		var new_weapon: Weapon = weapon_blueprint.instance()
+		new_weapon.from_dictionary(weapon_state)
 		add_weapon(new_weapon)
-		new_weapon.setup()
-		new_weapon.name = name
-		new_weapon.apply_component_state(weapon_state)
