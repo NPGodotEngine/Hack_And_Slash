@@ -296,3 +296,4 @@ nine_patch_stretch = true
 [node name="DamageComp" parent="." instance=ExtResource( 11 )]
 
 [node name="WeaponManager" parent="." instance=ExtResource( 5 )]
+position = Vector2( 0, -13 )

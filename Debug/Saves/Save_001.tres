@@ -47,10 +47,12 @@ data = {
 },
 "Trigger": {
 "accuracy_multiplier": 0.0,
+"burst_duration": 1.0,
 "damage_multiplier": 0.0,
 "name": "Trigger",
-"script_name": "AutoTrigger.gd",
-"trigger_duration": 1.0
+"number_of_bursts": 3,
+"script_name": "BurstTrigger.gd",
+"wait_to_next_burst": 1.0
 },
 "WeaponSkin": {
 "name": "WeaponSkin",
