@@ -28,13 +28,12 @@ func change() -> void:
     # change weapon appearances
     var weapon: Weapon = player.weapon_manager.get_weapon_by(0)
     var weapon_skin: WeaponSkin = weapon.weapon_appearance
-    weapon_skin.ammo_skin = load("res://Components/Weapons/WeaponSkin/AmmoSkins/TestAmmo.tscn").instance()
-    weapon_skin.stock_skin = load("res://Components/Weapons/WeaponSkin/StockSkins/TestStock.tscn").instance()
-    weapon_skin.trigger_skin = load("res://Components/Weapons/WeaponSkin/TriggerSkins/TestTrigger.tscn").instance()
-    weapon_skin.barrel_skin = load("res://Components/Weapons/WeaponSkin/BarrelSkins/TestBarrel.tscn").instance()
-    weapon_skin.base_skin = load("res://Components/Weapons/WeaponSkin/BaseSkins/TestBase.tscn").instance()
+    weapon_skin.ammo_skin = load("res://Components/Weapons/WeaponSkin/AmmoSkins/TestAmmoSkin.tscn").instance()
+    weapon_skin.stock_skin = load("res://Components/Weapons/WeaponSkin/StockSkins/TestStockSkin.tscn").instance()
+    weapon_skin.trigger_skin = load("res://Components/Weapons/WeaponSkin/TriggerSkins/TestTriggerSkin.tscn").instance()
+    weapon_skin.barrel_skin = load("res://Components/Weapons/WeaponSkin/BarrelSkins/TestBarrelSkin.tscn").instance()
+    weapon_skin.base_skin = load("res://Components/Weapons/WeaponSkin/BaseSkins/TestBaseSkin.tscn").instance()
     
     # # change weapon trigger script
     # weapon.trigger.set_script(load("res://Components/Attachments/Triggers/BurstTrigger.gd"))
-    
     print(GameSaver.save_game(1))

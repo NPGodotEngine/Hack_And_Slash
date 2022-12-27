@@ -58,23 +58,23 @@ data = {
 "weapon_base_skin": {
 "attachments": {
 "Ammo": {
-"name": "TestAmmo",
+"name": "TestAmmoSkin",
 "script_name": "Component.gd"
 },
 "Barrel": {
-"name": "TestBarrel",
+"name": "TestBarrelSkin",
 "script_name": "BarrelSkin.gd"
 },
 "Stock": {
-"name": "TestStock",
+"name": "TestStockSkin",
 "script_name": "Component.gd"
 },
 "Trigger": {
-"name": "TestTrigger",
+"name": "TestTriggerSkin",
 "script_name": "Component.gd"
 }
 },
-"name": "TestBase",
+"name": "TestBaseSkin",
 "script_name": "WeaponBaseSkin.gd"
 }
 },

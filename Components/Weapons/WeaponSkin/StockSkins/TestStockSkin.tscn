@@ -3,7 +3,7 @@
 [ext_resource path="res://Components/Component.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Weapons/MarineGun/Marine_gun.png" type="Texture" id=2]
 
-[node name="TestStock" type="Sprite"]
+[node name="TestStockSkin" type="Sprite"]
 self_modulate = Color( 0.384314, 0.372549, 0.372549, 1 )
 position = Vector2( -9, 2 )
 texture = ExtResource( 2 )
