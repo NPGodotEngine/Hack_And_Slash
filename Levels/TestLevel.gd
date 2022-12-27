@@ -35,6 +35,6 @@ func change() -> void:
     weapon_skin.base_skin = load("res://Components/Weapons/WeaponSkin/BaseSkins/TestBase.tscn").instance()
     
     # # change weapon trigger script
-    weapon.trigger.set_script(load("res://Components/Attachments/Triggers/BurstTrigger.gd"))
+    # weapon.trigger.set_script(load("res://Components/Attachments/Triggers/BurstTrigger.gd"))
     
     print(GameSaver.save_game(1))

@@ -155,5 +155,5 @@ func load(save_game:SaveGame) -> void:
 	
 	for weapon_state in weapons:
 		var new_weapon: Weapon = weapon_blueprint.instance()
-		new_weapon.from_dictionary(weapon_state)
 		add_weapon(new_weapon)
+		new_weapon.from_dictionary(weapon_state)

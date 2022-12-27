@@ -1,4 +1,5 @@
 tool
+class_name Barrel
 extends Attachment
 
 func _on_component_ready() -> void:

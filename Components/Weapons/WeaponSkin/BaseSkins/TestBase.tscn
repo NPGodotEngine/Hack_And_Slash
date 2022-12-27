@@ -7,7 +7,7 @@
 [ext_resource path="res://Components/Weapons/WeaponSkin/BarrelSkins/MarineGunBarrel.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/Weapons/MarineGun/Marine_gun.png" type="Texture" id=6]
 
-[node name="PurpleGunBase" type="Sprite"]
+[node name="TestBase" type="Sprite"]
 self_modulate = Color( 0.8, 0.14902, 0.956863, 1 )
 texture = ExtResource( 6 )
 region_enabled = true

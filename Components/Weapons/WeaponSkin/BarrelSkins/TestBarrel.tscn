@@ -3,7 +3,7 @@
 [ext_resource path="res://Assets/Weapons/MarineGun/Marine_gun.png" type="Texture" id=1]
 [ext_resource path="res://Components/Weapons/WeaponSkin/BarrelSkins/BarrelSkin.gd" type="Script" id=2]
 
-[node name="DoubleBarrel" type="Sprite"]
+[node name="TestBarrel" type="Sprite"]
 self_modulate = Color( 0.121569, 0.0705882, 0.972549, 1 )
 position = Vector2( 8, 0 )
 texture = ExtResource( 1 )

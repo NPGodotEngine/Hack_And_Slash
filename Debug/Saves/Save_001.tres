@@ -18,7 +18,7 @@ data = {
 "accuracy_multiplier": 0.0,
 "damage_multiplier": 0.0,
 "name": "Ammo",
-"script_name": "STDAmmo.gd"
+"script_name": "DefaultAmmo.gd"
 },
 "Barrel": {
 "accuracy_multiplier": 0.0,
@@ -47,12 +47,10 @@ data = {
 },
 "Trigger": {
 "accuracy_multiplier": 0.0,
-"burst_duration": 1.0,
 "damage_multiplier": 0.0,
 "name": "Trigger",
-"number_of_bursts": 3,
-"script_name": "BurstTrigger.gd",
-"wait_to_next_burst": 1.0
+"script_name": "AutoTrigger.gd",
+"trigger_duration": 1.0
 },
 "WeaponSkin": {
 "name": "WeaponSkin",
@@ -60,23 +58,23 @@ data = {
 "weapon_base_skin": {
 "attachments": {
 "Ammo": {
-"name": "RedAmmo",
+"name": "TestAmmo",
 "script_name": "Component.gd"
 },
 "Barrel": {
-"name": "DoubleBarrel",
+"name": "TestBarrel",
 "script_name": "BarrelSkin.gd"
 },
 "Stock": {
-"name": "DarkStock",
+"name": "TestStock",
 "script_name": "Component.gd"
 },
 "Trigger": {
-"name": "FastTrigger",
+"name": "TestTrigger",
 "script_name": "Component.gd"
 }
 },
-"name": "PurpleGunBase",
+"name": "TestBase",
 "script_name": "WeaponBaseSkin.gd"
 }
 },

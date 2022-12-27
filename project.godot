@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Components/Attachments/Attachment.gd"
 }, {
+"base": "Attachment",
+"class": "Barrel",
+"language": "GDScript",
+"path": "res://Components/Attachments/Barrels/Barrel.gd"
+}, {
 "base": "Component",
 "class": "BarrelSkin",
 "language": "GDScript",
@@ -109,6 +114,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Cores/SaveGame.gd"
 }, {
+"base": "Attachment",
+"class": "Stock",
+"language": "GDScript",
+"path": "res://Components/Attachments/Stocks/Stock.gd"
+}, {
 "base": "Line2D",
 "class": "Trail",
 "language": "GDScript",
@@ -143,6 +153,7 @@ _global_script_class_icons={
 "AccuracyComp": "",
 "Ammo": "",
 "Attachment": "",
+"Barrel": "",
 "BarrelSkin": "",
 "Bullet": "",
 "Character": "",
@@ -160,6 +171,7 @@ _global_script_class_icons={
 "Player": "",
 "Projectile": "",
 "SaveGame": "",
+"Stock": "",
 "Trail": "",
 "Trigger": "",
 "Weapon": "",

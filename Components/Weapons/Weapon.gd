@@ -19,6 +19,20 @@ onready var _accuracy_comp: AccuracyComp = (get_accuracy_comp())
 # Critical strike component
 onready var _critical_strike_comp: CriticalStrikeComp = (get_critical_strike_comp())
 
+# Weapon stock attachment
+onready var stock: Stock = (get_stock()) setget , get_stock
+
+# Weapon trigger attachment
+onready var trigger: Trigger = (get_trigger()) setget , get_trigger
+
+# Weapon ammo attachment
+onready var ammo: Ammo = (get_ammo()) setget , get_ammo
+
+# Weapon barrel attachment
+onready var barrel: Barrel = (get_barrel()) setget , get_barrel
+
+var alt: Attachment = null
+
 # Weapon skin
 ##
 # Skin for weapon visual
@@ -41,12 +55,6 @@ var weapon_damage: int = 0 setget , get_weapon_damage
 # attachments' accuracy and then
 # cap between 0.0 ~ 1.0
 var weapon_accuracy: float = 0.0 setget , get_weapon_accuracy
-
-var stock: Attachment = null
-var trigger: Trigger = null
-var ammo: Ammo = null
-var barrel: Attachment = null
-var alt: Attachment = null
 
 # Weapon manager manage this weapon
 var weapon_manager = null
@@ -112,6 +120,46 @@ func get_critical_strike_comp() -> CriticalStrikeComp:
 	new_cs.name = "CriticalStrike"
 	new_cs.owner = self
 	return new_cs
+
+func get_stock() -> Stock:
+	for node in get_children():
+		if node is Stock:
+			return node
+	var new_stock = load("res://Components/Attachments/Stocks/DefaultStock.tscn").instance()
+	add_child(new_stock)
+	new_stock.name = "Stock"
+	new_stock.owner = self
+	return new_stock
+
+func get_trigger() -> Trigger:
+	for node in get_children():
+		if node is Trigger:
+			return node
+	var new_trigger = load("res://Components/Attachments/Triggers/DefaultTrigger.tscn").instance()
+	add_child(new_trigger)
+	new_trigger.name = "Trigger"
+	new_trigger.owner = self
+	return new_trigger
+
+func get_ammo() -> Ammo:
+	for node in get_children():
+		if node is Ammo:
+			return node
+	var new_ammo = load("res://Components/Attachments/Ammos/DefaultAmmo.tscn").instance()
+	add_child(new_ammo)
+	new_ammo.name = "Ammo"
+	new_ammo.owner = self
+	return new_ammo
+
+func get_barrel() -> Barrel:
+	for node in get_children():
+		if node is Barrel:
+			return node
+	var new_barrel = load("res://Components/Attachments/Barrels/DefaultBarrel.tscn").instance()
+	add_child(new_barrel)
+	new_barrel.name = "Barrel"
+	new_barrel.owner = self
+	return new_barrel
 
 func get_weapon_skin() -> WeaponSkin:
 	for node in get_children():
