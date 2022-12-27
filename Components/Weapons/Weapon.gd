@@ -213,6 +213,23 @@ func calculate_attachments_accuracy_multiplier() -> float:
 	
 	return total_acc
 
+# Get hit damage from weapon
+func get_hit_damage() -> HitDamage:
+	var damage: int = get_weapon_damage()
+	var critical: bool = _critical_strike_comp.is_critical()
+	var color: Color = (_critical_strike_comp.critical_strike_color if critical 
+										else _damage_comp.damage_color)
+	var hit_damage: HitDamage = HitDamage.new().init(
+		weapon_manager.get_manager_owner(),
+		self,
+		damage,
+		critical,
+		_critical_strike_comp.critical_strike_multiplier,
+		color
+	)
+
+	return hit_damage
+
 # Execute weapon
 ##
 # `from_position` global position for weapon to shoot from

@@ -65,24 +65,6 @@ func _on_damage_changed(from, to) -> void:
 func _on_accuracy_changed(from, to) -> void:
 	._on_accuracy_changed(from, to)
 
-
-# Get hit damage from weapon
-func get_hit_damage() -> HitDamage:
-	var damage: int = get_weapon_damage()
-	var critical: bool = _critical_strike_comp.is_critical()
-	var color: Color = (_critical_strike_comp.critical_strike_color if critical 
-										else _damage_comp.damage_color)
-	var hit_damage: HitDamage = HitDamage.new().init(
-		weapon_manager.get_manager_owner(),
-		self,
-		damage,
-		critical,
-		_critical_strike_comp.critical_strike_multiplier,
-		color
-	)
-
-	return hit_damage
-
 func to_dictionary() -> Dictionary:
 	var state: Dictionary = .to_dictionary()
 
