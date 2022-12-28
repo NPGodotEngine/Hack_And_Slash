@@ -21,8 +21,17 @@ func cancel_action() -> void:
 
 func to_dictionary() -> Dictionary:
 	var state: Dictionary = .to_dictionary()
-	state["damage_multiplier"] = damage_multiplier
-	state["accuracy_multiplier"] = accuracy_multiplier
+
+	var properties: Dictionary = state[PROPERTIES_KEY]
+	properties["damage_multiplier"] = damage_multiplier
+	properties["accuracy_multiplier"] = accuracy_multiplier
 
 	return state
+
+func from_dictionary(state: Dictionary) -> void:
+	.from_dictionary(state)
+
+	var properties: Dictionary = state[PROPERTIES_KEY]
+	damage_multiplier = properties["damage_multiplier"]
+	accuracy_multiplier = properties["accuracy_multiplier"]
 

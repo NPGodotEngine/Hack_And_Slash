@@ -6,82 +6,126 @@
 script = ExtResource( 1 )
 save_version = "0.0.1"
 data = {
-"WeaponManager": {
+"weapon_manager": {
 "weapons": [ {
-"Accuracy": {
+"node_name": "WeaponBlueprint",
+"properties": {
+},
+"resource_name": "WeaponBlueprint.tscn",
+"script_name": "WeaponBlueprint.gd",
+"sub_node_states": {
+"accuracy": {
+"node_name": "AccuracyComp",
+"properties": {
 "accuracy": 0.5,
-"name": "Accuracy",
-"script_name": "AccuracyComp.gd",
 "spread_range_degree": 10.0
 },
-"Ammo": {
+"resource_name": "AccuracyComp.tscn",
+"script_name": "AccuracyComp.gd"
+},
+"ammo_att": {
+"node_name": "DefaultAmmo",
+"properties": {
 "accuracy_multiplier": 0.0,
-"damage_multiplier": 0.0,
-"name": "Ammo",
+"damage_multiplier": 0.0
+},
+"resource_name": "DefaultAmmo.tscn",
 "script_name": "DefaultAmmo.gd"
 },
-"Barrel": {
+"appearance": {
+"node_name": "WeaponSkin",
+"properties": {
+},
+"resource_name": "WeaponSkin.tscn",
+"script_name": "WeaponSkin.gd",
+"sub_node_states": {
+"base_skin": {
+"node_name": "MarineGunBase",
+"properties": {
+},
+"resource_name": "MarineGunBase.tscn",
+"script_name": "WeaponBaseSkin.gd",
+"sub_node_states": {
+"ammo": {
+"node_name": "MarineGunAmmo",
+"properties": {
+},
+"resource_name": "MarineGunAmmo.tscn",
+"script_name": "Component.gd"
+},
+"barrel": {
+"node_name": "MarineGunBarrel",
+"properties": {
+},
+"resource_name": "MarineGunBarrel.tscn",
+"script_name": "BarrelSkin.gd"
+},
+"stock": {
+"node_name": "MarineGunStock",
+"properties": {
+},
+"resource_name": "MarineGunStock.tscn",
+"script_name": "Component.gd"
+},
+"trigger": {
+"node_name": "MarineGunTrigger",
+"properties": {
+},
+"resource_name": "MarineGunTrigger.tscn",
+"script_name": "Component.gd"
+}
+}
+}
+}
+},
+"barrel_att": {
+"node_name": "DefaultBarrel",
+"properties": {
 "accuracy_multiplier": 0.0,
-"damage_multiplier": 0.0,
-"name": "Barrel",
+"damage_multiplier": 0.0
+},
+"resource_name": "DefaultBarrel.tscn",
 "script_name": "Barrel.gd"
 },
-"CriticalStrike": {
+"critical_strike": {
+"node_name": "CriticalStrikeComp",
+"properties": {
 "critical_strike_chance": 0.0,
 "critical_strike_multiplier": 1.0,
 "max_critical_strike_chance": 1.0,
-"min_critical_strike_chance": 0.0,
-"name": "CriticalStrike",
+"min_critical_strike_chance": 0.0
+},
+"resource_name": "CriticalStrikeComp.tscn",
 "script_name": "CriticalStrikeComp.gd"
 },
-"Damage": {
-"damage": 10,
-"name": "Damage",
+"damage": {
+"node_name": "DamageComp",
+"properties": {
+"damage": 10
+},
+"resource_name": "DamageComp.tscn",
 "script_name": "DamageComp.gd"
 },
-"Stock": {
+"stock_att": {
+"node_name": "DefaultStock",
+"properties": {
 "accuracy_multiplier": 0.0,
-"damage_multiplier": 0.0,
-"name": "Stock",
+"damage_multiplier": 0.0
+},
+"resource_name": "DefaultStock.tscn",
 "script_name": "Stock.gd"
 },
-"Trigger": {
+"trigger_att": {
+"node_name": "DefaultTrigger",
+"properties": {
 "accuracy_multiplier": 0.0,
-"burst_duration": 1.0,
 "damage_multiplier": 0.0,
-"name": "Trigger",
-"number_of_bursts": 3,
-"script_name": "BurstTrigger.gd",
-"wait_to_next_burst": 1.0
+"trigger_duration": 1.0
 },
-"WeaponSkin": {
-"name": "WeaponSkin",
-"script_name": "WeaponSkin.gd",
-"weapon_base_skin": {
-"attachments": {
-"Ammo": {
-"name": "TestAmmoSkin",
-"script_name": "Component.gd"
-},
-"Barrel": {
-"name": "TestBarrelSkin",
-"script_name": "BarrelSkin.gd"
-},
-"Stock": {
-"name": "TestStockSkin",
-"script_name": "Component.gd"
-},
-"Trigger": {
-"name": "TestTriggerSkin",
-"script_name": "Component.gd"
+"resource_name": "DefaultTrigger.tscn",
+"script_name": "AutoTrigger.gd"
 }
-},
-"name": "TestBaseSkin",
-"script_name": "WeaponBaseSkin.gd"
 }
-},
-"name": "WeaponBlueprint",
-"script_name": "WeaponBlueprint.gd"
 } ]
 }
 }

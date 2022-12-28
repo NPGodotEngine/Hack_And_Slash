@@ -44,6 +44,8 @@ func set_current_weapon_index(value:int) -> void:
 # Setup weapon manager
 func setup() -> void:
 	.setup()
+	for weapon in weapon_slots:
+		weapon.setup()
 
 func _physics_process(_delta: float) -> void:
 	var weapon: Weapon = get_weapon_by(current_weapon_index)
@@ -143,17 +145,19 @@ func save(save_game:SaveGame) -> void:
 		var weapon: Weapon = slot
 		var weapon_state: Dictionary = weapon.to_dictionary()
 		state["weapons"].append(weapon_state)
-	save_game.data[name] = state
+	save_game.data["weapon_manager"] = state
 
 func load(save_game:SaveGame) -> void:
 	for weapon in weapon_slots:
 		(weapon as Component).remove_from_parent()
 	weapon_slots.clear()
 
-	var state: Dictionary = save_game.data[name]
+	var state: Dictionary = save_game.data["weapon_manager"]
 	var weapons: Array = state["weapons"]
 	
 	for weapon_state in weapons:
 		var new_weapon: Weapon = weapon_blueprint.instance()
 		add_weapon(new_weapon)
 		new_weapon.from_dictionary(weapon_state)
+		new_weapon.setup()
+		

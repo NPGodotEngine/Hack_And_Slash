@@ -15,9 +15,9 @@ func _ready() -> void:
                         var weapon: Weapon = weapon_scene.instance()
                         node.add_weapon(weapon, true)
                  
-    # print(GameSaver.save_game(1))
+    print(GameSaver.save_game(1))
     print(GameSaver.load_saved_game(1))
-    change()
+    # change()
 
 func change() -> void:
     var player: Player = null
@@ -34,6 +34,7 @@ func change() -> void:
     weapon_skin.barrel_skin = load("res://Components/Weapons/WeaponSkin/BarrelSkins/TestBarrelSkin.tscn").instance()
     weapon_skin.base_skin = load("res://Components/Weapons/WeaponSkin/BaseSkins/TestBaseSkin.tscn").instance()
     
-    # # change weapon trigger script
-    # weapon.trigger.set_script(load("res://Components/Attachments/Triggers/BurstTrigger.gd"))
+    # # change weapon trigger
+    weapon.trigger = load("res://Components/Attachments/Triggers/BurstTrigger.tscn").instance()
+    player.weapon_manager.setup()
     print(GameSaver.save_game(1))

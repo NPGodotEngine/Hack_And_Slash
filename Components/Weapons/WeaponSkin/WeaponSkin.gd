@@ -92,24 +92,26 @@ func get_fire_positions() -> Array:
 func to_dictionary() -> Dictionary:
 	var state: Dictionary = .to_dictionary()
 
-	state["weapon_base_skin"] = _weapon_base_pos.get_child(0).to_dictionary()
+	var sub_node_states: Dictionary = {}
+	sub_node_states["base_skin"] = _weapon_base_pos.get_child(0).to_dictionary()
+	state["sub_node_states"] = sub_node_states
 
 	return state
 
 func from_dictionary(state:Dictionary) -> void:
 	.from_dictionary(state)
 
-	if _weapon_base_pos == null: return
-
-	var base_skin_state: Dictionary = state["weapon_base_skin"]
+	assert(_weapon_base_pos, "missing Position2D for weapon base skin")
 
 	for node in _weapon_base_pos.get_children():
 		var child_node: Component = _weapon_base_pos.get_child(0)
 		if child_node:
 			child_node.remove_from_parent()
-		
-	var base_skin_name = base_skin_state["name"] + ".tscn"
-	var base_skin_node: WeaponBaseSkin = load(Global.find_file_in_directory(base_skin_name)).instance()
+	
+	var sub_node_states: Dictionary = state["sub_node_states"]
+	var base_skin_state: Dictionary = sub_node_states["base_skin"]
+
+	var base_skin_node: WeaponBaseSkin = Global.create_instance(base_skin_state[RESOURCE_NAME_KEY])
 	_weapon_base_pos.add_child(base_skin_node)
 	base_skin_node.from_dictionary(base_skin_state)
 		

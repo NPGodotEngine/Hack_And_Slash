@@ -34,6 +34,13 @@ func set_damage(value:int) -> void:
 func to_dictionary() -> Dictionary:
 	var state: Dictionary = .to_dictionary()
 
-	state["damage"] = damage
+	var properties: Dictionary = state[PROPERTIES_KEY]
+	properties["damage"] = damage
 
 	return state
+
+func from_dictionary(state: Dictionary) -> void:
+	.from_dictionary(state)
+
+	var properties: Dictionary = state[PROPERTIES_KEY]
+	damage = properties["damage"]

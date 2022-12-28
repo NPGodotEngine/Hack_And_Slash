@@ -13,30 +13,38 @@ var _trigger_timer: Timer = null
 var _is_trigger_ready: bool = true
 
 func _on_component_ready() -> void:
-    ._on_component_ready()
+	._on_component_ready()
 
-    _trigger_timer = Timer.new()
-    add_child(_trigger_timer)
-    _trigger_timer.one_shot = true
-    _trigger_timer.connect("timeout", self, "_on_trigger_timer_timeout")
+	_trigger_timer = Timer.new()
+	add_child(_trigger_timer)
+	_trigger_timer.one_shot = true
+	_trigger_timer.connect("timeout", self, "_on_trigger_timer_timeout")
 
 func pull_trigger() -> void:
-    if not _is_trigger_ready:
-        return
-    
-    # set trigger not ready
-    _is_trigger_ready = false
+	if not _is_trigger_ready:
+		return
+	
+	# set trigger not ready
+	_is_trigger_ready = false
 
-    # time until next pull ready
-    _trigger_timer.start(trigger_duration)
-    emit_signal("trigger_pulled")
+	# time until next pull ready
+	_trigger_timer.start(trigger_duration)
+	emit_signal("trigger_pulled")
 
 func _on_trigger_timer_timeout() -> void:
-    _is_trigger_ready = true
+	_is_trigger_ready = true
 
 func to_dictionary() -> Dictionary:
-    var state: Dictionary = .to_dictionary()
-    state["trigger_duration"] = trigger_duration
-    
-    return state
-    
+	var state: Dictionary = .to_dictionary()
+
+	var properties: Dictionary = state[PROPERTIES_KEY]
+	properties["trigger_duration"] = trigger_duration
+
+	return state
+
+func from_dictionary(state: Dictionary) -> void:
+	.from_dictionary(state)
+
+	var properties: Dictionary = state[PROPERTIES_KEY]
+	trigger_duration = properties["trigger_duration"]
+	

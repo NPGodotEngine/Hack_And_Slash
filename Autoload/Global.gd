@@ -80,3 +80,24 @@ func find_file_in_directory(file_name:String, path:String="res://"):
         file_or_dir = directory.get_next()
     
     return absolute_file_path
+
+# Create an instance from file name
+# Return null if not found
+##
+# `file_name`: name of file
+# `extension`: file extension default is `tscn`
+# `search_dir`: directory to search from default is project root
+func create_instance(file_name:String, extension:String = "tscn", search_dir:String = "res://") -> Node:
+    var basename: String = file_name.get_basename()
+    basename = basename + "." + extension
+
+    var file_path: String = Global.find_file_in_directory(basename, search_dir)
+    if file_path == null:
+        return null
+    
+    var instance: Node = load(file_path).instance()
+    if instance:
+         return instance
+        
+    return null
+    

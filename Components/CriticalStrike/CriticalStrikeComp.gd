@@ -79,9 +79,19 @@ func is_critical() -> bool:
 func to_dictionary() -> Dictionary:
     var state: Dictionary = .to_dictionary()
 
-    state["critical_strike_multiplier"] = critical_strike_multiplier
-    state["min_critical_strike_chance"] = min_critical_strike_chance
-    state["max_critical_strike_chance"] = max_critical_strike_chance
-    state["critical_strike_chance"] = critical_strike_chance
+    var properties: Dictionary = state[PROPERTIES_KEY]
+    properties["critical_strike_multiplier"] = critical_strike_multiplier
+    properties["min_critical_strike_chance"] = min_critical_strike_chance
+    properties["max_critical_strike_chance"] = max_critical_strike_chance
+    properties["critical_strike_chance"] = critical_strike_chance
 
     return state
+
+func from_dictionary(state: Dictionary) -> void:
+    .from_dictionary(state)
+
+    var properties: Dictionary = state[PROPERTIES_KEY]
+    critical_strike_multiplier = properties["critical_strike_multiplier"]
+    min_critical_strike_chance = properties["min_critical_strike_chance"]
+    max_critical_strike_chance = properties["max_critical_strike_chance"]
+    critical_strike_chance = properties["critical_strike_chance"]

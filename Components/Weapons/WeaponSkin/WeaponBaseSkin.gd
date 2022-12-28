@@ -51,37 +51,36 @@ func set_barrel_skin(new_barrel_skin:Component) -> void:
     _barrel_pos.add_child(new_barrel_skin)
 
 func to_dictionary() -> Dictionary:
-    var skin_state: Dictionary = .to_dictionary()
+    var state: Dictionary = .to_dictionary()
 
-    var attachements_state = {}
-    attachements_state["Stock"] = _stock_pos.get_child(0).to_dictionary()
-    attachements_state["Trigger"] = _trigger_pos.get_child(0).to_dictionary()
-    attachements_state["Ammo"] = _ammo_pos.get_child(0).to_dictionary()
-    attachements_state["Barrel"] = _barrel_pos.get_child(0).to_dictionary()
+    var sub_node_states: Dictionary = {}
+    sub_node_states["stock"] = _stock_pos.get_child(0).to_dictionary()
+    sub_node_states["trigger"] = _trigger_pos.get_child(0).to_dictionary()
+    sub_node_states["ammo"] = _ammo_pos.get_child(0).to_dictionary()
+    sub_node_states["barrel"] = _barrel_pos.get_child(0).to_dictionary()
+    state["sub_node_states"] = sub_node_states
 
-    skin_state["attachments"] = attachements_state
-
-    return skin_state
+    return state
 
 func from_dictionary(state: Dictionary) -> void:
     .from_dictionary(state)
-    var attachement_state = state["attachments"]
+    var sub_node_states: Dictionary = state["sub_node_states"]
 
-    var stock_name = attachement_state["Stock"]["name"] + ".tscn"
-    var stock_skin_node = load(Global.find_file_in_directory(stock_name)).instance()
+    var stock_skin_node: Component = Global.create_instance(sub_node_states["stock"][RESOURCE_NAME_KEY])
     set_stock_skin(stock_skin_node)
+    stock_skin_node.from_dictionary(sub_node_states["stock"])
 
-    var trigger_name = attachement_state["Trigger"]["name"] + ".tscn"
-    var trigger_skin_node = load(Global.find_file_in_directory(trigger_name)).instance()
+    var trigger_skin_node: Component = Global.create_instance(sub_node_states["trigger"][RESOURCE_NAME_KEY])
     set_trigger_skin(trigger_skin_node)
+    trigger_skin_node.from_dictionary(sub_node_states["trigger"])
 
-    var ammo_name = attachement_state["Ammo"]["name"] + ".tscn"
-    var ammo_skin_node = load(Global.find_file_in_directory(ammo_name)).instance()
+    var ammo_skin_node: Component = Global.create_instance(sub_node_states["ammo"][RESOURCE_NAME_KEY])
     set_ammo_skin(ammo_skin_node)
+    ammo_skin_node.from_dictionary(sub_node_states["ammo"])
 
-    var barrel_name = attachement_state["Barrel"]["name"] + ".tscn"
-    var barrel_skin_node = load(Global.find_file_in_directory(barrel_name)).instance()
+    var barrel_skin_node: Component = Global.create_instance(sub_node_states["barrel"][RESOURCE_NAME_KEY])
     set_barrel_skin(barrel_skin_node)
+    barrel_skin_node.from_dictionary(sub_node_states["barrel"])
         
 
 

@@ -106,11 +106,20 @@ func _on_wait_next_burst_timer_timeout() -> void:
 
 func to_dictionary() -> Dictionary:
     var state: Dictionary = .to_dictionary()
-    state["number_of_bursts"] = number_of_bursts
-    state["burst_duration"] = burst_duration
-    state["wait_to_next_burst"] = wait_to_next_burst
+
+    var properties: Dictionary = state[PROPERTIES_KEY]
+    properties["number_of_bursts"] = number_of_bursts
+    properties["burst_duration"] = burst_duration
+    properties["wait_to_next_burst"] = wait_to_next_burst
     
     return state
 
+func from_dictionary(state: Dictionary) -> void:
+    .from_dictionary(state)
+
+    var properties: Dictionary = state[PROPERTIES_KEY]
+    number_of_bursts = properties["number_of_bursts"]
+    burst_duration = properties["burst_duration"]
+    wait_to_next_burst = properties["wait_to_next_burst"]
 
 

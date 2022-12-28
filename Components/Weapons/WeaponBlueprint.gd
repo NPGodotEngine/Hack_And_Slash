@@ -38,7 +38,7 @@ func _on_trigger_pulled() -> void:
 		var hit_damage: HitDamage = get_hit_damage()
 		var global_mouse_pos: Vector2 = get_global_mouse_position()
 		var direction = global_mouse_pos - global_position
-		var spread_direction: Vector2 = _accuracy_comp.get_random_spread(direction, get_weapon_accuracy())
+		var spread_direction: Vector2 = get_accuracy_comp().get_random_spread(direction, get_weapon_accuracy())
 		var to_new_pos: Vector2 =  (spread_direction * global_position.distance_to(global_mouse_pos) 
 														+ fire_position)
 		if ammo:
@@ -65,20 +65,6 @@ func _on_damage_changed(from, to) -> void:
 func _on_accuracy_changed(from, to) -> void:
 	._on_accuracy_changed(from, to)
 
-func to_dictionary() -> Dictionary:
-	var state: Dictionary = .to_dictionary()
 
-	for node in get_children():
-		if node is Component:
-			var comp_state = node.to_dictionary()
-			state[node.name] = comp_state
-
-	return state
-
-func from_dictionary(state:Dictionary) -> void:
-	.from_dictionary(state)
-	for key in state:
-		var node: Component = get_node(key)
-		node.from_dictionary(state[key])
 	
 

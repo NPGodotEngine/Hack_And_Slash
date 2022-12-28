@@ -51,7 +51,16 @@ func get_random_spread(face_dir:Vector2, accuracy_scaler:float = 1.0) -> Vector2
 
 func to_dictionary() -> Dictionary:
     var state: Dictionary = .to_dictionary()
-    state["spread_range_degree"] = spread_range_degree
-    state["accuracy"] = accuracy
+    
+    var properties: Dictionary = state[PROPERTIES_KEY]
+    properties["spread_range_degree"] = spread_range_degree
+    properties["accuracy"] = accuracy
     
     return state
+
+func from_dictionary(state:Dictionary) -> void:
+    .from_dictionary(state)
+
+    var properties: Dictionary = state[PROPERTIES_KEY]
+    spread_range_degree = properties["spread_range_degree"]
+    accuracy = properties["accuracy"]
