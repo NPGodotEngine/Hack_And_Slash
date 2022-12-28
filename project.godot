@@ -112,7 +112,7 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "SaveGame",
 "language": "GDScript",
-"path": "res://Cores/SaveGame.gd"
+"path": "res://Cores/SaveLoad/SaveGame.gd"
 }, {
 "base": "Attachment",
 "class": "Stock",
@@ -189,6 +189,7 @@ config/icon="res://icon.png"
 
 Global="*res://Autoload/Global.gd"
 GameSaver="*res://Autoload/GameSaver.gd"
+Events="*res://Autoload/Events.gd"
 
 [display]
 

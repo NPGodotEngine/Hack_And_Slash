@@ -2,6 +2,8 @@
 class_name WeaponManager
 extends Component
 
+# warning-ignore-all: RETURN_VALUE_DISCARDED
+
 signal weapon_index_changed(from_index, to_index)
 
 
@@ -40,7 +42,12 @@ func set_current_weapon_index(value:int) -> void:
 
 ## Override ##
 
-
+func _on_component_ready() -> void:
+	._on_component_ready()
+	
+	GameSaver.connect("save_game", self, "_on_save_game")
+	GameSaver.connect("load_game", self, "_on_load_game")
+	
 # Setup weapon manager
 func setup() -> void:
 	.setup()
@@ -137,7 +144,7 @@ func remove_weapon_by(index:int) -> void:
 func get_manager_owner():
 	return get_parent()
 	
-func save(save_game:SaveGame) -> void:
+func _on_save_game(save_game:SaveGame) -> void:
 	var state: Dictionary = {
 		"weapons": [],
 	}
@@ -147,7 +154,7 @@ func save(save_game:SaveGame) -> void:
 		state["weapons"].append(weapon_state)
 	save_game.data["weapon_manager"] = state
 
-func load(save_game:SaveGame) -> void:
+func _on_load_game(save_game:SaveGame) -> void:
 	for weapon in weapon_slots:
 		(weapon as Component).remove_from_parent()
 	weapon_slots.clear()

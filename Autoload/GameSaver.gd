@@ -1,6 +1,13 @@
 extends Node
 
+signal save_game(saved_file)
+
+signal load_game(saved_file)
+
+# Save file folder
 const SAVE_FOLDER = "res://Debug/Saves"
+
+# Save file name template
 const SAVE_NAME_TEMPLATE = "Save_%03d.tres"
 
 # Save game
@@ -23,13 +30,14 @@ func save_game(id:int) -> int:
 			push_error("Create directory fail %s, code: %d" % [SAVE_FOLDER, mk_dir_state])
 			return mk_dir_state
 	
-	# Tell all nodes in tree to save
-	# All nodes that are in group `save` and
-	# have save method
-	for node in get_tree().get_nodes_in_group("save"):
-		if node.has_method("save"):
-			node.save(save_game)
-	
+	# # Tell all nodes in tree to save
+	# # All nodes that are in group `save` and
+	# # have save method
+	# for node in get_tree().get_nodes_in_group("persist"):
+	# 	if node.has_method("save"):
+	# 		node.save(save_game)
+	emit_signal("save_game", save_game)
+
 	# Save game
 	var save_file_path: String = SAVE_FOLDER.plus_file(SAVE_NAME_TEMPLATE % id)
 	var save_state: int = ResourceSaver.save(save_file_path, save_game)
@@ -55,11 +63,12 @@ func load_saved_game(id:int) -> int:
 		push_error("Load save game fail %s" % save_file_path)
 		return ERR_FILE_CANT_READ
 
-	# Tell all nodes in tree to load
-	# All nodes that are in group `save` and
-	# have load method
-	for node in get_tree().get_nodes_in_group("save"):
-		if node.has_method("load"):
-			node.load(save_game)
+	# # Tell all nodes in tree to load
+	# # All nodes that are in group `save` and
+	# # have load method
+	# for node in get_tree().get_nodes_in_group("persist"):
+	# 	if node.has_method("load"):
+	# 		node.load(save_game)
+	emit_signal("load_game", save_game)
 
 	return OK 
