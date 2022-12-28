@@ -23,6 +23,11 @@ const SCRIPT_NAME_KEY = "script_name"
 # during deserialization
 const PROPERTIES_KEY = "properties"
 
+# Use this key to retrieve node's 
+# sub node states
+# during deserialization
+const SUB_NODE_STATE_KEY = "sub_node_states"
+
 func _ready() -> void:
     connect("script_changed", self, "_on_script_changed")
     _on_component_ready()
@@ -61,13 +66,17 @@ func remove_from_parent(delete:bool = true):
 ##
 # Return a dictionary which contain following:
 ##
-# node's name `NODE_NAME_KEY`
+# node's name 
+# `NODE_NAME_KEY`
 ##
 # node's resource name if node is an instance of other scene
 # `RESOURCE_NAME_KEY`
 ##
 # node's properties only serializied properties
 # `PROPERTIES_KEY`
+##
+# node's sub node states
+# `SUB_NODE_STATE_KEY`
 ##
 # node's script name if it has script
 # `SCRIPT_NAME_KEY`
@@ -80,8 +89,11 @@ func to_dictionary() -> Dictionary:
     # add resource file name
     component_dict[RESOURCE_NAME_KEY] = self.filename.get_file()
 
-    # add an empty properties dictionary
+    # add an empty dictionary for properties
     component_dict[PROPERTIES_KEY] = {}
+
+    # add an empty dictionary for sub node states
+    component_dict[SUB_NODE_STATE_KEY] = {}
 
     # add component script name
     component_dict[SCRIPT_NAME_KEY] = ""

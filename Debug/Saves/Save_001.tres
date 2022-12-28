@@ -21,7 +21,9 @@ data = {
 "spread_range_degree": 10.0
 },
 "resource_name": "AccuracyComp.tscn",
-"script_name": "AccuracyComp.gd"
+"script_name": "AccuracyComp.gd",
+"sub_node_states": {
+}
 },
 "ammo_att": {
 "node_name": "DefaultAmmo",
@@ -30,7 +32,9 @@ data = {
 "damage_multiplier": 0.0
 },
 "resource_name": "DefaultAmmo.tscn",
-"script_name": "DefaultAmmo.gd"
+"script_name": "DefaultAmmo.gd",
+"sub_node_states": {
+}
 },
 "appearance": {
 "node_name": "WeaponSkin",
@@ -40,39 +44,47 @@ data = {
 "script_name": "WeaponSkin.gd",
 "sub_node_states": {
 "base_skin": {
-"node_name": "MarineGunBase",
+"node_name": "TestBaseSkin",
 "properties": {
 },
-"resource_name": "MarineGunBase.tscn",
+"resource_name": "TestBaseSkin.tscn",
 "script_name": "WeaponBaseSkin.gd",
 "sub_node_states": {
 "ammo": {
-"node_name": "MarineGunAmmo",
+"node_name": "TestAmmoSkin",
 "properties": {
 },
-"resource_name": "MarineGunAmmo.tscn",
-"script_name": "Component.gd"
+"resource_name": "TestAmmoSkin.tscn",
+"script_name": "Component.gd",
+"sub_node_states": {
+}
 },
 "barrel": {
-"node_name": "MarineGunBarrel",
+"node_name": "TestBarrelSkin",
 "properties": {
 },
-"resource_name": "MarineGunBarrel.tscn",
-"script_name": "BarrelSkin.gd"
+"resource_name": "TestBarrelSkin.tscn",
+"script_name": "BarrelSkin.gd",
+"sub_node_states": {
+}
 },
 "stock": {
-"node_name": "MarineGunStock",
+"node_name": "TestStockSkin",
 "properties": {
 },
-"resource_name": "MarineGunStock.tscn",
-"script_name": "Component.gd"
+"resource_name": "TestStockSkin.tscn",
+"script_name": "Component.gd",
+"sub_node_states": {
+}
 },
 "trigger": {
-"node_name": "MarineGunTrigger",
+"node_name": "TestTriggerSkin",
 "properties": {
 },
-"resource_name": "MarineGunTrigger.tscn",
-"script_name": "Component.gd"
+"resource_name": "TestTriggerSkin.tscn",
+"script_name": "Component.gd",
+"sub_node_states": {
+}
 }
 }
 }
@@ -85,7 +97,9 @@ data = {
 "damage_multiplier": 0.0
 },
 "resource_name": "DefaultBarrel.tscn",
-"script_name": "Barrel.gd"
+"script_name": "Barrel.gd",
+"sub_node_states": {
+}
 },
 "critical_strike": {
 "node_name": "CriticalStrikeComp",
@@ -96,7 +110,9 @@ data = {
 "min_critical_strike_chance": 0.0
 },
 "resource_name": "CriticalStrikeComp.tscn",
-"script_name": "CriticalStrikeComp.gd"
+"script_name": "CriticalStrikeComp.gd",
+"sub_node_states": {
+}
 },
 "damage": {
 "node_name": "DamageComp",
@@ -104,7 +120,9 @@ data = {
 "damage": 10
 },
 "resource_name": "DamageComp.tscn",
-"script_name": "DamageComp.gd"
+"script_name": "DamageComp.gd",
+"sub_node_states": {
+}
 },
 "stock_att": {
 "node_name": "DefaultStock",
@@ -113,17 +131,23 @@ data = {
 "damage_multiplier": 0.0
 },
 "resource_name": "DefaultStock.tscn",
-"script_name": "Stock.gd"
+"script_name": "Stock.gd",
+"sub_node_states": {
+}
 },
 "trigger_att": {
-"node_name": "DefaultTrigger",
+"node_name": "BurstTrigger",
 "properties": {
 "accuracy_multiplier": 0.0,
+"burst_duration": 1.0,
 "damage_multiplier": 0.0,
-"trigger_duration": 1.0
+"number_of_bursts": 3,
+"wait_to_next_burst": 1.0
 },
-"resource_name": "DefaultTrigger.tscn",
-"script_name": "AutoTrigger.gd"
+"resource_name": "BurstTrigger.tscn",
+"script_name": "BurstTrigger.gd",
+"sub_node_states": {
+}
 }
 }
 } ]

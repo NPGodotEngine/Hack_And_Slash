@@ -15,9 +15,9 @@ func _ready() -> void:
                         var weapon: Weapon = weapon_scene.instance()
                         node.add_weapon(weapon, true)
                  
-    print(GameSaver.save_game(1))
+    # print(GameSaver.save_game(1))
     print(GameSaver.load_saved_game(1))
-    # change()
+    change()
 
 func change() -> void:
     var player: Player = null

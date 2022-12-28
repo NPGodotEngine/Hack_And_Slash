@@ -235,9 +235,6 @@ func _get_configuration_warning() -> String:
 	if get_weapon_appearance() == null:
 		return "Weapon must have a component as child with name WeaponSkin script"
 
-	# for a in _attachments:
-	# 	print(a.name)
-	# 	print(a.attachment_type)
 	if get_attachment_by_type(Global.AttachmentType.STOCK) == null:
 		return "Weapon must have 1 stock attachment"
 	if get_attachment_by_type(Global.AttachmentType.TRIGGER) == null:
@@ -285,32 +282,43 @@ func _setup_stock() -> void:
 
 func _setup_trigger() -> void:
 	trigger.setup()
-	trigger.connect("trigger_pulled", self, "_on_trigger_pulled")
+	if not trigger.is_connected("trigger_pulled", self, "_on_trigger_pulled"):
+		trigger.connect("trigger_pulled", self, "_on_trigger_pulled")
 
 func _setup_ammo() -> void:
 	ammo.setup()
-	ammo.connect("ammo_depleted", self, "_on_ammo_depleted")
-	ammo.connect("ammo_count_changed", self, "_on_ammo_count_changed")
-	ammo.connect("begin_reloading", self, "_on_begin_reloading")
-	ammo.connect("end_reloading", self, "_on_end_reloading")
+	if not ammo.is_connected("ammo_depleted", self, "_on_ammo_depleted"):
+		ammo.connect("ammo_depleted", self, "_on_ammo_depleted")
+	if not ammo.is_connected("ammo_count_changed", self, "_on_ammo_count_changed"):
+		ammo.connect("ammo_count_changed", self, "_on_ammo_count_changed")
+	if not ammo.is_connected("begin_reloading", self, "_on_begin_reloading"):
+		ammo.connect("begin_reloading", self, "_on_begin_reloading")
+	if not ammo.is_connected("end_reloading", self, "_on_end_reloading"):
+		ammo.connect("end_reloading", self, "_on_end_reloading")
 
 func _setup_barrel() -> void:
 	barrel.setup()
 
 func _setup_damage_comp() -> void:
 	damage_comp.setup()
-	damage_comp.connect("damage_changed", self, "_on_damage_changed")
+	if not damage_comp.is_connected("damage_changed", self, "_on_damage_changed"):
+		damage_comp.connect("damage_changed", self, "_on_damage_changed")
 
 func _setup_accuracy_comp() -> void:
 	accuracy_comp.setup()
-	accuracy_comp.connect("accuracy_changed", self, "_on_accuracy_changed")
+	if not accuracy_comp.is_connected("accuracy_changed", self, "_on_accuracy_changed"):
+		accuracy_comp.connect("accuracy_changed", self, "_on_accuracy_changed")
 
 func _setup_critical_strike_comp() -> void:
 	critical_strike_comp.setup()
-	critical_strike_comp.connect("critical_strike_multiplier_changed", self, "_on_critical_multiplier_changed")
-	critical_strike_comp.connect("critical_strike_chance_changed", self, "_on_critical_chance_changed")
-	critical_strike_comp.connect("min_critical_strike_chance_changed", self, "_on_min_critical_chance_changed")
-	critical_strike_comp.connect("max_critical_strike_chance_changed", self, "_on_max_critical_chance_changed")
+	if not critical_strike_comp.is_connected("critical_strike_multiplier_changed", self, "_on_critical_multiplier_changed"):
+		critical_strike_comp.connect("critical_strike_multiplier_changed", self, "_on_critical_multiplier_changed")
+	if not critical_strike_comp.is_connected("critical_strike_chance_changed", self, "_on_critical_chance_changed"):
+		critical_strike_comp.connect("critical_strike_chance_changed", self, "_on_critical_chance_changed")
+	if not critical_strike_comp.is_connected("min_critical_strike_chance_changed", self, "_on_min_critical_chance_changed"):
+		critical_strike_comp.connect("min_critical_strike_chance_changed", self, "_on_min_critical_chance_changed")
+	if not critical_strike_comp.is_connected("max_critical_strike_chance_changed", self, "_on_max_critical_chance_changed"):
+		critical_strike_comp.connect("max_critical_strike_chance_changed", self, "_on_max_critical_chance_changed")
 
 func _setup_weapon_appearance() -> void:
 	weapon_appearance.setup()
@@ -447,7 +455,7 @@ func _on_max_critical_chance_changed(from, to) -> void:
 func to_dictionary() -> Dictionary:
 	var state: Dictionary = .to_dictionary()
 
-	var sub_node_states: Dictionary = {}
+	var sub_node_states: Dictionary = state[SUB_NODE_STATE_KEY]
 	sub_node_states["damage"] = damage_comp.to_dictionary()
 	sub_node_states["accuracy"] = accuracy_comp.to_dictionary()
 	sub_node_states["critical_strike"] = critical_strike_comp.to_dictionary()
@@ -456,14 +464,13 @@ func to_dictionary() -> Dictionary:
 	sub_node_states["ammo_att"] = ammo.to_dictionary()
 	sub_node_states["barrel_att"] = barrel.to_dictionary()
 	sub_node_states["appearance"] = weapon_appearance.to_dictionary()
-	state["sub_node_states"] = sub_node_states
 
 	return state
 
 func from_dictionary(state:Dictionary) -> void:
 	.from_dictionary(state)
 	
-	var sub_node_states: Dictionary = state["sub_node_states"]
+	var sub_node_states: Dictionary = state[SUB_NODE_STATE_KEY]
 
 	var damage_component: DamageComp = Global.create_instance(sub_node_states["damage"][RESOURCE_NAME_KEY])
 	set_damage_comp(damage_component)

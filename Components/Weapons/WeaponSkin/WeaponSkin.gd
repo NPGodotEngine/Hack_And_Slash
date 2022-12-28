@@ -92,9 +92,8 @@ func get_fire_positions() -> Array:
 func to_dictionary() -> Dictionary:
 	var state: Dictionary = .to_dictionary()
 
-	var sub_node_states: Dictionary = {}
+	var sub_node_states: Dictionary = state[SUB_NODE_STATE_KEY]
 	sub_node_states["base_skin"] = _weapon_base_pos.get_child(0).to_dictionary()
-	state["sub_node_states"] = sub_node_states
 
 	return state
 
@@ -108,7 +107,7 @@ func from_dictionary(state:Dictionary) -> void:
 		if child_node:
 			child_node.remove_from_parent()
 	
-	var sub_node_states: Dictionary = state["sub_node_states"]
+	var sub_node_states: Dictionary = state[SUB_NODE_STATE_KEY]
 	var base_skin_state: Dictionary = sub_node_states["base_skin"]
 
 	var base_skin_node: WeaponBaseSkin = Global.create_instance(base_skin_state[RESOURCE_NAME_KEY])

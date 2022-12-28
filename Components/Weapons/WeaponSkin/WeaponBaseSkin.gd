@@ -53,18 +53,18 @@ func set_barrel_skin(new_barrel_skin:Component) -> void:
 func to_dictionary() -> Dictionary:
     var state: Dictionary = .to_dictionary()
 
-    var sub_node_states: Dictionary = {}
+    var sub_node_states: Dictionary = state[SUB_NODE_STATE_KEY]
     sub_node_states["stock"] = _stock_pos.get_child(0).to_dictionary()
     sub_node_states["trigger"] = _trigger_pos.get_child(0).to_dictionary()
     sub_node_states["ammo"] = _ammo_pos.get_child(0).to_dictionary()
     sub_node_states["barrel"] = _barrel_pos.get_child(0).to_dictionary()
-    state["sub_node_states"] = sub_node_states
 
     return state
 
 func from_dictionary(state: Dictionary) -> void:
     .from_dictionary(state)
-    var sub_node_states: Dictionary = state["sub_node_states"]
+
+    var sub_node_states: Dictionary = state[SUB_NODE_STATE_KEY]
 
     var stock_skin_node: Component = Global.create_instance(sub_node_states["stock"][RESOURCE_NAME_KEY])
     set_stock_skin(stock_skin_node)
