@@ -33,6 +33,10 @@ var _ignored_bodies: Array = []
 
 
 ## Override ##
+func _init() -> void:
+    ._init()
+    bullet_type = Global.BulletType.PROJECTILE
+    
 func _ready() -> void:
     if Engine.editor_hint: return
 

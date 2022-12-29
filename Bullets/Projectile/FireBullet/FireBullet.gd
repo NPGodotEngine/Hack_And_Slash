@@ -1,3 +1,4 @@
+tool
 class_name FireBullet
 extends Projectile
 
@@ -11,6 +12,12 @@ var split_count_left: int = 0
 # if it hit something
 var n_splits: int = 0
 
+func _get_configuration_warning() -> String:
+    var hit_box_node: HitBox = get_node("HitBox")
+    if hit_box_node == null:
+        return "Requried a node of HitBox as child"
+
+    return ""
 
 func _ready() -> void:
     $HitBox.connect("contacted_hurt_box", self, "_on_contact_hurt_box")

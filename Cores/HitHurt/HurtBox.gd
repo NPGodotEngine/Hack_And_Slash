@@ -24,9 +24,10 @@ func _on_area_entered(area:Area2D) -> void:
 
 # Add new mask to layer
 func add_layer_mask(new_mask:int) -> void:
-    collision_layer |= new_mask
+    layer_mask |= new_mask
+    collision_layer = layer_mask
 
 # Remove a mask from layer
 func remove_layer_mask(mask:int) -> void:
-    collision_layer ^= mask 
-
+    layer_mask ^= mask 
+    collision_layer = layer_mask

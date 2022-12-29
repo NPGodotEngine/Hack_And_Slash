@@ -26,9 +26,11 @@ func _ready() -> void:
 # Add new hit mask
 func add_hit_mask(new_mask:int) -> void:
 	# bitwise OR
-	collision_mask |= new_mask
+	hit_mask |= new_mask
+	collision_mask = hit_mask
 
 # Remove a hit mask
 func remove_hit_mask(mask:int) -> void:
 	# bitwise XOR
-	collision_mask ^= mask
+	hit_mask ^= mask
+	collision_mask = hit_mask

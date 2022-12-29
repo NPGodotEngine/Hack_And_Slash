@@ -7,7 +7,7 @@ extends Node2D
 
 
 # Bullet type `BulletType` in Global.gd
-export (Global.BulletType) var bullet_type: int = Global.BulletType.PROJECTILE
+var bullet_type: int = Global.BulletType.PROJECTILE
 
 # Bullet hit damage
 var hit_damage: HitDamage = null
