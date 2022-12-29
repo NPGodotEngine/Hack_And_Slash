@@ -32,9 +32,9 @@ func shoot_ammo(from_position:Vector2, to_position:Vector2, hit_damage:HitDamage
         Global.add_to_scene_tree(bullet)
 
         bullet.setup(from_position, to_position, bullet_speed, hit_damage, bullet_life_span, bullet_penetration_chance)
-        bullet.connect("on_projectile_hit", self, "_on_bullet_hit")
+        bullet.connect("projectile_hit", self, "_on_projectile_hit")
 
         _set_round_left(_round_left - rounds_per_shot)
 
-func _on_bullet_hit(bullet, body) -> void:
-    pass
+func _on_projectile_hit(hurt_box:HurtBox) -> void:
+    print(hurt_box)

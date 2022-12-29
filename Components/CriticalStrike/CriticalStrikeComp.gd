@@ -35,7 +35,7 @@ export (Color) var critical_strike_color: Color = Color.red
 ##
 # The chance to hit a
 # critical strike
-export (float, 0.0, 1.0) var critical_strike_chance = min_critical_strike_chance setget set_critical_strike_chance
+export (float, 0.0, 1.0) var critical_strike_chance = 0.3 setget set_critical_strike_chance
 
 
 

@@ -5,8 +5,10 @@ extends Bullet
 # warning-ignore-all:UNUSED_SIGNAL 
 # warning-ignore-all:UNUSED_ARGUMENT 
 
-# Emit when projectile hit a body
-signal on_projectile_hit(projectile, body)
+
+# Emit when projectile hit a HurtBox
+signal projectile_hit(hurt_box)
+
 
 # Bullet _speed
 var _speed := 200.0
@@ -20,9 +22,6 @@ var _life_span_timer: Timer = null
 # Bullet travel direction
 var _direction: Vector2 = Vector2.ZERO
 
-# Hit damage
-var _hit_damage: HitDamage = null
-
 # Penetration chance 0.0 ~ 1.0
 var _penetration_chance: float = 0.0
 
@@ -31,7 +30,6 @@ var _velocity: Vector2 = Vector2.ZERO
 
 # Bodies to ignored by projectile
 var _ignored_bodies: Array = []
-
 
 
 ## Override ##
@@ -72,14 +70,14 @@ func setup(from_position:Vector2, to_position:Vector2, speed:float,
     global_position = from_position
     _direction = (to_position - from_position).normalized() 
     _speed = speed
-    _hit_damage = hit_damage
     _life_span = life_span
     _penetration_chance = penetration_chance
+    hit_damage = hit_damage
 
     if not _life_span_timer:
         yield(self, "ready") 
         # start life span timer
-        _life_span_timer.start(_life_span)
+        _life_span_timer.start(_life_span) 
 
 # Move projectile
 ##

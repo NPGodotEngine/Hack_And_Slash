@@ -104,7 +104,7 @@ data = {
 "critical_strike": {
 "node_name": "CriticalStrikeComp",
 "properties": {
-"critical_strike_chance": 0.0,
+"critical_strike_chance": 0.3,
 "critical_strike_multiplier": 1.0,
 "max_critical_strike_chance": 1.0,
 "min_critical_strike_chance": 0.0

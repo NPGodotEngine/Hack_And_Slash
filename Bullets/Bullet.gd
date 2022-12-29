@@ -1,6 +1,13 @@
 class_name Bullet
 extends Node2D
 
-# Bullet type `BulletType` in Global.gd
-export (Global.BulletType) var bullet_type
+# warning-ignore-all: UNUSED_ARGUMENT
+# warning-ignore-all: RETURN_VALUE_DISCARDED
 
+
+
+# Bullet type `BulletType` in Global.gd
+export (Global.BulletType) var bullet_type: int = Global.BulletType.PROJECTILE
+
+# Bullet hit damage
+var hit_damage: HitDamage = null

@@ -1,21 +1,40 @@
 class_name CryoBullet
 extends Projectile
 
+# warning-ignore-all: RETURN_VALUE_DISCARDED
+
+
 # Acceleration curve
 ##
 # A curve that can be custom defined curve
 # Acceleration would base on curve
-var _acceleration_curve: Curve
+export (Curve) var _acceleration_curve: Curve
 
 # Max speed of bullet
-var _max_speed: float = _speed
+export var _max_speed: float = _speed
 
-onready var detection_area = $DetectionArea
+
+func _ready() -> void:
+    $HitBox.connect("contacted_hurt_box", self, "_on_contact_hurt_box")
+
+func setup(from_position:Vector2, to_position:Vector2, speed:float, 
+    hit_damage:HitDamage, life_span:float, penetration_chance:float) -> void:
+    .setup(from_position, to_position, speed, hit_damage, life_span, penetration_chance)
+
+    $HitBox.hit_damage = hit_damage
+
+func _on_contact_hurt_box(hurt_box:HurtBox) -> void:
+    if _ignored_bodies.has(hurt_box): 
+        return
+
+    emit_signal("projectile_hit", hurt_box)
+
+    # free projectile if not penetrated
+    if not _is_penetrated():
+        queue_free()
 
 
 ## Override ##
-func _ready() -> void:
-    detection_area.connect("body_entered", self, "_on_bullet_hit_body")
 	
 func _move_projectile(delta:float) -> void:
 	var current_speed: float = get_current_speed()
@@ -25,22 +44,6 @@ func _move_projectile(delta:float) -> void:
 	global_rotation = _direction.angle()
 	global_position += _velocity
 ## Override ##
-
-# Call when this projectile hit a physics body
-func _on_bullet_hit_body(body:Node) -> void:
-    if _ignored_bodies.has(body): return
-
-    if not body is Character:
-        queue_free()
-        return
-
-    if body.has_method("take_damage"):
-        emit_signal("on_projectile_hit", self, body)
-        body.take_damage(_hit_damage)
-    
-    # free projectile if not penetrated
-    if not _is_penetrated():
-        queue_free()
 
 
 # Get current speed

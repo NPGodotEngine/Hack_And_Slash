@@ -1,22 +1,22 @@
 extends Projectile
 
-onready var detection_area = $DetectionArea
+# warning-ignore-all: RETURN_VALUE_DISCARDED
 
 func _ready() -> void:
-    detection_area.connect("body_entered", self, "_on_bullet_hit_body")
+    $HitBox.connect("contacted_hurt_box", self, "_on_contact_hurt_box")
 
-# Call when this projectile hit a physics body
-func _on_bullet_hit_body(body:Node) -> void:
-    if _ignored_bodies.has(body): return
+func setup(from_position:Vector2, to_position:Vector2, speed:float, 
+    hit_damage:HitDamage, life_span:float, penetration_chance:float) -> void:
+    .setup(from_position, to_position, speed, hit_damage, life_span, penetration_chance)
 
-    if not body is Character:
-        queue_free()
+    $HitBox.hit_damage = hit_damage
+
+func _on_contact_hurt_box(hurt_box:HurtBox) -> void:
+    if _ignored_bodies.has(hurt_box): 
         return
 
-    if body.has_method("take_damage"):
-        emit_signal("on_projectile_hit", self, body)
-        body.take_damage(_hit_damage)
-    
+    emit_signal("projectile_hit", hurt_box)
+
     # free projectile if not penetrated
     if not _is_penetrated():
         queue_free()

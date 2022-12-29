@@ -27,11 +27,24 @@ onready var weapon_manager: WeaponManager = $WeaponManager
 onready var _health_comp: HealthComp = $HealthComp
 onready var _level_exp_comp: LevelExpComp = $LevelExpComp
 onready var _damage_comp: DamageComp = $DamageComp
+onready var _hurt_box: HurtBox = $HurtBox
 
 export (PackedScene) var _damage_label_scene = preload("res://Interface/HUD/DamageLabel.tscn")
 export (Vector2) var _damage_label_offset = Vector2.ZERO 
 
 
+func _ready() -> void:
+	_hurt_box.connect("take_damage", self, "_on_take_damage")
+
+	# components' signal
+	_level_exp_comp.connect("level_up", self, "_on_level_up")
+	_health_comp.connect("health_depleted", self, "_on_health_depleted")
+	_health_comp.connect("health_changed", self, "_on_health_changed")
+	_health_comp.connect("max_health_changed", self, "_on_max_health_changed")
+	_damage_comp.connect("damage_changed", self, "_on_damage_changed")
+
+	# character signal
+	connect("die", self, "_on_die")
 
 ## Override ##
 
@@ -43,17 +56,6 @@ func setup() -> void:
 	_health_comp.setup()
 	_level_exp_comp.setup()
 	_damage_comp.setup()
-	
-	# components' signal
-	_level_exp_comp.connect("level_up", self, "_on_level_up")
-	_health_comp.connect("health_depleted", self, "_on_health_depleted")
-	_health_comp.connect("health_changed", self, "_on_health_changed")
-	_health_comp.connect("max_health_changed", self, "_on_max_health_changed")
-	_damage_comp.connect("damage_changed", self, "_on_damage_changed")
-
-	# character signal
-	connect("take_damage", self, "_on_take_damage")
-	connect("die", self, "_on_die")
 
 	# update state
 	_update_state()
@@ -84,27 +86,6 @@ func move_character(_delta:float) -> void:
 
 	# Move player
 	velocity = move_and_slide(velocity)
-
-func take_damage(hit_damage:HitDamage) -> void:
-	.take_damage(hit_damage)
-	# if character is dead do nothing
-	if is_dead: return
-
-	var total_damage = hit_damage._damage
-
-	# if critical hit
-	if hit_damage._is_critical:
-		total_damage += total_damage * hit_damage._critical_multiplier
-	
-	# set new health
-	_health_comp.health -= total_damage
-
-	emit_signal("take_damage", hit_damage, total_damage)
-
-	print("%s take damage:%d, critical:%s critical_multiplier:%f" % [
-		self.name, total_damage, 
-		hit_damage._is_critical,
-		hit_damage._critical_multiplier])
 
 func die() -> void:
 	.die()
@@ -167,10 +148,27 @@ func _on_max_health_changed(_from_max_health:int, _to_max_health:int) -> void:
 func _on_health_depleted() -> void:
 	set_is_dead(true)
 
-func _on_take_damage(hit_damage:HitDamage, total_damage:int) -> void:
-	# prompt damage number
-	prompt_damage_number(total_damage, hit_damage)
+func _on_take_damage(hit_damage:HitDamage) -> void:
+	# if character is dead do nothing
+	if is_dead: return
+
+	var total_damage = hit_damage._damage
+
+	# if critical hit
+	if hit_damage._is_critical:
+		total_damage += total_damage * hit_damage._critical_multiplier
+	
+	# set new health
+	_health_comp.health -= total_damage
+
 	_update_health_bar()
+
+	prompt_damage_number(total_damage, hit_damage)
+
+	print("%s take damage:%d, critical:%s critical_multiplier:%f" % [
+		self.name, total_damage, 
+		hit_damage._is_critical,
+		hit_damage._critical_multiplier])
 
 func _on_damage_changed(from_damage:int, to_damage:int) -> void:
 	print("player damage changed %d -> %d" % [from_damage, to_damage])
@@ -231,7 +229,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			crit,
 			0.0,
 			Color.red if crit else Color.white)
-		take_damage(hit_damage)
+		_on_take_damage(hit_damage)
 		logging()
 
 func logging() -> void:

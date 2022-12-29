@@ -9,9 +9,6 @@ extends KinematicBody2D
 # warning-ignore-all: UNUSED_ARGUMENT
 # warning-ignore-all: UNUSED_SIGNAL
 
-# Emit when taking damage
-signal take_damage(hit_damage, total_damage)
-
 # Emit when character die
 signal die(character)
 
@@ -131,10 +128,6 @@ func physics_tick(delta: float) -> void:
 
 # Move character
 func move_character(delta:float) -> void:
-	pass
-
-# Character take damage
-func take_damage(hit_damage:HitDamage) -> void:
 	pass
 
 # Character die

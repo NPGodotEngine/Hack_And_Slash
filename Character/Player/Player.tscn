@@ -1,5 +1,6 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
+[ext_resource path="res://Cores/HitHurt/HurtBox.gd" type="Script" id=1]
 [ext_resource path="res://Character/Player/PlayerSkin.gd" type="Script" id=3]
 [ext_resource path="res://Character/Player/Player.gd" type="Script" id=4]
 [ext_resource path="res://Components/WeaponManager/WeaponManager.tscn" type="PackedScene" id=5]
@@ -198,6 +199,10 @@ tracks/3/keys = {
 radius = 19.0
 height = 26.0
 
+[sub_resource type="CapsuleShape2D" id=6]
+radius = 16.0
+height = 26.0
+
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 4 )
 
@@ -297,3 +302,11 @@ nine_patch_stretch = true
 
 [node name="WeaponManager" parent="." instance=ExtResource( 5 )]
 position = Vector2( 0, -13 )
+
+[node name="HurtBox" type="Area2D" parent="."]
+script = ExtResource( 1 )
+layer_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2( 0, -6 )
+shape = SubResource( 6 )
