@@ -1,6 +1,6 @@
 tool
 class_name Trigger
-extends Attachment
+extends WeaponModule
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 # warning-ignore-all: UNUSED_SIGNAL
@@ -11,7 +11,7 @@ signal trigger_pulled()
 func _on_component_ready() -> void:
     ._on_component_ready()
 
-    attachment_type = Global.AttachmentType.TRIGGER
+    module_type = Global.WeaponModuleType.TRIGGER
 
 # Pull trigger
 ##

@@ -37,4 +37,4 @@ func shoot_ammo(from_position:Vector2, to_position:Vector2, hit_damage:HitDamage
         _set_round_left(_round_left - rounds_per_shot)
 
 func _on_projectile_hit(hurt_box:HurtBox) -> void:
-    print(hurt_box)
+    pass

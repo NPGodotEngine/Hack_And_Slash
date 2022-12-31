@@ -1,5 +1,5 @@
 class_name Ammo
-extends Attachment
+extends WeaponModule
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 # warning-ignore-all: UNUSED_ARGUMENT
@@ -57,7 +57,7 @@ func _set_round_left(value:int) -> void:
 func _on_component_ready() -> void:
 	._on_component_ready()
 	
-	attachment_type = Global.AttachmentType.AMMO
+	module_type = Global.WeaponModuleType.AMMO
 		 
 	_reload_timer = Timer.new()
 	add_child(_reload_timer)

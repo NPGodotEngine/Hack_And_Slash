@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Components/Weapons/WeaponSkin/ReceiverSkin/WeaponReceiverSkin.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Weapons/MarineGun/Marine_gun.png" type="Texture" id=2]
+[ext_resource path="res://Components/Weapons/WeaponSkin/TriggerSkins/TriggerBlueprint1.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Components/Weapons/WeaponSkin/AmmoSkins/AmmoBlueprint1.tscn" type="PackedScene" id=5]
+
+[node name="ReceiverBlueprint1" type="Sprite"]
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 66, 22, 59, 19 )
+script = ExtResource( 1 )
+
+[node name="TriggerPos" type="Position2D" parent="."]
+show_behind_parent = true
+position = Vector2( -9, 3 )
+
+[node name="TriggerBlueprint1" parent="TriggerPos" instance=ExtResource( 4 )]
+
+[node name="AmmoPos" type="Position2D" parent="."]
+show_behind_parent = true
+position = Vector2( 4, 3 )
+
+[node name="AmmoBlueprint1" parent="AmmoPos" instance=ExtResource( 5 )]
+
+[node name="FirePointRoot" type="Position2D" parent="."]
+position = Vector2( 29, -3 )
+
+[node name="FirePos1" type="Position2D" parent="FirePointRoot"]

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Components/Weapons/WeaponModules/TriggerModules/AutoTrigger.gd" type="Script" id=1]
+
+[node name="AutoTriggerBlueprint" type="Node2D"]
+script = ExtResource( 1 )
+damage_multiplier = 0.0
+accuracy_multiplier = 0.0
+trigger_duration = 1.0

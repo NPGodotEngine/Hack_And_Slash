@@ -1,30 +1,20 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=7 format=2]
 
+[ext_resource path="res://Components/Weapons/WeaponSkin/WeaponSkinManager.gd" type="Script" id=1]
+[ext_resource path="res://Components/Weapons/WeaponReceiver/WeaponReceiverBlueprint.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Components/Weapons/WeaponBlueprint.gd" type="Script" id=4]
-[ext_resource path="res://Components/Weapons/WeaponSkin/WeaponSkin.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Components/Accuracy/AccuracyComp.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Components/CriticalStrike/CriticalStrikeComp.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Components/Damage/DamageComp.tscn" type="PackedScene" id=12]
-[ext_resource path="res://Components/Attachments/Ammos/DefaultAmmo.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Components/Attachments/Triggers/DefaultTrigger.tscn" type="PackedScene" id=15]
-[ext_resource path="res://Components/Attachments/Stocks/DefaultStock.tscn" type="PackedScene" id=16]
-[ext_resource path="res://Components/Attachments/Barrels/DefaultBarrel.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Components/Weapons/WeaponSkin/WeaponSkinBlueprint.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Components/Weapons/WeaponModules/AmmoModules/AmmoBlueprint.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Components/Weapons/WeaponModules/TriggerModules/AutoTriggerBlueprint.tscn" type="PackedScene" id=15]
 
 [node name="WeaponBlueprint" type="Node2D"]
 script = ExtResource( 4 )
 
-[node name="DamageComp" parent="." instance=ExtResource( 12 )]
+[node name="WeaponReceiver" parent="." instance=ExtResource( 2 )]
 
-[node name="AccuracyComp" parent="." instance=ExtResource( 7 )]
+[node name="AutoTriggerBlueprint" parent="." instance=ExtResource( 15 )]
 
-[node name="CriticalStrikeComp" parent="." instance=ExtResource( 8 )]
+[node name="AmmoBlueprint" parent="." instance=ExtResource( 14 )]
 
-[node name="WeaponSkin" parent="." instance=ExtResource( 6 )]
-
-[node name="DefaultStock" parent="." instance=ExtResource( 16 )]
-
-[node name="DefaultTrigger" parent="." instance=ExtResource( 15 )]
-
-[node name="DefaultAmmo" parent="." instance=ExtResource( 14 )]
-
-[node name="DefaultBarrel" parent="." instance=ExtResource( 17 )]
+[node name="WeaponSkinBlueprint" type="Node2D" parent="." instance=ExtResource( 6 )]
+script = ExtResource( 1 )

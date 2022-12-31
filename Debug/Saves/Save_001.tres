@@ -14,7 +14,75 @@ data = {
 "resource_name": "WeaponBlueprint.tscn",
 "script_name": "WeaponBlueprint.gd",
 "sub_node_states": {
-"accuracy": {
+"ammo_mod": {
+"node_name": "AmmoBlueprint",
+"properties": {
+"accuracy_multiplier": 0.0,
+"damage_multiplier": 0.0
+},
+"resource_name": "AmmoBlueprint.tscn",
+"script_name": "AmmoBlueprint.gd",
+"sub_node_states": {
+}
+},
+"appearance": {
+"node_name": "WeaponSkinBlueprint",
+"properties": {
+},
+"resource_name": "WeaponSkinBlueprint.tscn",
+"script_name": "WeaponSkinManager.gd",
+"sub_node_states": {
+"receiver_skin": {
+"node_name": "ReceiverBlueprint2",
+"properties": {
+},
+"resource_name": "ReceiverBlueprint2.tscn",
+"script_name": "WeaponReceiverSkin.gd",
+"sub_node_states": {
+"ammo": {
+"node_name": "AmmoBlueprint2",
+"properties": {
+},
+"resource_name": "AmmoBlueprint2.tscn",
+"script_name": "Component.gd",
+"sub_node_states": {
+}
+},
+"trigger": {
+"node_name": "TriggerBlueprint2",
+"properties": {
+},
+"resource_name": "TriggerBlueprint2.tscn",
+"script_name": "Component.gd",
+"sub_node_states": {
+}
+}
+}
+}
+}
+},
+"trigger_mod": {
+"node_name": "BurstTriggerBlueprint",
+"properties": {
+"accuracy_multiplier": 0.0,
+"burst_duration": 1.0,
+"damage_multiplier": 0.0,
+"number_of_bursts": 3,
+"wait_to_next_burst": 1.0
+},
+"resource_name": "BurstTriggerBlueprint.tscn",
+"script_name": "BurstTrigger.gd",
+"sub_node_states": {
+}
+},
+"weapon_receiver": {
+"node_name": "WeaponReceiver",
+"properties": {
+},
+"resource_name": "WeaponReceiverBlueprint.tscn",
+"script_name": "WeaponReceiver.gd",
+"sub_node_states": {
+"accuracy_comp": {
 "node_name": "AccuracyComp",
 "properties": {
 "accuracy": 0.5,
@@ -25,83 +93,7 @@ data = {
 "sub_node_states": {
 }
 },
-"ammo_att": {
-"node_name": "DefaultAmmo",
-"properties": {
-"accuracy_multiplier": 0.0,
-"damage_multiplier": 0.0
-},
-"resource_name": "DefaultAmmo.tscn",
-"script_name": "DefaultAmmo.gd",
-"sub_node_states": {
-}
-},
-"appearance": {
-"node_name": "WeaponSkin",
-"properties": {
-},
-"resource_name": "WeaponSkin.tscn",
-"script_name": "WeaponSkin.gd",
-"sub_node_states": {
-"base_skin": {
-"node_name": "TestBaseSkin",
-"properties": {
-},
-"resource_name": "TestBaseSkin.tscn",
-"script_name": "WeaponBaseSkin.gd",
-"sub_node_states": {
-"ammo": {
-"node_name": "TestAmmoSkin",
-"properties": {
-},
-"resource_name": "TestAmmoSkin.tscn",
-"script_name": "Component.gd",
-"sub_node_states": {
-}
-},
-"barrel": {
-"node_name": "TestBarrelSkin",
-"properties": {
-},
-"resource_name": "TestBarrelSkin.tscn",
-"script_name": "BarrelSkin.gd",
-"sub_node_states": {
-}
-},
-"stock": {
-"node_name": "TestStockSkin",
-"properties": {
-},
-"resource_name": "TestStockSkin.tscn",
-"script_name": "Component.gd",
-"sub_node_states": {
-}
-},
-"trigger": {
-"node_name": "TestTriggerSkin",
-"properties": {
-},
-"resource_name": "TestTriggerSkin.tscn",
-"script_name": "Component.gd",
-"sub_node_states": {
-}
-}
-}
-}
-}
-},
-"barrel_att": {
-"node_name": "DefaultBarrel",
-"properties": {
-"accuracy_multiplier": 0.0,
-"damage_multiplier": 0.0
-},
-"resource_name": "DefaultBarrel.tscn",
-"script_name": "Barrel.gd",
-"sub_node_states": {
-}
-},
-"critical_strike": {
+"critical_comp": {
 "node_name": "CriticalStrikeComp",
 "properties": {
 "critical_strike_chance": 0.3,
@@ -114,7 +106,7 @@ data = {
 "sub_node_states": {
 }
 },
-"damage": {
+"damage_comp": {
 "node_name": "DamageComp",
 "properties": {
 "damage": 10
@@ -123,30 +115,7 @@ data = {
 "script_name": "DamageComp.gd",
 "sub_node_states": {
 }
-},
-"stock_att": {
-"node_name": "DefaultStock",
-"properties": {
-"accuracy_multiplier": 0.0,
-"damage_multiplier": 0.0
-},
-"resource_name": "DefaultStock.tscn",
-"script_name": "Stock.gd",
-"sub_node_states": {
 }
-},
-"trigger_att": {
-"node_name": "BurstTrigger",
-"properties": {
-"accuracy_multiplier": 0.0,
-"burst_duration": 1.0,
-"damage_multiplier": 0.0,
-"number_of_bursts": 3,
-"wait_to_next_burst": 1.0
-},
-"resource_name": "BurstTrigger.tscn",
-"script_name": "BurstTrigger.gd",
-"sub_node_states": {
 }
 }
 }

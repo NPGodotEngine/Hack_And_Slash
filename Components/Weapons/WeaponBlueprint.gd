@@ -37,8 +37,8 @@ func _on_trigger_pulled() -> void:
 	for fire_position in weapon_appearance.fire_positions:
 		var hit_damage: HitDamage = get_hit_damage()
 		var global_mouse_pos: Vector2 = get_global_mouse_position()
-		var direction = global_mouse_pos - global_position
-		var spread_direction: Vector2 = get_accuracy_comp().get_random_spread(direction, get_weapon_accuracy())
+		var direction: Vector2 = global_mouse_pos - global_position
+		var spread_direction: Vector2 = weapon_receiver.get_spread_range(direction, get_weapon_accuracy())
 		var to_new_pos: Vector2 =  (spread_direction * global_position.distance_to(global_mouse_pos) 
 														+ fire_position)
 		if ammo:

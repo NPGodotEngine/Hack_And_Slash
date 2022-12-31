@@ -3,9 +3,9 @@
 [ext_resource path="res://Assets/Weapons/MarineGun/Marine_gun.png" type="Texture" id=1]
 [ext_resource path="res://Components/Component.gd" type="Script" id=2]
 
-[node name="MarineGunTrigger" type="Sprite"]
+[node name="TriggerBlueprint1" type="Sprite"]
 position = Vector2( 0, 5 )
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 92, 91, 8, 9 )
+region_rect = Rect2( 28, 27, 8, 9 )
 script = ExtResource( 2 )

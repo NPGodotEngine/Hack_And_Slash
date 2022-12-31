@@ -1,8 +1,8 @@
-class_name Attachment
+class_name WeaponModule
 extends Component
 
-# Attachment type
-var attachment_type: int = Global.AttachmentType.STOCK
+# Module type
+var module_type: int = Global.WeaponModuleType.TRIGGER
 
 # Attachment damage multiplier
 export (float, -1.0, 1.0) var damage_multiplier = 0.0

@@ -12,6 +12,8 @@ signal accuracy_changed(from_accuracy, to_accuracy)
 export (float) var spread_range_degree = 10.0
 
 # Accuracy
+##
+# value between 0.0 ~ 1.0
 export (float, 0.0, 1.0) var accuracy = 0.5 setget set_accuracy
 
 
