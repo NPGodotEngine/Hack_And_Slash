@@ -44,10 +44,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Bullets/Projectile/CryoBullet/CryoBullet.gd"
 }, {
-"base": "Component",
-"class": "DamageComp",
+"base": "Node",
+"class": "DamageComponent",
 "language": "GDScript",
-"path": "res://Components/Damage/DamageComp.gd"
+"path": "res://Scenes/Components/Damage/DamageComponent.gd"
 }, {
 "base": "Node2D",
 "class": "DamageLabel",
@@ -94,7 +94,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Cores/HitHurt/HurtBox.gd"
 }, {
-"base": "Character",
+"base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
 "path": "res://Character/Player/Player.gd"
@@ -157,7 +157,7 @@ _global_script_class_icons={
 "Component": "",
 "CriticalStrikeComp": "",
 "CryoBullet": "",
-"DamageComp": "",
+"DamageComponent": "",
 "DamageLabel": "",
 "ExpComponent": "",
 "FireBullet": "",

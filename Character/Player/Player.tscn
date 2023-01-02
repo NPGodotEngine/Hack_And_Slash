@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Cores/HitHurt/HurtBox.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Components/Exp/ExpComponent.tscn" type="PackedScene" id=2]
@@ -8,7 +8,6 @@
 [ext_resource path="res://Assets/Bar_progress.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Bar_under.png" type="Texture" id=8]
 [ext_resource path="res://Scenes/Components/Health/HealthComponent.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Components/Damage/DamageComp.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Assets/Marine/Marine_spritesheet.png" type="Texture" id=12]
 
 [sub_resource type="Animation" id=2]
@@ -205,6 +204,14 @@ height = 26.0
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 4 )
+max_movement_speed = null
+min_movement_speed = null
+drag_factor = null
+movement_speed = null
+_add_health_per_level = null
+_add_damage_per_level = null
+_damage_label_scene = null
+_damage_label_offset = null
 
 [node name="CharacterSkin" type="Node2D" parent="."]
 script = ExtResource( 3 )
@@ -294,11 +301,9 @@ texture_under = ExtResource( 8 )
 texture_progress = ExtResource( 7 )
 nine_patch_stretch = true
 
-[node name="HealthComp" parent="." instance=ExtResource( 10 )]
-
 [node name="ExpComponent" parent="." instance=ExtResource( 2 )]
 
-[node name="DamageComp" parent="." instance=ExtResource( 11 )]
+[node name="HealthComponent" parent="." instance=ExtResource( 10 )]
 
 [node name="WeaponManager" parent="." instance=ExtResource( 5 )]
 position = Vector2( 0, -13 )

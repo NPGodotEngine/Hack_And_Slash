@@ -2,10 +2,35 @@
 ##
 # Manage visual, movement, input
 class_name Player
-extends Character
+extends KinematicBody2D
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 # warning-ignore-all: UNUSED_ARGUMENT
+
+# Character's max movement speed
+##
+# Final scaled speed would be capped to this value
+# if it is greater than this value
+export (float) var max_movement_speed: float = 400.0
+
+# Character's min movement speed
+##
+# Final scaled speed would be capped to this value
+# if it is lower than this value
+export (float) var min_movement_speed: float = 0.0
+
+# How fast can player turn from 
+# one direction to another
+#
+# The higher the value the faster player can turn
+# and less the smooth of player motion
+export (float, 0.1, 1.0) var drag_factor: float = 0.5
+
+# Character movement speed
+##
+# Get this value will return a movement speed
+# scaled by movement speed multiplier
+export (float) var movement_speed: float = 200.0
 
 
 # Constant value for scaling up 
@@ -19,59 +44,42 @@ export (int) var _add_damage_per_level = 10
 # Player skin visual
 onready var _skin := $CharacterSkin
 
-onready var _health_bar := $HealthBar
+onready var _health_bar: TextureProgress = $HealthBar
 
 # Weapon manager
 onready var weapon_manager: WeaponManager = $WeaponManager
 
 onready var _health_comp: HealthComponent = $HealthComponent
-onready var _level_exp_comp: LevelExpComp = $LevelExpComp
-onready var _damage_comp: DamageComp = $DamageComp
+onready var _exp_comp: ExpComponent = $ExpComponent
 onready var _hurt_box: HurtBox = $HurtBox
 
 export (PackedScene) var _damage_label_scene = preload("res://Interface/HUD/DamageLabel.tscn")
 export (Vector2) var _damage_label_offset = Vector2.ZERO 
 
+# Player current velocity
+var velocity := Vector2.ZERO
+
+var is_dead: bool = false
 
 func _ready() -> void:
 	_hurt_box.connect("take_damage", self, "_on_take_damage")
 
-	# components' signal
-	_level_exp_comp.connect("level_up", self, "_on_level_up")
-	_health_comp.connect("health_depleted", self, "_on_health_depleted")
-	_health_comp.connect("health_changed", self, "_on_health_changed")
-	_health_comp.connect("max_health_changed", self, "_on_max_health_changed")
-	_damage_comp.connect("damage_changed", self, "_on_damage_changed")
+	_exp_comp.connect("progress_updated", self, "_on_progress_updated")
+	_exp_comp.connect("max_progress_reached", self, "_on_max_progress_reached")
+	_exp_comp.connect("xp_updated", self, "_on_xp_updated")
+	_exp_comp.connect("xp_required_updated", self, "_on_xp_required_updated")
 
-	# character signal
-	connect("die", self, "_on_die")
+	_health_comp.connect("health_updated", self, "_on_health_updated")
+	_health_comp.connect("max_health_updated", self, "_on_max_health_updated")
+	_health_comp.connect("low_health_alert", self, "_on_low_health")
+	_health_comp.connect("die", self, "_on_die")
 
-## Override ##
+func _physics_process(delta: float) -> void:
+	move_character(delta)
+	update_skin()
+	execute_weapons()
 
-func setup() -> void:
-	.setup()
-
-	# setup components
-	weapon_manager.setup()
-	_health_comp.setup()
-	_level_exp_comp.setup()
-	_damage_comp.setup()
-
-	# update state
-	_update_state()
-
-	# update health bar
-	_update_health_bar()
-
-	logging()
-
-func physics_tick(delta: float) -> void:
-	.physics_tick(delta)
-
-	_update_skin()
-	_execute_weapons()
-
-func move_character(_delta:float) -> void:
+func move_character(delta:float) -> void:
 	# Get direction from input
 	var direction: Vector2 = Vector2(
 		Input.get_axis("move_left", "move_right"),
@@ -79,7 +87,7 @@ func move_character(_delta:float) -> void:
 	).normalized()
 
 	# Smoothing player turing direction
-	var desired_velocity := direction * get_movement_speed()
+	var desired_velocity := direction * movement_speed
 	var steering_velocity = desired_velocity - velocity
 	steering_velocity  = steering_velocity * drag_factor
 	velocity += steering_velocity
@@ -87,28 +95,7 @@ func move_character(_delta:float) -> void:
 	# Move player
 	velocity = move_and_slide(velocity)
 
-func die() -> void:
-	.die()
-	_health_comp.health = 0
-
-## Override ##
-
-
-
-# Update player current state
-##
-# health, damage
-func _update_state() -> void :
-	# calculate max health and set max health
-	_health_comp.max_health = _health_comp.max_health + get_additional_health_by_level(_level_exp_comp._level)
-	
-	# set current health to max health
-	_health_comp.health = _health_comp.max_health
-
-	# increase current damage
-	_damage_comp.damage = _damage_comp.damage + get_additional_damage_by_level(_level_exp_comp._level)
-
-func _update_skin() -> void:
+func update_skin() -> void:
 	# Update skin 
 	var global_mouse_position := get_global_mouse_position()
 
@@ -117,7 +104,8 @@ func _update_skin() -> void:
 	else:
 		_skin.scale.x = 1.0 * _skin.scale.abs().x
 
-func _execute_weapons() -> void:
+
+func execute_weapons() -> void:
 	assert(weapon_manager, "weapon manager missing")
 
 	# execute weapon 
@@ -131,22 +119,29 @@ func _execute_weapons() -> void:
 	elif Input.is_action_just_released("secondary"):
 		weapon_manager.cancel_weapon_alt_execution()
 
-func _update_health_bar() -> void:
+func update_health_bar() -> void:
 	_health_bar.min_value = float(0)
 	_health_bar.max_value = float(_health_comp.max_health)
 	_health_bar.value = float(_health_comp.health)
 
-func _on_level_up(from_level:int, to_level:int) -> void:
-	_update_state()
+func _on_progress_updated(progress_context:ExpComponent.ProgressContext) -> void:
+	pass
 
-func _on_health_changed(_from_health:int, _to_health:int) -> void:
-	_update_health_bar()
+func _on_max_progress_reached(progress_context:ExpComponent.ProgressContext) -> void:
+	pass
 
-func _on_max_health_changed(_from_max_health:int, _to_max_health:int) -> void:
-	_update_health_bar()
+func _on_xp_updated(xp_context:ExpComponent.ExpContext) -> void:
+	pass
 
-func _on_health_depleted() -> void:
-	set_is_dead(true)
+func _on_xp_required_updated(xp_required_context:ExpComponent.ExpRequiredContext) -> void:
+	pass
+
+func _on_health_updated(health_context:HealthComponent.HealthContext) -> void:
+	_health_bar.value = health_context.updated_health
+
+func _on_max_health_updated(max_health_context:HealthComponent.MaxHealthContext) -> void:
+	_health_bar.max_value = max_health_context.updated_max_health
+
 
 func _on_take_damage(hit_damage:HitDamage) -> void:
 	# if character is dead do nothing
@@ -159,9 +154,7 @@ func _on_take_damage(hit_damage:HitDamage) -> void:
 		total_damage += total_damage * hit_damage._critical_multiplier
 	
 	# set new health
-	_health_comp.health -= total_damage
-
-	_update_health_bar()
+	_health_comp.damage(total_damage)
 
 	prompt_damage_number(total_damage, hit_damage)
 
@@ -170,11 +163,8 @@ func _on_take_damage(hit_damage:HitDamage) -> void:
 		hit_damage._is_critical,
 		hit_damage._critical_multiplier])
 
-func _on_damage_changed(from_damage:int, to_damage:int) -> void:
-	print("player damage changed %d -> %d" % [from_damage, to_damage])
-
-func _on_die(character:Character) -> void:
-	print("player die %d / %d" %[_health_comp.health, _health_comp.max_health])
+func _on_die() -> void:
+	print("player die")
 
 # Prompt damage number
 func prompt_damage_number(total_damage:int, hit_damage:HitDamage) -> void:
@@ -193,31 +183,18 @@ func prompt_damage_number(total_damage:int, hit_damage:HitDamage) -> void:
 				" (Crit)" if hit_damage._is_critical else ""
 			)
 
-# Get amount of additional health by character's current level
-# This exclude character's base health
-func get_additional_health_by_level(current_level:int) -> int:
-	current_level = int(max(0, min(current_level, _level_exp_comp._max_level))) 
-	return (current_level - 1) * _add_health_per_level
-
-# Get amount of additional damage by character's current level
-# This exclude character's base damage
-func get_additional_damage_by_level(current_level:int) -> int:
-	current_level = int(max(0, min(current_level, _level_exp_comp._max_level)))
-	return (current_level - 1) * _add_damage_per_level
-
 # Heal character
 func heal(amount:int) -> void:
 	if is_dead: return
 	
-	var new_health: int = int(max(0, min(_health_comp.health + amount,_health_comp.max_health)))
-	_health_comp.health = new_health
+	_health_comp.heal(amount)
 
 # for testing health bar
 func _unhandled_input(event: InputEvent) -> void:
 
 	if event.is_action_pressed("ui_down"): 
 		if not is_dead:
-			_level_exp_comp.add_exp(randi() % 10 + 1)
+			_exp_comp.increase_xp(randi() % 10 + 1)
 		logging()
 	
 	if event.is_action_pressed("ui_left"):
@@ -233,18 +210,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		logging()
 
 func logging() -> void:
-	print("level:%d, max_level:%d exp:%d, next_exp:%d, health:%d, max_health:%d, damage:%d, dead:%s" % 
-			[_level_exp_comp._level, 
-			_level_exp_comp._max_level, 
-			_level_exp_comp._current_exp, 
-			_level_exp_comp._next_level_exp_requried, 
-			_health_comp.health,
+	print("level:%d, max_level:%d exp:%d, next_exp:%d, health:%d, max_health:%d, dead:%s" % 
+			[_exp_comp._progress, 
+			_exp_comp.max_progress, 
+			_exp_comp._xp, 
+			_exp_comp._xp_required, 
+			_health_comp._health,
 			_health_comp.max_health, 
-			_damage_comp.damage, 
 			is_dead])
-	print("base_movement_speed:%f, speed:%f, movement_multiplier:%f" % [
-		movement_speed, 
-		get_movement_speed(), 
-		movement_speed_multiplier])
+	print("movement_speed:%f" % [movement_speed])
 		
 	

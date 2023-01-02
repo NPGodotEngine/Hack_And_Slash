@@ -3,16 +3,16 @@ extends Node
 
 class ProgressContext extends Resource:
     var previous_progress: float = 0.0
-    var progress_updated: float = 0.0
+    var updated_progress: float = 0.0
     var max_progress: float = 0.0
 
 class ExpContext extends Resource:
     var previous_xp: float = 0.0
-    var xp_updated: float = 0.0
+    var updated_xp: float = 0.0
 
 class ExpRequiredContext extends Resource:
     var previous_xp_required: float = 0.0
-    var xp_required_updated: float = 0.0
+    var updated_xp_required: float = 0.0
     
 
 # Emit when progress changed
@@ -68,7 +68,7 @@ func set_progress(value:float) -> void:
     
     var progress_context: ProgressContext = ProgressContext.new()
     progress_context.previous_progress = prev_progress
-    progress_context.progress_updated = _progress
+    progress_context.updated_progress = _progress
     progress_context.max_progress = max_progress
 
     emit_signal("progress_updated", progress_context)
@@ -89,7 +89,7 @@ func set_xp(value:float) -> void:
 
     var xp_context: ExpContext = ExpContext.new()
     xp_context.previous_xp = prev_xp
-    xp_context.xp_updated = _xp
+    xp_context.updated_xp = _xp
 
     emit_signal("xp_updated", xp_context)
 
@@ -106,7 +106,7 @@ func set_xp_required(value:float) -> void:
 
     var xp_required_context: ExpRequiredContext = ExpRequiredContext.new()
     xp_required_context.previous_xp_required = prev_xp_required
-    xp_required_context.xp_required_updated = _xp_required
+    xp_required_context.updated_xp_required = _xp_required
 
     emit_signal("xp_required_updated", xp_required_context)
 
