@@ -24,7 +24,7 @@ onready var _health_bar := $HealthBar
 # Weapon manager
 onready var weapon_manager: WeaponManager = $WeaponManager
 
-onready var _health_comp: HealthComp = $HealthComp
+onready var _health_comp: HealthComponent = $HealthComponent
 onready var _level_exp_comp: LevelExpComp = $LevelExpComp
 onready var _damage_comp: DamageComp = $DamageComp
 onready var _hurt_box: HurtBox = $HurtBox

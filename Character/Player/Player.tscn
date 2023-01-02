@@ -1,13 +1,13 @@
 [gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Cores/HitHurt/HurtBox.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Components/Exp/ExpComponent.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Character/Player/PlayerSkin.gd" type="Script" id=3]
 [ext_resource path="res://Character/Player/Player.gd" type="Script" id=4]
 [ext_resource path="res://Components/WeaponManager/WeaponManager.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/Bar_progress.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Bar_under.png" type="Texture" id=8]
-[ext_resource path="res://Components/LevelExp/LevelExpComp.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Components/Health/HealthComp.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/Components/Health/HealthComponent.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Components/Damage/DamageComp.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Assets/Marine/Marine_spritesheet.png" type="Texture" id=12]
 
@@ -296,7 +296,7 @@ nine_patch_stretch = true
 
 [node name="HealthComp" parent="." instance=ExtResource( 10 )]
 
-[node name="LevelExpComp" parent="." instance=ExtResource( 9 )]
+[node name="ExpComponent" parent="." instance=ExtResource( 2 )]
 
 [node name="DamageComp" parent="." instance=ExtResource( 11 )]
 

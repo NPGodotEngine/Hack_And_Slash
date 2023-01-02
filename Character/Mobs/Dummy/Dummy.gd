@@ -12,7 +12,7 @@ onready var _health_bar := $HealthBar
 onready var _animation_player := $AnimationPlayer
 onready var _player_detector: Area2D = $PlayerDetector
 
-onready var _health_comp: HealthComp = $HealthComp
+onready var _health_comp: HealthComponent = $HealthComponent
 onready var _hurt_box: HurtBox = $HurtBox
 
 
