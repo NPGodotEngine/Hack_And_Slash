@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Character/Player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Interface/HUD/DamageTextManager.tscn" type="PackedScene" id=2]
+
+[node name="World" type="Node"]
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 166, 193 )
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="DamageTextManager" parent="HUD" instance=ExtResource( 2 )]

@@ -9,6 +9,7 @@ class ProgressContext extends Resource:
 class ExpContext extends Resource:
     var previous_xp: float = 0.0
     var updated_xp: float = 0.0
+    var xp_required: float = 0.0
 
 class ExpRequiredContext extends Resource:
     var previous_xp_required: float = 0.0
@@ -35,6 +36,8 @@ signal xp_required_updated(exp_requried_context)
 # `progress_context`: class `ProgressContext`
 signal max_progress_reached(progress_context)
 
+
+
 # Design exp curve in inspector
 export (CurveTexture) var exp_curve: CurveTexture
 
@@ -43,6 +46,9 @@ export (float) var max_progress: float = 100.0
 
 # Base xp
 export (float) var base_exp: float = 1000.0
+
+# Print leve to xp requirement at start
+export (bool) var log_level_xp: bool = false
 
 # Current progression aka current
 # level
@@ -57,6 +63,15 @@ var _xp_required: float = 0.0 setget set_xp_required, get_xp_required
 
 
 ## Getter Setter ##
+
+
+func _ready() -> void:
+    _xp_required = calculate_xp_required(_progress)
+
+    if log_level_xp:
+        for level in range(_progress, max_progress+1):
+            print("level: %f -> xp required: %f" % [level, calculate_xp_required(level)])
+
 
 
 func set_progress(value:float) -> void:
@@ -85,11 +100,12 @@ func set_xp(value:float) -> void:
         return
     
     var prev_xp: float = _xp
-    _xp = value
+    _xp = round(value)
 
     var xp_context: ExpContext = ExpContext.new()
     xp_context.previous_xp = prev_xp
     xp_context.updated_xp = _xp
+    xp_context.xp_required = get_xp_required()
 
     emit_signal("xp_updated", xp_context)
 
@@ -113,12 +129,23 @@ func set_xp_required(value:float) -> void:
 func get_xp_required() -> float:
     var progress_scale: float = _progress / max_progress
     var xp_requried: float = exp_curve.curve.interpolate(progress_scale) * base_exp
-    return xp_requried
+    return round(xp_requried)
 ## Getter Setter ##
+
+# Calculate xp requirement to progress next level
+# base on given progress
+##
+# `progress`: current progress
+func calculate_xp_required(progress:float) -> float:
+    var progress_scale: float = progress / max_progress
+    var new_xp_requried: float = exp_curve.curve.interpolate(progress_scale) * base_exp
+    return round(new_xp_requried)
 
 
 # Increase xp by amount
 func increase_xp(xp_amount:float) -> void:
+    xp_amount = round(xp_amount)
+    print("increase xp by %f" % xp_amount)
     # do nothing if value is negative or 0.0
     if (xp_amount < 0.0 or sign(xp_amount) < 0.0 or
         is_equal_approx(xp_amount, 0.0)):
@@ -142,8 +169,7 @@ func increase_xp(xp_amount:float) -> void:
         set_xp(xp_required)
 
         # update xp required
-        var progress_scale: float = new_progress / max_progress
-        var new_xp_requried: float = exp_curve.curve.interpolate(progress_scale) * base_exp
+        var new_xp_requried: float = calculate_xp_required(new_progress)
         xp_required = new_xp_requried
         set_xp_required(new_xp_requried)
 
@@ -151,6 +177,7 @@ func increase_xp(xp_amount:float) -> void:
         set_progress(new_progress)
 
         if is_equal_approx(_progress, max_progress):
+            set_xp(xp_required)
             return
 
     set_xp(total_xp)

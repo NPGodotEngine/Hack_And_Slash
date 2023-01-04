@@ -118,9 +118,9 @@ func get_damage_color() -> Color:
 	return damage_comp.damage_color
 
 func get_is_critical() -> bool:
-    if critical_strike_comp == null:
-        return false
-    return critical_strike_comp.is_critical()
+	if critical_strike_comp == null:
+		return false
+	return critical_strike_comp.is_critical()
 
 func get_critical_multiplier() -> float:
 	if critical_strike_comp == null:

@@ -1,12 +1,11 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Cores/HitHurt/HurtBox.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Components/Exp/ExpComponent.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Character/Player/PlayerSkin.gd" type="Script" id=3]
 [ext_resource path="res://Character/Player/Player.gd" type="Script" id=4]
-[ext_resource path="res://Components/WeaponManager/WeaponManager.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Assets/Bar_progress.png" type="Texture" id=7]
-[ext_resource path="res://Assets/Bar_under.png" type="Texture" id=8]
+[ext_resource path="res://Interface/HUD/HealthBar/HealthBar.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Components/Movement/MovementComponent.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Components/Health/HealthComponent.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Assets/Marine/Marine_spritesheet.png" type="Texture" id=12]
 
@@ -204,14 +203,12 @@ height = 26.0
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 4 )
-max_movement_speed = null
-min_movement_speed = null
-drag_factor = null
-movement_speed = null
-_add_health_per_level = null
-_add_damage_per_level = null
-_damage_label_scene = null
-_damage_label_offset = null
+
+[node name="HealthBar" parent="." instance=ExtResource( 5 )]
+margin_left = -25.0
+margin_top = -49.0
+margin_right = 999.0
+margin_bottom = 551.0
 
 [node name="CharacterSkin" type="Node2D" parent="."]
 script = ExtResource( 3 )
@@ -287,26 +284,11 @@ anims/run = SubResource( 5 )
 position = Vector2( 1, -6 )
 shape = SubResource( 1 )
 
-[node name="HealthBar" type="TextureProgress" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -25.0
-margin_top = -49.0
-margin_right = 25.0
-margin_bottom = -43.0
-value = 100.0
-texture_under = ExtResource( 8 )
-texture_progress = ExtResource( 7 )
-nine_patch_stretch = true
-
 [node name="ExpComponent" parent="." instance=ExtResource( 2 )]
 
 [node name="HealthComponent" parent="." instance=ExtResource( 10 )]
 
-[node name="WeaponManager" parent="." instance=ExtResource( 5 )]
-position = Vector2( 0, -13 )
+[node name="MovementComponent" parent="." instance=ExtResource( 6 )]
 
 [node name="HurtBox" type="Area2D" parent="."]
 script = ExtResource( 1 )

@@ -11,7 +11,7 @@ var _attacker = null
 var _weapon = null
 
 # Damage
-var _damage: int = 0
+var _damage: float = 0.0
 
 # Is this a critical damage
 var _is_critical: bool = false
@@ -23,7 +23,7 @@ var _critical_multiplier: float = 0.0
 var _color_of_damage: Color = Color.white
 
 # Initialization
-func init(attacker, weapon, damage:int, is_critical:bool, critical_multiplier:float, color_of_damage:Color) -> HitDamage:
+func init(attacker, weapon, damage:float, is_critical:bool, critical_multiplier:float, color_of_damage:Color) -> HitDamage:
     _attacker = attacker
     _weapon = weapon
     _damage = damage

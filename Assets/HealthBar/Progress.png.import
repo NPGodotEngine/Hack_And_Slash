@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Bar_progress.png-cc6040c2792204fbb4bed2bad53c3dcd.stex"
+path="res://.import/Progress.png-926ac1d9b07e631eb510f3470eee9a17.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Bar_progress.png"
-dest_files=[ "res://.import/Bar_progress.png-cc6040c2792204fbb4bed2bad53c3dcd.stex" ]
+source_file="res://Assets/HealthBar/Progress.png"
+dest_files=[ "res://.import/Progress.png-926ac1d9b07e631eb510f3470eee9a17.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
@@ -31,5 +31,5 @@ process/invert_color=false
 process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0

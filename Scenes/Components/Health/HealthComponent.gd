@@ -22,6 +22,9 @@ class HealthContext extends Resource:
 	# Update health
 	var updated_health: float = 0.0
 
+	# Max health
+	var max_health: float = 0.0
+
 
 
 # Emit when health is 0
@@ -89,6 +92,7 @@ func set_health(value:float) -> void:
 	var health_context: HealthContext = HealthContext.new()
 	health_context.previous_health = prev_health
 	health_context.updated_health = _health
+	health_context.max_health = max_health
 
 	emit_signal("health_updated", health_context)
 	
