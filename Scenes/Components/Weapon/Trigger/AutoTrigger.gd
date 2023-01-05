@@ -1,7 +1,7 @@
-tool
 extends Trigger
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
+
 
 # Duration before next trigger pull from last trigger pulled
 export (float, 0.1, 10) var trigger_duration: float = 1.0
@@ -12,10 +12,12 @@ var _trigger_timer: Timer = null
 # Is trigger ready to be pulled
 var _is_trigger_ready: bool = true
 
-func _on_component_ready() -> void:
-	._on_component_ready()
+func _ready() -> void:
+	if _trigger_timer:
+		_trigger_timer.queue_free()
 
 	_trigger_timer = Timer.new()
+	_trigger_timer.name = "TriggerTimer"
 	add_child(_trigger_timer)
 	_trigger_timer.one_shot = true
 	_trigger_timer.connect("timeout", self, "_on_trigger_timer_timeout")
@@ -34,17 +36,4 @@ func pull_trigger() -> void:
 func _on_trigger_timer_timeout() -> void:
 	_is_trigger_ready = true
 
-func to_dictionary() -> Dictionary:
-	var state: Dictionary = .to_dictionary()
-
-	var properties: Dictionary = state[PROPERTIES_KEY]
-	properties["trigger_duration"] = trigger_duration
-
-	return state
-
-func from_dictionary(state: Dictionary) -> void:
-	.from_dictionary(state)
-
-	var properties: Dictionary = state[PROPERTIES_KEY]
-	trigger_duration = properties["trigger_duration"]
 	

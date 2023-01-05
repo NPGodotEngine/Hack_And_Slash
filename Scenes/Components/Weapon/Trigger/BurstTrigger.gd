@@ -41,29 +41,32 @@ func _get_configuration_warning() -> String:
 
     return ""
 
-
-func _on_component_ready() -> void:
-    ._on_component_ready()
-
-    _timer_per_burst = Timer.new()
-    add_child(_timer_per_burst)
-    _timer_per_burst.one_shot = true
-    _timer_per_burst.connect("timeout", self, "_on_timer_per_burst_timeout")
-
-    _wait_next_burst_timer = Timer.new()
-    add_child(_wait_next_burst_timer)
-    _wait_next_burst_timer.one_shot = true
-    _wait_next_burst_timer.connect("timeout", self, "_on_wait_next_burst_timer_timeout")
-
-func setup() -> void:
-    .setup()
-
+func _ready() -> void:
     assert(not is_equal_approx(burst_duration, 0), "burst duration can't be 0.0")
 
     # make sure we have equal amount of burst to setting
     _burst_left = number_of_bursts
     _duration_per_burst = burst_duration / number_of_bursts
 
+    if _timer_per_burst:
+        _timer_per_burst.queue_free()
+
+    _timer_per_burst = Timer.new()
+    _timer_per_burst.name = "TimerPerBurst"
+    add_child(_timer_per_burst)
+    _timer_per_burst.one_shot = true
+    _timer_per_burst.connect("timeout", self, "_on_timer_per_burst_timeout")
+    
+    if _wait_next_burst_timer:
+        _wait_next_burst_timer.queue_free()
+
+    _wait_next_burst_timer = Timer.new()
+    _wait_next_burst_timer.name = "WaitNextBurstTimer"
+    add_child(_wait_next_burst_timer)
+    _wait_next_burst_timer.one_shot = true
+    _wait_next_burst_timer.connect("timeout", self, "_on_wait_next_burst_timer_timeout")
+
+    
 func pull_trigger() -> void:
     if not _is_trigger_ready: return
 
@@ -104,22 +107,5 @@ func _on_wait_next_burst_timer_timeout() -> void:
     _is_bursting = false
     _is_wating_for_next_process = false
 
-func to_dictionary() -> Dictionary:
-    var state: Dictionary = .to_dictionary()
-
-    var properties: Dictionary = state[PROPERTIES_KEY]
-    properties["number_of_bursts"] = number_of_bursts
-    properties["burst_duration"] = burst_duration
-    properties["wait_to_next_burst"] = wait_to_next_burst
-    
-    return state
-
-func from_dictionary(state: Dictionary) -> void:
-    .from_dictionary(state)
-
-    var properties: Dictionary = state[PROPERTIES_KEY]
-    number_of_bursts = properties["number_of_bursts"]
-    burst_duration = properties["burst_duration"]
-    wait_to_next_burst = properties["wait_to_next_burst"]
 
 

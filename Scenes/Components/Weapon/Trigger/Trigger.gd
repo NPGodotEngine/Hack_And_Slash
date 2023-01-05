@@ -1,17 +1,16 @@
 tool
 class_name Trigger
-extends WeaponModule
+extends Node
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 # warning-ignore-all: UNUSED_SIGNAL
 
+
+
 # Emit when trigger pulled successful
 signal trigger_pulled()
 
-func _on_component_ready() -> void:
-    ._on_component_ready()
 
-    module_type = Global.WeaponModuleType.TRIGGER
 
 # Pull trigger
 ##

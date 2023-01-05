@@ -1,4 +1,5 @@
-extends Character
+class_name Mob
+extends KinematicBody2D
 
 # warning-ignore-all:RETURN_VALUE_DISCARDED
 # warning-ignore-all:UNUSED_ARGUMENT
