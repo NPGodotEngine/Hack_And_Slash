@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Cores/HitHurt/HurtBox.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Components/Exp/ExpComponent.tscn" type="PackedScene" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://Character/Player/Player.gd" type="Script" id=4]
 [ext_resource path="res://Interface/HUD/HealthBar/HealthBar.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Components/Movement/MovementComponent.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Components/Control/PlayerControlComponent.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Components/Weapon/WeaponManager/WeaponManager.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/Components/Health/HealthComponent.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Assets/Marine/Marine_spritesheet.png" type="Texture" id=12]
 
@@ -210,73 +212,74 @@ margin_top = -49.0
 margin_right = 999.0
 margin_bottom = 551.0
 
-[node name="CharacterSkin" type="Node2D" parent="."]
+[node name="PlayerSkin" type="Node2D" parent="."]
 script = ExtResource( 3 )
+movement = NodePath("../MovementComponent")
 
-[node name="Torso" type="Sprite" parent="CharacterSkin"]
+[node name="Torso" type="Sprite" parent="PlayerSkin"]
 texture = ExtResource( 12 )
 region_enabled = true
 region_rect = Rect2( 150, 22, 19, 20 )
 
-[node name="Head" type="Sprite" parent="CharacterSkin/Torso"]
+[node name="Head" type="Sprite" parent="PlayerSkin/Torso"]
 position = Vector2( -3, -23 )
 texture = ExtResource( 12 )
 region_enabled = true
 region_rect = Rect2( 147, 81, 26, 30 )
 
-[node name="Backpack" type="Sprite" parent="CharacterSkin/Torso"]
+[node name="Backpack" type="Sprite" parent="PlayerSkin/Torso"]
 show_behind_parent = true
 position = Vector2( -22, -8 )
 texture = ExtResource( 12 )
 region_enabled = true
 region_rect = Rect2( 22, 145, 19, 30 )
 
-[node name="ShoulderFront" type="Sprite" parent="CharacterSkin"]
+[node name="ShoulderFront" type="Sprite" parent="PlayerSkin"]
 position = Vector2( -12, -2 )
 texture = ExtResource( 12 )
 region_enabled = true
 region_rect = Rect2( 20, 16, 24, 32 )
 
-[node name="ShoulderBack" type="Sprite" parent="CharacterSkin"]
+[node name="ShoulderBack" type="Sprite" parent="PlayerSkin"]
 show_behind_parent = true
 position = Vector2( 11, -7 )
 texture = ExtResource( 12 )
 region_enabled = true
 region_rect = Rect2( 87, 148, 18, 24 )
 
-[node name="kneeFront" type="Sprite" parent="CharacterSkin"]
+[node name="kneeFront" type="Sprite" parent="PlayerSkin"]
 position = Vector2( -3, 10 )
 texture = ExtResource( 12 )
 region_enabled = true
 region_rect = Rect2( 91, 27, 10, 10 )
 
-[node name="FeetFront" type="Sprite" parent="CharacterSkin/kneeFront"]
+[node name="FeetFront" type="Sprite" parent="PlayerSkin/kneeFront"]
 show_behind_parent = true
 position = Vector2( 2, 8 )
 texture = ExtResource( 12 )
 region_enabled = true
 region_rect = Rect2( 22, 90, 19, 11 )
 
-[node name="KneeBack" type="Sprite" parent="CharacterSkin"]
+[node name="KneeBack" type="Sprite" parent="PlayerSkin"]
 show_behind_parent = true
 position = Vector2( 7, 10 )
 texture = ExtResource( 12 )
 region_enabled = true
 region_rect = Rect2( 91, 91, 10, 10 )
 
-[node name="FeetBack" type="Sprite" parent="CharacterSkin/KneeBack"]
+[node name="FeetBack" type="Sprite" parent="PlayerSkin/KneeBack"]
 show_behind_parent = true
 position = Vector2( 2, 8 )
 texture = ExtResource( 12 )
 region_enabled = true
 region_rect = Rect2( 150, 154, 19, 11 )
 
-[node name="UpperAnimator" type="AnimationPlayer" parent="CharacterSkin"]
+[node name="UpperAnimator" type="AnimationPlayer" parent="PlayerSkin"]
 autoplay = "idle"
 anims/RESET = SubResource( 2 )
 anims/idle = SubResource( 3 )
 
-[node name="LowerAnimator" type="AnimationPlayer" parent="CharacterSkin"]
+[node name="LowerAnimator" type="AnimationPlayer" parent="PlayerSkin"]
 anims/RESET = SubResource( 4 )
 anims/run = SubResource( 5 )
 
@@ -289,6 +292,9 @@ shape = SubResource( 1 )
 [node name="HealthComponent" parent="." instance=ExtResource( 10 )]
 
 [node name="MovementComponent" parent="." instance=ExtResource( 6 )]
+target = NodePath("..")
+
+[node name="WeaponManager" parent="." instance=ExtResource( 8 )]
 
 [node name="HurtBox" type="Area2D" parent="."]
 script = ExtResource( 1 )
@@ -297,3 +303,7 @@ layer_mask = 1
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2( 0, -6 )
 shape = SubResource( 6 )
+
+[node name="PlayerControlComponent" parent="." instance=ExtResource( 7 )]
+movement = NodePath("../MovementComponent")
+weapon_manager = NodePath("../WeaponManager")

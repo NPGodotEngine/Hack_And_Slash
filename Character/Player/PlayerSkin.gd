@@ -1,55 +1,104 @@
+tool
 extends Node2D
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 # warning-ignore-all: UNUSED_ARGUMENT
 
+
+
 const IDLE = "idle"
 const RUN = "run"
+
+
+
+# Node path to MovementComponent
+export(NodePath) var movement: NodePath
 
 onready var upper_body_animator: AnimationPlayer = $UpperAnimator
 onready var lower_body_animator: AnimationPlayer = $LowerAnimator
 
-# Character this skin belong to
-var _player: Player = null
+# MovementComponent
+onready var _movement: MovementComponent = get_node(movement)
+
+
 var _playback_speed: float = 1.0
 var _max_playback_speed: float = 64.0
 
+# Velocity from MovementComponent
+var _velocity: Vector2 = Vector2.ZERO
+
+
+
+func _get_configuration_warning() -> String:
+	if movement.is_empty():
+		return "movement node path is missing"
+
+	if not get_node(movement) is MovementComponent:
+		return "movement must be a MovementComponent node" 
+
+	return ""
 
 func _ready() -> void:
-	_player = get_parent()
-
+	if Engine.editor_hint:
+		return
+	
+	# wait for parent node to be ready
+	var _player = get_parent()
 	yield(_player, "ready")
 	
-	var max_speed: float = _player._movement_comp.max_movement_speed
-	var min_speed: float = _player._movement_comp.min_movement_speed
-	var speed: float = _player._movement_comp.movement_speed
+	var max_speed: float = _movement.max_movement_speed
+	var min_speed: float = _movement.min_movement_speed
+	var speed: float = _movement.movement_speed
 
 	_max_playback_speed = (max_speed - min_speed) / speed
+
+	_movement.connect("velocity_updated", self, "_on_velocity_updated")
 
 	upper_body_animator.play(IDLE)
 
 func _physics_process(delta: float) -> void:
+	if Engine.editor_hint:
+		return
+
+	update_skin()
+	update_animation()
+
+func _on_velocity_updated(velocity_context:MovementComponent.VelocityContext) -> void:
+	_velocity = velocity_context.updated_velocity
+
+
+func update_skin() -> void:
+	# Update skin 
+	var global_mouse_position := get_global_mouse_position()
+
+	if global_mouse_position.x < global_position.x:
+		self.scale.x = -1.0 * self.scale.abs().x
+	else:
+		self.scale.x = 1.0 * self.scale.abs().x
+
+func update_animation() -> void:
 	# update playback speed
-	var max_speed: float = _player._movement_comp.max_movement_speed
-	var min_speed: float = _player._movement_comp.min_movement_speed
-	var speed: float = _player._movement_comp.movement_speed
+	var max_speed: float = _movement.max_movement_speed
+	var min_speed: float = _movement.min_movement_speed
+	var speed: float = _movement.movement_speed
 
 	var speed_length = max_speed - min_speed
 	_playback_speed = speed / speed_length * _max_playback_speed
 	
 	# update playback speed direction
 	_playback_speed *= 1.0
-	var player_direction: Vector2 = (get_global_mouse_position() - _player.global_position).normalized()
-	if (not is_equal_approx(sign(_player._velocity.x), sign(player_direction.x)) and 
-		not is_equal_approx(_player._velocity.x, 0.0)):
+	var player_direction: Vector2 = (get_global_mouse_position() - global_position).normalized()
+	if (not is_equal_approx(sign(_velocity.x), sign(player_direction.x)) and 
+		not is_equal_approx(_velocity.x, 0.0)):
 		_playback_speed *= -1.0
 
-	if abs(_player._velocity.x) <= 0.1 and abs(_player._velocity.y) <= 0.1:
+	if abs(_velocity.x) <= 0.1 and abs(_velocity.y) <= 0.1:
 		play_animation(upper_body_animator, IDLE, _playback_speed)
 		stop_animation(lower_body_animator, RUN)
 	else:
 		play_animation(lower_body_animator, RUN, _playback_speed)
 		stop_animation(upper_body_animator, IDLE)
+
 
 # Return a bool value `true` indicate playback speed is
 # reverse (negative) or `false` indicate forward (positive) 

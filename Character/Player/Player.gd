@@ -9,7 +9,7 @@ extends KinematicBody2D
 
 
 # Player skin visual
-onready var _skin := $CharacterSkin
+onready var _skin := $PlayerSkin
 
 onready var _health_bar: HealthBar = $HealthBar
 
@@ -22,7 +22,7 @@ onready var _movement_comp: MovementComponent = $MovementComponent
 onready var _hurt_box: HurtBox = $HurtBox
 
 
-var _velocity: Vector2 = Vector2.ZERO
+
 var is_dead: bool = false
 
 func _ready() -> void:
@@ -40,46 +40,7 @@ func _ready() -> void:
 	_health_comp.connect("max_health_updated", self, "_on_max_health_updated")
 	_health_comp.connect("low_health_alert", self, "_on_low_health")
 	_health_comp.connect("die", self, "_on_die")
-
-func _physics_process(delta: float) -> void:
-	update_movement()
-	update_skin()
-	execute_weapons()
-
-func update_movement() -> void:
-	# Get direction from input
-	var direction: Vector2 = Vector2(
-		Input.get_axis("move_left", "move_right"),
-		Input.get_axis("move_up", "move_down")
-	).normalized()
-
-	var new_velocity: Vector2 = _movement_comp.move(_velocity, direction)
-	_velocity = move_and_slide(new_velocity)
-
-func update_skin() -> void:
-	# Update skin 
-	var global_mouse_position := get_global_mouse_position()
-
-	if global_mouse_position.x < global_position.x:
-		_skin.scale.x = -1.0 * _skin.scale.abs().x
-	else:
-		_skin.scale.x = 1.0 * _skin.scale.abs().x
-
-
-func execute_weapons() -> void:
-	if _weapon_manager == null:
-		return
-
-	# execute weapon 
-	if Input.is_action_pressed("primary"): 
-		_weapon_manager.execute_weapon()
-	elif Input.is_action_just_released("primary"):
-		_weapon_manager.cancel_weapon_execution()
-
-	if Input.is_action_pressed("secondary"):
-		_weapon_manager.execute_weapon_alt()
-	elif Input.is_action_just_released("secondary"):
-		_weapon_manager.cancel_weapon_alt_execution()
+	
 
 func _on_progress_updated(progress_context:ExpComponent.ProgressContext) -> void:
 	print("level up %f -> %f / %f" % [progress_context.previous_progress, 

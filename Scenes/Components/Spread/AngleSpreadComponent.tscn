@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scenes/Components/Spread/AngleSpreadComponent.gd" type="Script" id=1]
+
+[node name="AngleSpreadComponent" type="Node"]
+script = ExtResource( 1 )
