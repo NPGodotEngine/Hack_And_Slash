@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Controller",
+"class": "AIControllerComponent",
+"language": "GDScript",
+"path": "res://Scenes/Components/Control/AI/AIControllerComponent.gd"
+}, {
 "base": "Node",
 "class": "AccuracyComponent",
 "language": "GDScript",
@@ -29,10 +34,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Bullets/Bullet.gd"
 }, {
-"base": "KinematicBody2D",
-"class": "Character",
+"base": "Node",
+"class": "Controller",
 "language": "GDScript",
-"path": "res://Character/Character.gd"
+"path": "res://Scenes/Components/Control/Controller.gd"
 }, {
 "base": "Node",
 "class": "CriticalComponent",
@@ -87,7 +92,7 @@ _global_script_classes=[ {
 "base": "Area2D",
 "class": "HitBox",
 "language": "GDScript",
-"path": "res://Cores/HitHurt/HitBox.gd"
+"path": "res://Scenes/Components/HitHurt/HitBox.gd"
 }, {
 "base": "Reference",
 "class": "HitDamage",
@@ -97,12 +102,17 @@ _global_script_classes=[ {
 "base": "Area2D",
 "class": "HurtBox",
 "language": "GDScript",
-"path": "res://Cores/HitHurt/HurtBox.gd"
+"path": "res://Scenes/Components/HitHurt/HurtBox.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Mob",
 "language": "GDScript",
-"path": "res://Character/Mobs/Dummy/Dummy.gd"
+"path": "res://Character/Mobs/Mob.gd"
+}, {
+"base": "Node2D",
+"class": "MobSkin",
+"language": "GDScript",
+"path": "res://Scenes/Components/appearance/Mob/MobSkin.gd"
 }, {
 "base": "Node",
 "class": "MovementComponent",
@@ -114,10 +124,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Character/Player/Player.gd"
 }, {
-"base": "Node",
-"class": "PlayerControl",
+"base": "Controller",
+"class": "PlayerControllerComponent",
 "language": "GDScript",
-"path": "res://Scenes/Components/Control/PlayerControlComponent.gd"
+"path": "res://Scenes/Components/Control/Player/PlayerControllerComponent.gd"
 }, {
 "base": "Bullet",
 "class": "Projectile",
@@ -138,6 +148,16 @@ _global_script_classes=[ {
 "class": "SaveGame",
 "language": "GDScript",
 "path": "res://Cores/SaveLoad/SaveGame.gd"
+}, {
+"base": "Area2D",
+"class": "TargetDetector",
+"language": "GDScript",
+"path": "res://Scenes/Components/Detection/TargetDetector.gd"
+}, {
+"base": "Node",
+"class": "TargetFollowerComponent",
+"language": "GDScript",
+"path": "res://Scenes/Components/Control/AI/TargetFollowerComponent.gd"
 }, {
 "base": "Line2D",
 "class": "Trail",
@@ -160,11 +180,12 @@ _global_script_classes=[ {
 "path": "res://Scenes/Components/Weapon/WeaponManager/WeaponManager.gd"
 } ]
 _global_script_class_icons={
+"AIControllerComponent": "",
 "AccuracyComponent": "",
 "Ammo": "",
 "AngleSpreadComponent": "",
 "Bullet": "",
-"Character": "",
+"Controller": "",
 "CriticalComponent": "",
 "CryoBullet": "",
 "DamageComponent": "",
@@ -179,13 +200,16 @@ _global_script_class_icons={
 "HitDamage": "",
 "HurtBox": "",
 "Mob": "",
+"MobSkin": "",
 "MovementComponent": "",
 "Player": "",
-"PlayerControl": "",
+"PlayerControllerComponent": "",
 "Projectile": "",
 "ProjectileAmmo": "",
 "RangedDamageComponent": "",
 "SaveGame": "",
+"TargetDetector": "",
+"TargetFollowerComponent": "",
 "Trail": "",
 "Trigger": "",
 "Weapon": "",

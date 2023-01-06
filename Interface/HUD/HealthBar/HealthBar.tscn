@@ -5,12 +5,10 @@
 [ext_resource path="res://Interface/HUD/HealthBar/HealthBar.gd" type="Script" id=3]
 
 [node name="HealthBar" type="Control"]
-margin_right = 1024.0
-margin_bottom = 600.0
 script = ExtResource( 3 )
+
+[node name="Tween" type="Tween" parent="."]
 
 [node name="HealthBarUnder" parent="." instance=ExtResource( 2 )]
 
 [node name="HealthBarOver" parent="." instance=ExtResource( 1 )]
-
-[node name="Tween" type="Tween" parent="."]

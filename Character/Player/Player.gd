@@ -40,6 +40,9 @@ func _ready() -> void:
 	_health_comp.connect("max_health_updated", self, "_on_max_health_updated")
 	_health_comp.connect("low_health_alert", self, "_on_low_health")
 	_health_comp.connect("die", self, "_on_die")
+
+	_health_bar.max_health = _health_comp.max_health
+	_health_bar.health = _health_comp._health
 	
 
 func _on_progress_updated(progress_context:ExpComponent.ProgressContext) -> void:

@@ -1,12 +1,12 @@
 [gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://Cores/HitHurt/HurtBox.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Components/HitHurt/HurtBox.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Components/Exp/ExpComponent.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Components/appearance/Player/PlayerSkin.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Character/Player/Player.gd" type="Script" id=4]
 [ext_resource path="res://Interface/HUD/HealthBar/HealthBar.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Components/Movement/MovementComponent.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/Components/Control/PlayerControlComponent.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Components/Control/Player/PlayerControllerComponent.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/Components/Weapon/WeaponManager/WeaponManager.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/Components/Health/HealthComponent.tscn" type="PackedScene" id=10]
 
@@ -43,13 +43,14 @@ target = NodePath("..")
 [node name="WeaponManager" parent="." instance=ExtResource( 8 )]
 
 [node name="HurtBox" type="Area2D" parent="."]
+collision_mask = 0
 script = ExtResource( 1 )
-layer_mask = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2( 0, -6 )
 shape = SubResource( 6 )
 
-[node name="PlayerControlComponent" parent="." instance=ExtResource( 7 )]
+[node name="PlayerControllerComponent" parent="." instance=ExtResource( 7 )]
 movement = NodePath("../MovementComponent")
 weapon_manager = NodePath("../WeaponManager")
+actor = NodePath("..")

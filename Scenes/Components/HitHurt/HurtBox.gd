@@ -6,13 +6,9 @@ extends Area2D
 # Emit when take damage
 signal take_damage(hit_damage)
 
-# For adjusting from inspector
-export (int, LAYERS_2D_PHYSICS) var layer_mask: int = 0
-
 
 func _ready() -> void:
     monitorable = false
-    collision_layer = layer_mask
     collision_mask = 0
     connect("area_entered", self, "_on_area_entered")
 
@@ -24,10 +20,8 @@ func _on_area_entered(area:Area2D) -> void:
 
 # Add new mask to layer
 func add_layer_mask(new_mask:int) -> void:
-    layer_mask |= new_mask
-    collision_layer = layer_mask
+    collision_layer |= new_mask
 
 # Remove a mask from layer
 func remove_layer_mask(mask:int) -> void:
-    layer_mask ^= mask 
-    collision_layer = layer_mask
+    collision_layer ^= mask

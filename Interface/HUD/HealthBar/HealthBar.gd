@@ -27,15 +27,7 @@ func set_health(value:float) -> void:
     # set value 
     health_bar_over.value = health
     
-    # set color of health
-    if(health < max_health * low_threshold_scale or
-            is_equal_approx(health, max_health * low_threshold_scale)):
-        health_bar_over.tint_progress = low_color
-    elif (health < max_health * caution_threshold_scale or
-        is_equal_approx(health, max_health * caution_threshold_scale)):
-        health_bar_over.tint_progress = caution_color
-    else:
-        health_bar_over.tint_progress = health_color
+    update_health_bar_color()
 
     # tween health bar under
     tween.interpolate_property(health_bar_under, "value", prev_health, health, 
@@ -47,4 +39,18 @@ func set_max_health(value:float) -> void:
 
     health_bar_over.max_value = max_health
     health_bar_under.max_value = max_health
+
+func _ready() -> void:
+    update_health_bar_color()
+
+func update_health_bar_color() -> void:
+    # set color of health
+    if(health < max_health * low_threshold_scale or
+        is_equal_approx(health, max_health * low_threshold_scale)):
+        health_bar_over.tint_progress = low_color
+    elif (health < max_health * caution_threshold_scale or
+        is_equal_approx(health, max_health * caution_threshold_scale)):
+        health_bar_over.tint_progress = caution_color
+    else:
+        health_bar_over.tint_progress = health_color
 
