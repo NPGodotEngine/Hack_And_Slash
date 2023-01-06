@@ -27,14 +27,14 @@ func _get_configuration_warning() -> String:
 
 
 func enable_control() -> void:
-    .enable_control()
-    if _target_follower:
-        _target_follower.enable_follow = true
+	.enable_control()
+	if _target_follower:
+		_target_follower.enable_follow = true
 
 func disable_control() -> void:
-    .disable_control()
-    if _target_follower:
-        _target_follower.enable_follow = false
+	.disable_control()
+	if _target_follower:
+		_target_follower.enable_follow = false
 
 
 

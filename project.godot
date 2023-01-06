@@ -69,16 +69,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Bullets/Projectile/FireBullet/FireBullet.gd"
 }, {
-"base": "Area2D",
-"class": "FlamePool",
-"language": "GDScript",
-"path": "res://Shared/FlamePool/FlamePool.gd"
-}, {
-"base": "Area2D",
-"class": "FreezePool",
-"language": "GDScript",
-"path": "res://Shared/FreezePool/FreezePool.gd"
-}, {
 "base": "Control",
 "class": "HealthBar",
 "language": "GDScript",
@@ -192,8 +182,6 @@ _global_script_class_icons={
 "DamageLabel": "",
 "ExpComponent": "",
 "FireBullet": "",
-"FlamePool": "",
-"FreezePool": "",
 "HealthBar": "",
 "HealthComponent": "",
 "HitBox": "",
