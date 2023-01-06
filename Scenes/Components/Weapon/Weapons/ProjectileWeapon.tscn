@@ -7,7 +7,7 @@
 [ext_resource path="res://Scenes/Components/Spread/AngleSpreadComponent.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Components/Weapon/Ammo/ProjectileAmmo.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Components/Weapon/Trigger/AutoTrigger.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Bullets/Projectile/STDBullet/STDBullet.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Bullets/Projectile/ProjectileBullet/ProjectileBullet.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Assets/Weapons/Weapon_spritesheet.png" type="Texture" id=9]
 
 [node name="ProjectileWeapon" type="Node2D"]
@@ -33,12 +33,12 @@ accuracy = 0.7
 spread_range_degree = 5.0
 
 [node name="AutoTrigger" parent="." instance=ExtResource( 7 )]
-trigger_duration = 0.2
+trigger_duration = 0.15
 
 [node name="ProjectileAmmo" parent="." instance=ExtResource( 6 )]
 rounds_per_clip = 30
 reload_duration = 1.0
-bullet_speed = 450.0
+bullet_speed = 1500.0
 bullet_life_span = 2.0
 bullet_scene = ExtResource( 8 )
 

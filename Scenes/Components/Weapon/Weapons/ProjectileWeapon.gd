@@ -66,7 +66,6 @@ func _on_trigger_pulled() -> void:
         var bullet: Projectile = _projectile_ammo.consume_ammo(position, 
                                             end_position, hit_damage)
         Global.add_to_scene_tree(bullet)
-        print(hit_damage._damage)
 
 func update_weapon_skin() -> void:
     if Engine.editor_hint:
