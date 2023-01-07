@@ -44,11 +44,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/Components/CriticalStrike/CriticalComponent.gd"
 }, {
-"base": "Projectile",
-"class": "CryoBullet",
-"language": "GDScript",
-"path": "res://Bullets/Projectile/CryoBullet/CryoBullet.gd"
-}, {
 "base": "Node",
 "class": "DamageComponent",
 "language": "GDScript",
@@ -63,11 +58,6 @@ _global_script_classes=[ {
 "class": "ExpComponent",
 "language": "GDScript",
 "path": "res://Scenes/Components/Exp/ExpComponent.gd"
-}, {
-"base": "Projectile",
-"class": "FireBullet",
-"language": "GDScript",
-"path": "res://Bullets/Projectile/FireBullet/FireBullet.gd"
 }, {
 "base": "Control",
 "class": "HealthBar",
@@ -152,7 +142,7 @@ _global_script_classes=[ {
 "base": "Line2D",
 "class": "Trail",
 "language": "GDScript",
-"path": "res://Shared/Trail/Trail.gd"
+"path": "res://Scenes/Components/Trail/Trail.gd"
 }, {
 "base": "Node",
 "class": "Trigger",
@@ -177,11 +167,9 @@ _global_script_class_icons={
 "Bullet": "",
 "Controller": "",
 "CriticalComponent": "",
-"CryoBullet": "",
 "DamageComponent": "",
 "DamageLabel": "",
 "ExpComponent": "",
-"FireBullet": "",
 "HealthBar": "",
 "HealthComponent": "",
 "HitBox": "",

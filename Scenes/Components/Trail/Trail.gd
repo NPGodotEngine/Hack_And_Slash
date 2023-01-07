@@ -19,7 +19,7 @@ export (float) var wildness = 3.0
 export (float) var wild_range = 0.5
 
 # Max points can this trail has
-export (int, 5, 600) var max_points = 20
+export (int, 2, 600) var max_points = 6
 
 # Gravity of each points
 export (Vector2) var gravity := Vector2.ZERO
