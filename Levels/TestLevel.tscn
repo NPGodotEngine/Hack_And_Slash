@@ -49,9 +49,7 @@ position = Vector2( 823, 522 )
 [node name="Dummy3" parent="." instance=ExtResource( 6 )]
 position = Vector2( 868, 113 )
 
-[node name="HUD" type="CanvasLayer" parent="."]
-
-[node name="DamageTextManager" parent="HUD" instance=ExtResource( 5 )]
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 2 )
+
+[node name="DamageTextManager" parent="." instance=ExtResource( 5 )]

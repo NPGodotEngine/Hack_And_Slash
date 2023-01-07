@@ -19,6 +19,7 @@ onready var _projectile_ammo: ProjectileAmmo = get_node(projectile_ammo) as Proj
 onready var _fire_points: Array = get_fire_points()
 onready var _appearance: Node2D = get_node(appearance) as Node2D
 onready var _muzzle_flash: MuzzleFlash = get_node(muzzle_flash) as MuzzleFlash
+onready var _animation_player: AnimationPlayer = $Skin/AnimationPlayer
 
 
 func _get_configuration_warning() -> String:
@@ -75,6 +76,7 @@ func _on_trigger_pulled() -> void:
         Global.add_to_scene_tree(bullet)
 
         _muzzle_flash.flash(muzzle_flash_duration)
+        _animation_player.play("fire")
 
 func update_weapon_skin() -> void:
     if Engine.editor_hint:
