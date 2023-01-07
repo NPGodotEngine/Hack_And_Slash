@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scenes/Components/Weapon/Weapons/ProjectileWeapon.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Components/Damage/RangedDamageComponent.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Scenes/Components/Weapon/Trigger/AutoTrigger.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Bullets/Projectile/ProjectileBullet/ProjectileBullet.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Assets/Weapons/Weapon_spritesheet.png" type="Texture" id=9]
+[ext_resource path="res://Scenes/Components/Weapon/MuzzleFlash/MuzzleFlash.tscn" type="PackedScene" id=10]
 
 [node name="ProjectileWeapon" type="Node2D"]
 script = ExtResource( 1 )
@@ -20,6 +21,7 @@ trigger = NodePath("AutoTrigger")
 projectile_ammo = NodePath("ProjectileAmmo")
 fire_points = [ NodePath("FirePoint") ]
 appearance = NodePath("Skin")
+muzzle_flash = NodePath("MuzzleFlash")
 
 [node name="RangedDamageComponent" parent="." instance=ExtResource( 2 )]
 max_damage = 20.0
@@ -33,13 +35,14 @@ accuracy = 0.7
 spread_range_degree = 5.0
 
 [node name="AutoTrigger" parent="." instance=ExtResource( 7 )]
-trigger_duration = 0.15
+trigger_duration = 0.1
 
 [node name="ProjectileAmmo" parent="." instance=ExtResource( 6 )]
 rounds_per_clip = 30
 reload_duration = 1.0
 bullet_speed = 1500.0
 bullet_life_span = 2.0
+bullet_penetration_chance = 0.5
 bullet_scene = ExtResource( 8 )
 
 [node name="Skin" type="Node2D" parent="."]
@@ -50,4 +53,7 @@ region_enabled = true
 region_rect = Rect2( 2, 19, 59, 25 )
 
 [node name="FirePoint" type="Position2D" parent="."]
+position = Vector2( 29, -6 )
+
+[node name="MuzzleFlash" parent="." instance=ExtResource( 10 )]
 position = Vector2( 29, -6 )

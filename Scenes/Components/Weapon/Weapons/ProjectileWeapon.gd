@@ -9,13 +9,16 @@ export(NodePath) var trigger: NodePath
 export(NodePath) var projectile_ammo: NodePath
 export(Array, NodePath) var fire_points: Array
 export(NodePath) var appearance: NodePath
+export(NodePath) var muzzle_flash: NodePath
+export(float) var muzzle_flash_duration: float = 0.1
 
-onready var _accuracy: AccuracyComponent = get_node(accuracy)
-onready var _angle_spread: AngleSpreadComponent = get_node(angle_spread)
-onready var _trigger: Trigger = get_node(trigger)
-onready var _projectile_ammo: ProjectileAmmo = get_node(projectile_ammo)
+onready var _accuracy: AccuracyComponent = get_node(accuracy) as AccuracyComponent
+onready var _angle_spread: AngleSpreadComponent = get_node(angle_spread) as AngleSpreadComponent
+onready var _trigger: Trigger = get_node(trigger) as Trigger
+onready var _projectile_ammo: ProjectileAmmo = get_node(projectile_ammo) as ProjectileAmmo
 onready var _fire_points: Array = get_fire_points()
-onready var _appearance: Node2D = get_node(appearance)
+onready var _appearance: Node2D = get_node(appearance) as Node2D
+onready var _muzzle_flash: MuzzleFlash = get_node(muzzle_flash) as MuzzleFlash
 
 
 func _get_configuration_warning() -> String:
@@ -48,6 +51,10 @@ func _get_configuration_warning() -> String:
         return "appearance node path is missing"
     if not get_node(appearance) is Node2D:
         return "appearance must be a Node2D node"
+    if muzzle_flash.is_empty():
+        return "muzzle_flash node path is missing"
+    if not get_node(muzzle_flash) is MuzzleFlash:
+        return "muzzle_flash must be a MuzzleFlash node"
     return ""
 
 func _ready() -> void:
@@ -66,6 +73,8 @@ func _on_trigger_pulled() -> void:
         var bullet: Projectile = _projectile_ammo.consume_ammo(position, 
                                             end_position, hit_damage)
         Global.add_to_scene_tree(bullet)
+
+        _muzzle_flash.flash(muzzle_flash_duration)
 
 func update_weapon_skin() -> void:
     if Engine.editor_hint:
