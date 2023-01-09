@@ -10,11 +10,16 @@ extends Node2D
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 # warning-ignore-all: UNUSED_ARGUMENT
 
+
+const RESOURCE_NAME_KEY = "resource_name"
+const NAME_KEY = "name"
+
+
 export(NodePath) var ranged_damage: NodePath
 export(NodePath) var critical: NodePath
 
-onready var _ranged_damage: RangedDamageComponent = get_node(ranged_damage)
-onready var _critical: CriticalComponent = get_node(critical)
+onready var _ranged_damage: RangedDamageComponent = get_node(ranged_damage) as RangedDamageComponent
+onready var _critical: CriticalComponent = get_node(critical) as CriticalComponent
 
 # Weapon manager manage this weapon
 var weapon_manager = null
@@ -98,6 +103,41 @@ func active() -> void:
 func inactive() -> void:
 	set_process(false)
 	set_physics_process(false)
+
+func serialize() -> Dictionary:
+	var state: Dictionary = {
+		RESOURCE_NAME_KEY: name + ".tscn",
+		NAME_KEY: name
+	}
+
+	state["damage"] = {
+		"min": _ranged_damage.min_damage,
+		"max": _ranged_damage.max_damage,
+		"damage": _ranged_damage.damage
+	}
+
+	state["critical"] = {
+		"max": _critical.max_critical_chance,
+		"min": _critical.min_critical_chance,
+		"chance": _critical.critical_chance,
+		"multiplier":_critical.critical_multiplier
+	}
+	
+	return state
+
+func deserialize(dict:Dictionary) -> void:
+	yield(self, "ready")
+
+	_ranged_damage.min_damage = dict["damage"]["min"]
+	_ranged_damage.max_damage = dict["damage"]["max"]
+	_ranged_damage.damage = dict["damage"]["damage"]
+	
+	_critical.min_critical_chance = dict["critical"]["min"]
+	_critical.max_critical_chance = dict["critical"]["max"]
+	_critical.critical_chance = dict["critical"]["chance"]
+	_critical.critical_multiplier = dict["critical"]["multiplier"]
+
+
 
 
 

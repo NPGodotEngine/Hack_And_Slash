@@ -1,4 +1,5 @@
 tool
+class_name ProjectileWeapon
 extends Weapon
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
@@ -73,6 +74,7 @@ func _on_trigger_pulled() -> void:
         var hit_damage: HitDamage = get_hit_damage()
         var bullet: Projectile = _projectile_ammo.consume_ammo(position, 
                                             end_position, hit_damage)
+        bullet.show_behind_parent = true
         Global.add_to_scene_tree(bullet)
 
         _muzzle_flash.flash(muzzle_flash_duration)
@@ -117,3 +119,18 @@ func active() -> void:
 func inactive() -> void:
     .inactive()
     _appearance.hide()
+
+func serialize() -> Dictionary:
+    var state: Dictionary = .serialize()
+    
+    state["accuracy"] = {
+        "accuracy": _accuracy.accuracy
+    }
+    return state
+
+func deserialize(dict:Dictionary) -> void:
+    .deserialize(dict)
+    yield(self, "ready")
+    
+    _accuracy.accuracy = dict["accuracy"]["accuracy"]
+

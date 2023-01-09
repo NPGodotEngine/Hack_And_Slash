@@ -1,4 +1,5 @@
 tool
+class_name BurstTrigger
 extends Trigger
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED

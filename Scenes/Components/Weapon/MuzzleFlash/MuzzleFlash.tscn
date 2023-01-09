@@ -10,7 +10,7 @@ particles_anim_v_frames = 2
 particles_anim_loop = true
 
 [sub_resource type="Curve" id=2]
-_data = [ Vector2( 0, 0.3125 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+_data = [ Vector2( 0, 0.518182 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="CurveTexture" id=3]
 curve = SubResource( 2 )
@@ -35,6 +35,7 @@ material = SubResource( 1 )
 emitting = false
 amount = 1
 speed_scale = 10.0
+fixed_fps = 60
 process_material = SubResource( 4 )
 texture = ExtResource( 1 )
 

@@ -28,11 +28,7 @@ func _get_configuration_warning() -> String:
 # `to_position`: end position
 # `hit_damage`: `HitDamage`
 func consume_ammo(from_position:Vector2, to_position:Vector2, hit_damage:HitDamage) -> Projectile:
-    if _is_reloading:
-        return null
-
-    if _round_left == 0:
-        reload_ammo()
+    if _is_reloading or _round_left == 0:
         return null
 
     var bullet: Projectile = bullet_scene.instance()
@@ -42,5 +38,8 @@ func consume_ammo(from_position:Vector2, to_position:Vector2, hit_damage:HitDama
     bullet.setup(from_position, to_position, bullet_speed, hit_damage, bullet_life_span, bullet_penetration_chance)
 
     _set_round_left(_round_left - 1)
+
+    if _round_left == 0:
+        reload_ammo()
 
     return bullet

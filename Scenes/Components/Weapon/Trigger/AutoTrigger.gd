@@ -1,3 +1,4 @@
+class_name AutoTrigger
 extends Trigger
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED

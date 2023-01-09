@@ -15,9 +15,10 @@ func _on_flash_timer_timeout() -> void:
 
 func flash(flash_duration:float) -> void:
     if _flash_timer.time_left > 0.0:
-        return
+        _flash_timer.stop()
 
     _flash_timer.start(flash_duration)
     _particle2d.emitting = true
+    _particle2d.restart()
 
 

@@ -93,12 +93,7 @@ func _on_take_damage(hit_damage:HitDamage) -> void:
 	_health_comp.damage(total_damage)
 
 	# Show damage text
-	Events.emit_signal("present_damage_text", hit_damage, global_position)
-
-	print("%s take damage:%d, critical:%s critical_multiplier:%f" % [
-		self.name, total_damage, 
-		hit_damage._is_critical,
-		hit_damage._critical_multiplier])
+	Events.emit_signal("present_damage_text", hit_damage, total_damage, global_position)
 
 func _on_die() -> void:
 	print("player die")

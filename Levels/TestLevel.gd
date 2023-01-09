@@ -5,6 +5,7 @@ onready var weapon_library: Array = [
 ]
 
 func _ready() -> void:
+	yield(get_tree().create_timer(1.0), "timeout")
 	for child in get_children():
 		if child is Player:
 			for node in child.get_children():
@@ -13,25 +14,10 @@ func _ready() -> void:
 					for weapon_name in weapon_library:
 						var weapon: Weapon = Global.create_instance(weapon_name)
 						node.add_weapon(weapon, true)
-				 
-	# print(GameSaver.save_game(1))
-	# print(GameSaver.load_saved_game(1))
-	# change()
+						# change weapon properties
+						(weapon as ProjectileWeapon)._accuracy.accuracy = 0.5
+						(weapon as ProjectileWeapon)._ranged_damage.max_damage = 10.0
+						(weapon as ProjectileWeapon)._ranged_damage.min_damage = 5.0
 
-# func change() -> void:
-# 	var player: Player = null
-# 	for child in get_children():
-# 		if child is Player:
-# 			player = child
-	
-# 	# change weapon appearances
-# 	var weapon: Weapon = player.weapon_manager.get_weapon_by(0)
-# 	var weapon_skin: WeaponSkinManager = weapon.weapon_appearance
-# 	weapon_skin.ammo_skin = load("res://Components/Weapons/WeaponSkin/AmmoSkins/AmmoBlueprint2.tscn").instance()
-# 	weapon_skin.trigger_skin = load("res://Components/Weapons/WeaponSkin/TriggerSkins/TriggerBlueprint2.tscn").instance()
-# 	weapon_skin.receiver_skin = load("res://Components/Weapons/WeaponSkin/ReceiverSkin/ReceiverBlueprint2.tscn").instance()
-	
-# 	# # change weapon trigger
-# 	weapon.trigger = load("res://Components/Weapons/WeaponModules/TriggerModules/BurstTriggerBlueprint.tscn").instance()
-# 	player.weapon_manager.setup()
-# 	print(GameSaver.save_game(1))
+	GameSaver.save_game_data()
+	GameSaver.load_game_data()

@@ -50,7 +50,7 @@ func _on_take_damage(hit_damage:HitDamage) -> void:
 	_health_comp.damage(total_damage)
 	
 	# Show damage text
-	Events.emit_signal("present_damage_text", hit_damage, global_position)
+	Events.emit_signal("present_damage_text", hit_damage, total_damage, global_position)
 
 	if not is_dead:
 		_skin.play_hit()

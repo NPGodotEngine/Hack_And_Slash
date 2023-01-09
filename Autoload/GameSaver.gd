@@ -1,74 +1,91 @@
 extends Node
 
-signal save_game(saved_file)
+# Emit when save game start
+##
+# `saved_data`: `SavedData` 
+signal save_game(saved_data)
 
-signal load_game(saved_file)
+# Emit when load game start
+##
+# `saved_data`: `SavedData` 
+signal load_game(saved_data)
 
 # Save file folder
 const SAVE_FOLDER = "res://Debug/Saves"
 
 # Save file name template
-const SAVE_NAME_TEMPLATE = "Save_%03d.tres"
+const SAVE_NAME_TEMPLATE = "SavedData.res"
 
-# Save game
+# Current saved data
+var saved_data: SavedData = null
+
+
+func _init() -> void:
+	saved_data = load_saved_data()
+
+# Return a saved data
 ##
-# Any nodes in group `save` and 
-# have `save` method will be called on
-# method `save` with argument `SaveGame`
-func save_game(id:int) -> int:
-	# Create a new save game
-	var save_game: SaveGame = SaveGame.new()
+# Return an existing one if it had saved data
+# otherwise create a new saved data
+##
+# Return `null` if error happend
+func load_saved_data() -> SavedData:
+	var file: File = File.new()
+	var save_file_path: String = SAVE_FOLDER.plus_file(SAVE_NAME_TEMPLATE)
+	var data: SavedData = null
 
-	# Set game version
-	save_game.save_version = ProjectSettings.get_setting("global/game_version")
+	# create a new save if not exists or load existing one
+	if not file.file_exists(save_file_path):
+		push_warning("Save game file %s dose not exist, create a new save" % save_file_path)
 
-	# Make sure directory exists
-	var directory: Directory = Directory.new()
-	if not directory.dir_exists(SAVE_FOLDER):
-		var mk_dir_state: int =  directory.make_dir_recursive(SAVE_FOLDER)
-		if not mk_dir_state == OK:
-			push_error("Create directory fail %s, code: %d" % [SAVE_FOLDER, mk_dir_state])
-			return mk_dir_state
-	
-	# # Tell all nodes in tree to save
-	# # All nodes that are in group `save` and
-	# # have save method
-	# for node in get_tree().get_nodes_in_group("persist"):
-	# 	if node.has_method("save"):
-	# 		node.save(save_game)
-	emit_signal("save_game", save_game)
+		# Make sure directory exists
+		var directory: Directory = Directory.new()
+
+		if not directory.dir_exists(SAVE_FOLDER):
+			var mk_dir_state: int =  directory.make_dir_recursive(SAVE_FOLDER)
+			if not mk_dir_state == OK:
+				push_error("Create directory for new saved data fail %s, code: %d" % 
+						[SAVE_FOLDER, mk_dir_state])
+				return null
+
+		# Create a new save game
+		data = SavedData.new()
+
+		# Set game version
+		var save_version = ProjectSettings.get_setting("global/game_version")
+		if save_version != null:
+			data.save_version = ProjectSettings.get_setting("global/game_version")
+		else:
+			push_error("Project required a setting `global/game_version`")
+			data.save_version = "0.0.0"
+	else:
+		data = ResourceLoader.load(save_file_path)
+
+		if data == null:
+			push_error("Load save game fail %s" % save_file_path)
+
+	return data
+
+
+
+# Save game data
+func save_game_data() -> void:
+	if saved_data == null:
+		saved_data = load_saved_data()
+
+	# Tell all nodes in tree to save
+	emit_signal("save_game", saved_data)
 
 	# Save game
-	var save_file_path: String = SAVE_FOLDER.plus_file(SAVE_NAME_TEMPLATE % id)
-	var save_state: int = ResourceSaver.save(save_file_path, save_game)
+	var save_file_path: String = SAVE_FOLDER.plus_file(SAVE_NAME_TEMPLATE)
+	var save_state: int = ResourceSaver.save(save_file_path, saved_data)
 	if not save_state == OK:
 		push_error("Save game fail at path %s, code %d" % [save_file_path, save_state])
-	
-	return save_state
 
-# Load save game
-##
-# Any nodes in group `save` and 
-# have `load` method will be called on
-# method `load` with argument `SaveGame`
-func load_saved_game(id:int) -> int:
-	var file: File = File.new()
-	var save_file_path: String = SAVE_FOLDER.plus_file(SAVE_NAME_TEMPLATE % id)
-	if not file.file_exists(save_file_path):
-		push_warning("Save game file %s dose not exist" % save_file_path)
-		return ERR_FILE_NOT_FOUND
-	
-	var save_game: SaveGame = ResourceLoader.load(save_file_path)
-	if save_game == null:
-		push_error("Load save game fail %s" % save_file_path)
-		return ERR_FILE_CANT_READ
+# Load saved game data
+func load_game_data() -> void:
+	if saved_data == null:
+		saved_data = load_saved_data()
 
-	# # Tell all nodes in tree to load
-	# # All nodes that are in group `save` and
-	# # have load method
-	# for node in get_tree().get_nodes_in_group("persist"):
-	# 	if node.has_method("load"):
-	# 		node.load(save_game)
-	emit_signal("load_game", save_game)
-
-	return OK 
+	# Tell all nodes in tree to load
+	emit_signal("load_game", saved_data)

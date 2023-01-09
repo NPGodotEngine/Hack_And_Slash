@@ -7,11 +7,11 @@ export (PackedScene) var damage_text_scene = preload("res://Interface/HUD/Damage
 func _ready() -> void:
     Events.connect("present_damage_text", self, "_on_present_damage_text")
 
-func _on_present_damage_text(hit_damage:HitDamage, position:Vector2) -> void:
+func _on_present_damage_text(hit_damage:HitDamage, total_damage:float, position:Vector2) -> void:
     # Instance a damage label if any
     if damage_text_scene:
         var damage_text = damage_text_scene.instance()
-        var dmg_str = str(int(round(hit_damage._damage)))
+        var dmg_str = str(int(round(total_damage)))
         var is_critical: bool = hit_damage._is_critical
         var color: Color = hit_damage._color_of_damage
 

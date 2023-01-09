@@ -48,12 +48,44 @@ func set_current_weapon_index(value:int) -> void:
 	
 
 func _ready() -> void:
+	collect_weapons()
+
+	GameSaver.connect("save_game", self, "_on_save_game")
+	GameSaver.connect("load_game", self, "_on_load_game")
+
+func _on_save_game(saved_data:SavedData) -> void:
+	var serialized_weapons := []
+	for weapon in weapon_slots:
+		# serialized weapon
+		serialized_weapons.append((weapon as Weapon).serialize())
+	saved_data.data["weapons"] = serialized_weapons
+
+func _on_load_game(saved_data:SavedData) -> void:
+	# remove all existing weapons
+	if weapon_slots.size() > 0 or get_child_count() > 0:
+		weapon_slots.clear()
+		for child in get_children():
+			child.queue_free()
+	
+	# deserialize each weapons
+	var serizlied_weapons: Array = saved_data.data["weapons"]
+	for serialized_weapon in serizlied_weapons:
+		# deserialized weapon
+		var weapon: Weapon = Global.create_instance(serialized_weapon[Weapon.RESOURCE_NAME_KEY])
+		weapon.deserialize(serialized_weapon)
+		add_weapon(weapon)
+
+	set_current_weapon_index(0)
+
+func collect_weapons() -> void:
+	if weapon_slots.size() > 0:
+		for weapon in weapon_slots:
+			weapon.queue_free()
 	for child in get_children():
 		if child is Weapon:
 			(child as Weapon).inactive()
 			child.weapon_manager = self
 			weapon_slots.append(child)
-
 
 # Execute current weapon's main fire
 ##
