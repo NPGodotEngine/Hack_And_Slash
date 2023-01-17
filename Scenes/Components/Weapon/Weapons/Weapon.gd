@@ -15,14 +15,14 @@ const RESOURCE_NAME_KEY = "resource_name"
 const NAME_KEY = "name"
 
 
+# Weapon attributes resource
+export(Resource) var weapon_attributes:Resource = null setget set_weapon_attributes
 export(NodePath) var ranged_damage: NodePath
 export(NodePath) var critical: NodePath
 
 onready var _ranged_damage: RangedDamageComponent = get_node(ranged_damage) as RangedDamageComponent
 onready var _critical: CriticalComponent = get_node(critical) as CriticalComponent
 
-# Weapon attributes
-var weapon_attributes: WeaponAttributes = null setget set_weapon_attributes
 
 # Weapon manager manage this weapon
 var weapon_manager = null
@@ -31,16 +31,19 @@ var weapon_manager = null
 ## Getter Setter ##
 
 
-func set_weapon_attributes(value:WeaponAttributes) -> void:
-	if value == null:
+func set_weapon_attributes(value:Resource) -> void:
+	if value == null or not value is WeaponAttributes:
 		return
 
 	weapon_attributes = value
+	
+	var att: WeaponAttributes = weapon_attributes
 
-	_ranged_damage.min_damage = weapon_attributes.min_damage
-	_ranged_damage.max_damage = weapon_attributes.max_damage
-	_critical.critical_chance = weapon_attributes.critical_chance
-	_critical.critical_multiplier = weapon_attributes.critical_multiplier
+	_ranged_damage.min_damage = att.min_damage
+	_ranged_damage.max_damage = att.max_damage
+	_critical.critical_chance = att.critical_chance
+	_critical.critical_multiplier = att.critical_multiplier
+
 ## Getter Setter ## 
 
 func _get_configuration_warning() -> String:
@@ -52,6 +55,9 @@ func _get_configuration_warning() -> String:
 		return "critical node path is missing"
 	if not get_node(critical) is CriticalComponent:
 		return "critical must be a CriticalComponent node"
+	if weapon_attributes:
+		if not weapon_attributes is WeaponAttributes:
+			return "weapon_attributes must be a WeaponAttributes resource"
 	return ""
 
 func _physics_process(delta: float) -> void:
@@ -127,32 +133,36 @@ func serialize() -> Dictionary:
 		NAME_KEY: name
 	}
 
-	state["damage"] = {
-		"min": _ranged_damage.min_damage,
-		"max": _ranged_damage.max_damage,
-		"damage": _ranged_damage.damage
-	}
+	state["weapon_attributes"] = weapon_attributes
 
-	state["critical"] = {
-		"max": _critical.max_critical_chance,
-		"min": _critical.min_critical_chance,
-		"chance": _critical.critical_chance,
-		"multiplier":_critical.critical_multiplier
-	}
+	# state["damage"] = {
+	# 	"min": _ranged_damage.min_damage,
+	# 	"max": _ranged_damage.max_damage,
+	# 	"damage": _ranged_damage.damage
+	# }
+
+	# state["critical"] = {
+	# 	"max": _critical.max_critical_chance,
+	# 	"min": _critical.min_critical_chance,
+	# 	"chance": _critical.critical_chance,
+	# 	"multiplier":_critical.critical_multiplier
+	# }
 	
 	return state
 
 func deserialize(dict:Dictionary) -> void:
 	yield(self, "ready")
 
-	_ranged_damage.min_damage = dict["damage"]["min"]
-	_ranged_damage.max_damage = dict["damage"]["max"]
-	_ranged_damage.damage = dict["damage"]["damage"]
+	set_weapon_attributes(dict["weapon_attributes"])
+
+	# _ranged_damage.min_damage = dict["damage"]["min"]
+	# _ranged_damage.max_damage = dict["damage"]["max"]
+	# _ranged_damage.damage = dict["damage"]["damage"]
 	
-	_critical.min_critical_chance = dict["critical"]["min"]
-	_critical.max_critical_chance = dict["critical"]["max"]
-	_critical.critical_chance = dict["critical"]["chance"]
-	_critical.critical_multiplier = dict["critical"]["multiplier"]
+	# _critical.min_critical_chance = dict["critical"]["min"]
+	# _critical.max_critical_chance = dict["critical"]["max"]
+	# _critical.critical_chance = dict["critical"]["chance"]
+	# _critical.critical_multiplier = dict["critical"]["multiplier"]
 
 
 
