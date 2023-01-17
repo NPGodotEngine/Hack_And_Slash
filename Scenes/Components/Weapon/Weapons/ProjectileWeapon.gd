@@ -22,23 +22,7 @@ onready var _appearance: Node2D = get_node(appearance) as Node2D
 onready var _muzzle_flash: MuzzleFlash = get_node(muzzle_flash) as MuzzleFlash
 onready var _animation_player: AnimationPlayer = $Skin/AnimationPlayer
 
-
-
-func set_weapon_attributes(value:Resource) -> void:
-	if value== null or not value is WeaponAttributes:
-		return
-
-	if not is_inside_tree():
-		yield(self, "ready")
-
-	.set_weapon_attributes(value)
 	
-	var att: WeaponAttributes = weapon_attributes
-
-	_accuracy.accuracy = att.accuracy
-	_trigger.trigger_duration = att.trigger_duration
-	_projectile_ammo.reload_duration = att.reload_duration
-
 
 func _get_configuration_warning() -> String:
 	var warning =  ._get_configuration_warning()
@@ -137,17 +121,10 @@ func inactive() -> void:
 	.inactive()
 	_appearance.hide()
 
-# func serialize() -> Dictionary:
-#     var state: Dictionary = .serialize()
-	
-#     state["accuracy"] = {
-#         "accuracy": _accuracy.accuracy
-#     }
-#     return state
+func apply_weapon_attributes(attributes:WeaponAttributes) -> void:
+	.apply_weapon_attributes(attributes)
 
-# func deserialize(dict:Dictionary) -> void:
-#     .deserialize(dict)
-#     yield(self, "ready")
-	
-#     _accuracy.accuracy = dict["accuracy"]["accuracy"]
+	_accuracy.accuracy = attributes.accuracy
+	_trigger.trigger_duration = attributes.trigger_duration
+	_projectile_ammo.reload_duration = attributes.reload_duration
 

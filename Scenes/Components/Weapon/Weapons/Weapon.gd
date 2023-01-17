@@ -13,6 +13,7 @@ extends Node2D
 
 const RESOURCE_NAME_KEY = "resource_name"
 const NAME_KEY = "name"
+const WEAPON_ATTRIBUTES_KEY = "weapon_attributes"
 
 
 # Weapon attributes resource
@@ -36,15 +37,9 @@ func set_weapon_attributes(value:Resource) -> void:
 		return
 
 	weapon_attributes = value
-	
-	var att: WeaponAttributes = weapon_attributes
-
-	_ranged_damage.min_damage = att.min_damage
-	_ranged_damage.max_damage = att.max_damage
-	_critical.critical_chance = att.critical_chance
-	_critical.critical_multiplier = att.critical_multiplier
-
 ## Getter Setter ## 
+
+
 
 func _get_configuration_warning() -> String:
 	if ranged_damage.is_empty():
@@ -60,6 +55,11 @@ func _get_configuration_warning() -> String:
 			return "weapon_attributes must be a WeaponAttributes resource"
 	return ""
 
+func _ready() -> void:
+	if not is_inside_tree():
+		yield(self, "ready")
+		apply_weapon_attributes(weapon_attributes)
+
 func _physics_process(delta: float) -> void:
 	update_weapon_skin()
 
@@ -67,7 +67,7 @@ func _physics_process(delta: float) -> void:
 func _on_trigger_pulled() -> void:
 	pass
 
-# Get hit damage from weapon
+# Get hit damage for this weapon
 func get_hit_damage() -> HitDamage:
 	var damage: float = _ranged_damage.damage
 	var is_critical: bool = _critical.is_critical()
@@ -127,42 +127,25 @@ func inactive() -> void:
 	set_process(false)
 	set_physics_process(false)
 
+func apply_weapon_attributes(attributes:WeaponAttributes) -> void:
+	_ranged_damage.min_damage = attributes.min_damage
+	_ranged_damage.max_damage = attributes.max_damage
+	_critical.critical_chance = attributes.critical_chance
+	_critical.critical_multiplier = attributes.critical_multiplier
+
 func serialize() -> Dictionary:
 	var state: Dictionary = {
 		RESOURCE_NAME_KEY: name + ".tscn",
 		NAME_KEY: name
 	}
 
-	state["weapon_attributes"] = weapon_attributes
-
-	# state["damage"] = {
-	# 	"min": _ranged_damage.min_damage,
-	# 	"max": _ranged_damage.max_damage,
-	# 	"damage": _ranged_damage.damage
-	# }
-
-	# state["critical"] = {
-	# 	"max": _critical.max_critical_chance,
-	# 	"min": _critical.min_critical_chance,
-	# 	"chance": _critical.critical_chance,
-	# 	"multiplier":_critical.critical_multiplier
-	# }
+	state[WEAPON_ATTRIBUTES_KEY] = weapon_attributes
 	
 	return state
 
 func deserialize(dict:Dictionary) -> void:
 	yield(self, "ready")
-
-	set_weapon_attributes(dict["weapon_attributes"])
-
-	# _ranged_damage.min_damage = dict["damage"]["min"]
-	# _ranged_damage.max_damage = dict["damage"]["max"]
-	# _ranged_damage.damage = dict["damage"]["damage"]
-	
-	# _critical.min_critical_chance = dict["critical"]["min"]
-	# _critical.max_critical_chance = dict["critical"]["max"]
-	# _critical.critical_chance = dict["critical"]["chance"]
-	# _critical.critical_multiplier = dict["critical"]["multiplier"]
+	apply_weapon_attributes(dict[WEAPON_ATTRIBUTES_KEY])
 
 
 
