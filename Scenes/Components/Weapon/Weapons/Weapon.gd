@@ -21,10 +21,27 @@ export(NodePath) var critical: NodePath
 onready var _ranged_damage: RangedDamageComponent = get_node(ranged_damage) as RangedDamageComponent
 onready var _critical: CriticalComponent = get_node(critical) as CriticalComponent
 
+# Weapon attributes
+var weapon_attributes: WeaponAttributes = null setget set_weapon_attributes
+
 # Weapon manager manage this weapon
 var weapon_manager = null
 
 
+## Getter Setter ##
+
+
+func set_weapon_attributes(value:WeaponAttributes) -> void:
+	if value == null:
+		return
+
+	weapon_attributes = value
+
+	_ranged_damage.min_damage = weapon_attributes.min_damage
+	_ranged_damage.max_damage = weapon_attributes.max_damage
+	_critical.critical_chance = weapon_attributes.critical_chance
+	_critical.critical_multiplier = weapon_attributes.critical_multiplier
+## Getter Setter ## 
 
 func _get_configuration_warning() -> String:
 	if ranged_damage.is_empty():
