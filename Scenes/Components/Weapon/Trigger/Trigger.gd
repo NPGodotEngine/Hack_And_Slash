@@ -12,6 +12,11 @@ signal trigger_pulled()
 
 
 
+# Duration before next trigger pull from last trigger pulled
+export (float, 0.1, 10) var trigger_duration: float = 1.0
+
+
+
 # Pull trigger
 ##
 # If trigger is ready and pulled

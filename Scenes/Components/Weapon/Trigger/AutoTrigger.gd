@@ -4,14 +4,13 @@ extends Trigger
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 
 
-# Duration before next trigger pull from last trigger pulled
-export (float, 0.1, 10) var trigger_duration: float = 1.0
-
 # Trigger timer
 var _trigger_timer: Timer = null
 
 # Is trigger ready to be pulled
 var _is_trigger_ready: bool = true
+
+
 
 func _ready() -> void:
 	if _trigger_timer:

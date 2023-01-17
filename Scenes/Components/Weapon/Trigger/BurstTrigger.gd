@@ -11,8 +11,6 @@ export (int, 2, 100) var number_of_bursts = 3
 # Duration for a burst process
 export (float) var burst_duration: float = 1.0
 
-# Duration between last burst process and next burst process
-export (float) var wait_to_next_burst: float = 1.0
 
 # Number of bursts left
 var _burst_left: int = 0
@@ -35,6 +33,8 @@ var _is_wating_for_next_process: bool = false
 
 # Is trigger ready to be pulled
 var _is_trigger_ready: bool = true
+
+
 
 func _get_configuration_warning() -> String:
     if is_equal_approx(burst_duration, 0):
@@ -92,7 +92,7 @@ func _on_timer_per_burst_timeout() -> void:
     if _burst_left == 0:
         # burst process finished
         # wait til next burst process
-        _wait_next_burst_timer.start(wait_to_next_burst)
+        _wait_next_burst_timer.start(trigger_duration)
     else:
         # burst process not finished
         _is_bursting = true
