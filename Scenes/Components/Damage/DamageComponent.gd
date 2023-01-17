@@ -13,8 +13,6 @@ class DamageContext extends Resource:
 signal damage_updated(damage_context)
 
 
-# Min damage
-export (float) var min_damage: float = 1.0
 
 # Current damage
 export (float) var damage: float = 10.0 setget set_damage, get_damage
@@ -33,8 +31,7 @@ func set_damage(value:float) -> void:
 		return 
 
 	var prev_damage = damage
-	damage = max(value, min_damage)
-	damage = round(damage)
+	damage = round(value)
 
 	var damage_context: DamageContext = DamageContext.new()
 	damage_context.previous_damage = prev_damage
@@ -43,6 +40,6 @@ func set_damage(value:float) -> void:
 	emit_signal("damage_updated", damage_context)
 
 func get_damage() -> float:
-	return round(max(damage * damage_multiplier, min_damage))
+	return round(damage * damage_multiplier)
 
 ## Getter Setter ##
