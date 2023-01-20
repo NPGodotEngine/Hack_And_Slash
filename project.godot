@@ -94,6 +94,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/Components/HitHurt/HurtBox.gd"
 }, {
+"base": "Resource",
+"class": "Inventory",
+"language": "GDScript",
+"path": "res://Scenes/Components/Inventory/Inventory.gd"
+}, {
+"base": "Resource",
+"class": "InventoryItem",
+"language": "GDScript",
+"path": "res://Scenes/Components/Inventory/InventoryItem.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Mob",
 "language": "GDScript",
@@ -202,6 +212,8 @@ _global_script_class_icons={
 "HitBox": "",
 "HitDamage": "",
 "HurtBox": "",
+"Inventory": "",
+"InventoryItem": "",
 "Mob": "",
 "MobSkin": "",
 "MovementComponent": "",
