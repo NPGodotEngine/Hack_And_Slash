@@ -29,7 +29,7 @@ export var stackable: bool = false
 export var stack_size: int = 10
 
 # Current stack count
-export var _stack_count: int = 1
+export var _stack_quantity: int = 1
 
 
 
@@ -37,10 +37,10 @@ func _init() -> void:
     if stack_size <= 0:
         stack_size = 1
 
-    if _stack_count <= 0:
-        _stack_count = 1
-    elif _stack_count > stack_size:
-        _stack_count = stack_size
+    if _stack_quantity <= 0:
+        _stack_quantity = 1
+    elif _stack_quantity > stack_size:
+        _stack_quantity = stack_size
 
 
 
@@ -49,8 +49,8 @@ func add_to_stack(amount:int=1) -> void:
     if not stackable:
         return
 
-    if amount + _stack_count <= stack_size:
-        _stack_count += amount
+    if amount + _stack_quantity <= stack_size:
+        _stack_quantity += amount
         # emit signal item updated
         emit_signal("item_updated", self)
     else:
@@ -65,12 +65,12 @@ func remove_from_stack(amount:int=1) -> void:
         emit_signal("remove_item", self)
         return
     
-    var new_stack_count = _stack_count - amount
-    if new_stack_count < 0 or new_stack_count == 0:
+    var new_stack_quantity = _stack_quantity - amount
+    if new_stack_quantity < 0 or new_stack_quantity == 0:
         #emit signal remove item
         emit_signal("remove_item", self)
     else:
-        _stack_count = new_stack_count
+        _stack_quantity = new_stack_quantity
         # emit signal item updated
         emit_signal("item_updated", self)
 
