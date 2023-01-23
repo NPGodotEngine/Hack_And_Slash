@@ -55,14 +55,20 @@ func get_item(index:int) -> InventoryItem:
     return inventory_items[index]
 
 func _setup_item(item:InventoryItem) -> void:
-    item.connect("item_updated", self, "_on_item_updated")
-    item.connect("item_stack_full", self, "_on_item_stack_full")
-    item.connect("remove_item", self, "_on_remove_item")
+    if not item.is_connected("item_updated", self, "_on_item_updated"):
+        item.connect("item_updated", self, "_on_item_updated")
+    if not item.is_connected("item_stack_full", self, "_on_item_stack_full"):
+        item.connect("item_stack_full", self, "_on_item_stack_full")
+    if not item.is_connected("remove_item", self, "_on_remove_item"):
+        item.connect("remove_item", self, "_on_remove_item")
 
 func _destroy_item(item:InventoryItem) -> void:
-    item.disconnect("item_updated", self, "_on_item_updated")
-    item.disconnect("item_stack_full", self, "_on_item_stack_full")
-    item.disconnect("remove_item", self, "_on_remove_item")
+    if item.is_connected("item_updated", self, "_on_item_updated"):
+        item.disconnect("item_updated", self, "_on_item_updated")
+    if item.is_connected("item_stack_full", self, "_on_item_stack_full"):
+        item.disconnect("item_stack_full", self, "_on_item_stack_full")
+    if item.is_connected("remove_item", self, "_on_remove_item"):
+         item.disconnect("remove_item", self, "_on_remove_item")
 
 func _on_item_updated(item:InventoryItem) -> void:
     # emit signal inventory updated

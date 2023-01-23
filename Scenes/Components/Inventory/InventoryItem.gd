@@ -28,6 +28,9 @@ export var stackable: bool = false
 # Max size this inventory item can stack
 export var stack_size: int = 10
 
+# Item's icon to be displayed in inventory
+export var icon: Texture = null
+
 # Current stack count
 export var _stack_quantity: int = 1
 

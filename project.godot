@@ -64,6 +64,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Interface/HUD/DamageLabel.gd"
 }, {
+"base": "InventoryItem",
+"class": "EquipmentItem",
+"language": "GDScript",
+"path": "res://Scenes/Components/Inventory/Items/EquipmentItem.gd"
+}, {
 "base": "Node",
 "class": "ExpComponent",
 "language": "GDScript",
@@ -103,6 +108,11 @@ _global_script_classes=[ {
 "class": "InventoryItem",
 "language": "GDScript",
 "path": "res://Scenes/Components/Inventory/InventoryItem.gd"
+}, {
+"base": "Panel",
+"class": "ItemSlotUI",
+"language": "GDScript",
+"path": "res://Interface/UI/Inventory/ItemSlotUI.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Mob",
@@ -206,6 +216,7 @@ _global_script_class_icons={
 "CriticalComponent": "",
 "DamageComponent": "",
 "DamageLabel": "",
+"EquipmentItem": "",
 "ExpComponent": "",
 "HealthBar": "",
 "HealthComponent": "",
@@ -214,6 +225,7 @@ _global_script_class_icons={
 "HurtBox": "",
 "Inventory": "",
 "InventoryItem": "",
+"ItemSlotUI": "",
 "Mob": "",
 "MobSkin": "",
 "MovementComponent": "",
@@ -244,6 +256,7 @@ config/icon="res://icon.png"
 Global="*res://Autoload/Global.gd"
 GameSaver="*res://Autoload/GameSaver.gd"
 Events="*res://Autoload/Events.gd"
+InventoryManager="*res://Autoload/InventoryManager.gd"
 
 [display]
 

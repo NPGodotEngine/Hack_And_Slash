@@ -1,11 +1,11 @@
 extends Node2D
 
 onready var weapon_library: Array = [
-	"MarineWeapon",
+	"RaiderRifle",
 ]
 
 onready var weapon_att_library: Array = [
-	"MaineWeaponAtt.tres"
+	"RaiderRifleAttr.tres"
 ]
 
 func _ready() -> void:

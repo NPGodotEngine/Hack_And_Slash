@@ -8,9 +8,8 @@
 [ext_resource path="res://Scenes/Components/Weapon/Ammo/ProjectileAmmo.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Components/Weapon/Trigger/AutoTrigger.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Bullets/Projectile/ProjectileBullet/ProjectileBullet.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Assets/Icons/Weapon_icon.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Weapons/Weapon_spritesheet.png" type="Texture" id=9]
 [ext_resource path="res://Scenes/Components/Weapon/MuzzleFlash/MuzzleFlash.tscn" type="PackedScene" id=10]
-
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -107,7 +106,7 @@ bullet_scene = ExtResource( 8 )
 [node name="weapon" type="Sprite" parent="Skin"]
 texture = ExtResource( 9 )
 region_enabled = true
-region_rect = Rect2( 2, 19, 59, 25 )
+region_rect = Rect2( 17, 34, 59, 25 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Skin"]
 playback_speed = 15.0

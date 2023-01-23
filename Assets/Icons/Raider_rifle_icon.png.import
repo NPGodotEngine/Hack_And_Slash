@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Marine_gun.png-82b348b0cd6bc94c792b1edac1202c56.stex"
+path="res://.import/Raider_rifle_icon.png-e12815af6fea78c18dbf3ea67d6baf94.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Weapons/MarineGun/Marine_gun.png"
-dest_files=[ "res://.import/Marine_gun.png-82b348b0cd6bc94c792b1edac1202c56.stex" ]
+source_file="res://Assets/Icons/Raider_rifle_icon.png"
+dest_files=[ "res://.import/Raider_rifle_icon.png-e12815af6fea78c18dbf3ea67d6baf94.stex" ]
 
 [params]
 
