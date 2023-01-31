@@ -92,7 +92,7 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "HitDamage",
 "language": "GDScript",
-"path": "res://Cores/Damage/HitDamage.gd"
+"path": "res://System/Damage/HitDamage.gd"
 }, {
 "base": "Area2D",
 "class": "HurtBox",
@@ -167,7 +167,7 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "SavedData",
 "language": "GDScript",
-"path": "res://Cores/SaveLoad/SavedData.gd"
+"path": "res://System/SaveLoad/SavedData.gd"
 }, {
 "base": "Area2D",
 "class": "TargetDetector",
@@ -253,10 +253,10 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Global="*res://Autoload/Global.gd"
-GameSaver="*res://Autoload/GameSaver.gd"
-Events="*res://Autoload/Events.gd"
-InventoryManager="*res://Autoload/InventoryManager.gd"
+Global="*res://System/Autoload/Global.gd"
+GameSaver="*res://System/Autoload/GameSaver.gd"
+Events="*res://System/Autoload/Events.gd"
+InventoryManager="*res://System/Autoload/InventoryManager.gd"
 
 [display]
 
