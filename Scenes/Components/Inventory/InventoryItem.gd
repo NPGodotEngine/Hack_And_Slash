@@ -22,6 +22,9 @@ signal remove_item(item)
 # Inventory item type
 export(InventoryItemType) var item_type: int
 
+# Name of item
+export(String) var item_name: String = "" 
+
 # Is inventory item stackable
 export var stackable: bool = false
 

@@ -1,12 +1,17 @@
-[gd_resource type="Resource" load_steps=3 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/Components/Inventory/Items/EquipmentItem.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Icons/Raider_rifle_icon.png" type="Texture" id=2]
+[ext_resource path="res://Scenes/Prefabs/Weapons/RaiderRifleAttr.tres" type="Resource" id=3]
+[ext_resource path="res://Scenes/Prefabs/Weapons/RaiderRifle.tscn" type="PackedScene" id=4]
 
 [resource]
 script = ExtResource( 1 )
 item_type = 0
+item_name = ""
 stackable = false
 stack_size = 10
 icon = ExtResource( 2 )
 _stack_quantity = 1
+equipment_scene = ExtResource( 4 )
+equipment_attr = ExtResource( 3 )

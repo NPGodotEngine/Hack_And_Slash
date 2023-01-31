@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/Prefabs/Items/EquipmentItem.tres" type="Resource" id=1]
+[ext_resource path="res://System/SaveLoad/SavedData.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/Components/Inventory/Inventory.gd" type="Script" id=3]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 3 )
+inventory_items = [ ExtResource( 1 ), ExtResource( 1 ) ]
+
+[resource]
+script = ExtResource( 2 )
+save_version = "0.0.1"
+data = {
+"Inventory": SubResource( 1 )
+}

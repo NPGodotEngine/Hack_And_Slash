@@ -14,7 +14,7 @@ signal load_game(saved_data)
 const SAVE_FOLDER = "res://Debug/Saves"
 
 # Save file name template
-const SAVE_NAME_TEMPLATE = "SavedData.res"
+const SAVE_NAME_TEMPLATE = "SavedData.tres"
 
 # Current saved data
 var saved_data: SavedData = null
