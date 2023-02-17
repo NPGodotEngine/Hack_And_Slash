@@ -25,6 +25,8 @@ export (float) var max_movement_speed: float = 400.0
 # Min movement speed
 export (float) var min_movement_speed: float = 10.0
 
+
+
 # How fast can player turn from 
 # one direction to another
 ##
@@ -35,11 +37,10 @@ export (float, 0.1, 1.0) var drag_factor: float = 0.5
 # Movement speed
 export (float) var movement_speed: float = 200.0
 
-onready var _target: KinematicBody2D = get_node(target)
+onready var _target: KinematicBody2D = get_node(target) as KinematicBody2D
 
 # Movement speed multiplier
 var movement_speed_multiplier: float = 1.0
-
 
 # Current velocity
 var _velocity: Vector2 = Vector2.ZERO

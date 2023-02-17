@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/books_2.png-8b7fee3af813ebf3954e42f3e49a0b8e.stex"
+path="res://.import/books_2.png-1453c6b39e183e83bd76aebbdf73bf1c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Shared/books_2.png"
-dest_files=[ "res://.import/books_2.png-8b7fee3af813ebf3954e42f3e49a0b8e.stex" ]
+source_file="res://Assets/books_2.png"
+dest_files=[ "res://.import/books_2.png-1453c6b39e183e83bd76aebbdf73bf1c.stex" ]
 
 [params]
 
