@@ -5,6 +5,9 @@ extends Node
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 
 
+# Emit when dash begin
+signal dash_begin()
+
 # Emit when dash finished
 signal dash_finished()
 
@@ -20,10 +23,10 @@ signal dash_cooldown_end()
 export(NodePath) var target: NodePath
 
 # Dash speed
-export (float) var dash_speed: float = 600.0
+export (float) var dash_speed: float = 1200.0
 
 # Dash duration
-export (float) var dash_duration: float = 0.1
+export (float) var dash_duration: float = 0.2
 
 # Dash cooldown duration
 export (float) var dash_cooldown_duration: float = 1.0 
@@ -85,4 +88,5 @@ func dash(direction:Vector2) -> void:
 			_dash_completed()
 	else:
 		_is_dashing = true
+		emit_signal("dash_begin")
 		_dash_timer.start(dash_duration)

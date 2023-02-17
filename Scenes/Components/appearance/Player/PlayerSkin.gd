@@ -8,17 +8,21 @@ extends Node2D
 
 const IDLE = "idle"
 const RUN = "run"
+const DASH = "dash"
+const DEFAULT = "default"
 
 
 
 # Node path to MovementComponent
 export(NodePath) var movement: NodePath
+export(NodePath) var dash: NodePath
 
 onready var upper_body_animator: AnimationPlayer = $UpperAnimator
 onready var lower_body_animator: AnimationPlayer = $LowerAnimator
 
 # MovementComponent
 onready var _movement: MovementComponent = get_node(movement)
+onready var _dash: DashComponent = get_node(dash)
 
 
 var _playback_speed: float = 1.0
@@ -32,9 +36,12 @@ var _velocity: Vector2 = Vector2.ZERO
 func _get_configuration_warning() -> String:
 	if movement.is_empty():
 		return "movement node path is missing"
-
 	if not get_node(movement) is MovementComponent:
-		return "movement must be a MovementComponent node" 
+		return "movement must be a MovementComponent node"
+	if dash.is_empty():
+		return "dash node path is missing"
+	if not get_node(dash) is DashComponent:
+		return "dash must be a DashComponent node"  
 
 	return ""
 
@@ -61,7 +68,13 @@ func _physics_process(delta: float) -> void:
 		return
 
 	update_skin()
-	update_animation()
+	update_playback_speed()
+	if _dash._is_dashing:
+		play_dash_anim()
+	elif abs(_velocity.x) <= 0.1 and abs(_velocity.y) <= 0.1:
+		play_idle_anim()
+	else:
+		play_run_anim()
 
 func _on_velocity_updated(velocity_context:MovementComponent.VelocityContext) -> void:
 	_velocity = velocity_context.updated_velocity
@@ -76,7 +89,7 @@ func update_skin() -> void:
 	else:
 		self.scale.x = 1.0 * self.scale.abs().x
 
-func update_animation() -> void:
+func update_playback_speed() -> void:
 	# update playback speed
 	var max_speed: float = _movement.max_movement_speed
 	var min_speed: float = _movement.min_movement_speed
@@ -92,13 +105,17 @@ func update_animation() -> void:
 		not is_equal_approx(_velocity.x, 0.0)):
 		_playback_speed *= -1.0
 
-	if abs(_velocity.x) <= 0.1 and abs(_velocity.y) <= 0.1:
-		play_animation(upper_body_animator, IDLE, _playback_speed)
-		stop_animation(lower_body_animator, RUN)
-	else:
-		play_animation(lower_body_animator, RUN, _playback_speed)
-		stop_animation(upper_body_animator, IDLE)
+func play_dash_anim() -> void:
+	play_animation(upper_body_animator, DASH, _playback_speed)
+	play_animation(lower_body_animator, DASH, _playback_speed)
 
+func play_idle_anim() -> void:
+	play_animation(upper_body_animator, IDLE, _playback_speed)
+	play_animation(lower_body_animator, DEFAULT, _playback_speed)
+
+func play_run_anim() -> void:
+	play_animation(lower_body_animator, RUN, _playback_speed)
+	play_animation(upper_body_animator, DEFAULT, _playback_speed)
 
 # Return a bool value `true` indicate playback speed is
 # reverse (negative) or `false` indicate forward (positive) 
@@ -115,6 +132,7 @@ func is_playing_reverse(playback_speed:float) -> bool:
 func play_animation(player:AnimationPlayer, name:String, speed:float=1.0) -> void:
 	if player.current_animation == name:
 		return
+
 	player.play(name, -1, speed, is_playing_reverse(speed))
 
 # Stop an animation

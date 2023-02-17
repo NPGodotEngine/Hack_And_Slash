@@ -7,8 +7,6 @@ extends Controller
 # warning-ignore-all: UNUSED_SIGNAL
 
 
-# Emit when dash is about to happen
-signal prepare_for_dash()
 
 # Node path to MovementComponent
 export(NodePath) var movement: NodePath
@@ -105,7 +103,6 @@ func update_movement() -> void:
         not _is_dashing and not _dash._is_cooldown):
         _is_dashing = true
         _dash_direction = _actor.global_position.direction_to(_actor.get_global_mouse_position())
-        emit_signal("prepare_for_dash")
     
 func update_weapon_input() -> void:
     if _weapon_manager == null:

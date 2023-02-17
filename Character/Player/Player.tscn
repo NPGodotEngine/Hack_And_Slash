@@ -29,6 +29,7 @@ margin_right = 999.0
 margin_bottom = 551.0
 
 [node name="PlayerSkin" parent="." instance=ExtResource( 3 )]
+dash = NodePath("../DashComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 1, -6 )
@@ -43,8 +44,6 @@ target = NodePath("..")
 
 [node name="DashComponent" parent="." instance=ExtResource( 9 )]
 target = NodePath("..")
-dash_speed = 1200.0
-dash_duration = 0.2
 
 [node name="WeaponManager" parent="." instance=ExtResource( 8 )]
 
