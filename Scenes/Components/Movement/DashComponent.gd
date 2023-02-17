@@ -70,7 +70,12 @@ func _on_cooldown_timer_timeout() -> void:
 	_is_cooldown = false
 	emit_signal("dash_cooldown_end")
 
-func dash(direction:Vector2) -> void:
+# Perform dash
+# Called this method in physics process in order
+# to update dash
+##
+# `direction`: dash direction
+func process_dash(direction:Vector2) -> void:
 	if _target == null or target.is_empty():
 		push_error("Could not find target to dash")
 		return

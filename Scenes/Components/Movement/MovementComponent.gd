@@ -54,10 +54,12 @@ func _get_configuration_warning() -> String:
 
     return ""
 
-# Return a `Vector2` for new movement velocity
+# Perform movement
+# Called this method in physics process in order
+# to update movement
 ##
-# `direction`: desired movement direction
-func move(direction:Vector2) -> void:
+# `direction`: movement direction
+func process_move(direction:Vector2) -> void:
     if _target == null or target.is_empty():
         push_error("Could not find target to move")
         return

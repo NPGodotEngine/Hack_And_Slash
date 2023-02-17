@@ -95,9 +95,9 @@ func update_movement() -> void:
             Input.get_axis("move_up", "move_down")
         ).normalized()
 
-        _movement.move(direction)
+        _movement.process_move(direction)
     else:
-        _dash.dash(_dash_direction)
+        _dash.process_dash(_dash_direction)
 
     if (Input.is_action_just_pressed("Dash") and 
         not _is_dashing and not _dash._is_cooldown):
