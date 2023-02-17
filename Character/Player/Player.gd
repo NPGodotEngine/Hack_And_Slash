@@ -9,7 +9,7 @@ extends KinematicBody2D
 
 
 # Player skin visual
-onready var _skin := $PlayerSkin
+onready var _skin: PlayerSkin = $PlayerSkin
 
 onready var _health_bar: HealthBar = $HealthBar
 
@@ -20,6 +20,7 @@ onready var _health_comp: HealthComponent = $HealthComponent
 onready var _exp_comp: ExpComponent = $ExpComponent
 onready var _movement_comp: MovementComponent = $MovementComponent
 onready var _hurt_box: HurtBox = $HurtBox
+onready var _dash_comp: DashComponent = $DashComponent
 
 
 
@@ -44,6 +45,13 @@ func _ready() -> void:
 	_health_bar.max_health = _health_comp.max_health
 	_health_bar.health = _health_comp._health
 	
+	_dash_comp.connect("display_dash_effect", self, "_on_display_dash_effect")
+
+func _on_display_dash_effect(dash_effect:DashComponent.DashVisualEffect) -> void:
+	dash_effect.effect.global_position = global_position
+	var visual = _skin.duplicate_visual()
+	dash_effect.effect.add_child(visual)
+	Global.add_to_scene_tree(dash_effect.effect)
 
 func _on_progress_updated(progress_context:ExpComponent.ProgressContext) -> void:
 	print("level up %f -> %f / %f" % [progress_context.previous_progress, 

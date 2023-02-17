@@ -5,6 +5,9 @@ extends Node
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 
 
+class DashVisualEffect:
+	var effect:Node2D = null
+
 # Emit when dash begin
 signal dash_begin()
 
@@ -14,9 +17,12 @@ signal dash_finished()
 # Emit when dash begin cooldown
 signal dash_cooldown_begin()
 
-
 # Emit when dash cooldown end
 signal dash_cooldown_end()
+
+# Emit when need to display a dash visual effect
+signal display_dash_effect(visual_effect)
+
 
 
 # Node path to KenimaticBody2D
@@ -30,6 +36,9 @@ export (float) var dash_duration: float = 0.2
 
 # Dash cooldown duration
 export (float) var dash_cooldown_duration: float = 1.0 
+
+# Dash effect
+export (PackedScene) var dash_effect: PackedScene
 
 
 onready var _target: KinematicBody2D = get_node(target) as KinematicBody2D
@@ -86,6 +95,12 @@ func process_dash(direction:Vector2) -> void:
 	if _is_dashing:
 		var dash_velocity: Vector2 = direction * dash_speed
 		_target.move_and_slide(dash_velocity, Vector2.ZERO)
+
+		if dash_effect:
+			var effect = dash_effect.instance()
+			var dash_visual_effect: DashVisualEffect = DashVisualEffect.new()
+			dash_visual_effect.effect = effect
+			emit_signal("display_dash_effect", dash_visual_effect)
 
 		# if collide with wall
 		if _target.is_on_wall():

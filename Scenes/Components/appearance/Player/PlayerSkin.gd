@@ -1,4 +1,5 @@
 tool
+class_name PlayerSkin
 extends Node2D
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
@@ -23,7 +24,7 @@ onready var lower_body_animator: AnimationPlayer = $LowerAnimator
 # MovementComponent
 onready var _movement: MovementComponent = get_node(movement)
 onready var _dash: DashComponent = get_node(dash)
-
+onready var _visual: Node2D = $Visual
 
 var _playback_speed: float = 1.0
 var _max_playback_speed: float = 64.0
@@ -122,6 +123,11 @@ func play_run_anim() -> void:
 func is_playing_reverse(playback_speed:float) -> bool:
 	var result: bool =  true if _playback_speed < 0.0 else false
 	return result
+
+# Duplicate an instance of this skin
+# but only visual part
+func duplicate_visual() -> Node2D:
+	return _visual.duplicate() as Node2D
 
 # Play an animation
 ##
