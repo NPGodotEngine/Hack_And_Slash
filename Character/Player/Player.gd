@@ -46,12 +46,17 @@ func _ready() -> void:
 	_health_bar.health = _health_comp._health
 	
 	_dash_comp.connect("display_dash_effect", self, "_on_display_dash_effect")
+	_dash_comp.connect("display_dash_particles", self, "_on_display_dash_particles")
 
 func _on_display_dash_effect(dash_effect:DashComponent.DashVisualEffect) -> void:
 	dash_effect.effect.global_position = global_position
 	var visual = _skin.duplicate_visual()
 	dash_effect.effect.add_child(visual)
 	Global.add_to_scene_tree(dash_effect.effect)
+
+func _on_display_dash_particles(particles_effect:DashComponent.DashParticlesEffect) -> void:
+	particles_effect.particles.global_position = global_position
+	Global.add_to_scene_tree(particles_effect.particles)
 
 func _on_progress_updated(progress_context:ExpComponent.ProgressContext) -> void:
 	print("level up %f -> %f / %f" % [progress_context.previous_progress, 

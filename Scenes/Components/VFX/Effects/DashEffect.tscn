@@ -4,6 +4,7 @@
 
 [node name="DashEffect" type="Node2D"]
 script = ExtResource( 1 )
-initial_color = Color( 0.254902, 0.254902, 0.254902, 1 )
+initial_color = Color( 0.541176, 0.541176, 0.541176, 0.501961 )
+trans_type = 8
 
 [node name="Tween" type="Tween" parent="."]

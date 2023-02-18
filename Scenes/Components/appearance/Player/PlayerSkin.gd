@@ -127,7 +127,9 @@ func is_playing_reverse(playback_speed:float) -> bool:
 # Duplicate an instance of this skin
 # but only visual part
 func duplicate_visual() -> Node2D:
-	return _visual.duplicate() as Node2D
+	var vis =  _visual.duplicate() as Node2D
+	vis.scale.x = self.scale.x
+	return vis
 
 # Play an animation
 ##

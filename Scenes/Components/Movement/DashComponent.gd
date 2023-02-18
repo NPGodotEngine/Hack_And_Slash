@@ -8,6 +8,9 @@ extends Node
 class DashVisualEffect:
 	var effect:Node2D = null
 
+class DashParticlesEffect:
+	var particles:Particles2D = null
+
 # Emit when dash begin
 signal dash_begin()
 
@@ -23,13 +26,16 @@ signal dash_cooldown_end()
 # Emit when need to display a dash visual effect
 signal display_dash_effect(visual_effect)
 
+# Emit when need to display a dash particles effect
+signal display_dash_particles(particles_effect)
+
 
 
 # Node path to KenimaticBody2D
 export(NodePath) var target: NodePath
 
 # Dash speed
-export (float) var dash_speed: float = 1200.0
+export (float) var dash_speed: float = 2000.0
 
 # Dash duration
 export (float) var dash_duration: float = 0.2
@@ -39,6 +45,9 @@ export (float) var dash_cooldown_duration: float = 1.0
 
 # Dash effect
 export (PackedScene) var dash_effect: PackedScene
+
+# Dash particles
+export (PackedScene) var dash_particles: PackedScene
 
 
 onready var _target: KinematicBody2D = get_node(target) as KinematicBody2D
@@ -110,3 +119,17 @@ func process_dash(direction:Vector2) -> void:
 		_is_dashing = true
 		emit_signal("dash_begin")
 		_dash_timer.start(dash_duration)
+		
+		if dash_particles:
+			var particles = dash_particles.instance()
+
+			# set particles direction
+			if particles is Particles2D:
+				var dir_norm: Vector2 = direction.normalized()
+				particles.process_material.direction = -Vector3(dir_norm.x, dir_norm.y, 0.0)
+			else:
+				push_error("dash particles is not a Particles2D node")
+
+			var particles_effect: DashParticlesEffect = DashParticlesEffect.new()
+			particles_effect.particles = particles
+			emit_signal("display_dash_particles", particles_effect)
