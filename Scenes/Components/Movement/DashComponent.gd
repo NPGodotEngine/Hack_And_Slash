@@ -43,6 +43,9 @@ export (float) var dash_duration: float = 0.2
 # Dash cooldown duration
 export (float) var dash_cooldown_duration: float = 1.0 
 
+# The layer mask target will be in during dashing
+export (int, LAYERS_2D_PHYSICS)	var dash_layer: int = 0
+
 # Dash effect
 export (PackedScene) var dash_effect: PackedScene
 
@@ -53,6 +56,9 @@ export (PackedScene) var dash_particles: PackedScene
 onready var _target: KinematicBody2D = get_node(target) as KinematicBody2D
 onready var _dash_timer: Timer = $DashTimer
 onready var _cooldown_timer: Timer = $CooldownTimer
+
+# Reference to target's layer mask
+var _target_layer: int = 0
 
 # Whether is in dashing or not
 var _is_dashing: bool = false
@@ -78,6 +84,8 @@ func _on_dash_timer_timeout() -> void:
 
 func _dash_completed() -> void:
 	_is_dashing = false
+	# recover target's original layer mask
+	_target.collision_layer = _target_layer
 	emit_signal("dash_finished")
 
 	_is_cooldown = true
@@ -119,7 +127,12 @@ func process_dash(direction:Vector2) -> void:
 		_is_dashing = true
 		emit_signal("dash_begin")
 		_dash_timer.start(dash_duration)
+
+		# Change target to dash layer
+		_target_layer = _target.collision_layer
+		_target.collision_layer = dash_layer
 		
+		# handle dash particles
 		if dash_particles:
 			var particles = dash_particles.instance()
 
