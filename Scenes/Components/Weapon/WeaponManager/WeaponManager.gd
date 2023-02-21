@@ -17,6 +17,8 @@ var weapon_slots: Array = []
 # Current index point to the weapon
 var current_weapon_index: int = -1 setget set_current_weapon_index
 
+# Whether weapon manager is enabled
+var _is_enabled: bool = true
 
 
 ## Getter Setter ##
@@ -92,6 +94,9 @@ func collect_weapons() -> void:
 # `from_position` global position for weapon to shoot from
 # `to_position` global position for weapon to shoot to
 func execute_weapon() -> void:
+	if not _is_enabled:
+		return
+
 	if weapon_slots.size() <= 0 or current_weapon_index == -1: 
 		return
 
@@ -115,6 +120,9 @@ func cancel_weapon_execution() -> void:
 # `from_position` global position for weapon to shoot from
 # `to_position` global position for weapon to shoot to
 func execute_weapon_alt() -> void:
+	if not _is_enabled:
+		return
+		
 	if weapon_slots.size() <= 0 or current_weapon_index == -1: 
 		return
 
@@ -164,4 +172,31 @@ func remove_weapon_by(index:int) -> void:
 	remove_child(weapon)
 	if index <= current_weapon_index:
 		set_current_weapon_index(current_weapon_index)
-		
+
+# Enable weapon manager
+##
+# When weapon manager is enabled
+# weapon manager can execute current weapon
+##
+# Eanble weapon manager also active current weapon
+func enable() -> void:
+	_is_enabled = true
+
+	if current_weapon_index != -1:
+		# enable current weapon
+		var weapon: Weapon = weapon_slots[current_weapon_index]
+		weapon.active()
+
+# Diable weapon manager
+##
+# When weapon manager is disabled
+# weapon manager can't execute current weapon
+##
+# Disable weapon manager also inactive current weapon
+func disable() -> void:
+	_is_enabled = false
+
+	if current_weapon_index != -1:
+		# disable current weapon
+		var weapon: Weapon = weapon_slots[current_weapon_index]
+		weapon.inactive()		

@@ -12,6 +12,7 @@ extents = Vector2( 55, 46 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 166, 193 )
+collision_mask = 7
 
 [node name="HUD" type="CanvasLayer" parent="."]
 

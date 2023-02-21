@@ -60,6 +60,9 @@ onready var _cooldown_timer: Timer = $CooldownTimer
 # Reference to target's layer mask
 var _target_layer: int = 0
 
+# Reference to target's layer mask
+var _target_mask: int = 0
+
 # Whether is in dashing or not
 var _is_dashing: bool = false
 
@@ -84,8 +87,13 @@ func _on_dash_timer_timeout() -> void:
 
 func _dash_completed() -> void:
 	_is_dashing = false
+
 	# recover target's original layer mask
 	_target.collision_layer = _target_layer
+	
+	# recover target's original mask
+	_target.collision_mask = _target_mask
+
 	emit_signal("dash_finished")
 
 	_is_cooldown = true
@@ -131,6 +139,10 @@ func process_dash(direction:Vector2) -> void:
 		# Change target to dash layer
 		_target_layer = _target.collision_layer
 		_target.collision_layer = dash_layer
+
+		# Change target mask
+		_target_mask = _target.collision_mask
+		_target.collision_mask = 0
 		
 		# handle dash particles
 		if dash_particles:
