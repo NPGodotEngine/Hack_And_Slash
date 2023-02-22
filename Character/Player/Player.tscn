@@ -41,6 +41,7 @@ target = NodePath("..")
 
 [node name="DashComponent" parent="." instance=ExtResource( 9 )]
 target = NodePath("..")
+dash_mask = 4
 dash_effect = ExtResource( 11 )
 dash_particles = ExtResource( 12 )
 

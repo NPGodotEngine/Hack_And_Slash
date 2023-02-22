@@ -46,6 +46,9 @@ export (float) var dash_cooldown_duration: float = 1.0
 # The layer mask target will be in during dashing
 export (int, LAYERS_2D_PHYSICS)	var dash_layer: int = 0
 
+# The mask target will be in during dashing
+export (int, LAYERS_2D_PHYSICS) var dash_mask: int = 0
+
 # Dash effect
 export (PackedScene) var dash_effect: PackedScene
 
@@ -142,7 +145,7 @@ func process_dash(direction:Vector2) -> void:
 
 		# Change target mask
 		_target_mask = _target.collision_mask
-		_target.collision_mask = 0
+		_target.collision_mask = dash_mask
 		
 		# handle dash particles
 		if dash_particles:
