@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Interface/GUI.gd" type="Script" id=1]
-[ext_resource path="res://Interface/HUD/DamageTextManager.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Interface/HUD/Damage/DamageTextManager.tscn" type="PackedScene" id=2]
+
 
 [node name="GUI" type="CanvasLayer" groups=["GUI"]]
 script = ExtResource( 1 )

@@ -59,10 +59,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/Components/Damage/DamageComponent.gd"
 }, {
-"base": "Node2D",
+"base": "Reference",
 "class": "DamageLabel",
 "language": "GDScript",
-"path": "res://Interface/HUD/DamageLabel.gd"
+"path": "res://Interface/HUD/Damage/DamageLabel.gd"
 }, {
 "base": "Node",
 "class": "DashComponent",
