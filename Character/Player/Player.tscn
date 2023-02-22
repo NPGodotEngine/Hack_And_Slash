@@ -61,4 +61,4 @@ weapon_manager = NodePath("../WeaponManager")
 actor = NodePath("..")
 
 [node name="RemoteHealthBar" parent="." instance=ExtResource( 13 )]
-position = Vector2( 0, -48 )
+position = Vector2( 0, -60 )
