@@ -14,7 +14,7 @@ onready var _skin: PlayerSkin = $PlayerSkin
 onready var _health_bar_remote: RemoteHealthBar = $RemoteHealthBar
 
 # Weapon manager
-onready var _weapon_manager = null
+onready var _weapon_manager: WeaponManager = $WeaponManager
 
 onready var _health_comp: HealthComponent = $HealthComponent
 onready var _exp_comp: ExpComponent = $ExpComponent
@@ -47,6 +47,14 @@ func _ready() -> void:
 	
 	_dash_comp.connect("display_dash_effect", self, "_on_display_dash_effect")
 	_dash_comp.connect("display_dash_particles", self, "_on_display_dash_particles")
+	_dash_comp.connect("dash_begin", self, "_on_dash_begin")
+	_dash_comp.connect("dash_finished", self, "_on_dash_finished")
+
+func _on_dash_begin() -> void:
+	_weapon_manager.disable()
+
+func _on_dash_finished() -> void:
+	_weapon_manager.enable()
 
 func _on_display_dash_effect(dash_effect:DashComponent.DashVisualEffect) -> void:
 	dash_effect.effect.global_position = global_position
