@@ -6,7 +6,7 @@
 [ext_resource path="res://Scenes/Components/HitHurt/HurtBox.gd" type="Script" id=4]
 [ext_resource path="res://Scenes/Components/Detection/TargetDetector.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Components/Health/HealthComponent.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Interface/HUD/HealthBar/HealthBar.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Interface/HUD/HealthBar/RemoteHealthBar.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/Components/Control/AI/AIControllerComponent.tscn" type="PackedScene" id=9]
 
 [sub_resource type="CircleShape2D" id=1]
@@ -34,12 +34,6 @@ target = NodePath("..")
 [node name="HealthComponent" parent="." instance=ExtResource( 6 )]
 max_health = 1000.0
 
-[node name="HealthBar" parent="." instance=ExtResource( 7 )]
-margin_left = -24.0
-margin_top = -57.0
-margin_right = 1000.0
-margin_bottom = 543.0
-
 [node name="MobSkin" parent="." instance=ExtResource( 1 )]
 
 [node name="HurtBox" type="Area2D" parent="."]
@@ -58,3 +52,6 @@ shape = SubResource( 8 )
 
 [node name="AIControllerComponent" parent="." instance=ExtResource( 9 )]
 actor = NodePath("..")
+
+[node name="RemoteHealthBar" parent="." instance=ExtResource( 7 )]
+position = Vector2( 0, -60 )

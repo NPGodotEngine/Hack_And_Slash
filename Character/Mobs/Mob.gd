@@ -8,7 +8,7 @@ extends KinematicBody2D
 
 onready var _skin: MobSkin = $MobSkin
 onready var _health_comp = $HealthComponent
-onready var _health_bar: HealthBar = $HealthBar
+onready var _health_bar_remote: RemoteHealthBar = $RemoteHealthBar
 onready var _hurt_box: HurtBox = $HurtBox
 
 var _target: Player = null
@@ -23,16 +23,16 @@ func _ready() -> void:
 	_health_comp.connect("low_health_alert", self, "_on_low_health_alert")
 	_health_comp.connect("die", self, "_on_die")
 
-	_health_bar.max_health = _health_comp.max_health
-	_health_bar.health = _health_comp._health
+	_health_bar_remote.healthbar.max_health = _health_comp.max_health
+	_health_bar_remote.healthbar.health = _health_comp._health
 
 
 
 func _on_health_updated(health_context:HealthComponent.HealthContext) -> void:
-	_health_bar.health = health_context.updated_health
+	_health_bar_remote.healthbar.health = health_context.updated_health
 
 func _on_max_health_updated(max_health_context:HealthComponent.MaxHealthContext) -> void:
-	_health_bar.max_health = max_health_context.updated_max_health
+	_health_bar_remote.healthbar.max_health = max_health_context.updated_max_health
 
 func _on_low_health_alert(health_context:HealthComponent.HealthContext) -> void:
 	pass
@@ -58,6 +58,6 @@ func _on_take_damage(hit_damage:HitDamage) -> void:
 
 func _on_die() -> void:
 	is_dead = true
-	_health_bar.hide()
+	_health_bar_remote.healthbar.hide()
 	_skin.play_die()
 

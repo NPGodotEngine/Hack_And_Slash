@@ -11,7 +11,7 @@ extends KinematicBody2D
 # Player skin visual
 onready var _skin: PlayerSkin = $PlayerSkin
 
-onready var _health_bar: HealthBar = $HealthBar
+onready var _health_bar_remote: RemoteHealthBar = $RemoteHealthBar
 
 # Weapon manager
 onready var _weapon_manager = null
@@ -27,8 +27,8 @@ onready var _dash_comp: DashComponent = $DashComponent
 var is_dead: bool = false
 
 func _ready() -> void:
-	_health_bar.health = _health_comp._health
-	_health_bar.max_health = _health_comp.max_health
+	_health_bar_remote.healthbar.health = _health_comp._health
+	_health_bar_remote.healthbar.max_health = _health_comp.max_health
 	
 	_hurt_box.connect("take_damage", self, "_on_take_damage")
 
@@ -42,8 +42,8 @@ func _ready() -> void:
 	_health_comp.connect("low_health_alert", self, "_on_low_health")
 	_health_comp.connect("die", self, "_on_die")
 
-	_health_bar.max_health = _health_comp.max_health
-	_health_bar.health = _health_comp._health
+	_health_bar_remote.healthbar.max_health = _health_comp.max_health
+	_health_bar_remote.healthbar.health = _health_comp._health
 	
 	_dash_comp.connect("display_dash_effect", self, "_on_display_dash_effect")
 	_dash_comp.connect("display_dash_particles", self, "_on_display_dash_particles")
@@ -81,11 +81,11 @@ func _on_xp_required_updated(xp_required_context:ExpComponent.ExpRequiredContext
 	pass
 
 func _on_health_updated(health_context:HealthComponent.HealthContext) -> void:
-	_health_bar.health = health_context.updated_health
+	_health_bar_remote.healthbar.health = health_context.updated_health
 	print("health %f -> %f" % [health_context.previous_health, health_context.updated_health])
 
 func _on_max_health_updated(max_health_context:HealthComponent.MaxHealthContext) -> void:
-	_health_bar.max_health = max_health_context.updated_max_health
+	_health_bar_remote.healthbar.max_health = max_health_context.updated_max_health
 	print("max health %f -> %f" % [max_health_context.previous_max_health, max_health_context.updated_max_health])
 
 func _on_low_health(health_context:HealthComponent.HealthContext) -> void:

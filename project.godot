@@ -74,6 +74,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/Components/Exp/ExpComponent.gd"
 }, {
+"base": "CanvasLayer",
+"class": "GUI",
+"language": "GDScript",
+"path": "res://Interface/GUI.gd"
+}, {
 "base": "Control",
 "class": "HealthBar",
 "language": "GDScript",
@@ -154,6 +159,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/Components/Damage/RangedDamageComponent.gd"
 }, {
+"base": "RemoteTransform2D",
+"class": "RemoteHealthBar",
+"language": "GDScript",
+"path": "res://Interface/HUD/HealthBar/RemoteHealthBar.gd"
+}, {
 "base": "Resource",
 "class": "SavedData",
 "language": "GDScript",
@@ -208,6 +218,7 @@ _global_script_class_icons={
 "DamageLabel": "",
 "DashComponent": "",
 "ExpComponent": "",
+"GUI": "",
 "HealthBar": "",
 "HealthComponent": "",
 "HitBox": "",
@@ -224,6 +235,7 @@ _global_script_class_icons={
 "ProjectileAmmo": "",
 "ProjectileWeapon": "",
 "RangedDamageComponent": "",
+"RemoteHealthBar": "",
 "SavedData": "",
 "TargetDetector": "",
 "TargetFollowerComponent": "",
@@ -243,6 +255,7 @@ config/icon="res://icon.png"
 
 Global="*res://System/Autoload/Global.gd"
 GameSaver="*res://System/Autoload/GameSaver.gd"
+UI="*res://System/Autoload/UI.gd"
 Events="*res://System/Autoload/Events.gd"
 InventoryManager="*res://System/Autoload/InventoryManager.gd"
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Character/Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/books_2.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Interface/HUD/DamageTextManager.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Character/Mobs/Dummy/DummyChase.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Character/Mobs/Dummy/Dummy1.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Interface/GUI.tscn" type="PackedScene" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 52, 40 )
@@ -53,3 +54,5 @@ position = Vector2( 868, 113 )
 environment = SubResource( 2 )
 
 [node name="DamageTextManager" parent="." instance=ExtResource( 5 )]
+
+[node name="GUI" parent="." instance=ExtResource( 8 )]
