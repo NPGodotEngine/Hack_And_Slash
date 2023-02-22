@@ -50,6 +50,9 @@ func _ready() -> void:
 	_dash_comp.connect("dash_begin", self, "_on_dash_begin")
 	_dash_comp.connect("dash_finished", self, "_on_dash_finished")
 
+	# UI
+	GameUI.gui.hud.hp_state.health_component = _health_comp
+
 func _on_dash_begin() -> void:
 	_weapon_manager.disable()
 

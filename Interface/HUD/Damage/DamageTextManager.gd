@@ -2,7 +2,7 @@ extends Node
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 
-export (PackedScene) var damage_text_scene = preload("res://Interface/HUD/DamageLabel.tscn")
+export (PackedScene) var damage_text_scene: PackedScene
 
 func _ready() -> void:
     Events.connect("present_damage_text", self, "_on_present_damage_text")

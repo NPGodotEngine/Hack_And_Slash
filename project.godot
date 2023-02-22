@@ -59,7 +59,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/Components/Damage/DamageComponent.gd"
 }, {
-"base": "Reference",
+"base": "Node2D",
 "class": "DamageLabel",
 "language": "GDScript",
 "path": "res://Interface/HUD/Damage/DamageLabel.gd"
@@ -79,7 +79,17 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Interface/GUI.gd"
 }, {
-"base": "Control",
+"base": "HBoxContainer",
+"class": "HPState",
+"language": "GDScript",
+"path": "res://Interface/HUD/HP/HPState.gd"
+}, {
+"base": "CanvasLayer",
+"class": "HUD",
+"language": "GDScript",
+"path": "res://Interface/HUD/HUD.gd"
+}, {
+"base": "MarginContainer",
 "class": "HealthBar",
 "language": "GDScript",
 "path": "res://Interface/HUD/HealthBar/HealthBar.gd"
@@ -219,6 +229,8 @@ _global_script_class_icons={
 "DashComponent": "",
 "ExpComponent": "",
 "GUI": "",
+"HPState": "",
+"HUD": "",
 "HealthBar": "",
 "HealthComponent": "",
 "HitBox": "",
@@ -255,7 +267,7 @@ config/icon="res://icon.png"
 
 Global="*res://System/Autoload/Global.gd"
 GameSaver="*res://System/Autoload/GameSaver.gd"
-UI="*res://System/Autoload/UI.gd"
+GameUI="*res://System/Autoload/GameUI.gd"
 Events="*res://System/Autoload/Events.gd"
 InventoryManager="*res://System/Autoload/InventoryManager.gd"
 

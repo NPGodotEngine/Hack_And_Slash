@@ -17,7 +17,7 @@ func _ready() -> void:
 
 	# add to ui
 	_pos = Position2D.new()
-	UI.gui.world_ui.add_child(_pos)
+	GameUI.gui.world_ui.add_child(_pos)
 	_pos.add_child(healthbar)
 
 	# center health bar
