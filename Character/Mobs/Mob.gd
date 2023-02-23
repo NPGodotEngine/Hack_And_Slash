@@ -8,7 +8,7 @@ extends KinematicBody2D
 
 onready var _skin: MobSkin = $MobSkin
 onready var _health_comp = $HealthComponent
-onready var _health_bar_remote: RemoteHealthBar = $RemoteHealthBar
+onready var _health_bar_remote: FloatHealthBar = $FloatHealthBar
 onready var _hurt_box: HurtBox = $HurtBox
 
 var _target: Player = null
@@ -60,4 +60,10 @@ func _on_die() -> void:
 	is_dead = true
 	_health_bar_remote.healthbar.hide()
 	_skin.play_die()
+
+func queue_free() -> void:
+	for child in get_children():
+		remove_child(child)
+		child.queue_free()
+	.queue_free()
 

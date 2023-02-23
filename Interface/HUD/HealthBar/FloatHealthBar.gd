@@ -1,4 +1,4 @@
-class_name RemoteHealthBar
+class_name FloatHealthBar
 extends RemoteTransform2D
 
 export (PackedScene) var healthbar_scene: PackedScene
@@ -25,4 +25,11 @@ func _ready() -> void:
 
 	# set remote path
 	remote_path = _pos.get_path()
+
+func queue_free() -> void:
+	if _pos.get_parent():
+		_pos.get_parent().remove_child(_pos)
+		_pos.queue_free()
+	.queue_free()
+
 

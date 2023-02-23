@@ -11,7 +11,7 @@ extends KinematicBody2D
 # Player skin visual
 onready var _skin: PlayerSkin = $PlayerSkin
 
-onready var _health_bar_remote: RemoteHealthBar = $RemoteHealthBar
+onready var _health_bar_remote: FloatHealthBar = $FloatHealthBar
 
 # Weapon manager
 onready var _weapon_manager: WeaponManager = $WeaponManager
@@ -49,9 +49,6 @@ func _ready() -> void:
 	_dash_comp.connect("display_dash_particles", self, "_on_display_dash_particles")
 	_dash_comp.connect("dash_begin", self, "_on_dash_begin")
 	_dash_comp.connect("dash_finished", self, "_on_dash_finished")
-
-	# UI
-	GameUI.gui.hud.hp_state.health_component = _health_comp
 
 func _on_dash_begin() -> void:
 	_weapon_manager.disable()

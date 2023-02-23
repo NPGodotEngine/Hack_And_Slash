@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Interface/HUD/HUD.gd" type="Script" id=1]
 [ext_resource path="res://Interface/HUD/HP/HPState.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Interface/HUD/Dash/DashState.tscn" type="PackedScene" id=3]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -15,4 +16,17 @@ grow_vertical = 0
 custom_constants/margin_left = 8
 custom_constants/margin_bottom = 8
 
-[node name="HPState" parent="PlayerState" instance=ExtResource( 2 )]
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerState"]
+margin_left = 8.0
+margin_right = 244.0
+margin_bottom = 32.0
+
+[node name="HPState" parent="PlayerState/VBoxContainer" instance=ExtResource( 2 )]
+margin_left = 0.0
+margin_right = 236.0
+margin_bottom = 14.0
+
+[node name="DashState" parent="PlayerState/VBoxContainer" instance=ExtResource( 3 )]
+margin_top = 18.0
+margin_right = 236.0
+margin_bottom = 32.0
