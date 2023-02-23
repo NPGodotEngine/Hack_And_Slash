@@ -268,7 +268,7 @@ config/icon="res://icon.png"
 Global="*res://System/Autoload/Global.gd"
 GameSaver="*res://System/Autoload/GameSaver.gd"
 GameUI="*res://System/Autoload/GameUI.gd"
-Events="*res://System/Autoload/Events.gd"
+UIEvents="*res://System/Autoload/UIEvents.gd"
 InventoryManager="*res://System/Autoload/InventoryManager.gd"
 
 [display]

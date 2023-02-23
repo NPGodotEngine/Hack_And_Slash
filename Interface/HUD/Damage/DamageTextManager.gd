@@ -1,13 +1,20 @@
+tool
 extends Node
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 
 export (PackedScene) var damage_text_scene: PackedScene
 
-func _ready() -> void:
-    Events.connect("present_damage_text", self, "_on_present_damage_text")
+func _get_configuration_warning() -> String:
+    if damage_text_scene == null:
+        return "damage text PackedScene is missing and will not display damage text"
+    
+    return ""
 
-func _on_present_damage_text(hit_damage:HitDamage, total_damage:float, position:Vector2) -> void:
+func _ready() -> void:
+    UIEvents.connect("display_damage_text", self, "_on_display_damage_text")
+
+func _on_display_damage_text(hit_damage:HitDamage, total_damage:float, position:Vector2) -> void:
     # Instance a damage label if any
     if damage_text_scene:
         var damage_text = damage_text_scene.instance()
