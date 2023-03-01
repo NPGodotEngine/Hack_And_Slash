@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Interface/HUD/HealthBar/FloatHealthBar.gd" type="Script" id=1]
+[ext_resource path="res://Interface/HUD/HealthBar/HealthBar.tscn" type="PackedScene" id=2]
+
+[node name="FloatHealthBar" type="RemoteTransform2D"]
+script = ExtResource( 1 )
+healthbar_scene = ExtResource( 2 )

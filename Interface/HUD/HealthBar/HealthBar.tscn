@@ -4,7 +4,10 @@
 [ext_resource path="res://Interface/HUD/HealthBar/HealthBarUnder.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Interface/HUD/HealthBar/HealthBar.gd" type="Script" id=3]
 
-[node name="HealthBar" type="Control"]
+[node name="HealthBar" type="MarginContainer"]
+margin_right = 50.0
+margin_bottom = 6.0
+rect_min_size = Vector2( 50, 6 )
 script = ExtResource( 3 )
 
 [node name="Tween" type="Tween" parent="."]

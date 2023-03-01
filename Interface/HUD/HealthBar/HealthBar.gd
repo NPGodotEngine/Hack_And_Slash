@@ -1,5 +1,5 @@
 class_name HealthBar
-extends Control
+extends MarginContainer
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 

@@ -10,6 +10,8 @@ extents = Vector2( 55, 46 )
 
 [node name="World" type="Node"]
 
+[node name="GUI" parent="." instance=ExtResource( 2 )]
+
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 166, 193 )
 collision_mask = 7
@@ -25,5 +27,3 @@ shape = SubResource( 1 )
 
 [node name="Dummy1" parent="." instance=ExtResource( 4 )]
 position = Vector2( 348, 403 )
-
-[node name="GUI" parent="." instance=ExtResource( 2 )]

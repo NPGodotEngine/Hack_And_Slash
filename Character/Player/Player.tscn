@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scenes/Components/HitHurt/HurtBox.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Components/Exp/ExpComponent.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Components/appearance/Player/PlayerSkin.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Character/Player/Player.gd" type="Script" id=4]
+[ext_resource path="res://Interface/HUD/HealthBar/HealthBarUI.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Components/Movement/MovementComponent.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Components/Control/Player/PlayerControllerComponent.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/Components/Weapon/WeaponManager/WeaponManager.tscn" type="PackedScene" id=8]
@@ -11,7 +12,8 @@
 [ext_resource path="res://Scenes/Components/Health/HealthComponent.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/Components/VFX/Effects/DashEffect.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Scenes/Components/VFX/Particle/PuffDash.tscn" type="PackedScene" id=12]
-[ext_resource path="res://Interface/HUD/HealthBar/RemoteHealthBar.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Interface/HUD/HealthBar/FloatHealthBar.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Interface/HUD/Dash/DashBarUI.tscn" type="PackedScene" id=14]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 19.0
@@ -61,5 +63,11 @@ dash = NodePath("../DashComponent")
 weapon_manager = NodePath("../WeaponManager")
 actor = NodePath("..")
 
-[node name="RemoteHealthBar" parent="." instance=ExtResource( 13 )]
+[node name="FloatHealthBar" parent="." instance=ExtResource( 13 )]
 position = Vector2( 0, -60 )
+
+[node name="HealthBarUI" parent="." instance=ExtResource( 5 )]
+healthComponent = NodePath("../HealthComponent")
+
+[node name="DashBarUI" parent="." instance=ExtResource( 14 )]
+dashComponent = NodePath("../DashComponent")

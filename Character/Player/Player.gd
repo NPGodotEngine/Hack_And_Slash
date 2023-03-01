@@ -11,7 +11,7 @@ extends KinematicBody2D
 # Player skin visual
 onready var _skin: PlayerSkin = $PlayerSkin
 
-onready var _health_bar_remote: RemoteHealthBar = $RemoteHealthBar
+onready var _health_bar_remote: FloatHealthBar = $FloatHealthBar
 
 # Weapon manager
 onready var _weapon_manager: WeaponManager = $WeaponManager
@@ -114,7 +114,7 @@ func _on_take_damage(hit_damage:HitDamage) -> void:
 	_health_comp.damage(total_damage)
 
 	# Show damage text
-	Events.emit_signal("present_damage_text", hit_damage, total_damage, global_position)
+	UIEvents.emit_signal("display_damage_text", hit_damage, total_damage, global_position)
 
 func _on_die() -> void:
 	print("player die")

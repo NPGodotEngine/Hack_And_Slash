@@ -3,13 +3,24 @@ class_name DashComponent
 extends Node
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
+# warning-ignore-all: UNUSED_ARGUMENT
 
+enum DashStates {
+	DASH,
+	COOLDOWN,
+	UNKNOWN
+}
+
+class DashProgress:
+	var state: int 
+	var progress: float = 0.0
+	var duration: float = 0.0
 
 class DashVisualEffect:
-	var effect:Node2D = null
+	var effect: Node2D = null
 
 class DashParticlesEffect:
-	var particles:Particles2D = null
+	var particles: Particles2D = null
 
 # Emit when dash begin
 signal dash_begin()
@@ -40,6 +51,9 @@ export (float) var dash_speed: float = 2000.0
 # Dash duration
 export (float) var dash_duration: float = 0.2
 
+# Dash delay recover
+export (float) var dash_delay_recover: float = 0.2
+
 # Dash cooldown duration
 export (float) var dash_cooldown_duration: float = 1.0 
 
@@ -59,6 +73,12 @@ export (PackedScene) var dash_particles: PackedScene
 onready var _target: KinematicBody2D = get_node(target) as KinematicBody2D
 onready var _dash_timer: Timer = $DashTimer
 onready var _cooldown_timer: Timer = $CooldownTimer
+onready var _dash_delay_recover_timer: Timer = $DelayTimer
+
+# Return dash progress
+##
+# Setting this value does nothing
+var dash_progress: DashProgress = null setget no_set, get_dash_progress
 
 # Reference to target's layer mask
 var _target_layer: int = 0
@@ -72,6 +92,31 @@ var _is_dashing: bool = false
 # Whether is in cooldown or not
 var _is_cooldown: bool = false
 
+# Whether is in delay before cooldown process begin
+var _is_delay_recover: bool = false
+
+
+func no_set(value):
+	pass
+
+func get_dash_progress() -> DashProgress:
+	var progress: DashProgress = DashProgress.new()
+
+	if _is_dashing:
+		progress.state = DashStates.DASH
+		progress.progress = _dash_timer.time_left
+		progress.duration = _dash_timer.wait_time
+	elif _is_cooldown:
+		progress.state = DashStates.COOLDOWN
+		progress.progress = _cooldown_timer.time_left
+		progress.duration = _cooldown_timer.wait_time
+	else:
+		progress.state = DashStates.UNKNOWN
+		progress.progress = 1.0
+		progress.duration = 1.0
+	
+	return progress
+
 func _get_configuration_warning() -> String:
 	if target.is_empty():
 		return "target node path is missing"
@@ -84,6 +129,15 @@ func _get_configuration_warning() -> String:
 func _ready() -> void:
 	_dash_timer.connect("timeout", self, "_on_dash_timer_timeout")
 	_cooldown_timer.connect("timeout", self, "_on_cooldown_timer_timeout")
+	_dash_delay_recover_timer.connect("timeout", self, "_on_dash_delay_timeout")
+
+func _on_dash_delay_timeout() -> void:
+	_is_delay_recover = false
+
+	# start cooldown
+	_is_cooldown = true
+	emit_signal("dash_cooldown_begin")
+	_cooldown_timer.start(dash_cooldown_duration)
 
 func _on_dash_timer_timeout() -> void:
 	_dash_completed()
@@ -99,9 +153,12 @@ func _dash_completed() -> void:
 
 	emit_signal("dash_finished")
 
-	_is_cooldown = true
-	emit_signal("dash_cooldown_begin")
-	_cooldown_timer.start(dash_cooldown_duration)
+	# start delay recover
+	_is_delay_recover = true
+	if is_equal_approx(dash_delay_recover, 0.0):
+		_on_dash_delay_timeout()
+	else:
+		_dash_delay_recover_timer.start(dash_delay_recover)
 	
 func _on_cooldown_timer_timeout() -> void:
 	_is_cooldown = false
@@ -117,7 +174,7 @@ func process_dash(direction:Vector2) -> void:
 		push_error("Could not find target to dash")
 		return
 
-	if _is_cooldown:
+	if _is_cooldown or _is_delay_recover:
 		return
 
 	if _is_dashing:

@@ -8,7 +8,7 @@ extends KinematicBody2D
 
 onready var _skin: MobSkin = $MobSkin
 onready var _health_comp = $HealthComponent
-onready var _health_bar_remote: RemoteHealthBar = $RemoteHealthBar
+onready var _health_bar_remote: FloatHealthBar = $FloatHealthBar
 onready var _hurt_box: HurtBox = $HurtBox
 
 var _target: Player = null
@@ -50,7 +50,7 @@ func _on_take_damage(hit_damage:HitDamage) -> void:
 	_health_comp.damage(total_damage)
 	
 	# Show damage text
-	Events.emit_signal("present_damage_text", hit_damage, total_damage, global_position)
+	UIEvents.emit_signal("display_damage_text", hit_damage, total_damage, global_position)
 
 	if not is_dead:
 		_skin.play_hit()
@@ -60,4 +60,10 @@ func _on_die() -> void:
 	is_dead = true
 	_health_bar_remote.healthbar.hide()
 	_skin.play_die()
+
+func queue_free() -> void:
+	for child in get_children():
+		remove_child(child)
+		child.queue_free()
+	.queue_free()
 
