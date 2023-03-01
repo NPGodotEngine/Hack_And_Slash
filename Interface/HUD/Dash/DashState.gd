@@ -1,6 +1,7 @@
 class_name DashState
 extends HBoxContainer
 
+# warning-ignore-all: RETURN_VALUE_DISCARDED
 
 onready var dashbar: DashBar = $DashBar
 
