@@ -80,6 +80,12 @@ onready var _dash_delay_recover_timer: Timer = $DelayTimer
 # Setting this value does nothing
 var dash_progress: DashProgress = null setget no_set, get_dash_progress
 
+# Return `true` if dash can be performed
+# otherwise `false`
+##
+# Setting this value does nothing
+var is_dash_avaliable: bool = true setget no_set, get_is_dash_avaliable
+
 # Reference to target's layer mask
 var _target_layer: int = 0
 
@@ -116,6 +122,11 @@ func get_dash_progress() -> DashProgress:
 		progress.duration = 1.0
 	
 	return progress
+
+func get_is_dash_avaliable() -> bool:
+	if _is_dashing or _is_delay_recover or _is_cooldown:
+		return false
+	return true
 
 func _get_configuration_warning() -> String:
 	if target.is_empty():

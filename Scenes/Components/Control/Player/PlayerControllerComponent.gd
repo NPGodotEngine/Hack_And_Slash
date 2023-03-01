@@ -100,7 +100,7 @@ func update_movement() -> void:
         _dash.process_dash(_dash_direction)
 
     if (Input.is_action_just_pressed("Dash") and 
-        not _is_dashing and not _dash._is_cooldown):
+        not _is_dashing and _dash.is_dash_avaliable):
         _is_dashing = true
         _dash_direction = Vector2(
             Input.get_axis("move_left", "move_right"),
