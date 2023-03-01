@@ -102,7 +102,10 @@ func update_movement() -> void:
     if (Input.is_action_just_pressed("Dash") and 
         not _is_dashing and not _dash._is_cooldown):
         _is_dashing = true
-        _dash_direction = _actor.global_position.direction_to(_actor.get_global_mouse_position())
+        _dash_direction = Vector2(
+            Input.get_axis("move_left", "move_right"),
+            Input.get_axis("move_up", "move_down")
+        ).normalized()
     
 func update_weapon_input() -> void:
     if _weapon_manager == null:
