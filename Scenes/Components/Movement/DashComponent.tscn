@@ -10,3 +10,6 @@ one_shot = true
 
 [node name="CooldownTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="DelayTimer" type="Timer" parent="."]
+one_shot = true

@@ -15,3 +15,8 @@ signal display_damage_text(hit_damage, total_damage, position)
 # `health`: current health
 # `max_health`: max health
 signal player_health_updated(health, max_health)
+
+# Emit when player dash HUD need to be updated
+# `progress`: dash progress
+# `duration`: duration of dash
+signal player_dash_updated(progress, duration)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scenes/Components/HitHurt/HurtBox.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Components/Exp/ExpComponent.tscn" type="PackedScene" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://Scenes/Components/VFX/Effects/DashEffect.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Scenes/Components/VFX/Particle/PuffDash.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Interface/HUD/HealthBar/FloatHealthBar.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Interface/HUD/Dash/DashBarUI.tscn" type="PackedScene" id=14]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 19.0
@@ -67,3 +68,6 @@ position = Vector2( 0, -60 )
 
 [node name="HealthBarUI" parent="." instance=ExtResource( 5 )]
 healthComponent = NodePath("../HealthComponent")
+
+[node name="DashBarUI" parent="." instance=ExtResource( 14 )]
+dashComponent = NodePath("../DashComponent")
