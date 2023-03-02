@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Interface/HUD/HP/HPState.gd" type="Script" id=1]
-[ext_resource path="res://Interface/HUD/HealthBar/HealthBar.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Interface/HUD/HPState/HPState.gd" type="Script" id=1]
+[ext_resource path="res://Interface/Components/HealthBar/HealthBar.tscn" type="PackedScene" id=2]
 
 [node name="HPState" type="HBoxContainer"]
 margin_left = 8.0

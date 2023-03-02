@@ -59,15 +59,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/Components/Damage/DamageComponent.gd"
 }, {
-"base": "Reference",
+"base": "Node2D",
 "class": "DamageLabel",
 "language": "GDScript",
-"path": "res://Interface/HUD/Damage/DamageLabel.gd"
+"path": "res://Interface/WorldUI/Damage/DamageLabel.gd"
 }, {
 "base": "MarginContainer",
 "class": "DashBar",
 "language": "GDScript",
-"path": "res://Interface/HUD/Dash/DashBar.gd"
+"path": "res://Interface/Components/Dash/DashBar.gd"
 }, {
 "base": "Node",
 "class": "DashComponent",
@@ -77,7 +77,7 @@ _global_script_classes=[ {
 "base": "HBoxContainer",
 "class": "DashState",
 "language": "GDScript",
-"path": "res://Interface/HUD/Dash/DashState.gd"
+"path": "res://Interface/HUD/DashState/DashState.gd"
 }, {
 "base": "Node",
 "class": "ExpComponent",
@@ -87,7 +87,7 @@ _global_script_classes=[ {
 "base": "RemoteTransform2D",
 "class": "FloatHealthBar",
 "language": "GDScript",
-"path": "res://Interface/HUD/HealthBar/FloatHealthBar.gd"
+"path": "res://Interface/WorldUI/HealthBar/FloatHealthBar.gd"
 }, {
 "base": "CanvasLayer",
 "class": "GUI",
@@ -97,7 +97,7 @@ _global_script_classes=[ {
 "base": "HBoxContainer",
 "class": "HPState",
 "language": "GDScript",
-"path": "res://Interface/HUD/HP/HPState.gd"
+"path": "res://Interface/HUD/HPState/HPState.gd"
 }, {
 "base": "CanvasLayer",
 "class": "HUD",
@@ -107,7 +107,7 @@ _global_script_classes=[ {
 "base": "MarginContainer",
 "class": "HealthBar",
 "language": "GDScript",
-"path": "res://Interface/HUD/HealthBar/HealthBar.gd"
+"path": "res://Interface/Components/HealthBar/HealthBar.gd"
 }, {
 "base": "Node",
 "class": "HealthComponent",

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Interface/Components/HealthBar/HealthBarUnder.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Interface/Components/HealthBar/HealthBarOver.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Interface/Components/Dash/DashBar.gd" type="Script" id=3]
+
+[node name="DashBar" type="MarginContainer"]
+margin_right = 200.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 200, 0 )
+script = ExtResource( 3 )
+
+[node name="BarUnder" parent="." instance=ExtResource( 1 )]
+margin_right = 200.0
+margin_bottom = 14.0
+
+[node name="BarOver" parent="." instance=ExtResource( 2 )]
+margin_right = 200.0
+margin_bottom = 14.0
