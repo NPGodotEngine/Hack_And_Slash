@@ -60,9 +60,9 @@ func _set_round_left(value:int) -> void:
 	ammo_context.round_per_clip = rounds_per_clip
 
 	if _round_left > 0:
-		emit_signal("ammo_count_updated", _round_left, rounds_per_clip)
+		emit_signal("ammo_count_updated", ammo_context)
 	else:
-		emit_signal("ammo_depleted", 0, rounds_per_clip)
+		emit_signal("ammo_depleted", ammo_context)
 
 ## Getter Setter##
 

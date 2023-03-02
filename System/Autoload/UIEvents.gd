@@ -20,3 +20,8 @@ signal player_health_updated(health, max_health)
 # `progress`: dash progress
 # `duration`: duration of dash
 signal player_dash_updated(progress, duration)
+
+# Emit when player ammo count HUD need to be updated
+# `ammo_count`: current ammo count
+# `max_ammo_count`: ammo count at max
+signal player_ammo_updated(ammo_count, max_ammo_count)
