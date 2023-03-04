@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Interface/HUD/HUD.gd" type="Script" id=1]
 [ext_resource path="res://Interface/HUD/HPState/HPState.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Interface/HUD/DashState/DashState.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Interface/HUD/AmmoState/AmmoState.tscn" type="PackedScene" id=4]
+[ext_resource path="res://System/Style/UI_theme.tres" type="Theme" id=5]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -14,28 +15,30 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -40.0
 grow_vertical = 0
+theme = ExtResource( 5 )
 custom_constants/margin_left = 8
 custom_constants/margin_bottom = 8
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PlayerState"]
 margin_left = 8.0
 margin_right = 1024.0
-margin_bottom = 49.0
+margin_bottom = 84.0
 custom_constants/separation = 658
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PlayerState/HBoxContainer"]
-margin_right = 174.0
-margin_bottom = 49.0
+margin_right = 194.0
+margin_bottom = 84.0
 
 [node name="HPState" parent="PlayerState/HBoxContainer/VBoxContainer" instance=ExtResource( 2 )]
-margin_right = 174.0
+margin_right = 194.0
+margin_bottom = 40.0
 
 [node name="DashState" parent="PlayerState/HBoxContainer/VBoxContainer" instance=ExtResource( 3 )]
-margin_top = 24.0
-margin_right = 174.0
-margin_bottom = 49.0
+margin_top = 44.0
+margin_right = 194.0
+margin_bottom = 84.0
 
 [node name="AmmoState" parent="PlayerState/HBoxContainer" instance=ExtResource( 4 )]
-margin_left = 832.0
-margin_right = 908.0
-margin_bottom = 49.0
+margin_left = 852.0
+margin_right = 976.0
+margin_bottom = 84.0
