@@ -1,18 +1,41 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Interface/HUD/DashState/DashState.gd" type="Script" id=1]
 [ext_resource path="res://Interface/Components/Dash/DashBar.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/UI/Dash_inner_icon.png" type="Texture" id=3]
+[ext_resource path="res://Assets/UI/Dash_outline_icon.png" type="Texture" id=4]
 
 [node name="DashState" type="HBoxContainer"]
 margin_right = 229.0
 margin_bottom = 14.0
 script = ExtResource( 1 )
 
-[node name="Label" type="Label" parent="."]
-margin_right = 32.0
-margin_bottom = 14.0
-text = "Dash"
+[node name="CenterContainer" type="CenterContainer" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="DashOutline" type="TextureRect" parent="CenterContainer"]
+self_modulate = Color( 0.192157, 0.180392, 0.180392, 1 )
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+texture = ExtResource( 4 )
+expand = true
+
+[node name="DashInner" type="TextureRect" parent="CenterContainer"]
+self_modulate = Color( 1, 0, 0, 1 )
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+texture = ExtResource( 3 )
+expand = true
 
 [node name="DashBar" parent="." instance=ExtResource( 2 )]
-margin_left = 36.0
-margin_right = 236.0
+margin_left = 44.0
+margin_top = 10.0
+margin_right = 194.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 150, 20 )
+size_flags_vertical = 4
+dash_bar_over_color = Color( 0.945098, 1, 0, 1 )
+dash_bar_under_color = Color( 0.188235, 0.180392, 0.180392, 1 )

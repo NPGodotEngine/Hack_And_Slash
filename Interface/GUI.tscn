@@ -5,7 +5,6 @@
 [ext_resource path="res://Interface/HUD/HUD.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Interface/WorldUI/Damage/DamageLabel.tscn" type="PackedScene" id=4]
 
-
 [node name="GUI" type="CanvasLayer" groups=["GUI"]]
 script = ExtResource( 1 )
 

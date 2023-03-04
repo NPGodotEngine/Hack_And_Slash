@@ -1,22 +1,42 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Interface/HUD/HPState/HPState.gd" type="Script" id=1]
 [ext_resource path="res://Interface/Components/HealthBar/HealthBar.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/UI/Health_inner_icon.png" type="Texture" id=3]
+[ext_resource path="res://Assets/UI/Health_outline_icon.png" type="Texture" id=4]
 
 [node name="HPState" type="HBoxContainer"]
-margin_left = 8.0
-margin_right = 237.0
-margin_bottom = 21.0
+margin_right = 229.0
+margin_bottom = 20.0
 script = ExtResource( 1 )
 
-[node name="Label" type="Label" parent="."]
-margin_top = 3.0
-margin_right = 18.0
-margin_bottom = 17.0
-text = "HP"
+[node name="CenterContainer" type="CenterContainer" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="HealthOutline" type="TextureRect" parent="CenterContainer"]
+self_modulate = Color( 0.188235, 0.180392, 0.176471, 1 )
+margin_right = 40.0
+margin_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 40, 40 )
+texture = ExtResource( 4 )
+expand = true
+
+[node name="HealthInner" type="TextureRect" parent="CenterContainer"]
+self_modulate = Color( 1, 0, 0, 1 )
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+texture = ExtResource( 3 )
+expand = true
 
 [node name="HealthBar" parent="." instance=ExtResource( 2 )]
-margin_left = 22.0
-margin_right = 222.0
-margin_bottom = 21.0
-rect_min_size = Vector2( 200, 0 )
+margin_left = 44.0
+margin_top = 10.0
+margin_right = 194.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 150, 20 )
+size_flags_horizontal = 0
+size_flags_vertical = 4
