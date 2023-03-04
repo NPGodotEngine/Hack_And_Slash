@@ -17,6 +17,8 @@ onready var tween: Tween = $Tween
 
 var ammo_count: int setget set_ammo_count
 var max_ammo_count: int setget set_max_ammo_count
+
+var _transition_type: int = Tween.TRANS_QUART
     
     
 func set_ammo_count(value:int) -> void:
@@ -37,17 +39,17 @@ func consume_ammo_anim() -> void:
 
     tween.interpolate_property(current_ammo, "rect_scale", 
         Vector2.ONE,scale_to, anim_duration/ 2.0, 
-        Tween.TRANS_LINEAR, tween.EASE_OUT)
+        _transition_type, tween.EASE_IN_OUT)
     tween.interpolate_property(current_ammo, "rect_scale", 
         scale_to, Vector2.ONE, anim_duration/ 2.0, 
-        Tween.TRANS_LINEAR, tween.EASE_OUT, anim_duration/ 2.0)
+        _transition_type, tween.EASE_OUT_IN, anim_duration/ 2.0)
 
     tween.interpolate_property(current_ammo, "modulate", 
         from_color, to_color, anim_duration/ 2.0, 
-        Tween.TRANS_LINEAR, tween.EASE_OUT)
+        _transition_type, tween.EASE_IN_OUT)
     tween.interpolate_property(current_ammo, "modulate", 
         to_color, from_color, anim_duration/ 2.0, 
-        Tween.TRANS_LINEAR, tween.EASE_OUT, anim_duration/ 2.0)
+        _transition_type, tween.EASE_OUT_IN, anim_duration/ 2.0)
 
     tween.repeat = false
     tween.start()
@@ -58,10 +60,10 @@ func ammo_deplete_anim() -> void:
 
     tween.interpolate_property(current_ammo, "modulate", 
         from_color, to_color, deplete_anim_duration/ 2.0, 
-        Tween.TRANS_LINEAR, tween.EASE_OUT)
+        Tween.TRANS_LINEAR, tween.EASE_IN_OUT)
     tween.interpolate_property(current_ammo, "modulate", 
         to_color, from_color, deplete_anim_duration/ 2.0, 
-        Tween.TRANS_LINEAR, tween.EASE_OUT, deplete_anim_duration/ 2.0)
+        Tween.TRANS_LINEAR, tween.EASE_OUT_IN, deplete_anim_duration/ 2.0)
 
     tween.repeat = true
     tween.start()
