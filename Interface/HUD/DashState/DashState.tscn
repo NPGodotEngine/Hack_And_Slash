@@ -23,7 +23,7 @@ texture = ExtResource( 4 )
 expand = true
 
 [node name="DashInner" type="TextureRect" parent="CenterContainer"]
-self_modulate = Color( 1, 0, 0, 1 )
+self_modulate = Color( 0.945098, 1, 0, 1 )
 margin_right = 40.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 40 )
