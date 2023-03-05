@@ -76,7 +76,6 @@ critical_chance = 0.2
 [node name="AccuracyComponent" parent="." instance=ExtResource( 4 )]
 
 [node name="AngleSpreadComponent" parent="." instance=ExtResource( 5 )]
-spread_range_degree = 5.0
 
 [node name="AutoTrigger" parent="." instance=ExtResource( 7 )]
 trigger_duration = 0.1

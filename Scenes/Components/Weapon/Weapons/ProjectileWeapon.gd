@@ -75,7 +75,7 @@ func _on_trigger_pulled() -> void:
 		var position = (point as Position2D).global_position
 		var global_mouse_position = get_global_mouse_position()
 		var distance: float = position.distance_to(global_mouse_position)
-		var end_position = _angle_spread.get_random_spread(global_mouse_position - self.global_position, 
+		var end_position = _angle_spread.get_random_spread(global_position.direction_to(global_mouse_position), 
 												_accuracy.accuracy) * distance + position
 		var hit_damage: HitDamage = get_hit_damage()
 		var bullet: Projectile = _projectile_ammo.consume_ammo(position, 
