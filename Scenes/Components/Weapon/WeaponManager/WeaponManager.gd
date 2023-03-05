@@ -67,7 +67,9 @@ func _on_load_game(saved_data:SavedData) -> void:
 	if weapon_slots.size() > 0 or get_child_count() > 0:
 		weapon_slots.clear()
 		for child in get_children():
-			child.queue_free()
+			if child is Weapon:
+				remove_child(child)
+				child.queue_free()
 	
 	# deserialize each weapons
 	var serizlied_weapons: Array = saved_data.data["weapons"]
@@ -82,7 +84,9 @@ func _on_load_game(saved_data:SavedData) -> void:
 func collect_weapons() -> void:
 	if weapon_slots.size() > 0:
 		for weapon in weapon_slots:
-			weapon.queue_free()
+			if weapon is Weapon:
+				remove_child(weapon)
+				weapon.queue_free()
 	for child in get_children():
 		if child is Weapon:
 			(child as Weapon).inactive()

@@ -12,6 +12,7 @@ export(Array, NodePath) var fire_points: Array
 export(NodePath) var appearance: NodePath
 export(NodePath) var muzzle_flash: NodePath
 export(float) var muzzle_flash_duration: float = 0.1
+export (NodePath) var weapon_animator: NodePath
 
 onready var _accuracy: AccuracyComponent = get_node(accuracy) as AccuracyComponent
 onready var _angle_spread: AngleSpreadComponent = get_node(angle_spread) as AngleSpreadComponent
@@ -20,7 +21,7 @@ onready var _projectile_ammo: ProjectileAmmo = get_node(projectile_ammo) as Proj
 onready var _fire_points: Array = get_fire_points()
 onready var _appearance: Node2D = get_node(appearance) as Node2D
 onready var _muzzle_flash: MuzzleFlash = get_node(muzzle_flash) as MuzzleFlash
-onready var _animation_player: AnimationPlayer = $Skin/AnimationPlayer
+onready var _animation_player: AnimationPlayer = get_node(weapon_animator) as AnimationPlayer
 
 	
 
@@ -58,6 +59,10 @@ func _get_configuration_warning() -> String:
 		return "muzzle_flash node path is missing"
 	if not get_node(muzzle_flash) is MuzzleFlash:
 		return "muzzle_flash must be a MuzzleFlash node"
+	if weapon_animator.is_empty():
+		return "weapon_animator node path is missing"
+	if not get_node(weapon_animator) is AnimationPlayer:
+		return "weapon_animator must be an AnimationPlayer node"
 	return ""
 
 func _ready() -> void:
@@ -84,16 +89,15 @@ func _on_trigger_pulled() -> void:
 func update_weapon_skin() -> void:
 	if Engine.editor_hint:
 		return 
-	# Update weapon skin facing direction
+	# Update weapon facing direction
 	var global_mouse_position := get_global_mouse_position()
-
+	
 	if global_mouse_position.x < global_position.x:
-		_appearance.scale.y = -1.0 * _appearance.scale.abs().y
+		self.scale.y = -1.0 * self.scale.abs().y
 	else:
-		_appearance.scale.y = 1.0 * _appearance.scale.abs().y
-
-	var point_dir: Vector2 = global_mouse_position - self.global_position
-	self.rotation = point_dir.angle()
+		self.scale.y = 1.0 * self.scale.abs().y
+	
+	look_at(global_mouse_position)
 
 func get_fire_points() -> Array:
 	var points: Array = []

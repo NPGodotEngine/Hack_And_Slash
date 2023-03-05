@@ -1,19 +1,19 @@
 [gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://Scenes/Components/Weapon/Weapons/ProjectileWeapon.gd" type="Script" id=1]
-[ext_resource path="res://Scenes/Components/Damage/RangedDamageComponent.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scenes/Components/CriticalStrike/CriticalComponent.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/Components/Accuracy/AccuracyComponent.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/Components/Spread/AngleSpreadComponent.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scenes/Components/Weapon/Ammo/ProjectileAmmo.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/Components/Weapon/Trigger/AutoTrigger.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Bullets/Projectile/ProjectileBullet/ProjectileBullet.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Assets/Weapons/Weapon_spritesheet.png" type="Texture" id=9]
-[ext_resource path="res://Scenes/Components/Weapon/MuzzleFlash/MuzzleFlash.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Scenes/Components/Weapon/Weapons/WeaponAttributes.gd" type="Script" id=11]
+[ext_resource path="res://Assets/Weapons/Weapon_spritesheet.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/Components/Weapon/Weapons/WeaponAttributes.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/Components/Weapon/Weapons/ProjectileWeapon.gd" type="Script" id=3]
+[ext_resource path="res://Scenes/Components/Weapon/Ammo/ProjectileAmmo.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Bullets/Projectile/ProjectileBullet/ProjectileBullet.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Components/Weapon/MuzzleFlash/MuzzleFlash.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Components/Accuracy/AccuracyComponent.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Components/Weapon/Trigger/AutoTrigger.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/Components/Damage/RangedDamageComponent.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/Components/CriticalStrike/CriticalComponent.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/Components/Spread/AngleSpreadComponent.tscn" type="PackedScene" id=11]
 
 [sub_resource type="Resource" id=3]
-script = ExtResource( 11 )
+script = ExtResource( 2 )
 max_damage = 10.0
 min_damage = 5.0
 critical_chance = 0.2
@@ -53,7 +53,7 @@ tracks/0/keys = {
 }
 
 [node name="MarineWeapon" type="Node2D"]
-script = ExtResource( 1 )
+script = ExtResource( 3 )
 weapon_attributes = SubResource( 3 )
 ranged_damage = NodePath("RangedDamageComponent")
 critical = NodePath("CriticalComponent")
@@ -66,30 +66,30 @@ appearance = NodePath("Appearance")
 muzzle_flash = NodePath("MuzzleFlash")
 weapon_animator = NodePath("Appearance/AnimationPlayer")
 
-[node name="RangedDamageComponent" parent="." instance=ExtResource( 2 )]
+[node name="RangedDamageComponent" parent="." instance=ExtResource( 9 )]
 max_damage = 10.0
 min_damage = 5.0
 
-[node name="CriticalComponent" parent="." instance=ExtResource( 3 )]
+[node name="CriticalComponent" parent="." instance=ExtResource( 10 )]
 critical_chance = 0.2
 
-[node name="AccuracyComponent" parent="." instance=ExtResource( 4 )]
+[node name="AccuracyComponent" parent="." instance=ExtResource( 7 )]
 
-[node name="AngleSpreadComponent" parent="." instance=ExtResource( 5 )]
+[node name="AngleSpreadComponent" parent="." instance=ExtResource( 11 )]
 spread_range_degree = 5.0
 
-[node name="AutoTrigger" parent="." instance=ExtResource( 7 )]
+[node name="AutoTrigger" parent="." instance=ExtResource( 8 )]
 trigger_duration = 0.1
 
-[node name="ProjectileAmmo" parent="." instance=ExtResource( 6 )]
+[node name="ProjectileAmmo" parent="." instance=ExtResource( 4 )]
 rounds_per_clip = 30
 reload_duration = 1.0
 bullet_speed = 1500.0
 bullet_life_span = 2.0
 bullet_penetration_chance = 0.3
-bullet_scene = ExtResource( 8 )
+bullet_scene = ExtResource( 5 )
 
-[node name="MuzzleFlash" parent="." instance=ExtResource( 10 )]
+[node name="MuzzleFlash" parent="." instance=ExtResource( 6 )]
 position = Vector2( 30, 0 )
 
 [node name="FirePoint" type="Position2D" parent="."]
@@ -99,7 +99,7 @@ position = Vector2( 30, 0 )
 position = Vector2( 0, 6 )
 
 [node name="weapon" type="Sprite" parent="Appearance"]
-texture = ExtResource( 9 )
+texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 2, 19, 59, 25 )
 
