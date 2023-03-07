@@ -10,6 +10,10 @@ class AmmoContext extends Resource:
 	var updated_ammo_count: int = 0
 	var round_per_clip: int = 0
 
+class AmmoReloadProgress:
+	var progress: float = 1.0
+	var max_progress: float = 1.0
+
 # Emit when ammo depleted
 signal ammo_depleted(ammo_context)
 
@@ -33,6 +37,8 @@ export (int, 1, 5000) var rounds_per_clip: int = 10
 # Duration for reload ammo
 export (float, 0.1, 20.0) var reload_duration: float = 2.0
 
+var progress: AmmoReloadProgress setget no_set, get_progress
+
 # Number of rounds left in a clip
 var _round_left: int = 0 setget _set_round_left
 
@@ -45,6 +51,19 @@ var _is_reloading: bool = false
 
 
 ## Getter Setter##
+
+
+func no_set(value):
+	pass
+
+func get_progress() -> AmmoReloadProgress:
+	var reload_progress: AmmoReloadProgress = AmmoReloadProgress.new()
+
+	if _is_reloading:	
+		reload_progress.progress = _reload_timer.wait_time - _reload_timer.time_left
+		reload_progress.max_progress = _reload_timer.wait_time
+
+	return reload_progress 
 
 
 func _set_round_left(value:int) -> void:

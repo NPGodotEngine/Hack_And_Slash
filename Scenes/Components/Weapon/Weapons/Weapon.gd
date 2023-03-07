@@ -63,6 +63,12 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	update_weapon_skin()
 
+func queue_free() -> void:
+	for child in get_children():
+		remove_child(child)
+		child.queue_free()
+	.queue_free()
+
 # Call when weapon trigger is pulled
 func _on_trigger_pulled() -> void:
 	pass

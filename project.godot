@@ -49,6 +49,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/Components/Weapon/Trigger/BurstTrigger.gd"
 }, {
+"base": "TextureProgress",
+"class": "CircularFillBar",
+"language": "GDScript",
+"path": "res://Interface/Components/ReloadBar/CircularFillBar.gd"
+}, {
 "base": "Node",
 "class": "Controller",
 "language": "GDScript",
@@ -238,6 +243,7 @@ _global_script_class_icons={
 "AutoTrigger": "",
 "Bullet": "",
 "BurstTrigger": "",
+"CircularFillBar": "",
 "Controller": "",
 "CriticalComponent": "",
 "DamageComponent": "",

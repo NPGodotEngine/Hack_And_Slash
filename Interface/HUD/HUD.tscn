@@ -40,5 +40,5 @@ margin_bottom = 84.0
 
 [node name="AmmoState" parent="PlayerState/HBoxContainer" instance=ExtResource( 4 )]
 margin_left = 852.0
-margin_right = 976.0
+margin_right = 951.0
 margin_bottom = 84.0
