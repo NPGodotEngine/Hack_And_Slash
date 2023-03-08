@@ -49,7 +49,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/Components/Weapon/Trigger/BurstTrigger.gd"
 }, {
-"base": "Reference",
+"base": "TextureProgress",
 "class": "CircularFillBar",
 "language": "GDScript",
 "path": "res://Interface/Components/ReloadIndicator/CircularFillBar.gd"
@@ -69,12 +69,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/Components/Damage/DamageComponent.gd"
 }, {
-"base": "Node2D",
+"base": "Reference",
 "class": "DamageLabel",
 "language": "GDScript",
 "path": "res://Interface/WorldUI/Damage/DamageLabel.gd"
 }, {
-"base": "MarginContainer",
+"base": "Reference",
 "class": "DashBar",
 "language": "GDScript",
 "path": "res://Interface/Components/Dash/DashBar.gd"
@@ -84,7 +84,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/Components/Movement/DashComponent.gd"
 }, {
-"base": "HBoxContainer",
+"base": "Reference",
 "class": "DashState",
 "language": "GDScript",
 "path": "res://Interface/HUD/DashState/DashState.gd"
@@ -94,7 +94,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/Components/Exp/ExpComponent.gd"
 }, {
-"base": "RemoteTransform2D",
+"base": "Reference",
 "class": "FloatHealthBar",
 "language": "GDScript",
 "path": "res://Interface/WorldUI/HealthBar/FloatHealthBar.gd"
@@ -104,7 +104,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Interface/GUI.gd"
 }, {
-"base": "HBoxContainer",
+"base": "Reference",
 "class": "HPState",
 "language": "GDScript",
 "path": "res://Interface/HUD/HPState/HPState.gd"
@@ -114,7 +114,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Interface/HUD/HUD.gd"
 }, {
-"base": "MarginContainer",
+"base": "Reference",
 "class": "HealthBar",
 "language": "GDScript",
 "path": "res://Interface/Components/HealthBar/HealthBar.gd"
