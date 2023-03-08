@@ -16,6 +16,17 @@ const NAME_KEY = "name"
 const WEAPON_ATTRIBUTES_KEY = "weapon_attributes"
 
 
+# Emit when weapon become active
+##
+# `weapon`: weapon of itself
+signal weapon_active(weapon)
+
+# Emit when weapon become inactive
+##
+# `weapon`: weapon of itself
+signal weapon_inactive(weapon)
+
+
 # Weapon attributes resource
 export(Resource) var weapon_attributes:Resource = null setget set_weapon_attributes
 export(NodePath) var ranged_damage: NodePath
@@ -127,11 +138,15 @@ func update_weapon_skin() -> void:
 func active() -> void:
 	set_process(true)
 	set_physics_process(true)
+	
+	emit_signal("weapon_active", self)
 
 # Inactive this weapon
 func inactive() -> void:
 	set_process(false)
 	set_physics_process(false)
+
+	emit_signal("weapon_inactive", self)
 
 func apply_weapon_attributes(attributes:WeaponAttributes) -> void:
 	_ranged_damage.min_damage = attributes.min_damage

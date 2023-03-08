@@ -184,7 +184,7 @@ func remove_weapon_by(index:int) -> void:
 # weapon manager can execute current weapon
 ##
 # Eanble weapon manager also active current weapon
-func enable() -> void:
+func enable_weapon_manager() -> void:
 	_is_enabled = true
 
 	if current_weapon_index != -1:
@@ -198,7 +198,7 @@ func enable() -> void:
 # weapon manager can't execute current weapon
 ##
 # Disable weapon manager also inactive current weapon
-func disable() -> void:
+func disable_weapon_manager() -> void:
 	_is_enabled = false
 
 	if current_weapon_index != -1:

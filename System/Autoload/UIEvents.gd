@@ -25,3 +25,15 @@ signal player_dash_updated(progress, duration)
 # `ammo_count`: current ammo count
 # `max_ammo_count`: ammo count at max
 signal player_ammo_updated(ammo_count, max_ammo_count)
+
+# Emit when a weapon crosshair need to be added
+# to HUD
+##
+# `crosshair`: crosshair  Node2D object
+signal add_weapon_crosshair(crosshair)
+
+# Emit when a weapon reload indicator need to be add
+# to HUD
+##
+# `reload_indicator`: indicator Node2D object
+signal add_weapon_reload_indicator(reload_indicator)

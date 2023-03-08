@@ -27,3 +27,4 @@ func _ready() -> void:
 
 	GameSaver.save_game_data()
 	GameSaver.load_game_data()
+

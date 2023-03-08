@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Interface/Components/ReloadBar/CircularFillBar.gd" type="Script" id=1]
+[ext_resource path="res://Interface/Components/ReloadIndicator/CircularFillBar.gd" type="Script" id=1]
 [ext_resource path="res://Assets/CircularBar/Reloading_bar.png" type="Texture" id=2]
 
 [node name="CircularFillBar" type="TextureProgress"]
