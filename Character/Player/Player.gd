@@ -51,10 +51,10 @@ func _ready() -> void:
 	_dash_comp.connect("dash_finished", self, "_on_dash_finished")
 
 func _on_dash_begin() -> void:
-	_weapon_manager.disable()
+	_weapon_manager.disable_weapon_manager()
 
 func _on_dash_finished() -> void:
-	_weapon_manager.enable()
+	_weapon_manager.enable_weapon_manager()
 
 func _on_display_dash_effect(dash_effect:DashComponent.DashVisualEffect) -> void:
 	dash_effect.effect.global_position = global_position
