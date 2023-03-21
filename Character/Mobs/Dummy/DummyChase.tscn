@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scenes/Components/appearance/Mob/MobSkin.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Character/Mobs/Mob.gd" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Interface/WorldUI/HealthBar/FloatHealthBar.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/Components/Control/AI/TargetFollowerComponent.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/Components/Control/AI/AIControllerComponent.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Character/Mobs/Dummy/LineOfSight.gd" type="Script" id=10]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 30.5941
@@ -59,6 +60,15 @@ target_follower = NodePath("TargetFollowerComponent")
 movement = NodePath("../../MovementComponent")
 target_detector = NodePath("../../TargetDetector")
 actor = NodePath("../..")
+permanent_target = true
 
 [node name="FloatHealthBar" parent="." instance=ExtResource( 7 )]
 position = Vector2( 0, -60 )
+
+[node name="LineOfSight" type="Node2D" parent="."]
+position = Vector2( 0, -15 )
+script = ExtResource( 10 )
+target_detector = NodePath("../TargetDetector")
+
+[node name="RayCast2D" type="RayCast2D" parent="LineOfSight"]
+cast_to = Vector2( 0, 100 )
