@@ -10,7 +10,6 @@
 [ext_resource path="res://Scenes/Components/Control/AI/TargetFollowerComponent.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/Components/Control/AI/AIControllerComponent.tscn" type="PackedScene" id=9]
 
-
 [sub_resource type="CircleShape2D" id=1]
 radius = 30.5941
 
