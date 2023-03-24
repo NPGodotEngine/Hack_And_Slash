@@ -8,8 +8,8 @@
 [ext_resource path="res://Scenes/Components/Health/HealthComponent.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Interface/WorldUI/HealthBar/FloatHealthBar.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/Components/Control/AI/TargetFollowerComponent.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Scenes/Components/Control/AI/AIControllerComponent.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Character/Mobs/Dummy/LineOfSight.gd" type="Script" id=10]
+[ext_resource path="res://Character/Mobs/AI/MobAI.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Character/Mobs/AI/AIComponents/LineOfSight.tscn" type="PackedScene" id=10]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 30.5941
@@ -52,23 +52,14 @@ shape = SubResource( 7 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TargetDetector"]
 shape = SubResource( 8 )
 
-[node name="AIControllerComponent" parent="." instance=ExtResource( 9 )]
+[node name="TargetFollowerComponent" parent="." instance=ExtResource( 8 )]
+movement = NodePath("../MovementComponent")
 actor = NodePath("..")
-target_follower = NodePath("TargetFollowerComponent")
-
-[node name="TargetFollowerComponent" parent="AIControllerComponent" instance=ExtResource( 8 )]
-movement = NodePath("../../MovementComponent")
-target_detector = NodePath("../../TargetDetector")
-actor = NodePath("../..")
 permanent_target = true
 
 [node name="FloatHealthBar" parent="." instance=ExtResource( 7 )]
 position = Vector2( 0, -60 )
 
-[node name="LineOfSight" type="Node2D" parent="."]
-position = Vector2( 0, -15 )
-script = ExtResource( 10 )
-target_detector = NodePath("../TargetDetector")
+[node name="LineOfSight" parent="." instance=ExtResource( 10 )]
 
-[node name="RayCast2D" type="RayCast2D" parent="LineOfSight"]
-cast_to = Vector2( 0, 100 )
+[node name="MobAI" parent="." instance=ExtResource( 9 )]

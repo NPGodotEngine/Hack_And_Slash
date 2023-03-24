@@ -6,7 +6,6 @@ extends Node
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 
 export(NodePath) var movement: NodePath
-export(NodePath) var target_detector: NodePath
 export(NodePath) var actor: NodePath
 
 export (bool) var enable_follow: bool = false
@@ -20,7 +19,6 @@ export (float) var keep_dist_threshold: float = 1.0
 export (bool) var permanent_target: bool = false
 
 onready var _movement: MovementComponent = get_node(movement) as MovementComponent
-onready var _target_detector: TargetDetector = get_node(target_detector) as TargetDetector
 onready var _actor: KinematicBody2D = get_node(actor) as KinematicBody2D
 
 # The target this follower will move to
@@ -32,10 +30,6 @@ func _get_configuration_warning() -> String:
 		return "movement node path is missing"
 	if not get_node(movement) is MovementComponent:
 		return "movement must be a MovementComponent" 
-	if target_detector.is_empty():
-		return "target_detector node path is missing"
-	if not get_node(target_detector) is TargetDetector:
-		return "target_detector must be a TargetDetector"
 	if actor.is_empty():
 		return "actor node path is missing"
 	if not get_node(actor) is KinematicBody2D:
@@ -46,27 +40,12 @@ func _ready() -> void:
 	if Engine.editor_hint:
 		return
 
-	_target_detector.connect("target_detected", self, "_on_target_detected")
-	
-	if not permanent_target:
-		_target_detector.connect("target_lost", self, "_on_target_lost")
-
 func _physics_process(delta: float) -> void:
 	if Engine.editor_hint:
 		return
 
 	if enable_follow:
 		move_close_to_target()
-
-func _on_target_detected(detected_context:TargetDetector.DetectedContext) -> void:
-	if target == null:
-		target = detected_context.detected_target
-
-func _on_target_lost(target_lost_context:TargetDetector.TargetLostContext) -> void:
-	if target:
-		target = null
-
-
 
 func move_close_to_target():
 	if target == null or _movement == null or _actor == null: 

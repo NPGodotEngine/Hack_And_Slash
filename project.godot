@@ -204,6 +204,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/beehave/nodes/decorators/limiter.gd"
 }, {
+"base": "Position2D",
+"class": "LineOfSight",
+"language": "GDScript",
+"path": "res://Character/Mobs/AI/AIComponents/LineOfSight.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Mob",
 "language": "GDScript",
@@ -359,6 +364,7 @@ _global_script_class_icons={
 "InverterDecorator": "res://addons/beehave/icons/inverter.svg",
 "Leaf": "res://addons/beehave/icons/action.svg",
 "LimiterDecorator": "res://addons/beehave/icons/limiter.svg",
+"LineOfSight": "",
 "Mob": "",
 "MobSkin": "",
 "MovementComponent": "",
@@ -387,6 +393,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Hack_And_Slash"
+run/main_scene="res://Levels/TestLevel.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -401,6 +408,10 @@ InventoryManager="*res://System/Autoload/InventoryManager.gd"
 
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/beehave/plugin.cfg" )
 
 [global]
 

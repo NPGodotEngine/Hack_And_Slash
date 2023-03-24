@@ -11,8 +11,7 @@ onready var _health_comp = $HealthComponent
 onready var _health_bar_remote: FloatHealthBar = $FloatHealthBar
 onready var _hurt_box: HurtBox = $HurtBox
 
-var _target: Player = null
-
+var mob_behavior_ai: BeehaveRoot
 var is_dead: bool = false
 
 func _ready() -> void:
@@ -26,7 +25,11 @@ func _ready() -> void:
 	_health_bar_remote.healthbar.max_health = _health_comp.max_health
 	_health_bar_remote.healthbar.health = _health_comp._health
 
-
+	for child in get_children():
+		if child is BeehaveRoot:
+			mob_behavior_ai = child
+			break
+			
 
 func _on_health_updated(health_context:HealthComponent.HealthContext) -> void:
 	_health_bar_remote.healthbar.health = health_context.updated_health
@@ -58,6 +61,8 @@ func _on_take_damage(hit_damage:HitDamage) -> void:
 
 func _on_die() -> void:
 	is_dead = true
+	if mob_behavior_ai:
+		mob_behavior_ai.disable()
 	_health_bar_remote.healthbar.hide()
 	_skin.play_die()
 
