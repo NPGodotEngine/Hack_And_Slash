@@ -298,7 +298,8 @@ InventoryManager="*res://System/Autoload/InventoryManager.gd"
 [display]
 
 window/stretch/mode="viewport"
-window/stretch/aspect="keep"
+window/stretch/aspect="expand"
+window/stretch/shrink=4.0
 
 [global]
 
