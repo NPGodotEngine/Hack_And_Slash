@@ -6,7 +6,9 @@
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = ExtResource( 1 )
-animation = "idle"
+animation = "run"
+frame = 2
+playing = true
 
 [node name="Camera2D" type="Camera2D" parent="AnimatedSprite"]
 current = true
