@@ -45,8 +45,6 @@ func _ready() -> void:
 	_health_bar_remote.healthbar.max_health = _health_comp.max_health
 	_health_bar_remote.healthbar.health = _health_comp._health
 	
-	_dash_comp.connect("display_dash_effect", self, "_on_display_dash_effect")
-	_dash_comp.connect("display_dash_particles", self, "_on_display_dash_particles")
 	_dash_comp.connect("dash_begin", self, "_on_dash_begin")
 	_dash_comp.connect("dash_finished", self, "_on_dash_finished")
 
