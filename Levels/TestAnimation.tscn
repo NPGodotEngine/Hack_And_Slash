@@ -6,8 +6,7 @@
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = ExtResource( 1 )
-animation = "run"
-frame = 2
+animation = "dodge"
 playing = true
 
 [node name="Camera2D" type="Camera2D" parent="AnimatedSprite"]
