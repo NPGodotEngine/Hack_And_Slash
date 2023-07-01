@@ -68,6 +68,10 @@ func _physics_process(delta: float) -> void:
 		play(DODGE)
 	elif abs(_velocity.x) <= 0.1 and abs(_velocity.y) <= 0.1:
 		play(IDLE)
+	elif get_global_mouse_position().x < global_position.x and _velocity.x > 0.0:
+		play(RUN, true)
+	elif get_global_mouse_position().x > global_position.x and _velocity.x < 0.0:
+		play(RUN, true)
 	else:
 		play(RUN)
 
