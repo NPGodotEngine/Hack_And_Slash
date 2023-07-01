@@ -2,6 +2,7 @@ class_name FloatHealthBar
 extends Position2D
 
 export (PackedScene) var healthbar_scene: PackedScene
+export (Vector2) var healthbar_size: Vector2 = Vector2(1.0, 1.0)
 
 # Health bar UI
 var healthbar:HealthBar
@@ -18,14 +19,12 @@ func _ready() -> void:
 	# add to ui
 	_pos = Position2D.new()
 	_pos.add_child(healthbar)
+	_pos.scale = healthbar_size
 	UIEvents.emit_signal("add_float_health_bar_ui", _pos)
-	# GameUI.gui.world_ui.add_child(_pos)
 
 	# center health bar
 	healthbar.rect_position.x = -healthbar.health_bar_over.rect_size.x / 2.0
-
 	
-
 
 func _process(_delta: float) -> void:
 	_pos.global_position = get_global_transform_with_canvas().origin

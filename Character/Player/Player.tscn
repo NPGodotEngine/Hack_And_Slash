@@ -81,6 +81,7 @@ weaponManager = NodePath("../WeaponManager")
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( -1, 5 )
 current = true
+zoom = Vector2( 0.6, 0.6 )
 smoothing_enabled = true
 
 [node name="DamageTextUI" parent="." instance=ExtResource( 16 )]
