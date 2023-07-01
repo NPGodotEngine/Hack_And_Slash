@@ -17,13 +17,9 @@ const DODGE = "dodge"
 export(NodePath) var movement: NodePath
 export(NodePath) var dash: NodePath
 
-onready var upper_body_animator: AnimationPlayer = $UpperAnimator
-onready var lower_body_animator: AnimationPlayer = $LowerAnimator
-
 # MovementComponent
 onready var _movement: MovementComponent = get_node(movement)
 onready var _dash: DashComponent = get_node(dash)
-onready var _visual: Node2D = $Visual
 
 var _playback_speed: float = 1.0
 var _max_playback_speed: float = 64.0

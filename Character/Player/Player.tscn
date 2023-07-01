@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Scenes/Components/HitHurt/HurtBox.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Components/Exp/ExpComponent.tscn" type="PackedScene" id=2]
@@ -12,9 +12,11 @@
 [ext_resource path="res://Scenes/Components/Health/HealthComponent.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/Components/VFX/Effects/DashEffect.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Scenes/Components/VFX/Particle/PuffDash.tscn" type="PackedScene" id=12]
-[ext_resource path="res://Interface/WorldUI/HealthBar/FloatHealthBar.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Interface/UIMediators/HealthBar/FloatHealthBarUI.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Interface/UIMediators/Dash/DashBarUI.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Interface/UIMediators/Ammo/AmmoUI.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Interface/UIMediators/Damage/DamageTextUI.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Interface/WorldUI/Damage/DamageLabel.tscn" type="PackedScene" id=17]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 7.0
@@ -75,3 +77,12 @@ dashComponent = NodePath("../DashComponent")
 
 [node name="AmmoUI" parent="." instance=ExtResource( 15 )]
 weaponManager = NodePath("../WeaponManager")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( -1, 5 )
+current = true
+smoothing_enabled = true
+
+[node name="DamageTextUI" parent="." instance=ExtResource( 16 )]
+character = NodePath("..")
+damage_text = ExtResource( 17 )

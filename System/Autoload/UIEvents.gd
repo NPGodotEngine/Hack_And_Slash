@@ -8,7 +8,8 @@ extends Node
 # `hit_damage`: `HitDamage`
 # `total_damage`: `float`
 # `position`: global position
-signal display_damage_text(hit_damage, total_damage, position)
+# `damage_text_ui`: ui for damage text
+signal display_damage_text(hit_damage, total_damage, damage_text_ui)
 
 # Emit when player health HUD need to be updated
 ##
@@ -37,3 +38,9 @@ signal add_weapon_crosshair(crosshair)
 ##
 # `reload_indicator`: indicator Node2D object
 signal add_weapon_reload_indicator(reload_indicator)
+
+# Emit when a float health bar ui need to be added
+# to World UI
+##
+# `float_health_bar_ui`: the ui for float health bar
+signal add_float_health_bar_ui(float_health_bar_ui)

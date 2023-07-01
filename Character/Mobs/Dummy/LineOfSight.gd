@@ -49,5 +49,3 @@ func _physics_process(delta: float) -> void:
         else:
             is_target_in_sight = false
     
-    print(is_target_in_sight)
-    
