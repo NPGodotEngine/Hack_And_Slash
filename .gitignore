@@ -8,3 +8,6 @@ export_presets.cfg
 
 # System/tool-specific ignores
 .directory
+
+# Debuge folder
+Debug/
