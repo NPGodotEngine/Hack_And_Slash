@@ -2,7 +2,7 @@
 ##
 # Manage visual, movement, input
 class_name Player
-extends KinematicBody2D
+extends Character
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 # warning-ignore-all: UNUSED_ARGUMENT
@@ -45,8 +45,6 @@ func _ready() -> void:
 	_health_bar_remote.healthbar.max_health = _health_comp.max_health
 	_health_bar_remote.healthbar.health = _health_comp._health
 	
-	_dash_comp.connect("display_dash_effect", self, "_on_display_dash_effect")
-	_dash_comp.connect("display_dash_particles", self, "_on_display_dash_particles")
 	_dash_comp.connect("dash_begin", self, "_on_dash_begin")
 	_dash_comp.connect("dash_finished", self, "_on_dash_finished")
 
@@ -113,8 +111,7 @@ func _on_take_damage(hit_damage:HitDamage) -> void:
 	# set new health
 	_health_comp.damage(total_damage)
 
-	# Show damage text
-	UIEvents.emit_signal("display_damage_text", hit_damage, total_damage, global_position)
+	emit_signal("on_character_take_damage", hit_damage, total_damage)
 
 func _on_die() -> void:
 	print("player die")

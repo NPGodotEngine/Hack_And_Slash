@@ -5,11 +5,11 @@
 [ext_resource path="res://Assets/Bullets/BulletTrail.png" type="Texture" id=3]
 
 [sub_resource type="Curve" id=1]
-_data = [ Vector2( 0, 0.663636 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.181818 ), 0.0, 0.0, 0, 0 ]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.136364 ), 0.0, 0.0, 0, 0 ]
 
 [node name="BulletTrail" type="Line2D"]
 points = PoolVector2Array( 0, 0, -40, 0, -80, 0, -120, 0, -160, 0 )
-width = 15.0
+width = 3.0
 width_curve = SubResource( 1 )
 default_color = Color( 0.4, 0.501961, 1, 1 )
 gradient = ExtResource( 2 )

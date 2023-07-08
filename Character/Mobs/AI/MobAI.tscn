@@ -1,16 +1,12 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://addons/beehave/nodes/beehave_root.gd" type="Script" id=1]
 [ext_resource path="res://addons/beehave/nodes/composites/selector.gd" type="Script" id=2]
 [ext_resource path="res://addons/beehave/nodes/composites/sequence.gd" type="Script" id=3]
-[ext_resource path="res://Character/Mobs/AI/BehaviorAI/Conditions/HasTarget.gd" type="Script" id=4]
 [ext_resource path="res://Character/Mobs/AI/BehaviorAI/Conditions/HasTarget.tscn" type="PackedScene" id=5]
 [ext_resource path="res://addons/beehave/nodes/decorators/inverter.gd" type="Script" id=6]
-[ext_resource path="res://Character/Mobs/AI/BehaviorAI/Conditions/IsTargetInSight.gd" type="Script" id=7]
 [ext_resource path="res://Character/Mobs/AI/BehaviorAI/Conditions/IsTargetInSight.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Character/Mobs/AI/BehaviorAI/Actions/AttackTarget.gd" type="Script" id=9]
 [ext_resource path="res://Character/Mobs/AI/BehaviorAI/Actions/AttackTarget.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Character/Mobs/AI/BehaviorAI/Actions/MoveToTarget.gd" type="Script" id=11]
 [ext_resource path="res://Character/Mobs/AI/BehaviorAI/Actions/MoveToTarget.tscn" type="PackedScene" id=12]
 
 [node name="MobAI" type="Node"]
@@ -22,8 +18,7 @@ script = ExtResource( 2 )
 [node name="WaitForTarget" type="Node" parent="Either"]
 script = ExtResource( 6 )
 
-[node name="TargetDetected" type="Node" parent="Either/WaitForTarget" instance=ExtResource( 5 )]
-script = ExtResource( 4 )
+[node name="TargetDetected" parent="Either/WaitForTarget" instance=ExtResource( 5 )]
 target_detector = NodePath("../../../../TargetDetector")
 target_follower = NodePath("../../../../TargetFollowerComponent")
 
@@ -33,16 +28,13 @@ script = ExtResource( 3 )
 [node name="WaitTargetInSight" type="Node" parent="Either/AttackTarget"]
 script = ExtResource( 2 )
 
-[node name="IsTargetInSight" type="Node" parent="Either/AttackTarget/WaitTargetInSight" instance=ExtResource( 8 )]
-script = ExtResource( 7 )
+[node name="IsTargetInSight" parent="Either/AttackTarget/WaitTargetInSight" instance=ExtResource( 8 )]
 line_of_sight = NodePath("../../../../../LineOfSight")
 
-[node name="MoveToTarget" type="Node" parent="Either/AttackTarget/WaitTargetInSight" instance=ExtResource( 12 )]
-script = ExtResource( 11 )
+[node name="MoveToTarget" parent="Either/AttackTarget/WaitTargetInSight" instance=ExtResource( 12 )]
 move_component = NodePath("../../../../../MovementComponent")
 
 [node name="Attack" type="Node" parent="Either/AttackTarget"]
 script = ExtResource( 3 )
 
-[node name="AttackTarget" type="Node" parent="Either/AttackTarget/Attack" instance=ExtResource( 10 )]
-script = ExtResource( 9 )
+[node name="AttackTarget" parent="Either/AttackTarget/Attack" instance=ExtResource( 10 )]

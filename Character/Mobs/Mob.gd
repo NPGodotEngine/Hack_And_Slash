@@ -1,5 +1,5 @@
 class_name Mob
-extends KinematicBody2D
+extends Character
 
 # warning-ignore-all:RETURN_VALUE_DISCARDED
 # warning-ignore-all:UNUSED_ARGUMENT
@@ -52,8 +52,7 @@ func _on_take_damage(hit_damage:HitDamage) -> void:
 
 	_health_comp.damage(total_damage)
 	
-	# Show damage text
-	UIEvents.emit_signal("display_damage_text", hit_damage, total_damage, global_position)
+	emit_signal("on_character_take_damage", hit_damage, total_damage)
 
 	if not is_dead:
 		_skin.play_hit()

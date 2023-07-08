@@ -4,3 +4,4 @@
 
 [node name="DamageTextManager" type="Node"]
 script = ExtResource( 1 )
+damage_text_scene = null

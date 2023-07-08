@@ -1,13 +1,14 @@
 class_name FloatHealthBar
-extends RemoteTransform2D
+extends Position2D
 
 export (PackedScene) var healthbar_scene: PackedScene
+export (Vector2) var healthbar_size: Vector2 = Vector2(1.0, 1.0)
 
 # Health bar UI
 var healthbar:HealthBar
 
 # A position 2d whose global position will 
-# be updated by this remote with healthbar 
+# be updated by this component with healthbar 
 # ui attached as child
 var _pos: Position2D
 
@@ -17,14 +18,16 @@ func _ready() -> void:
 
 	# add to ui
 	_pos = Position2D.new()
-	GameUI.gui.world_ui.add_child(_pos)
 	_pos.add_child(healthbar)
+	_pos.scale = healthbar_size
+	UIEvents.emit_signal("add_float_health_bar_ui", _pos)
 
 	# center health bar
 	healthbar.rect_position.x = -healthbar.health_bar_over.rect_size.x / 2.0
+	
 
-	# set remote path
-	remote_path = _pos.get_path()
+func _process(_delta: float) -> void:
+	_pos.global_position = get_global_transform_with_canvas().origin
 
 func queue_free() -> void:
 	if _pos.get_parent():

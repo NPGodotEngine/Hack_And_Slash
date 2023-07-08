@@ -37,7 +37,8 @@ func consume_ammo(from_position:Vector2, to_position:Vector2, hit_damage:HitDama
 
     bullet.setup(from_position, to_position, bullet_speed, hit_damage, bullet_life_span, bullet_penetration_chance)
 
-    _set_round_left(_round_left - 1)
+    if not self.infinite_ammo:
+        _set_round_left(_round_left - 1)
 
     if _round_left == 0:
         reload_ammo()
