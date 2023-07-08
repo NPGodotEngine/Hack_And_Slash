@@ -78,7 +78,10 @@ func _on_trigger_pulled() -> void:
 		bullet.show_behind_parent = true
 		Global.add_to_scene_tree(bullet)
 
-		_muzzle_flash.flash(muzzle_flash_duration)
+		puff_muzzle_flash()
+
+func puff_muzzle_flash() -> void:
+	_muzzle_flash.flash(muzzle_flash_duration, 1|2|4)
 
 func update_weapon_skin() -> void:
 	if Engine.editor_hint:
