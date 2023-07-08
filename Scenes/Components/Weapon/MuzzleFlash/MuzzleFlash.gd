@@ -1,11 +1,9 @@
+tool
 class_name MuzzleFlash
 extends Sprite
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 
-const FLASH_SMALL = [0,1,2]
-const FLASH_MEDIUM = [3,4,5]
-const FLASH_LARGE = [6,7,8]
 
 enum flash_type {
     SMALL = 1,
@@ -14,10 +12,26 @@ enum flash_type {
 }
 
 export (float) var flash_duration: float = 0.1
+export (Array, int) var flash_small_frames: Array = []
+export (Array, int) var flash_medium_frames: Array = []
+export (Array, int) var flash_large_frames: Array = []
 
 onready var _flash_duration_timer: Timer = $FlashDurationTimer
 
+func _get_configuration_warning() -> String:
+    if flash_small_frames.size() == 0:
+        return "You must define frame numbers for small flash"
+    if flash_medium_frames.size() == 0:
+        return "You must define frame numbers for medium flash"
+    if flash_large_frames.size() == 0:
+        return "You must define frame numbers for large flash"
+    return ""
+
 func _ready() -> void:
+    if Engine.editor_hint:
+        return
+    
+    randomize()
     self.hide()
     _flash_duration_timer.connect("timeout", self, "_on_flash_timer_timeout")
 
@@ -35,14 +49,13 @@ func flash(duration:float = flash_duration, type:int=flash_type.SMALL) -> void:
     
 
     var frame_range := []
-    if bool(type & flash_type.MEDIUM) == true:
-        frame_range += FLASH_MEDIUM
-    if bool(type & flash_type.LARGE) == true:
-        frame_range += FLASH_LARGE
     if bool(type & flash_type.SMALL) == true:
-        frame_range += FLASH_SMALL
+        frame_range += flash_small_frames
+    if bool(type & flash_type.MEDIUM) == true:
+        frame_range += flash_medium_frames
+    if bool(type & flash_type.LARGE) == true:
+        frame_range += flash_large_frames
     
-    randomize()
     var index: int = rand_range(0, frame_range.size()-1) as int
     self.frame = frame_range[index]
 
