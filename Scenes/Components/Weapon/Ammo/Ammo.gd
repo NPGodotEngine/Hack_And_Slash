@@ -27,6 +27,8 @@ signal begin_reloading(ammo_context)
 signal end_reloading(ammo_context)
 
 
+# Infinite ammo
+export (bool) var infinite_ammo: bool = false
 
 # Fill ammo when ammo component start
 export (bool) var fill_ammo_when_start: bool = true
