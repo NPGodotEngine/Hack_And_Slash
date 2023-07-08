@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Marine_run_sheet.png-3054f5c75f0f0b3835e76573f4770a44.stex"
+path="res://.import/Animation_sheet.png-193c5c022ef4c9603ad818c5d03ab776.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Characters/Animations/Marine/Marine_run_sheet.png"
-dest_files=[ "res://.import/Marine_run_sheet.png-3054f5c75f0f0b3835e76573f4770a44.stex" ]
+source_file="res://Assets/Characters/Animations/Animation_sheet.png"
+dest_files=[ "res://.import/Animation_sheet.png-193c5c022ef4c9603ad818c5d03ab776.stex" ]
 
 [params]
 

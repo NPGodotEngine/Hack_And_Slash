@@ -67,7 +67,7 @@ weapon_manager = NodePath("../WeaponManager")
 actor = NodePath("..")
 
 [node name="FloatHealthBar" parent="." instance=ExtResource( 13 )]
-position = Vector2( 0, -12 )
+position = Vector2( 0, -45 )
 
 [node name="HealthBarUI" parent="." instance=ExtResource( 5 )]
 healthComponent = NodePath("../HealthComponent")
@@ -81,7 +81,6 @@ weaponManager = NodePath("../WeaponManager")
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( -1, 5 )
 current = true
-zoom = Vector2( 0.5, 0.5 )
 
 [node name="DamageTextUI" parent="." instance=ExtResource( 16 )]
 character = NodePath("..")

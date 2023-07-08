@@ -21,8 +21,6 @@ export(NodePath) var dash: NodePath
 onready var _movement: MovementComponent = get_node(movement)
 onready var _dash: DashComponent = get_node(dash)
 
-var _playback_speed: float = 1.0
-var _max_playback_speed: float = 64.0
 
 # Velocity from MovementComponent
 var _velocity: Vector2 = Vector2.ZERO
@@ -48,12 +46,6 @@ func _ready() -> void:
 	# wait for parent node to be ready
 	var _player = get_parent()
 	yield(_player, "ready")
-	
-	var max_speed: float = _movement.max_movement_speed
-	var min_speed: float = _movement.min_movement_speed
-	var speed: float = _movement.movement_speed
-
-	_max_playback_speed = (max_speed - min_speed) / speed
 
 	_movement.connect("velocity_updated", self, "_on_velocity_updated")
 
@@ -80,12 +72,20 @@ func _on_velocity_updated(velocity_context:MovementComponent.VelocityContext) ->
 
 
 func update_skin() -> void:
-	# Update skin 
+	# change facing direction
+	# base on mouse course relative to character
 	var global_mouse_position := get_global_mouse_position()
 
 	if global_mouse_position.x < global_position.x:
 		self.flip_h = true
 	else:
 		self.flip_h = false
+
+	# change direction when dashing
+	if _dash._is_dashing:
+		if _velocity.x < 0.0:
+			self.flip_h = true
+		elif _velocity.x > 0.0:
+			self.flip_h = false
 
 
