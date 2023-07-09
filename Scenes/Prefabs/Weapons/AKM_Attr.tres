@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Scenes/Components/Weapon/Weapons/WeaponAttributes.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+max_damage = 20.0
+min_damage = 10.0
+critical_chance = 0.3
+critical_multiplier = 1.5
+accuracy = 0.5
+trigger_duration = 0.15
+reload_duration = 1.5

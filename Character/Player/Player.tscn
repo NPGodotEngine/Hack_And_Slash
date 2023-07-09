@@ -25,7 +25,7 @@ height = 14.0
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 15, 23 )
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=["Player"]]
 script = ExtResource( 4 )
 
 [node name="PlayerSkin" parent="." instance=ExtResource( 3 )]

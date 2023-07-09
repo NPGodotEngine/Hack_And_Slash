@@ -17,11 +17,11 @@ func _ready() -> void:
 func tick(actor, blackboard):
 	if detected_target != null:
 		blackboard.set("detected_target", detected_target)
-		print("Target detected")
+		# print("Target detected")
 		return SUCCESS
 	else:
 		blackboard.erase("detected_target")
-		print("Detecting target")
+		# print("Detecting target")
 		return FAILED
 
 func _on_target_detected(detected_context:TargetDetector.DetectedContext) -> void:

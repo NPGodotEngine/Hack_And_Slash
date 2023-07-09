@@ -75,7 +75,9 @@ func _on_load_game(saved_data:SavedData) -> void:
 	var serizlied_weapons: Array = saved_data.data["weapons"]
 	for serialized_weapon in serizlied_weapons:
 		# deserialized weapon
-		var weapon: Weapon = Global.create_instance(serialized_weapon[Weapon.RESOURCE_NAME_KEY])
+		var weapon_name = serialized_weapon[Weapon.WEAPON_NAME]
+		var weapon: Weapon = ResourceLibrary.weapons[weapon_name].instance()
+		weapon.weapon_attributes = ResourceLibrary.weapon_attributes[weapon_name]
 		weapon.deserialize(serialized_weapon)
 		add_weapon(weapon)
 

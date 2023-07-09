@@ -11,9 +11,7 @@ extends Node2D
 # warning-ignore-all: UNUSED_ARGUMENT
 
 
-const RESOURCE_NAME_KEY = "resource_name"
-const NAME_KEY = "name"
-const WEAPON_ATTRIBUTES_KEY = "weapon_attributes"
+const WEAPON_NAME = "name"
 
 
 # Emit when weapon become active
@@ -45,9 +43,13 @@ var weapon_manager = null
 
 func set_weapon_attributes(value:Resource) -> void:
 	if value == null or not value is WeaponAttributes:
+		push_error("Unable to apply weapon attributes")
 		return
 
+	yield(self, "ready")
 	weapon_attributes = value
+	apply_weapon_attributes(value)
+	
 ## Getter Setter ## 
 
 
@@ -149,6 +151,7 @@ func inactive() -> void:
 	emit_signal("weapon_inactive", self)
 
 func apply_weapon_attributes(attributes:WeaponAttributes) -> void:
+	print(attributes.trigger_duration)
 	_ranged_damage.min_damage = attributes.min_damage
 	_ranged_damage.max_damage = attributes.max_damage
 	_critical.critical_chance = attributes.critical_chance
@@ -156,17 +159,13 @@ func apply_weapon_attributes(attributes:WeaponAttributes) -> void:
 
 func serialize() -> Dictionary:
 	var state: Dictionary = {
-		RESOURCE_NAME_KEY: name + ".tscn",
-		NAME_KEY: name
+		WEAPON_NAME: name,
 	}
-
-	state[WEAPON_ATTRIBUTES_KEY] = weapon_attributes
 	
 	return state
 
 func deserialize(dict:Dictionary) -> void:
-	yield(self, "ready")
-	apply_weapon_attributes(dict[WEAPON_ATTRIBUTES_KEY])
+	pass
 
 
 

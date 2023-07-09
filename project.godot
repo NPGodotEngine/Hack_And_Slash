@@ -408,6 +408,7 @@ GameSaver="*res://System/Autoload/GameSaver.gd"
 GameUI="*res://System/Autoload/GameUI.gd"
 UIEvents="*res://System/Autoload/UIEvents.gd"
 InventoryManager="*res://System/Autoload/InventoryManager.gd"
+ResourceLibrary="*res://System/Autoload/ResourceLibrary.gd"
 
 [display]
 
