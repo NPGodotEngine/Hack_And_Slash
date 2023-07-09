@@ -151,7 +151,6 @@ func inactive() -> void:
 	emit_signal("weapon_inactive", self)
 
 func apply_weapon_attributes(attributes:WeaponAttributes) -> void:
-	print(attributes.trigger_duration)
 	_ranged_damage.min_damage = attributes.min_damage
 	_ranged_damage.max_damage = attributes.max_damage
 	_critical.critical_chance = attributes.critical_chance

@@ -123,6 +123,7 @@ func inactive() -> void:
 	_appearance.hide()
 
 func apply_weapon_attributes(attributes:WeaponAttributes) -> void:
+	.apply_weapon_attributes(attributes)
 	_accuracy.accuracy = attributes.accuracy
 	_trigger.trigger_duration = attributes.trigger_duration
 	_projectile_ammo.reload_duration = attributes.reload_duration
