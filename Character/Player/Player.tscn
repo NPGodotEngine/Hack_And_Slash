@@ -43,6 +43,7 @@ target = NodePath("..")
 
 [node name="DodgeComponent" parent="." instance=ExtResource( 9 )]
 target = NodePath("..")
+dodge_mask = 4
 
 [node name="WeaponManager" parent="." instance=ExtResource( 8 )]
 
@@ -62,6 +63,7 @@ actor = NodePath("..")
 
 [node name="FloatHealthBar" parent="." instance=ExtResource( 13 )]
 position = Vector2( 0, -45 )
+healthComponent = NodePath("../HealthComponent")
 
 [node name="HealthBarUI" parent="." instance=ExtResource( 5 )]
 healthComponent = NodePath("../HealthComponent")

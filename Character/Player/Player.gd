@@ -11,8 +11,6 @@ extends Character
 # Player skin visual
 onready var _skin: PlayerSkin = $PlayerSkin
 
-onready var _health_bar_remote: FloatHealthBar = $FloatHealthBar
-
 # Weapon manager
 onready var _weapon_manager: WeaponManager = $WeaponManager
 
@@ -34,16 +32,10 @@ func _ready() -> void:
 	_exp_comp.connect("xp_updated", self, "_on_xp_updated")
 	_exp_comp.connect("xp_required_updated", self, "_on_xp_required_updated")
 
-	_health_comp.connect("health_updated", self, "_on_health_updated")
-	_health_comp.connect("max_health_updated", self, "_on_max_health_updated")
-	_health_comp.connect("low_health_alert", self, "_on_low_health")
 	_health_comp.connect("die", self, "_on_die")
 	
 	_dodge_comp.connect("dodge_begin", self, "_on_dodge_begin")
 	_dodge_comp.connect("dodge_finished", self, "_on_dodge_finished")
-
-	_health_bar_remote.healthbar.health = _health_comp._health
-	_health_bar_remote.healthbar.max_health = _health_comp.max_health
 
 func _on_dodge_begin() -> void:
 	_weapon_manager.disable_weapon_manager()
@@ -82,18 +74,6 @@ func _on_xp_required_updated(xp_required_context:ExpComponent.ExpRequiredContext
 	print("xp required increase %f -> %f" % [xp_required_context.previous_xp_required, 
 								xp_required_context.updated_xp_required])
 	pass
-
-func _on_health_updated(health_context:HealthComponent.HealthContext) -> void:
-	_health_bar_remote.healthbar.health = health_context.updated_health
-	print("health %f -> %f" % [health_context.previous_health, health_context.updated_health])
-
-func _on_max_health_updated(max_health_context:HealthComponent.MaxHealthContext) -> void:
-	_health_bar_remote.healthbar.max_health = max_health_context.updated_max_health
-	print("max health %f -> %f" % [max_health_context.previous_max_health, max_health_context.updated_max_health])
-
-func _on_low_health(health_context:HealthComponent.HealthContext) -> void:
-	print("low health alert %f / %f" % [health_context.updated_health, health_context.max_health])
-
 
 func _on_take_damage(hit_damage:HitDamage) -> void:
 	# if character is dead do nothing

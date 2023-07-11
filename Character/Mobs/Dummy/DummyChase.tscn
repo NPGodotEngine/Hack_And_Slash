@@ -61,6 +61,7 @@ permanent_target = true
 
 [node name="FloatHealthBar" parent="." instance=ExtResource( 7 )]
 position = Vector2( 0, -60 )
+healthComponent = NodePath("../HealthComponent")
 
 [node name="LineOfSight" parent="." instance=ExtResource( 10 )]
 

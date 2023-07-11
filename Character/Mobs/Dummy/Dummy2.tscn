@@ -57,6 +57,7 @@ actor = NodePath("..")
 
 [node name="FloatHealthBar" parent="." instance=ExtResource( 7 )]
 position = Vector2( 0, -60 )
+healthComponent = NodePath("../HealthComponent")
 
 [node name="DamageTextUI" parent="." instance=ExtResource( 10 )]
 character = NodePath("..")
