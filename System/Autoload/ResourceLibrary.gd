@@ -2,8 +2,10 @@ extends Node
 
 const WEAPON = "_Weapon.tscn"
 const WEAPON_ATTRIBUTE = "_Attr.tres"
+const PLAYER = "_Pl.tscn"
 
 const weapons_res_path = "res://Scenes/Prefabs/Weapons/"
+const player_character_res_path = "res://Scenes/Prefabs/Characters/Players/"
 
 # Dictionary contain all weapon resources as
 # type of Resource
@@ -13,8 +15,12 @@ var weapons := {}
 # as type of Resource
 var weapon_attributes := {}
 
+var player_characters := {}
+
 func _ready() -> void:
     iterate_directory(weapons_res_path, "load_weapon_resource")
+    iterate_directory(player_character_res_path, "load_player_character_resource")
+    print(player_characters)
 
 # Iterate a directory and handle file by
 # a given function
@@ -59,3 +65,9 @@ func load_weapon_resource(filename:String, current_dir:String) -> void:
     elif filename.ends_with(WEAPON_ATTRIBUTE):
         var weapon_name: String= filename.replace(WEAPON_ATTRIBUTE, "")
         weapon_attributes[weapon_name] = load("%s/%s" % [current_dir, filename])
+
+func load_player_character_resource(filename:String, current_dir:String) -> void:
+    # if file is player character .tscn
+    if filename.ends_with(PLAYER):
+        var character_name: String= filename.replace(PLAYER, "")
+        player_characters[character_name] = load("%s/%s" % [current_dir, filename])
