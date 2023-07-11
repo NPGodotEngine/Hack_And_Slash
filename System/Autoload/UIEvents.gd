@@ -17,10 +17,10 @@ signal display_damage_text(hit_damage, total_damage, damage_text_ui)
 # `max_health`: max health
 signal player_health_updated(health, max_health)
 
-# Emit when player dash HUD need to be updated
-# `progress`: dash progress
-# `duration`: duration of dash
-signal player_dash_updated(progress, duration)
+# Emit when player dodge HUD need to be updated
+# `progress`: dodge progress
+# `duration`: duration of dodge
+signal player_dodge_updated(progress, duration)
 
 # Emit when player ammo count HUD need to be updated
 # `ammo_count`: current ammo count

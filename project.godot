@@ -124,32 +124,32 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Interface/WorldUI/Damage/DamageLabel.gd"
 }, {
-"base": "MarginContainer",
-"class": "DashBar",
-"language": "GDScript",
-"path": "res://Interface/Components/Dash/DashBar.gd"
-}, {
-"base": "Node",
-"class": "DashComponent",
-"language": "GDScript",
-"path": "res://Scenes/Components/Movement/DashComponent.gd"
-}, {
-"base": "HBoxContainer",
-"class": "DashState",
-"language": "GDScript",
-"path": "res://Interface/HUD/DashState/DashState.gd"
-}, {
 "base": "BeehaveNode",
 "class": "Decorator",
 "language": "GDScript",
 "path": "res://addons/beehave/nodes/decorators/decorator.gd"
+}, {
+"base": "MarginContainer",
+"class": "DodgeBar",
+"language": "GDScript",
+"path": "res://Interface/Components/Dodge/DodgeBar.gd"
+}, {
+"base": "Node",
+"class": "DodgeComponent",
+"language": "GDScript",
+"path": "res://Scenes/Components/Movement/DodgeComponent.gd"
+}, {
+"base": "HBoxContainer",
+"class": "DodgeState",
+"language": "GDScript",
+"path": "res://Interface/HUD/DodgeState/DodgeState.gd"
 }, {
 "base": "Node",
 "class": "ExpComponent",
 "language": "GDScript",
 "path": "res://Scenes/Components/Exp/ExpComponent.gd"
 }, {
-"base": "Reference",
+"base": "Position2D",
 "class": "FloatHealthBar",
 "language": "GDScript",
 "path": "res://Interface/UIMediators/HealthBar/FloatHealthBarUI.gd"
@@ -353,10 +353,10 @@ _global_script_class_icons={
 "CriticalComponent": "",
 "DamageComponent": "",
 "DamageLabel": "",
-"DashBar": "",
-"DashComponent": "",
-"DashState": "",
 "Decorator": "res://addons/beehave/icons/category_decorator.svg",
+"DodgeBar": "",
+"DodgeComponent": "",
+"DodgeState": "",
 "ExpComponent": "",
 "FloatHealthBar": "",
 "GUI": "",
@@ -455,7 +455,7 @@ secondary={
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
-Dash={
+Dodge={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":32,"unicode":0,"echo":false,"script":null)
  ]

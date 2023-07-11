@@ -22,10 +22,12 @@ func _ready() -> void:
 	_pos.scale = healthbar_size
 	UIEvents.emit_signal("add_float_health_bar_ui", _pos)
 
-	# center health bar
-	healthbar.rect_position.x = -healthbar.health_bar_over.rect_size.x / 2.0
+	if not healthbar.is_inside_tree():
+		yield(healthbar, "ready")
+		configure_healthbar()
+	else:
+		configure_healthbar()
 	
-
 func _process(_delta: float) -> void:
 	_pos.global_position = get_global_transform_with_canvas().origin
 
@@ -35,4 +37,7 @@ func queue_free() -> void:
 		_pos.queue_free()
 	.queue_free()
 
+func configure_healthbar() -> void:
+	# center health bar
+	healthbar.rect_position.x = -healthbar.health_bar_over.rect_size.x / 2.0
 

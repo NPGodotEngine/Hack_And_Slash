@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Interface/HUD/DodgeState/DodgeState.gd" type="Script" id=1]
+[ext_resource path="res://Assets/UI/Dash_outline_icon.png" type="Texture" id=2]
+[ext_resource path="res://Interface/Components/Dodge/DodgeBar.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/UI/Dash_inner_icon.png" type="Texture" id=4]
+
+[node name="DodgeState" type="HBoxContainer"]
+margin_right = 229.0
+margin_bottom = 14.0
+script = ExtResource( 1 )
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="DodgeOutline" type="TextureRect" parent="CenterContainer"]
+self_modulate = Color( 0.192157, 0.180392, 0.180392, 1 )
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+texture = ExtResource( 2 )
+expand = true
+
+[node name="DodgeInner" type="TextureRect" parent="CenterContainer"]
+self_modulate = Color( 0.945098, 1, 0, 1 )
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+texture = ExtResource( 4 )
+expand = true
+
+[node name="DodgeBar" parent="." instance=ExtResource( 3 )]
+margin_left = 44.0
+margin_top = 10.0
+margin_right = 194.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 150, 20 )
+size_flags_vertical = 4

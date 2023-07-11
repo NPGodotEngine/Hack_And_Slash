@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Interface/HUD/HUD.gd" type="Script" id=1]
 [ext_resource path="res://Interface/HUD/HPState/HPState.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Interface/HUD/DashState/DashState.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Interface/HUD/DodgeState/DodgeState.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Interface/HUD/AmmoState/AmmoState.tscn" type="PackedScene" id=4]
 [ext_resource path="res://System/Style/UI_theme.tres" type="Theme" id=5]
 [ext_resource path="res://Interface/HUD/HUDCursor.gd" type="Script" id=6]
@@ -34,7 +34,7 @@ margin_bottom = 84.0
 margin_right = 194.0
 margin_bottom = 40.0
 
-[node name="DashState" parent="PlayerState/HBoxContainer/VBoxContainer" instance=ExtResource( 3 )]
+[node name="DodgeState" parent="PlayerState/HBoxContainer/VBoxContainer" instance=ExtResource( 3 )]
 margin_top = 44.0
 margin_right = 194.0
 margin_bottom = 84.0

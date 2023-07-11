@@ -15,11 +15,11 @@ const DODGE = "dodge"
 
 # Node path to MovementComponent
 export(NodePath) var movement: NodePath
-export(NodePath) var dash: NodePath
+export(NodePath) var dodge: NodePath
 
 # MovementComponent
 onready var _movement: MovementComponent = get_node(movement)
-onready var _dash: DashComponent = get_node(dash)
+onready var _dodge: DodgeComponent = get_node(dodge)
 
 
 # Velocity from MovementComponent
@@ -32,10 +32,10 @@ func _get_configuration_warning() -> String:
 		return "movement node path is missing"
 	if not get_node(movement) is MovementComponent:
 		return "movement must be a MovementComponent node"
-	if dash.is_empty():
-		return "dash node path is missing"
-	if not get_node(dash) is DashComponent:
-		return "dash must be a DashComponent node"  
+	if _dodge.is_empty():
+		return "dodge node path is missing"
+	if not get_node(dodge) is DodgeComponent:
+		return "dodge must be a DodgeComponent node"  
 
 	return ""
 
@@ -56,7 +56,7 @@ func _physics_process(delta: float) -> void:
 		return
 
 	update_skin()
-	if _dash._is_dashing:
+	if _dodge._is_dodging:
 		play(DODGE)
 	elif abs(_velocity.x) <= 0.1 and abs(_velocity.y) <= 0.1:
 		play(IDLE)
@@ -81,8 +81,8 @@ func update_skin() -> void:
 	else:
 		self.flip_h = false
 
-	# change direction when dashing
-	if _dash._is_dashing:
+	# change direction when dodging
+	if _dodge._is_dodging:
 		if _velocity.x < 0.0:
 			self.flip_h = true
 		elif _velocity.x > 0.0:

@@ -20,16 +20,13 @@ onready var _health_comp: HealthComponent = $HealthComponent
 onready var _exp_comp: ExpComponent = $ExpComponent
 onready var _movement_comp: MovementComponent = $MovementComponent
 onready var _hurt_box: HurtBox = $HurtBox
-onready var _dash_comp: DashComponent = $DashComponent
+onready var _dodge_comp: DodgeComponent = $DodgeComponent
 
 
 
 var is_dead: bool = false
 
 func _ready() -> void:
-	_health_bar_remote.healthbar.health = _health_comp._health
-	_health_bar_remote.healthbar.max_health = _health_comp.max_health
-	
 	_hurt_box.connect("take_damage", self, "_on_take_damage")
 
 	_exp_comp.connect("progress_updated", self, "_on_progress_updated")
@@ -41,26 +38,26 @@ func _ready() -> void:
 	_health_comp.connect("max_health_updated", self, "_on_max_health_updated")
 	_health_comp.connect("low_health_alert", self, "_on_low_health")
 	_health_comp.connect("die", self, "_on_die")
-
-	_health_bar_remote.healthbar.max_health = _health_comp.max_health
-	_health_bar_remote.healthbar.health = _health_comp._health
 	
-	_dash_comp.connect("dash_begin", self, "_on_dash_begin")
-	_dash_comp.connect("dash_finished", self, "_on_dash_finished")
+	_dodge_comp.connect("dodge_begin", self, "_on_dodge_begin")
+	_dodge_comp.connect("dodge_finished", self, "_on_dodge_finished")
 
-func _on_dash_begin() -> void:
+	_health_bar_remote.healthbar.health = _health_comp._health
+	_health_bar_remote.healthbar.max_health = _health_comp.max_health
+
+func _on_dodge_begin() -> void:
 	_weapon_manager.disable_weapon_manager()
 
-func _on_dash_finished() -> void:
+func _on_dodge_finished() -> void:
 	_weapon_manager.enable_weapon_manager()
 
-func _on_display_dash_effect(dash_effect:DashComponent.DashVisualEffect) -> void:
-	dash_effect.effect.global_position = global_position
+func _on_display_dodge_effect(dodge_effect:DodgeComponent.DodgeVisualEffect) -> void:
+	dodge_effect.effect.global_position = global_position
 	var visual = _skin.duplicate_visual()
-	dash_effect.effect.add_child(visual)
-	Global.add_to_scene_tree(dash_effect.effect)
+	dodge_effect.effect.add_child(visual)
+	Global.add_to_scene_tree(dodge_effect.effect)
 
-func _on_display_dash_particles(particles_effect:DashComponent.DashParticlesEffect) -> void:
+func _on_display_dodge_particles(particles_effect:DodgeComponent.DodgeParticlesEffect) -> void:
 	particles_effect.particles.global_position = global_position
 	Global.add_to_scene_tree(particles_effect.particles)
 
