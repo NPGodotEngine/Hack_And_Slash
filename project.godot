@@ -294,6 +294,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/beehave/nodes/composites/sequence_star.gd"
 }, {
+"base": "Sprite",
+"class": "Spawner",
+"language": "GDScript",
+"path": "res://Scenes/Components/Spawner/Spawner.gd"
+}, {
 "base": "Area2D",
 "class": "TargetDetector",
 "language": "GDScript",
@@ -387,6 +392,7 @@ _global_script_class_icons={
 "SelectorStarComposite": "res://addons/beehave/icons/selector_star.svg",
 "SequenceComposite": "res://addons/beehave/icons/sequencer.svg",
 "SequenceStarComposite": "res://addons/beehave/icons/sequencer_star.svg",
+"Spawner": "",
 "TargetDetector": "",
 "TargetFollowerComponent": "",
 "Trail": "",
