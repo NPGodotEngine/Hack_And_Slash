@@ -41,7 +41,8 @@ shape = SubResource( 1 )
 
 [node name="PlayerSpawner" parent="." instance=ExtResource( 5 )]
 position = Vector2( 200, 205 )
-list = [ "Solider" ]
+list = [ "Soldier" ]
+spawn_radius = 100.0
 
 [node name="Dummy" parent="." instance=ExtResource( 7 )]
 position = Vector2( 667, 465 )

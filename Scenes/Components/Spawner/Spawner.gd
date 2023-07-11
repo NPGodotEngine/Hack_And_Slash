@@ -1,11 +1,16 @@
 class_name Spawner
 extends Sprite
 
+# warning-ignore-all: UNUSED_ARGUMENT
+
+
 export (Array, String) var list := []
 export (int, 0, 100) var spawn_chance_percent := 100
-export (int, 1, 4) var num_spawn := 1
+export (int) var num_spawn := 1
 
 func _ready() -> void:
+	if Engine.editor_hint:
+		return
 	texture = null
 	randomize()
 
