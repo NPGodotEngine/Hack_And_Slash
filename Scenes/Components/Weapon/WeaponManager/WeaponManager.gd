@@ -51,6 +51,7 @@ func set_current_weapon_index(value:int) -> void:
 
 func _ready() -> void:
 	collect_weapons()
+	set_current_weapon_index(0)
 
 	GameSaver.connect("save_game", self, "_on_save_game")
 	GameSaver.connect("load_game", self, "_on_load_game")

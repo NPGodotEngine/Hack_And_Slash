@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/spawner_robot.svg-a89743c3642c7cbeeac748ede40fdf1f.stex"
+path="res://.import/spawner_player.svg-f23b143602ed103ddea3e8c0678c91ad.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/spawner_robot.svg"
-dest_files=[ "res://.import/spawner_robot.svg-a89743c3642c7cbeeac748ede40fdf1f.stex" ]
+source_file="res://Assets/Icons/spawner_player.svg"
+dest_files=[ "res://.import/spawner_player.svg-f23b143602ed103ddea3e8c0678c91ad.stex" ]
 
 [params]
 

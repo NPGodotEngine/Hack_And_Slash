@@ -1,8 +1,8 @@
 class_name Spawner
 extends Sprite
 
-export (Array, PackedScene) var list := []
-export (int, 0, 100) var spawn_chance_percent := 50
+export (Array, String) var list := []
+export (int, 0, 100) var spawn_chance_percent := 100
 export (int, 1, 4) var num_spawn := 1
 
 func _ready() -> void:
@@ -18,12 +18,9 @@ func spawn() -> void:
 		return
 	
 	for _i in num_spawn:
-		var random_scene_index = randi() % list.size()
-		var scene: PackedScene = list[random_scene_index]
+		var random_name_index = randi() % list.size()
 		
-		if not scene:
-			continue
-		
-		var node: Node2D = scene.instance()
-		get_parent().add_child(node)
-		node.global_position = global_position
+		handle_spawn(list[random_name_index])
+
+func handle_spawn(resource_name:String) -> void:
+	pass

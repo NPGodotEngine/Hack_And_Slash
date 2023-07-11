@@ -5,6 +5,8 @@ extends Weapon
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 
 export(NodePath) var accuracy: NodePath
+export(NodePath) var ranged_damage: NodePath
+export(NodePath) var critical: NodePath
 export(NodePath) var angle_spread: NodePath
 export(NodePath) var trigger: NodePath
 export(NodePath) var projectile_ammo: NodePath
@@ -14,6 +16,8 @@ export(NodePath) var muzzle_flash: NodePath
 export(float) var muzzle_flash_duration: float = 0.1
 
 onready var _accuracy: AccuracyComponent = get_node(accuracy) as AccuracyComponent
+onready var _ranged_damage: RangedDamageComponent = get_node(ranged_damage) as RangedDamageComponent
+onready var _critical: CriticalComponent = get_node(critical) as CriticalComponent
 onready var _angle_spread: AngleSpreadComponent = get_node(angle_spread) as AngleSpreadComponent
 onready var _trigger: Trigger = get_node(trigger) as Trigger
 onready var _projectile_ammo: ProjectileAmmo = get_node(projectile_ammo) as ProjectileAmmo
@@ -58,10 +62,25 @@ func _get_configuration_warning() -> String:
 		return "muzzle_flash node path is missing"
 	if not get_node(muzzle_flash) is MuzzleFlash:
 		return "muzzle_flash must be a MuzzleFlash node"
+	if ranged_damage.is_empty():
+		return "ranged_damage node path is missing"
+	if not get_node(ranged_damage) is RangedDamageComponent:
+		return "ranged_damage must be a RangedDamageComponent node"
+	if critical.is_empty():
+		return "critical node path is missing"
+	if not get_node(critical) is CriticalComponent:
+		return "critical must be a CriticalComponent node"
 	return ""
 
 func _ready() -> void:
 	_trigger.connect("trigger_pulled", self, "_on_trigger_pulled")
+
+	if weapon_attributes:
+		if not is_inside_tree():
+			yield(self, "ready")
+			apply_weapon_attributes(weapon_attributes)
+		else:
+			apply_weapon_attributes(weapon_attributes)
 
 func _on_trigger_pulled() -> void:
 	for point in _fire_points:
@@ -96,6 +115,22 @@ func update_weapon_skin() -> void:
 	
 	look_at(global_mouse_position)
 
+func get_hit_damage() -> HitDamage:
+	var damage: float = _ranged_damage.damage
+	var is_critical: bool = _critical.is_critical()
+	var color: Color = (_critical.critical_color if is_critical 
+							else _ranged_damage.damage_color)
+	var hit_damage: HitDamage = HitDamage.new().init(
+		weapon_manager.get_parent(),
+		self,
+		damage,
+		is_critical,
+		_critical.critical_multiplier,
+		color
+	)
+
+	return hit_damage
+
 func get_fire_points() -> Array:
 	var points: Array = []
 	for node_path in fire_points:
@@ -123,7 +158,10 @@ func inactive() -> void:
 	_appearance.hide()
 
 func apply_weapon_attributes(attributes:WeaponAttributes) -> void:
-	.apply_weapon_attributes(attributes)
+	_ranged_damage.min_damage = attributes.min_damage
+	_ranged_damage.max_damage = attributes.max_damage
+	_critical.critical_chance = attributes.critical_chance
+	_critical.critical_multiplier = attributes.critical_multiplier
 	_accuracy.accuracy = attributes.accuracy
 	_trigger.trigger_duration = attributes.trigger_duration
 	_projectile_ammo.reload_duration = attributes.reload_duration

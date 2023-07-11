@@ -1,5 +1,6 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
+[ext_resource path="res://Scenes/Prefabs/Weapons/M4A1/M4A1_Attr.tres" type="Resource" id=1]
 [ext_resource path="res://Assets/Weapons/Weapons_sheet.png" type="Texture" id=2]
 [ext_resource path="res://Scenes/Components/Damage/RangedDamageComponent.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Components/CriticalStrike/CriticalComponent.tscn" type="PackedScene" id=4]
@@ -17,9 +18,10 @@
 
 [node name="M4A1" type="Node2D"]
 script = ExtResource( 15 )
+weapon_attributes = ExtResource( 1 )
+accuracy = NodePath("AccuracyComponent")
 ranged_damage = NodePath("RangedDamageComponent")
 critical = NodePath("CriticalComponent")
-accuracy = NodePath("AccuracyComponent")
 angle_spread = NodePath("AngleSpreadComponent")
 trigger = NodePath("AutoTrigger")
 projectile_ammo = NodePath("ProjectileAmmo")
@@ -28,22 +30,23 @@ appearance = NodePath("Appearance")
 muzzle_flash = NodePath("MuzzleFlash")
 
 [node name="RangedDamageComponent" parent="." instance=ExtResource( 3 )]
-max_damage = 10.0
-min_damage = 5.0
+max_damage = 16.0
+min_damage = 8.0
 
 [node name="CriticalComponent" parent="." instance=ExtResource( 4 )]
-critical_chance = 0.2
+critical_multiplier = 1.5
+critical_chance = 0.15
 
 [node name="AccuracyComponent" parent="." instance=ExtResource( 10 )]
 
 [node name="AngleSpreadComponent" parent="." instance=ExtResource( 7 )]
 
 [node name="AutoTrigger" parent="." instance=ExtResource( 11 )]
-trigger_duration = 0.1
+trigger_duration = 0.06
 
 [node name="ProjectileAmmo" parent="." instance=ExtResource( 8 )]
 rounds_per_clip = 30
-reload_duration = 1.0
+reload_duration = 1.5
 bullet_speed = 1500.0
 bullet_life_span = 2.0
 bullet_penetration_chance = 0.3
