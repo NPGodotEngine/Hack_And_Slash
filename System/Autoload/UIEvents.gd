@@ -27,6 +27,9 @@ signal player_dodge_updated(progress, duration)
 # `max_ammo_count`: ammo count at max
 signal player_ammo_updated(ammo_count, max_ammo_count)
 
+signal show_player_ammo_ui()
+signal hide_player_ammo_ui()
+
 # Emit when a weapon crosshair need to be added
 # to HUD
 ##

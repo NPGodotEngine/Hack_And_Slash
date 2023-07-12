@@ -34,7 +34,7 @@ export (bool) var infinite_ammo: bool = false
 export (bool) var fill_ammo_when_start: bool = true
 
 # How many rounds per clip
-export (int, 1, 5000) var rounds_per_clip: int = 10
+export (int, 1, 5000) var rounds_per_clip: int = 10 setget _set_round_per_clip
 
 # Duration for reload ammo
 export (float, 0.1, 20.0) var reload_duration: float = 2.0
@@ -67,6 +67,9 @@ func get_progress() -> AmmoReloadProgress:
 
 	return reload_progress 
 
+func _set_round_per_clip(value:int) -> void:
+	rounds_per_clip = value
+	_round_left = int(min(max(0, value), rounds_per_clip))
 
 func _set_round_left(value:int) -> void:
 	if _round_left == value: 

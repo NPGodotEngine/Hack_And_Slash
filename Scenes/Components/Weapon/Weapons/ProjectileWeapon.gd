@@ -11,7 +11,6 @@ export(NodePath) var angle_spread: NodePath
 export(NodePath) var trigger: NodePath
 export(NodePath) var projectile_ammo: NodePath
 export(Array, NodePath) var fire_points: Array
-export(NodePath) var appearance: NodePath
 export(NodePath) var muzzle_flash: NodePath
 export(float) var muzzle_flash_duration: float = 0.1
 
@@ -22,7 +21,6 @@ onready var _angle_spread: AngleSpreadComponent = get_node(angle_spread) as Angl
 onready var _trigger: Trigger = get_node(trigger) as Trigger
 onready var _projectile_ammo: ProjectileAmmo = get_node(projectile_ammo) as ProjectileAmmo
 onready var _fire_points: Array = get_fire_points()
-onready var _appearance: Node2D = get_node(appearance) as Node2D
 onready var _muzzle_flash: MuzzleFlash = get_node(muzzle_flash) as MuzzleFlash
 
 
@@ -54,10 +52,6 @@ func _get_configuration_warning() -> String:
 	for point in get_fire_points():
 		if not point is Position2D:
 			return "fire_points must contain Position2D node"
-	if appearance.is_empty():
-		return "appearance node path is missing"
-	if not get_node(appearance) is Node2D:
-		return "appearance must be a Node2D node"
 	if muzzle_flash.is_empty():
 		return "muzzle_flash node path is missing"
 	if not get_node(muzzle_flash) is MuzzleFlash:
@@ -151,11 +145,11 @@ func cancel_alt_execution() -> void:
 
 func active() -> void:
 	.active()
-	_appearance.show()
+	self.show()
 
 func inactive() -> void:
 	.inactive()
-	_appearance.hide()
+	self.hide()
 
 func apply_weapon_attributes(attributes:WeaponAttributes) -> void:
 	_ranged_damage.min_damage = attributes.min_damage
@@ -166,4 +160,6 @@ func apply_weapon_attributes(attributes:WeaponAttributes) -> void:
 	_trigger.trigger_duration = attributes.trigger_duration
 	_projectile_ammo.reload_duration = attributes.reload_duration
 	_projectile_ammo.rounds_per_clip = attributes.round_per_clip
+
+	.apply_weapon_attributes(attributes)
 

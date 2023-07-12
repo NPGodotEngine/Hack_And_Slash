@@ -20,6 +20,10 @@ var weapon_slots: Array = []
 
 
 # Current index point to the weapon
+# assign a new index will inactive previous weapon
+# and active weapon at given index
+#
+# Change index simulate as switch weapon
 var current_weapon_index: int = DEFAULT_WEAPON_INDEX setget set_current_weapon_index
 
 # Whether weapon manager is enabled
@@ -175,6 +179,8 @@ func add_weapon(new_weapon, make_current:bool=false) -> void:
 	new_weapon.weapon_manager = self
 	if make_current:
 		set_current_weapon_index(weapon_slots.size() - 1)
+	else:
+		(new_weapon as Weapon).inactive()
 
 # Remove a weapon
 ##
@@ -190,10 +196,9 @@ func remove_weapon_by(index:int) -> void:
 
 # Enable weapon manager
 ##
-# When weapon manager is enabled
-# weapon manager can execute current weapon
-##
-# Eanble weapon manager also active current weapon
+# Eanble weapon manager only active the weapon
+# whose index is current weapon index that remain
+# unchanged after disable weapon manager
 func enable_weapon_manager() -> void:
 	_is_enabled = true
 
@@ -205,9 +210,8 @@ func enable_weapon_manager() -> void:
 # Diable weapon manager
 ##
 # When weapon manager is disabled
-# weapon manager can't execute current weapon
-##
-# Disable weapon manager also inactive current weapon
+# all weapons all be inactive and
+# current weapon index is remain unchanged
 func disable_weapon_manager() -> void:
 	_is_enabled = false
 

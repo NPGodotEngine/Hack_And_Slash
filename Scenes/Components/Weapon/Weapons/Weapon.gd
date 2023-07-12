@@ -24,11 +24,11 @@ signal weapon_active(weapon)
 # `weapon`: weapon of itself
 signal weapon_inactive(weapon)
 
-# Emit when weapon attributes applied
+# Emit when weapon attributes updated
 # successful
 ##
 # `weapon`: weapon of itself
-signal weapon_attributes_applied(weapon)
+signal weapon_attributes_updated(weapon)
 
 
 # Weapon attributes resource
@@ -118,7 +118,6 @@ func update_weapon_skin() -> void:
 
 # Active this weapon
 func active() -> void:
-	print("%s active" % name)
 	set_process(true)
 	set_physics_process(true)
 	
@@ -126,7 +125,6 @@ func active() -> void:
 
 # Inactive this weapon
 func inactive() -> void:
-	print("%s inactive" % name)
 	set_process(false)
 	set_physics_process(false)
 
@@ -136,7 +134,7 @@ func inactive() -> void:
 # subclass must call this at parent class
 # at end of code
 func apply_weapon_attributes(attributes:WeaponAttributes) -> void:
-	emit_signal("weapon_attributes_applied")
+	emit_signal("weapon_attributes_updated", self)
 
 func serialize() -> Dictionary:
 	var state: Dictionary = {

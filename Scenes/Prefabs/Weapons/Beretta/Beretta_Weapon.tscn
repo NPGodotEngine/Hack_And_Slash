@@ -15,7 +15,7 @@
 [ext_resource path="res://Interface/Components/Crosshair/Crosshair.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Interface/HUD/WeaponCrosshair/WeaponCrosshair.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Interface/Components/ReloadIndicator/ReloadIndicator.tscn" type="PackedScene" id=15]
-[ext_resource path="res://Scenes/Components/Weapon/WeaponSkin/WeaponSkin.gd" type="Script" id=16]
+[ext_resource path="res://Interface/UIMediators/Ammo/AmmoUI.tscn" type="PackedScene" id=17]
 
 [node name="Beretta" type="Node2D"]
 script = ExtResource( 3 )
@@ -67,8 +67,6 @@ position = Vector2( 0, 6 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 137, 0, 41, 27 )
-script = ExtResource( 16 )
-weapon = NodePath("../..")
 
 [node name="WeaponCrosshair" parent="." instance=ExtResource( 14 )]
 weapon = NodePath("..")
@@ -79,3 +77,7 @@ crosshair_scene = ExtResource( 13 )
 weapon = NodePath("..")
 ammo = NodePath("../ProjectileAmmo")
 reloadbar_scene = ExtResource( 15 )
+
+[node name="AmmoUI" parent="." instance=ExtResource( 17 )]
+weapon = NodePath("..")
+ammo = NodePath("../ProjectileAmmo")

@@ -1,10 +1,9 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Character/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Interface/UIMediators/HealthBar/HealthBarUI.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Interface/UIMediators/Dodge/DodgeBarUI.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Prefabs/Weapons/AKM/AKM_Weapon.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Interface/UIMediators/Ammo/AmmoUI.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Components/Movement/MovementComponent.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Components/Control/Player/PlayerControllerComponent.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/Components/appearance/Player/PlayerSkin.tscn" type="PackedScene" id=8]
@@ -72,9 +71,6 @@ healthComponent = NodePath("../HealthComponent")
 
 [node name="DodgeBarUI" parent="." instance=ExtResource( 3 )]
 dodgeComponent = NodePath("../DodgeComponent")
-
-[node name="AmmoUI" parent="." instance=ExtResource( 5 )]
-weaponManager = NodePath("../WeaponManager")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true

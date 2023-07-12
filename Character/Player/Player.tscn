@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scenes/Components/HitHurt/HurtBox.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Components/Exp/ExpComponent.tscn" type="PackedScene" id=2]
@@ -12,7 +12,6 @@
 [ext_resource path="res://Scenes/Components/Health/HealthComponent.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Interface/UIMediators/HealthBar/FloatHealthBarUI.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Interface/UIMediators/Dodge/DodgeBarUI.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Interface/UIMediators/Ammo/AmmoUI.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Interface/UIMediators/Damage/DamageTextUI.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Interface/WorldUI/Damage/DamageLabel.tscn" type="PackedScene" id=17]
 
@@ -70,9 +69,6 @@ healthComponent = NodePath("../HealthComponent")
 
 [node name="DodgeBarUI" parent="." instance=ExtResource( 14 )]
 dodgeComponent = NodePath("../DodgeComponent")
-
-[node name="AmmoUI" parent="." instance=ExtResource( 15 )]
-weaponManager = NodePath("../WeaponManager")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true

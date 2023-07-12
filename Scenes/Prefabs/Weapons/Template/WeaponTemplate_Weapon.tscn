@@ -11,7 +11,7 @@
 [ext_resource path="res://Scenes/Components/Damage/RangedDamageComponent.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/Components/CriticalStrike/CriticalComponent.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/Components/Spread/AngleSpreadComponent.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Scenes/Components/Weapon/WeaponSkin/WeaponSkin.gd" type="Script" id=12]
+[ext_resource path="res://Interface/UIMediators/Ammo/AmmoUI.tscn" type="PackedScene" id=13]
 
 [sub_resource type="Resource" id=3]
 script = ExtResource( 2 )
@@ -22,6 +22,7 @@ critical_multiplier = 1.0
 accuracy = 0.5
 trigger_duration = 0.1
 reload_duration = 1.0
+round_per_clip = 30
 
 [node name="WeaponTemplate" type="Node2D"]
 script = ExtResource( 3 )
@@ -72,5 +73,7 @@ position = Vector2( 0, 6 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 0, 3, 58, 20 )
-script = ExtResource( 12 )
-weapon = NodePath("../..")
+
+[node name="AmmoUI" parent="." instance=ExtResource( 13 )]
+weapon = NodePath("..")
+ammo = NodePath("../ProjectileAmmo")
