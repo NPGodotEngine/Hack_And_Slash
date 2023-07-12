@@ -23,3 +23,6 @@ export (float) var trigger_duration: float = 1.0
 
 # Reload duration
 export (float) var reload_duration: float = 1.0
+
+# Round per clip
+export (int) var round_per_clip: int = 30

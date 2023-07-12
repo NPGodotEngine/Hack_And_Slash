@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scenes/Prefabs/Weapons/M4A1/M4A1_Attr.tres" type="Resource" id=1]
 [ext_resource path="res://Assets/Weapons/Weapons_sheet.png" type="Texture" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://Bullets/Projectile/ProjectileBullet/ProjectileBullet.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Interface/HUD/WeaponReloadIndicator/WeaponReloadIndicator.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Scenes/Components/Weapon/Weapons/ProjectileWeapon.gd" type="Script" id=15]
+[ext_resource path="res://Scenes/Components/Weapon/WeaponSkin/WeaponSkin.gd" type="Script" id=16]
 
 [node name="M4A1" type="Node2D"]
 script = ExtResource( 15 )
@@ -64,7 +65,9 @@ position = Vector2( 0, 6 )
 [node name="weapon" type="Sprite" parent="Appearance"]
 texture = ExtResource( 2 )
 region_enabled = true
-region_rect = Rect2( 66, 22, 60, 20 )
+region_rect = Rect2( 63, 3, 60, 20 )
+script = ExtResource( 16 )
+weapon = NodePath("../..")
 
 [node name="WeaponCrosshair" parent="." instance=ExtResource( 6 )]
 weapon = NodePath("..")

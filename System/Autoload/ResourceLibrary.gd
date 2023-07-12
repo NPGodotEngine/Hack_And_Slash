@@ -61,13 +61,16 @@ func load_weapon_resource(filename:String, current_dir:String) -> void:
     if filename.ends_with(WEAPON):
         var weapon_name: String= filename.replace(WEAPON, "")
         weapons[weapon_name] = load("%s/%s" % [current_dir, filename])
+        print("load weapon: %s" % weapon_name)
     # if file is weapon attribute .tres
     elif filename.ends_with(WEAPON_ATTRIBUTE):
         var weapon_name: String= filename.replace(WEAPON_ATTRIBUTE, "")
         weapon_attributes[weapon_name] = load("%s/%s" % [current_dir, filename])
+        print("load weapon attribute: %s" % weapon_name)
 
 func load_player_character_resource(filename:String, current_dir:String) -> void:
     # if file is player character .tscn
     if filename.ends_with(PLAYER):
         var character_name: String= filename.replace(PLAYER, "")
         player_characters[character_name] = load("%s/%s" % [current_dir, filename])
+        print("load player character: %s" % character_name)

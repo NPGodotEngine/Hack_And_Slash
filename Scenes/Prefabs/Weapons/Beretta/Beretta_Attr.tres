@@ -4,11 +4,11 @@
 
 [resource]
 script = ExtResource( 1 )
-max_damage = 25.0
-min_damage = 15.0
+max_damage = 10.0
+min_damage = 5.0
 critical_chance = 0.2
-critical_multiplier = 1.5
-accuracy = 0.7
-trigger_duration = 0.1
-reload_duration = 1.5
-round_per_clip = 30
+critical_multiplier = 1.0
+accuracy = 0.9
+trigger_duration = 0.8
+reload_duration = 0.6
+round_per_clip = 17

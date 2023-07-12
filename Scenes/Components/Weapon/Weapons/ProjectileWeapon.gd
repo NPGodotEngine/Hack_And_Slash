@@ -165,4 +165,5 @@ func apply_weapon_attributes(attributes:WeaponAttributes) -> void:
 	_accuracy.accuracy = attributes.accuracy
 	_trigger.trigger_duration = attributes.trigger_duration
 	_projectile_ammo.reload_duration = attributes.reload_duration
+	_projectile_ammo.rounds_per_clip = attributes.round_per_clip
 

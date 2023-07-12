@@ -4,18 +4,23 @@ extends Node2D
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 
+
+const DEFAULT_WEAPON_INDEX = -1
+
 class SwitchWeaponContext extends Resource:
-	var previous_weapon_index = -1
-	var current_weapon_index = -1
+	var previous_weapon_index = DEFAULT_WEAPON_INDEX
+	var current_weapon_index = DEFAULT_WEAPON_INDEX
 
 signal switch_weapon(switch_weapon_context)
 
+export (Array, PackedScene) var preset_weapons: Array = []
 
 # Hold list of weapons 
 var weapon_slots: Array = []
 
+
 # Current index point to the weapon
-var current_weapon_index: int = -1 setget set_current_weapon_index
+var current_weapon_index: int = DEFAULT_WEAPON_INDEX setget set_current_weapon_index
 
 # Whether weapon manager is enabled
 var _is_enabled: bool = true
@@ -26,32 +31,40 @@ var _is_enabled: bool = true
 
 func set_current_weapon_index(value:int) -> void:
 	var pre_weapon_index = current_weapon_index
-	current_weapon_index = wrapi(value, 0, weapon_slots.size() - 1)
-
-	if current_weapon_index >= weapon_slots.size():
-		current_weapon_index = -1 
-		return 
-
+	
+	# if value is out of slots's range
+	# set index to -1 otherwise set to the value
+	if value < 0 || value >= weapon_slots.size():
+		current_weapon_index = DEFAULT_WEAPON_INDEX
+	else: 
+		current_weapon_index = wrapi(value, 0, weapon_slots.size())
+	
 	# disable previous weapon
 	if pre_weapon_index >= 0:
 		var previous_weapon: Weapon = weapon_slots[pre_weapon_index]
 		previous_weapon.inactive()
+	else:
+		push_warning("Unable to inactive previous weapon at index %d weapon size %d" % 
+			[pre_weapon_index, weapon_slots.size()])
 
 	# enable current weapon
-	var current_weapon: Weapon = weapon_slots[current_weapon_index]
-	current_weapon.active()
-	
-	var switch_weapon_context: SwitchWeaponContext = SwitchWeaponContext.new()
-	switch_weapon_context.previous_weapon_index = pre_weapon_index
-	switch_weapon_context.current_weapon_index = current_weapon_index
+	if current_weapon_index >= 0 && current_weapon_index < weapon_slots.size(): 
+		var current_weapon: Weapon = weapon_slots[current_weapon_index]
+		current_weapon.active()
+		
+		var switch_weapon_context: SwitchWeaponContext = SwitchWeaponContext.new()
+		switch_weapon_context.previous_weapon_index = pre_weapon_index
+		switch_weapon_context.current_weapon_index = current_weapon_index
 
-	emit_signal("switch_weapon", switch_weapon_context)
+		emit_signal("switch_weapon", switch_weapon_context)
+	else:
+		push_warning("Unable to active weapon at index %d weapon size %d" % 
+			[current_weapon_index, weapon_slots.size()])
 ## Getter Setter ##
 	
 
 func _ready() -> void:
-	collect_weapons()
-	set_current_weapon_index(0)
+	load_preset_weapons()
 
 	GameSaver.connect("save_game", self, "_on_save_game")
 	GameSaver.connect("load_game", self, "_on_load_game")
@@ -81,21 +94,14 @@ func _on_load_game(saved_data:SavedData) -> void:
 		weapon.weapon_attributes = ResourceLibrary.weapon_attributes[weapon_name]
 		weapon.deserialize(serialized_weapon)
 		add_weapon(weapon)
+		weapon.inactive()
 
-	set_current_weapon_index(0)
-
-func collect_weapons() -> void:
-	if weapon_slots.size() > 0:
-		for weapon in weapon_slots:
-			if weapon is Weapon:
-				remove_child(weapon)
-				weapon.queue_free()
-
-	for child in get_children():
-		if child is Weapon:
-			(child as Weapon).inactive()
-			child.weapon_manager = self
-			weapon_slots.append(child)
+func load_preset_weapons() -> void:
+	if preset_weapons.size() > 0:
+		for wp_scene in preset_weapons:
+			var wp_instance: Weapon = wp_scene.instance()
+			add_weapon(wp_instance)
+			wp_instance.inactive()
 
 # Execute current weapon's main fire
 ##
@@ -105,7 +111,7 @@ func execute_weapon() -> void:
 	if not _is_enabled:
 		return
 
-	if weapon_slots.size() <= 0 or current_weapon_index == -1: 
+	if weapon_slots.size() <= 0 or current_weapon_index == DEFAULT_WEAPON_INDEX: 
 		return
 
 	var weapon: Weapon = weapon_slots[current_weapon_index]
@@ -116,7 +122,7 @@ func execute_weapon() -> void:
 ##
 # Mainly for weapon requried warm up
 func cancel_weapon_execution() -> void:
-	if weapon_slots.size() <= 0 or current_weapon_index == -1: 
+	if weapon_slots.size() <= 0 or current_weapon_index == DEFAULT_WEAPON_INDEX: 
 		return
 
 	var weapon: Weapon = weapon_slots[current_weapon_index]
@@ -131,7 +137,7 @@ func execute_weapon_alt() -> void:
 	if not _is_enabled:
 		return
 		
-	if weapon_slots.size() <= 0 or current_weapon_index == -1: 
+	if weapon_slots.size() <= 0 or current_weapon_index == DEFAULT_WEAPON_INDEX: 
 		return
 
 	var weapon: Weapon = weapon_slots[current_weapon_index]
@@ -140,7 +146,7 @@ func execute_weapon_alt() -> void:
 
 # Cancel current weapon's alternative fire 
 func cancel_weapon_alt_execution() -> void:
-	if weapon_slots.size() <= 0 or current_weapon_index == -1: 
+	if weapon_slots.size() <= 0 or current_weapon_index == DEFAULT_WEAPON_INDEX: 
 		return
 
 	var weapon: Weapon = weapon_slots[current_weapon_index]
@@ -151,7 +157,7 @@ func cancel_weapon_alt_execution() -> void:
 ##
 # `index` index of weapon in weapon slots
 func get_weapon_by(index:int):
-	if index == -1 or index >= weapon_slots.size(): 
+	if index == DEFAULT_WEAPON_INDEX or index >= weapon_slots.size(): 
 		return null
 		
 	return weapon_slots[index]
@@ -161,6 +167,7 @@ func get_weapon_by(index:int):
 # `make_current`: `true` make new weapon as current weapon
 func add_weapon(new_weapon, make_current:bool=false) -> void:
 	if not new_weapon is Weapon:
+		push_error("%s is not a type of Weapon" % new_weapon.name)
 		return 
 
 	add_child(new_weapon)
@@ -190,7 +197,7 @@ func remove_weapon_by(index:int) -> void:
 func enable_weapon_manager() -> void:
 	_is_enabled = true
 
-	if current_weapon_index != -1:
+	if current_weapon_index != DEFAULT_WEAPON_INDEX:
 		# enable current weapon
 		var weapon: Weapon = weapon_slots[current_weapon_index]
 		weapon.active()
@@ -204,7 +211,7 @@ func enable_weapon_manager() -> void:
 func disable_weapon_manager() -> void:
 	_is_enabled = false
 
-	if current_weapon_index != -1:
+	if current_weapon_index != DEFAULT_WEAPON_INDEX:
 		# disable current weapon
 		var weapon: Weapon = weapon_slots[current_weapon_index]
 		weapon.inactive()		

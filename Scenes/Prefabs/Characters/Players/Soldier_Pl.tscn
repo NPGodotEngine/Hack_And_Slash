@@ -47,8 +47,7 @@ target = NodePath("..")
 dodge_mask = 4
 
 [node name="WeaponManager" parent="." instance=ExtResource( 11 )]
-
-[node name="AKM" parent="WeaponManager" instance=ExtResource( 4 )]
+preset_weapons = [ ExtResource( 4 ) ]
 
 [node name="HurtBox" type="Area2D" parent="."]
 collision_mask = 0

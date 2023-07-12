@@ -11,3 +11,4 @@ critical_multiplier = 1.5
 accuracy = 0.5
 trigger_duration = 0.06
 reload_duration = 1.5
+round_per_clip = 30
