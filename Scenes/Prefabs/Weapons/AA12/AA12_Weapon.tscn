@@ -40,7 +40,7 @@ critical_chance = 0.2
 accuracy = 0.65
 
 [node name="AngleSpreadComponent" parent="." instance=ExtResource( 11 )]
-spread_range_degree = 5.0
+spread_range_degree = 6.5
 
 [node name="ShotgunAmmo" parent="." instance=ExtResource( 4 )]
 bullet_speed = 1500.0
