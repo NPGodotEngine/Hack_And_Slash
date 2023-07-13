@@ -55,18 +55,18 @@ random_penetration = null
 trigger_duration = 0.65
 
 [node name="MuzzleFlash" parent="." instance=ExtResource( 6 )]
-position = Vector2( 27, -3 )
+position = Vector2( 38, 2 )
 
 [node name="FirePoint" type="Position2D" parent="."]
-position = Vector2( 21, -4 )
+position = Vector2( 32, 1 )
 
 [node name="Appearance" type="Node2D" parent="."]
-position = Vector2( 0, 6 )
+position = Vector2( 3, 6 )
 
 [node name="weapon" type="Sprite" parent="Appearance"]
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 137, 0, 41, 27 )
+region_rect = Rect2( 68, 85, 56, 22 )
 
 [node name="WeaponCrosshair" parent="." instance=ExtResource( 14 )]
 weapon = NodePath("..")

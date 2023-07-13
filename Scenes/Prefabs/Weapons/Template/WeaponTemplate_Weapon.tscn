@@ -71,7 +71,7 @@ position = Vector2( 0, 6 )
 [node name="weapon" type="Sprite" parent="Appearance"]
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 0, 3, 58, 20 )
+region_rect = Rect2( 3, 22, 58, 20 )
 
 [node name="AmmoUI" parent="." instance=ExtResource( 13 )]
 weapon = NodePath("..")
