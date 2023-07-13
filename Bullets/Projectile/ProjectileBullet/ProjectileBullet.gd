@@ -13,12 +13,6 @@ func _get_configuration_warning() -> String:
 func _ready() -> void:
     $HitBox.connect("contacted_hurt_box", self, "_on_contact_hurt_box")
 
-func setup(from_position:Vector2, to_position:Vector2, speed:float, 
-    hit_damage:HitDamage, life_span:float, penetration_chance:float) -> void:
-    .setup(from_position, to_position, speed, hit_damage, life_span, penetration_chance)
-
-    $HitBox.hit_damage = hit_damage
-
 func _on_contact_hurt_box(hurt_box:HurtBox) -> void:
     if _ignored_bodies.has(hurt_box): 
         return
@@ -28,4 +22,7 @@ func _on_contact_hurt_box(hurt_box:HurtBox) -> void:
     # free projectile if not penetrated
     if not _is_penetrated():
         queue_free()
+
+func _hit_damage_updated(damage:HitDamage) -> void:
+    $HitBox.hit_damage = damage
 

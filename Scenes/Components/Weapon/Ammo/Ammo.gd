@@ -1,3 +1,4 @@
+tool
 class_name Ammo
 extends Node
 
@@ -26,6 +27,14 @@ signal begin_reloading(ammo_context)
 # Emit when reloading end
 signal end_reloading(ammo_context)
 
+export(float) var bullet_speed = 200.0
+export(float) var bullet_life_span = 3.0
+export(float) var bullet_penetration_chance = 0.0
+
+# The actual bullet scene
+##
+# To be used to instantiate a new bullet
+export(PackedScene) var bullet_scene: PackedScene = null
 
 # Infinite ammo
 export (bool) var infinite_ammo: bool = false
@@ -92,7 +101,15 @@ func _set_round_left(value:int) -> void:
 
 ## Override ##
 
+func _get_configuration_warning() -> String:
+    if bullet_scene == null:
+        return "bullet_scene is missing"
+    return ""
+
 func _ready() -> void:
+	if Engine.editor_hint:
+		return
+		
 	if fill_ammo_when_start:
 		_set_round_left(rounds_per_clip)
 

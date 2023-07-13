@@ -24,7 +24,7 @@ glow_high_quality = true
 
 [node name="TestLevel" type="Node2D"]
 script = ExtResource( 4 )
-test_weapon_name = "Beretta"
+test_weapon_name = "AA12"
 
 [node name="GUI" parent="." instance=ExtResource( 8 )]
 

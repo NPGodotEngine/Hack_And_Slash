@@ -9,7 +9,7 @@ export(NodePath) var ranged_damage: NodePath
 export(NodePath) var critical: NodePath
 export(NodePath) var angle_spread: NodePath
 export(NodePath) var trigger: NodePath
-export(NodePath) var projectile_ammo: NodePath
+export(NodePath) var ammo: NodePath
 export(Array, NodePath) var fire_points: Array
 export(NodePath) var muzzle_flash: NodePath
 export(float) var muzzle_flash_duration: float = 0.1
@@ -19,7 +19,7 @@ onready var _ranged_damage: RangedDamageComponent = get_node(ranged_damage) as R
 onready var _critical: CriticalComponent = get_node(critical) as CriticalComponent
 onready var _angle_spread: AngleSpreadComponent = get_node(angle_spread) as AngleSpreadComponent
 onready var _trigger: Trigger = get_node(trigger) as Trigger
-onready var _projectile_ammo: ProjectileAmmo = get_node(projectile_ammo) as ProjectileAmmo
+onready var _ammo: Ammo = get_node(ammo) as Ammo
 onready var _fire_points: Array = get_fire_points()
 onready var _muzzle_flash: MuzzleFlash = get_node(muzzle_flash) as MuzzleFlash
 
@@ -43,10 +43,10 @@ func _get_configuration_warning() -> String:
 		return "trigger node path is missing"
 	if not get_node(trigger) is Trigger:
 		return "trigger must be a Trigger node"
-	if projectile_ammo.is_empty():
-		return "projectile_ammo node path is missing"
-	if not get_node(projectile_ammo) is ProjectileAmmo:
-		return "projectile_ammo must be a ProjectileAmmo node"
+	if ammo.is_empty():
+		return "ammo node path is missing"
+	if not get_node(ammo) is Ammo:
+		return "ammo must be a Ammo node"
 	if fire_points.size() == 0:
 		return "at least 1 node path in fire_points"
 	for point in get_fire_points():
@@ -77,8 +77,14 @@ func _ready() -> void:
 			apply_weapon_attributes(weapon_attributes)
 
 func _on_trigger_pulled() -> void:
+	if not _ammo is ProjectileAmmo:
+		push_error("Ammo is not a type of ProjectileAmmo")
+		return
+
+	var projectile_ammo: ProjectileAmmo = _ammo as ProjectileAmmo
+
 	for point in _fire_points:
-		if _projectile_ammo._is_reloading:
+		if _ammo._is_reloading:
 			return
 		var position = (point as Position2D).global_position
 		var global_mouse_position = get_global_mouse_position()
@@ -86,10 +92,11 @@ func _on_trigger_pulled() -> void:
 		var end_position = _angle_spread.get_random_spread(global_position.direction_to(global_mouse_position), 
 												_accuracy.accuracy) * distance + position
 		var hit_damage: HitDamage = get_hit_damage()
-		var bullet: Projectile = _projectile_ammo.consume_ammo(position, 
-											end_position, hit_damage)
+		var bullet: Projectile = projectile_ammo.consume_ammo()
+		bullet.hit_damage = hit_damage
 		bullet.show_behind_parent = true
 		Global.add_to_scene_tree(bullet)
+		bullet.setup_direction(position, end_position)
 
 		puff_muzzle_flash()
 
@@ -158,8 +165,8 @@ func apply_weapon_attributes(attributes:WeaponAttributes) -> void:
 	_critical.critical_multiplier = attributes.critical_multiplier
 	_accuracy.accuracy = attributes.accuracy
 	_trigger.trigger_duration = attributes.trigger_duration
-	_projectile_ammo.reload_duration = attributes.reload_duration
-	_projectile_ammo.rounds_per_clip = attributes.round_per_clip
+	_ammo.reload_duration = attributes.reload_duration
+	_ammo.rounds_per_clip = attributes.round_per_clip
 
 	.apply_weapon_attributes(attributes)
 

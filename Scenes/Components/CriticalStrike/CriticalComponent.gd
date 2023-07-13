@@ -99,10 +99,10 @@ func set_critical_strike_chance(value:float) -> void:
 # RGN base each calls
 # Call this for each attacks
 func is_critical() -> bool:
-	if is_equal_approx(critical_chance, 0.0):
-		return false
-	
-	# check if critical
-	return Global.is_in_threshold(critical_chance, 
-	min_critical_chance, max_critical_chance)
+    if is_equal_approx(critical_chance, 0.0):
+        return false
+
+    # check if critical
+    return Global.is_in_threshold(critical_chance, 
+    min_critical_chance, max_critical_chance)
 
