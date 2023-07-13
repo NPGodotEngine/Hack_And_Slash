@@ -7,6 +7,9 @@ extends Area2D
 # Emit when contact with a HurtBox
 signal contacted_hurt_box(hurt_box)
 
+# Emit when contact with StaticBody2D
+signal contacted_static_body(body)
+
 
 
 # HitDamage
@@ -20,6 +23,11 @@ func set_paried_hurt_box(hurt_box) -> void:
 	
 func _ready() -> void:
 	collision_layer = 0
+	connect("body_entered", self, "_on_body_entered")
+
+func _on_body_entered(body:Node) -> void:
+	if body is StaticBody2D:
+		emit_signal("contacted_static_body", body)
 
 # Add new hit mask
 func add_hit_mask(new_mask:int) -> void:
