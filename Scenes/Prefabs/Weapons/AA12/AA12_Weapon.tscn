@@ -49,7 +49,6 @@ bullet_penetration_chance = 0.3
 bullet_scene = ExtResource( 5 )
 rounds_per_clip = 20
 reload_duration = 1.6
-random_penetration = null
 
 [node name="AutoTrigger" parent="." instance=ExtResource( 8 )]
 trigger_duration = 0.65
