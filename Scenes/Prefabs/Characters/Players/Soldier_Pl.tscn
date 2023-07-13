@@ -24,6 +24,7 @@ height = 14.0
 extents = Vector2( 15, 23 )
 
 [node name="Soldier" type="KinematicBody2D" groups=["Player"]]
+collision_mask = 7
 script = ExtResource( 1 )
 
 [node name="PlayerSkin" parent="." instance=ExtResource( 8 )]
