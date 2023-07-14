@@ -30,27 +30,27 @@ fire_points = [ NodePath("FirePoint") ]
 muzzle_flash = NodePath("MuzzleFlash")
 
 [node name="RangedDamageComponent" parent="." instance=ExtResource( 3 )]
-max_damage = 16.0
-min_damage = 8.0
+max_damage = 100.0
+min_damage = 50.0
 
 [node name="CriticalComponent" parent="." instance=ExtResource( 4 )]
-critical_multiplier = 1.5
-critical_chance = 0.15
+critical_multiplier = 2.0
+critical_chance = 0.4
 
 [node name="AccuracyComponent" parent="." instance=ExtResource( 10 )]
+accuracy = 0.9
 
 [node name="AngleSpreadComponent" parent="." instance=ExtResource( 7 )]
 
 [node name="AutoTrigger" parent="." instance=ExtResource( 11 )]
-trigger_duration = 0.06
+trigger_duration = 1.5
 
 [node name="ProjectileAmmo" parent="." instance=ExtResource( 8 )]
 bullet_speed = 1500.0
 bullet_life_span = 2.0
 bullet_penetration_chance = 0.3
 bullet_scene = ExtResource( 13 )
-rounds_per_clip = 30
-reload_duration = 1.5
+rounds_per_clip = 6
 
 [node name="MuzzleFlash" parent="." instance=ExtResource( 12 )]
 position = Vector2( 36, 1 )
