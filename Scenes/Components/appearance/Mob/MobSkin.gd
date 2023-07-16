@@ -43,7 +43,7 @@ func on_die_anim_finished() -> void:
 	_character.queue_free()
 
 func update_skin() -> void:
-    if _velocity.x < 0.0:
-        self.flip_h = true
-    else:
-        self.flip_h = false
+	if _velocity.x < 0.0:
+		self.flip_h = true
+	else:
+		self.flip_h = false
