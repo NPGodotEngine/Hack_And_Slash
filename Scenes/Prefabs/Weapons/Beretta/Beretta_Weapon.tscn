@@ -65,7 +65,7 @@ position = Vector2( 0, 9 )
 [node name="weapon" type="Sprite" parent="Appearance"]
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 11, 82, 41, 27 )
+region_rect = Rect2( 139, 18, 41, 27 )
 
 [node name="WeaponCrosshair" parent="." instance=ExtResource( 14 )]
 weapon = NodePath("..")

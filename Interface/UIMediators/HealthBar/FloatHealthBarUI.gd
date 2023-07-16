@@ -56,7 +56,7 @@ func _on_max_health_updated(max_health_context:HealthComponent.MaxHealthContext)
 	healthbar.max_health = max_health_context.updated_max_health
 
 func _on_die() -> void:
-	self.hide()
+	_pos.hide()
 	
 func _process(_delta: float) -> void:
 	if Engine.editor_hint:

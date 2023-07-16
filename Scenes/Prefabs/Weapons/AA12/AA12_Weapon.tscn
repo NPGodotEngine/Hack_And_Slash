@@ -30,14 +30,14 @@ fire_points = [ NodePath("FirePoint") ]
 muzzle_flash = NodePath("MuzzleFlash")
 
 [node name="RangedDamageComponent" parent="." instance=ExtResource( 9 )]
-max_damage = 6.0
-min_damage = 3.0
+max_damage = 18.0
+min_damage = 10.0
 
 [node name="CriticalComponent" parent="." instance=ExtResource( 10 )]
-critical_chance = 0.2
+critical_chance = 0.4
 
 [node name="AccuracyComponent" parent="." instance=ExtResource( 7 )]
-accuracy = 0.65
+accuracy = 0.1
 
 [node name="AngleSpreadComponent" parent="." instance=ExtResource( 11 )]
 spread_range_degree = 6.5
@@ -65,7 +65,7 @@ position = Vector2( 3, 6 )
 [node name="weapon" type="Sprite" parent="Appearance"]
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 68, 85, 56, 22 )
+region_rect = Rect2( 4, 85, 56, 22 )
 
 [node name="WeaponCrosshair" parent="." instance=ExtResource( 14 )]
 weapon = NodePath("..")
