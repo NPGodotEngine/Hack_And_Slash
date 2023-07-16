@@ -28,7 +28,7 @@ onready var _dodge: DodgeComponent = get_node(dodge) as DodgeComponent
 # WeaponManager
 onready var _weapon_manager: WeaponManager = get_node(weapon_manager) as WeaponManager
 
-onready var _actor: KinematicBody2D = get_node(actor) as KinematicBody2D
+onready var _actor: Player = get_node(actor) as Player
 
 # Whether actor is in dodging or not
 var _is_dodging: bool = false
@@ -52,8 +52,8 @@ func _get_configuration_warning() -> String:
 
     if actor.is_empty():
         return "actor node path is missing"
-    if not get_node(actor) is KinematicBody2D:
-            return "actor must be KinematicBody2D node"
+    if not get_node(actor) is Player:
+            return "actor must be Player node"
 
     return ""
 
@@ -73,6 +73,9 @@ func _on_dodge_cooldown_end() -> void:
 
 func _physics_process(delta: float) -> void:
     if Engine.editor_hint:
+        return
+    
+    if _actor.is_dead:
         return
 
     update_movement()

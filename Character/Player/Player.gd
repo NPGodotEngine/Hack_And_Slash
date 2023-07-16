@@ -83,6 +83,17 @@ func _on_take_damage(hit_damage:HitDamage) -> void:
 
 func _on_die() -> void:
 	print("player die")
+	is_dead = true
+
+	_weapon_manager.disable_weapon_manager()
+
+	if _hurt_box:
+		var collision_shape: CollisionShape2D = _hurt_box.get_child(0)
+		collision_shape.set_deferred("disabled", true)
+
+	for child in get_children():
+		if child is CollisionShape2D:
+			child .set_deferred("disabled", true)
 
 
 # Heal character
