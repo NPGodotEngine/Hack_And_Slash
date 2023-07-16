@@ -8,9 +8,6 @@ extends Character
 # warning-ignore-all: UNUSED_ARGUMENT
 
 
-# Player skin visual
-onready var _skin: PlayerSkin = $PlayerSkin
-
 # Weapon manager
 onready var _weapon_manager: WeaponManager = $WeaponManager
 
@@ -42,12 +39,6 @@ func _on_dodge_begin() -> void:
 
 func _on_dodge_finished() -> void:
 	_weapon_manager.enable_weapon_manager()
-
-func _on_display_dodge_effect(dodge_effect:DodgeComponent.DodgeVisualEffect) -> void:
-	dodge_effect.effect.global_position = global_position
-	var visual = _skin.duplicate_visual()
-	dodge_effect.effect.add_child(visual)
-	Global.add_to_scene_tree(dodge_effect.effect)
 
 func _on_display_dodge_particles(particles_effect:DodgeComponent.DodgeParticlesEffect) -> void:
 	particles_effect.particles.global_position = global_position
@@ -92,6 +83,7 @@ func _on_take_damage(hit_damage:HitDamage) -> void:
 
 func _on_die() -> void:
 	print("player die")
+
 
 # Heal character
 func heal(amount:int) -> void:

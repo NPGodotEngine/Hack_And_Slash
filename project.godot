@@ -89,6 +89,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Character/Character.gd"
 }, {
+"base": "AnimatedSprite",
+"class": "CharacterSkin",
+"language": "GDScript",
+"path": "res://Scenes/Components/appearance/Player/CharacterSkin.gd"
+}, {
 "base": "TextureProgress",
 "class": "CircularFillBar",
 "language": "GDScript",
@@ -244,11 +249,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/Components/Control/Player/PlayerControllerComponent.gd"
 }, {
-"base": "AnimatedSprite",
-"class": "PlayerSkin",
-"language": "GDScript",
-"path": "res://Scenes/Components/appearance/Player/PlayerSkin.gd"
-}, {
 "base": "Bullet",
 "class": "Projectile",
 "language": "GDScript",
@@ -361,6 +361,7 @@ _global_script_class_icons={
 "Bullet": "",
 "BurstTrigger": "",
 "Character": "",
+"CharacterSkin": "",
 "CircularFillBar": "",
 "Composite": "res://addons/beehave/icons/category_composite.svg",
 "ConditionLeaf": "res://addons/beehave/icons/condition.svg",
@@ -392,7 +393,6 @@ _global_script_class_icons={
 "MuzzleFlash": "",
 "Player": "",
 "PlayerControllerComponent": "",
-"PlayerSkin": "",
 "Projectile": "",
 "ProjectileAmmo": "",
 "ProjectileWeapon": "",

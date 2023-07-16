@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scenes/Components/HitHurt/HurtBox.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Components/Exp/ExpComponent.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scenes/Components/appearance/Player/PlayerSkin.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Components/appearance/Player/CharacterSkin.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Character/Player/Player.gd" type="Script" id=4]
 [ext_resource path="res://Interface/UIMediators/HealthBar/HealthBarUI.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Components/Movement/MovementComponent.tscn" type="PackedScene" id=6]
@@ -25,13 +25,13 @@ extents = Vector2( 15, 23 )
 [node name="Player" type="KinematicBody2D" groups=["Player"]]
 script = ExtResource( 4 )
 
-[node name="PlayerSkin" parent="." instance=ExtResource( 3 )]
-frame = 0
-movement = NodePath("../MovementComponent")
-dodge = NodePath("../DodgeComponent")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+
+[node name="CharacterSkin" parent="." instance=ExtResource( 3 )]
+movement = NodePath("../MovementComponent")
+dodge = NodePath("../DodgeComponent")
+health = NodePath("../HealthComponent")
 
 [node name="ExpComponent" parent="." instance=ExtResource( 2 )]
 
