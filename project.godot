@@ -92,7 +92,7 @@ _global_script_classes=[ {
 "base": "AnimatedSprite",
 "class": "CharacterSkin",
 "language": "GDScript",
-"path": "res://Scenes/Components/appearance/Player/CharacterSkin.gd"
+"path": "res://Scenes/Components/appearance/CharacterSkin.gd"
 }, {
 "base": "TextureProgress",
 "class": "CircularFillBar",
@@ -223,11 +223,6 @@ _global_script_classes=[ {
 "class": "Mob",
 "language": "GDScript",
 "path": "res://Character/Mobs/Mob.gd"
-}, {
-"base": "Node2D",
-"class": "MobSkin",
-"language": "GDScript",
-"path": "res://Scenes/Components/appearance/Mob/MobSkin.gd"
 }, {
 "base": "Node",
 "class": "MovementComponent",
@@ -388,7 +383,6 @@ _global_script_class_icons={
 "LimiterDecorator": "res://addons/beehave/icons/limiter.svg",
 "LineOfSight": "",
 "Mob": "",
-"MobSkin": "",
 "MovementComponent": "",
 "MuzzleFlash": "",
 "Player": "",

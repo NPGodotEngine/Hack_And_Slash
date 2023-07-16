@@ -11,11 +11,11 @@
 [ext_resource path="res://Scenes/Components/Control/AI/AIControllerComponent.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Interface/UIMediators/Damage/DamageTextUI.tscn" type="PackedScene" id=10]
 
-[sub_resource type="CircleShape2D" id=1]
-radius = 30.5941
+[sub_resource type="CapsuleShape2D" id=9]
+radius = 17.0
 
-[sub_resource type="CircleShape2D" id=7]
-radius = 29.0689
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 17, 22 )
 
 [sub_resource type="CircleShape2D" id=8]
 radius = 213.021
@@ -26,8 +26,8 @@ collision_mask = 7
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -14 )
-shape = SubResource( 1 )
+position = Vector2( 2, 0 )
+shape = SubResource( 9 )
 
 [node name="MovementComponent" type="Node" parent="."]
 script = ExtResource( 3 )
@@ -37,6 +37,9 @@ target = NodePath("..")
 max_health = 1000.0
 
 [node name="MobSkin" parent="." instance=ExtResource( 1 )]
+movement = NodePath("../MovementComponent")
+health = NodePath("../HealthComponent")
+character = NodePath("..")
 
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 2
@@ -44,8 +47,7 @@ collision_mask = 0
 script = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2( 0, -14 )
-shape = SubResource( 7 )
+shape = SubResource( 10 )
 
 [node name="TargetDetector" parent="." instance=ExtResource( 5 )]
 
