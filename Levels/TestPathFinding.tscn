@@ -16,6 +16,7 @@ position = Vector2( 507, 314 )
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="Dummy1"]
 avoidance_enabled = true
+max_speed = 600.0
 
 [node name="Navigator" type="Node2D" parent="Dummy1"]
 script = ExtResource( 2 )
@@ -24,8 +25,13 @@ agent = NodePath("../NavigationAgent2D")
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="."]
 navpoly = SubResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 222, 361 )
-texture = ExtResource( 3 )
+[node name="Sprite" type="KinematicBody2D" parent="."]
+position = Vector2( 235, 353 )
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="Sprite"]
+
+[node name="Sprite" type="Sprite" parent="Sprite"]
+texture = ExtResource( 3 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Sprite"]
+polygon = PoolVector2Array( -52, -39, 57, -46, 55, 44, -57, 46 )
