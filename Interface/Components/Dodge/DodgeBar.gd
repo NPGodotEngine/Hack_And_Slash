@@ -4,15 +4,15 @@ extends MarginContainer
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 
 
-export (Color) var dodge_bar_over_color: Color = Color.darkgreen
-export (Color) var dodge_bar_under_color: Color = Color.darkgray
+@export var dodge_bar_over_color: Color = Color.DARK_GREEN
+@export var dodge_bar_under_color: Color = Color.DARK_GRAY
 
 
-onready var bar_under: TextureProgress = $BarUnder
-onready var bar_over: TextureProgress = $BarOver
+@onready var bar_under: TextureProgressBar = $BarUnder
+@onready var bar_over: TextureProgressBar = $BarOver
 
-var dodge_value: float = 100.0 setget set_dodge_value
-var max_dodge_value: float = 100.0 setget set_max_dodge_value
+var dodge_value: float = 100.0: set = set_dodge_value
+var max_dodge_value: float = 100.0: set = set_max_dodge_value
 
 func set_dodge_value(value:float) -> void:
     bar_over.value = value
@@ -23,7 +23,9 @@ func set_max_dodge_value(value:float) -> void:
     bar_under.value = bar_under.max_value
 
 func _ready() -> void:
-	update_bar_color()
+    super._ready()
+    
+    update_bar_color()
 
 func update_bar_color() -> void:
     bar_over.tint_progress = dodge_bar_over_color

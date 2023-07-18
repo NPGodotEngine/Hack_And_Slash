@@ -1,9 +1,9 @@
-tool
+@tool
 class_name ShotgunWeapon
 extends ProjectileWeapon
 
 # Number of projectile per each shot
-export (int) var rounds_per_shot: int = 4
+@export var rounds_per_shot: int = 4
 
 func _on_trigger_pulled() -> void:
 	if not _ammo is ShotgunAmmo:
@@ -24,7 +24,7 @@ func _on_trigger_pulled() -> void:
 	var global_mouse_position = get_global_mouse_position()
 
 	for point in _fire_points:
-		var position = (point as Position2D).global_position
+		var position = (point as Marker2D).global_position
 		var distance: float = position.distance_to(global_mouse_position)
 
 		for bullet in rounds:

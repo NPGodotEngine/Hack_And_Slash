@@ -18,6 +18,8 @@ var weapon_attributes := {}
 var player_characters := {}
 
 func _ready() -> void:
+    super._ready()
+    
     iterate_directory(weapons_res_path, "load_weapon_resource")
     iterate_directory(player_character_res_path, "load_player_character_resource")
     print(player_characters)
@@ -32,29 +34,28 @@ func _ready() -> void:
 #  - `current_dir` as string
 # `recursive`: `true` iterate sub directories recursively otherwise `false`  
 func iterate_directory(path:String, file_handler:String, recursive:bool=true) -> void:
-    var directory: Directory = Directory.new()
-    var dir_state: int = directory.open(path)
-    if not dir_state == OK:
+    var opend_dir := DirAccess.open(path)
+    if opend_dir == null || DirAccess.get_open_error() != OK:
         push_error("Unable to open directory %s" % path)
         return
 
-    if directory.list_dir_begin(true, true) != OK:
+    if opend_dir.list_dir_begin()  != OK:# TODOConverter3To4 fill missing arguments https://github.com/godotengine/godot/pull/40547
         push_error("Unable to open directory %s" % path)
         return
     
-    var filename: String = directory.get_next()
+    var filename: String = opend_dir.get_next()
     while filename != "":
-        if file_handler != "" or not file_handler.empty():
+        if file_handler != "" or not file_handler.is_empty():
             # if recursive iteration (subfloders)
             # and current is a directory (folder)
             # then iterate sub directories
-            if recursive && directory.current_is_dir():
-                iterate_directory("%s/%s" % [directory.get_current_dir(), filename], 
+            if recursive && opend_dir.current_is_dir():
+                iterate_directory("%s/%s" % [opend_dir.get_current_dir(), filename], 
                                     file_handler, recursive)
             else: # call function to handle file
-                call(file_handler, filename, directory.get_current_dir())
+                call(file_handler, filename, opend_dir.get_current_dir())
 
-        filename = directory.get_next()
+        filename = opend_dir.get_next()
 
 func load_weapon_resource(filename:String, current_dir:String) -> void:
     # if file is weapon .tscn

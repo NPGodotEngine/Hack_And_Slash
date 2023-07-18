@@ -15,7 +15,7 @@ signal contacted_static_body(body)
 # HitDamage
 var hit_damage: HitDamage
 
-var paired_hurt_box = null setget set_paried_hurt_box
+var paired_hurt_box = null: set = set_paried_hurt_box
 
 func set_paried_hurt_box(hurt_box) -> void:
 	emit_signal("contacted_hurt_box", hurt_box)
@@ -23,7 +23,9 @@ func set_paried_hurt_box(hurt_box) -> void:
 	
 func _ready() -> void:
 	collision_layer = 0
-	connect("body_entered", self, "_on_body_entered")
+	connect("body_entered", Callable(self, "_on_body_entered"))
+	
+	super._ready()
 
 func _on_body_entered(body:Node) -> void:
 	if body is StaticBody2D:

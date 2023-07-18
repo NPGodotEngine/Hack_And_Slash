@@ -39,26 +39,26 @@ signal max_progress_reached(progress_context)
 
 
 # Design exp curve in inspector
-export (CurveTexture) var exp_curve: CurveTexture
+@export var exp_curve: CurveTexture
 
 # Max progression aka max level
-export (float) var max_progress: float = 100.0
+@export var max_progress: float = 100.0
 
 # Base xp
-export (float) var base_exp: float = 1000.0
+@export var base_exp: float = 1000.0
 
 # Print leve to xp requirement at start
-export (bool) var log_level_xp: bool = false
+@export var log_level_xp: bool = false
 
 # Current progression aka current
 # level
-var _progress: float = 1.0 setget set_progress
+var _progress: float = 1.0: set = set_progress
 
 # Current xp
-var _xp: float = 0.0 setget set_xp
+var _xp: float = 0.0: set = set_xp
 
 # Exp required to progress
-var _xp_required: float = 0.0 setget set_xp_required, get_xp_required
+var _xp_required: float = 0.0: get = get_xp_required, set = set_xp_required
 
 
 
@@ -66,6 +66,8 @@ var _xp_required: float = 0.0 setget set_xp_required, get_xp_required
 
 
 func _ready() -> void:
+    super._ready()
+    
     _xp_required = calculate_xp_required(_progress)
 
     if log_level_xp:
@@ -128,7 +130,7 @@ func set_xp_required(value:float) -> void:
 
 func get_xp_required() -> float:
     var progress_scale: float = _progress / max_progress
-    var xp_requried: float = exp_curve.curve.interpolate(progress_scale) * base_exp
+    var xp_requried: float = exp_curve.curve.sample(progress_scale) * base_exp
     return round(xp_requried)
 ## Getter Setter ##
 
@@ -138,7 +140,7 @@ func get_xp_required() -> float:
 # `progress`: current progress
 func calculate_xp_required(progress:float) -> float:
     var progress_scale: float = progress / max_progress
-    var new_xp_requried: float = exp_curve.curve.interpolate(progress_scale) * base_exp
+    var new_xp_requried: float = exp_curve.curve.sample(progress_scale) * base_exp
     return round(new_xp_requried)
 
 

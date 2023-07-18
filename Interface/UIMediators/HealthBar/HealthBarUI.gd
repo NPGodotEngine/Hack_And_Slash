@@ -1,25 +1,30 @@
-tool
+@tool
 extends Node
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 
-export (NodePath) var healthComponent: NodePath
+@export var healthComponent: NodePath
 
-onready var _health_comp: HealthComponent = get_node(healthComponent) as HealthComponent
+@onready var _health_comp: HealthComponent = get_node(healthComponent) as HealthComponent
 
-func _get_configuration_warning() -> String:
+func _get_configuration_warnings() -> PackedStringArray:
+    if not super._get_configuration_warnings().is_empty():
+        return super._get_configuration_warnings()
+
     if healthComponent.is_empty():
-        return "healthComponent node path is missing"
+        return ["healthComponent node path is missing"]
     if not get_node(healthComponent) is HealthComponent:
-        return "healthComponent must be HealthComponent"
+        return ["healthComponent must be HealthComponent"]
 
-    return ""
+    return []
 
 func _ready() -> void:
-    _health_comp.connect("health_updated", self, "_on_health_updated")
-    _health_comp.connect("max_health_updated", self, "_on_max_health_updated")
+    _health_comp.connect("health_updated", Callable(self, "_on_health_updated"))
+    _health_comp.connect("max_health_updated", Callable(self, "_on_max_health_updated"))
     UIEvents.emit_signal("player_health_updated",
         _health_comp._health, _health_comp.max_health)
+    
+    super._ready()
 
 func _on_health_updated(health_context:HealthComponent.HealthContext) -> void:
     UIEvents.emit_signal("player_health_updated", 

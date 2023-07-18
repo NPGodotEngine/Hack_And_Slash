@@ -1,6 +1,6 @@
-tool
+@tool
 class_name MuzzleFlash
-extends Sprite
+extends Sprite2D
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 
@@ -11,29 +11,34 @@ enum flash_type {
     LARGE = 4
 }
 
-export (float) var flash_duration: float = 0.1
-export (Array, int) var flash_small_frames: Array = []
-export (Array, int) var flash_medium_frames: Array = []
-export (Array, int) var flash_large_frames: Array = []
+@export var flash_duration: float = 0.1
+@export var flash_small_frames: Array[int] = []
+@export var flash_medium_frames: Array[int] = []
+@export var flash_large_frames: Array[int] = []
 
-onready var _flash_duration_timer: Timer = $FlashDurationTimer
+@onready var _flash_duration_timer: Timer = $FlashDurationTimer
 
-func _get_configuration_warning() -> String:
+func _get_configuration_warnings() -> PackedStringArray:
+    if not super._get_configuration_warnings().is_empty():
+        return super._get_configuration_warnings()
+
     if flash_small_frames.size() == 0:
-        return "You must define frame numbers for small flash"
+        return ["You must define frame numbers for small flash"]
     if flash_medium_frames.size() == 0:
-        return "You must define frame numbers for medium flash"
+        return ["You must define frame numbers for medium flash"]
     if flash_large_frames.size() == 0:
-        return "You must define frame numbers for large flash"
-    return ""
+        return ["You must define frame numbers for large flash"]
+    return []
 
 func _ready() -> void:
-    if Engine.editor_hint:
+    if Engine.is_editor_hint():
         return
     
+    super._ready()
+
     randomize()
     self.hide()
-    _flash_duration_timer.connect("timeout", self, "_on_flash_timer_timeout")
+    _flash_duration_timer.connect("timeout", Callable(self, "_on_flash_timer_timeout"))
 
 func _on_flash_timer_timeout() -> void:
     self.hide()
@@ -56,7 +61,7 @@ func flash(duration:float = flash_duration, type:int=flash_type.SMALL) -> void:
     if bool(type & flash_type.LARGE) == true:
         frame_range += flash_large_frames
     
-    var index: int = rand_range(0, frame_range.size()-1) as int
+    var index: int = randf_range(0, frame_range.size()-1) as int
     self.frame = frame_range[index]
 
     _flash_duration_timer.start(duration)

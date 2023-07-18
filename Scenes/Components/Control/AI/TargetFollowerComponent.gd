@@ -1,47 +1,54 @@
-tool
+@tool
 class_name TargetFollowerComponent
 extends Node
 
 # warning-ignore-all: UNUSED_ARGUMENT
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 
-export(NodePath) var movement: NodePath
-export(NodePath) var actor: NodePath
+@export var movement: NodePath
+@export var actor: NodePath
 
-export (bool) var enable_follow: bool = false
-export (float) var keep_distance: float = 100.0
-export (float) var keep_dist_threshold: float = 1.0
+@export var enable_follow: bool = false
+@export var keep_distance: float = 100.0
+@export var keep_dist_threshold: float = 1.0
 
 # Once target is assigned, follow the target
 # permanently until new target is assigned
 ##
 # Target will never out of range
-export (bool) var permanent_target: bool = false
+@export var permanent_target: bool = false
 
-onready var _movement: MovementComponent = get_node(movement) as MovementComponent
-onready var _actor: KinematicBody2D = get_node(actor) as KinematicBody2D
+@onready var _movement: MovementComponent = get_node(movement) as MovementComponent
+@onready var _actor: CharacterBody2D = get_node(actor) as CharacterBody2D
 
 # The target this follower will move to
 var target = null
 
 
-func _get_configuration_warning() -> String:
+func _get_configuration_warnings() -> PackedStringArray:
+	if not super._get_configuration_warnings().is_empty():
+		return super._get_configuration_warnings()
+		
 	if movement.is_empty():
-		return "movement node path is missing"
+		return ["movement node path is missing"]
 	if not get_node(movement) is MovementComponent:
-		return "movement must be a MovementComponent" 
+		return ["movement must be a MovementComponent" ]
 	if actor.is_empty():
-		return "actor node path is missing"
-	if not get_node(actor) is KinematicBody2D:
-		return "actor must be a KinematicBody2D"  
-	return ""
+		return ["actor node path is missing"]
+	if not get_node(actor) is CharacterBody2D:
+		return ["actor must be a CharacterBody2D"]  
+	return []
 
 func _ready() -> void:
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		return
+	
+	super._ready()
 
 func _physics_process(delta: float) -> void:
-	if Engine.editor_hint:
+	super. _physics_process(delta)
+
+	if Engine.is_editor_hint():
 		return
 
 	if enable_follow:

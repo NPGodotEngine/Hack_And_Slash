@@ -1,3 +1,4 @@
 {
-  "godot_tools.scene_file_config": "c:\\Users\\tomne\\Desktop\\Godot\\GodotProjects\\Hack_And_Slash\\Levels\\TestPathFinding.tscn"
+  "godot_tools.scene_file_config": "c:\\Users\\tomne\\Desktop\\Godot\\GodotProjects\\Hack_And_Slash\\Levels\\TestLevel.tscn",
+  "godot_tools.gdscript_lsp_server_port": 6005
 }

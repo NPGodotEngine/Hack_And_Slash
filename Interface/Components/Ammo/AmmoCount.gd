@@ -4,19 +4,18 @@ extends MarginContainer
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 
 
-export (float) var anim_duration: float = 0.2
-export (float) var deplete_anim_duration: float = 1.0
-export (Vector2) var scale_to: Vector2 = Vector2(2.0, 2.0)
-export (Color) var from_color: Color = Color.white
-export (Color) var to_color: Color = Color.red
+@export var anim_duration: float = 0.2
+@export var deplete_anim_duration: float = 1.0
+@export var scale_to: Vector2 = Vector2(2.0, 2.0)
+@export var from_color: Color = Color.WHITE
+@export var to_color: Color = Color.RED
 
 
-onready var current_ammo: Label = $HBoxContainer/CurrentAmmo
-onready var max_ammo: Label = $HBoxContainer/MaxAmmo
-onready var tween: Tween = $Tween
+@onready var current_ammo: Label = $HBoxContainer/CurrentAmmo
+@onready var max_ammo: Label = $HBoxContainer/MaxAmmo
 
-var ammo_count: int setget set_ammo_count
-var max_ammo_count: int setget set_max_ammo_count
+var ammo_count: int: set = set_ammo_count
+var max_ammo_count: int: set = set_max_ammo_count
 
 var _transition_type: int = Tween.TRANS_QUART
     
@@ -35,35 +34,33 @@ func set_max_ammo_count(value:int) -> void:
     max_ammo.text = str(max_ammo_count)
 
 func consume_ammo_anim() -> void:
-    current_ammo.rect_pivot_offset = current_ammo.rect_size / 2.0
+    current_ammo.pivot_offset = current_ammo.size / 2.0
 
-    tween.interpolate_property(current_ammo, "rect_scale", 
-        Vector2.ONE,scale_to, anim_duration/ 2.0, 
-        _transition_type, tween.EASE_IN_OUT)
-    tween.interpolate_property(current_ammo, "rect_scale", 
-        scale_to, Vector2.ONE, anim_duration/ 2.0, 
-        _transition_type, tween.EASE_OUT_IN, anim_duration/ 2.0)
+    var scale_tween := create_tween()
+    scale_tween.tween_property(current_ammo, "scale", scale_to, anim_duration/ 2.0)\
+        .set_trans(_transition_type)\
+        .set_ease(Tween.EASE_IN_OUT)
+    scale_tween.tween_property(current_ammo, "scale", Vector2.ONE, anim_duration/ 2.0)\
+        .set_trans(_transition_type)\
+        .set_ease(Tween.EASE_OUT_IN)
 
-    tween.interpolate_property(current_ammo, "modulate", 
-        from_color, to_color, anim_duration/ 2.0, 
-        _transition_type, tween.EASE_IN_OUT)
-    tween.interpolate_property(current_ammo, "modulate", 
-        to_color, from_color, anim_duration/ 2.0, 
-        _transition_type, tween.EASE_OUT_IN, anim_duration/ 2.0)
-
-    tween.repeat = false
-    tween.start()
+    var color_tween := create_tween()
+    color_tween.tween_property(current_ammo, "modulate", to_color, anim_duration/ 2.0)\
+        .set_trans(_transition_type)\
+        .set_ease(Tween.EASE_IN_OUT) 
+    color_tween.tween_property(current_ammo, "modulate", from_color, anim_duration/ 2.0)\
+        .set_trans(_transition_type)\
+        .set_ease(Tween.EASE_OUT_IN)
 
 func ammo_deplete_anim() -> void:
-    current_ammo.rect_pivot_offset = current_ammo.rect_size / 2.0
-    current_ammo.rect_scale = Vector2.ONE
+    current_ammo.pivot_offset = current_ammo.size / 2.0
+    current_ammo.scale = Vector2.ONE
 
-    tween.interpolate_property(current_ammo, "modulate", 
-        from_color, to_color, deplete_anim_duration/ 2.0, 
-        Tween.TRANS_LINEAR, tween.EASE_IN_OUT)
-    tween.interpolate_property(current_ammo, "modulate", 
-        to_color, from_color, deplete_anim_duration/ 2.0, 
-        Tween.TRANS_LINEAR, tween.EASE_OUT_IN, deplete_anim_duration/ 2.0)
+    var color_tween := create_tween()
+    color_tween.tween_property(current_ammo, "modulate", to_color, deplete_anim_duration/ 2.0)\
+        .set_trans(Tween.TRANS_LINEAR)\
+        .set_ease(Tween.EASE_IN_OUT) 
 
-    tween.repeat = true
-    tween.start()
+    color_tween.tween_property(current_ammo, "modulate", from_color, deplete_anim_duration/ 2.0)\
+        .set_trans(Tween.TRANS_LINEAR)\
+        .set_ease(Tween.EASE_OUT_IN) 

@@ -5,21 +5,22 @@ extends Character
 # warning-ignore-all:UNUSED_ARGUMENT
 
 
-onready var _health_comp = $HealthComponent
-onready var _hurt_box: HurtBox = $HurtBox
+@onready var _health_comp = $HealthComponent
+@onready var _hurt_box: HurtBox = $HurtBox
 
-var mob_behavior_ai: BeehaveRoot
+var mob_behavior_ai: BeehaveTree
 var is_dead: bool = false
 
 func _ready() -> void:
-	_hurt_box.connect("take_damage", self, "_on_take_damage")
-
-	_health_comp.connect("die", self, "_on_die")
+	_hurt_box.connect("take_damage", Callable(self, "_on_take_damage"))
+	_health_comp.connect("die", Callable(self, "_on_die"))
 
 	for child in get_children():
-		if child is BeehaveRoot:
+		if child is BeehaveTree:
 			mob_behavior_ai = child
 			break
+	
+	super._ready()
 
 func _on_take_damage(hit_damage:HitDamage) -> void:
 	# if character is dead do nothing
@@ -47,11 +48,11 @@ func _on_die() -> void:
 
 	for child in get_children():
 		if child is CollisionShape2D:
-			child .set_deferred("disabled", true)
+			child.set_deferred("disabled", true)
 
-func queue_free() -> void:
-	for child in get_children():
-		remove_child(child)
-		child.queue_free()
-	.queue_free()
+# func queue_free() -> void:
+# 	for child in get_children():
+# 		remove_child(child)
+# 		child.queue_free()
+# 	super.queue_free()
 

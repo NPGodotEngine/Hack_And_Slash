@@ -16,7 +16,7 @@ signal accuracy_updated(accuracy_context)
 # Accuracy
 ##
 # value between 0.0 ~ 1.0
-export (float, 0.0, 1.0) var accuracy = 0.5 setget set_accuracy
+@export_range(0.0, 1.0) var accuracy: float = 0.5: set = set_accuracy
 
 
 ## Getter Setter ##

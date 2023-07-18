@@ -1,35 +1,58 @@
-# Special implementation of sequencer who will execute
-# successful nodes only once until all nodes were successful
+## Sequence Star nodes will attempt to execute all of its children and report
+## `SUCCESS` in case all of the children report a `SUCCESS` status code.
+## If at least one child reports a `FAILURE` status code, this node will also
+## return `FAILURE` and tick again.
+## In case a child returns `RUNNING` this node will restart.
+@tool
+@icon("../../icons/sequence_reactive.svg")
+class_name SequenceStarComposite extends Composite
 
-extends Composite
 
-class_name SequenceStarComposite, "../../icons/sequencer_star.svg"
+var successful_index: int = 0
 
-var successful_index = 0
 
-func tick(actor, blackboard):
+func tick(actor: Node, blackboard: Blackboard) -> int:
 	for c in get_children():
 		if c.get_index() < successful_index:
 			continue
 
+		if c != running_child:
+			c.before_run(actor, blackboard)
+
 		var response = c.tick(actor, blackboard)
+		if can_send_message(blackboard):
+			BeehaveDebuggerMessages.process_tick(c.get_instance_id(), response)
 
 		if c is ConditionLeaf:
-			blackboard.set("last_condition", c)
-			blackboard.set("last_condition_status", response)
+			blackboard.set_value("last_condition", c, str(actor.get_instance_id()))
+			blackboard.set_value("last_condition_status", response, str(actor.get_instance_id()))
 
-		if response != SUCCESS:
-			if response == FAILURE:
-				successful_index = 0
-			if c is ActionLeaf and response == RUNNING:
-				blackboard.set("running_action", c)
-			return response
-		else:
-			successful_index += 1
+		match response:
+			SUCCESS:
+				successful_index += 1
+				c.after_run(actor, blackboard)
+			FAILURE:
+				c.after_run(actor, blackboard)
+				return FAILURE
+			RUNNING:
+				running_child = c
+				if c is ActionLeaf:
+					blackboard.set_value("running_action", c, str(actor.get_instance_id()))
+				return RUNNING
+	_reset()
+	return SUCCESS
 
-	if successful_index == get_child_count():
-		successful_index = 0
-		return SUCCESS
-	else:
-		successful_index = 0
-		return FAILURE
+
+func interrupt(actor: Node, blackboard: Blackboard) -> void:
+	_reset()
+	super(actor, blackboard)
+
+	
+func _reset() -> void:
+	successful_index = 0
+
+
+func get_class_name() -> Array[StringName]:
+	var classes := super()
+	classes.push_back(&"SequenceStarComposite")
+	return classes

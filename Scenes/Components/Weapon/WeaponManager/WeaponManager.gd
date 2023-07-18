@@ -13,7 +13,7 @@ class SwitchWeaponContext extends Resource:
 
 signal switch_weapon(switch_weapon_context)
 
-export (Array, PackedScene) var preset_weapons: Array = []
+@export var preset_weapons: Array[PackedScene] = []
 
 # Hold list of weapons 
 var weapon_slots: Array = []
@@ -24,7 +24,7 @@ var weapon_slots: Array = []
 # and active weapon at given index
 #
 # Change index simulate as switch weapon
-var current_weapon_index: int = DEFAULT_WEAPON_INDEX setget set_current_weapon_index
+var current_weapon_index: int = DEFAULT_WEAPON_INDEX: set = set_current_weapon_index
 
 # Whether weapon manager is enabled
 var _is_enabled: bool = true
@@ -68,10 +68,12 @@ func set_current_weapon_index(value:int) -> void:
 	
 
 func _ready() -> void:
+	super._ready()
+	
 	load_preset_weapons()
 
-	GameSaver.connect("save_game", self, "_on_save_game")
-	GameSaver.connect("load_game", self, "_on_load_game")
+	GameSaver.connect("save_game", Callable(self, "_on_save_game"))
+	GameSaver.connect("load_game", Callable(self, "_on_load_game"))
 
 func _on_save_game(saved_data:SavedData) -> void:
 	var serialized_weapons := []
@@ -94,7 +96,7 @@ func _on_load_game(saved_data:SavedData) -> void:
 	for serialized_weapon in serizlied_weapons:
 		# deserialized weapon
 		var weapon_name = serialized_weapon[Weapon.WEAPON_NAME]
-		var weapon: Weapon = ResourceLibrary.weapons[weapon_name].instance()
+		var weapon: Weapon = ResourceLibrary.weapons[weapon_name].instantiate()
 		weapon.weapon_attributes = ResourceLibrary.weapon_attributes[weapon_name]
 		weapon.deserialize(serialized_weapon)
 		add_weapon(weapon)
@@ -103,7 +105,7 @@ func _on_load_game(saved_data:SavedData) -> void:
 func load_preset_weapons() -> void:
 	if preset_weapons.size() > 0:
 		for wp_scene in preset_weapons:
-			var wp_instance: Weapon = wp_scene.instance()
+			var wp_instance: Weapon = wp_scene.instantiate()
 			add_weapon(wp_instance)
 			wp_instance.inactive()
 

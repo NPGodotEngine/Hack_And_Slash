@@ -1,37 +1,37 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=5 format=3 uid="uid://b7eskjjerl8lm"]
 
-[ext_resource path="res://Character/Mobs/Dummy/Dummy1.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Levels/Navigator.gd" type="Script" id=2]
-[ext_resource path="res://Assets/books_2.png" type="Texture" id=3]
+[ext_resource type="PackedScene" path="res://Character/Mobs/Dummy/Dummy1.tscn" id="1"]
+[ext_resource type="Script" path="res://Levels/Navigator.gd" id="2"]
+[ext_resource type="Texture2D" uid="uid://dbwvq5mm6sr1w" path="res://Assets/books_2.png" id="3"]
 
-[sub_resource type="NavigationPolygon" id=1]
-vertices = PoolVector2Array( 529, 386, 443, 516, 427, 471, 419, 405, 428, 379, 333, 511, 362, 473, 90, 52, 269, 49, 257, 142, 149, 153, 68, 157, 420, 245, 546, 244, 571, 334, 910, 245, 918, 487, 816, 487, 813, 345, 810, 161, 906, 70, 675, 75, 767, 162, 667, 243, 737, 241, 731, 336, 325, 378, 360, 446, 229, 427, 77, 298, 166, 303, 117, 433, 308, 289 )
-polygons = [ PoolIntArray( 0, 1, 2, 3, 4 ), PoolIntArray( 2, 1, 5, 6 ), PoolIntArray( 7, 8, 9, 10, 11 ), PoolIntArray( 4, 12, 13, 14, 0 ), PoolIntArray( 15, 16, 17, 18, 19 ), PoolIntArray( 20, 15, 19 ), PoolIntArray( 21, 20, 19, 22 ), PoolIntArray( 23, 21, 22, 24 ), PoolIntArray( 23, 24, 25, 14 ), PoolIntArray( 13, 23, 14 ), PoolIntArray( 26, 4, 3, 27, 28 ), PoolIntArray( 6, 5, 28, 27 ), PoolIntArray( 29, 11, 10, 30, 31 ), PoolIntArray( 28, 31, 30, 32, 26 ) ]
-outlines = [ PoolVector2Array( 90, 52, 269, 49, 257, 142, 149, 153, 166, 303, 308, 289, 325, 378, 428, 379, 420, 245, 546, 244, 667, 243, 675, 75, 906, 70, 910, 245, 918, 487, 816, 487, 813, 345, 810, 161, 767, 162, 737, 241, 731, 336, 571, 334, 529, 386, 443, 516, 333, 511, 229, 427, 117, 433, 77, 298, 68, 157 ), PoolVector2Array( 360, 446, 362, 473, 427, 471, 419, 405 ) ]
+[sub_resource type="NavigationPolygon" id="1"]
+vertices = PackedVector2Array(529, 386, 443, 516, 427, 471, 419, 405, 428, 379, 333, 511, 362, 473, 90, 52, 269, 49, 257, 142, 149, 153, 68, 157, 420, 245, 546, 244, 571, 334, 910, 245, 918, 487, 816, 487, 813, 345, 810, 161, 906, 70, 675, 75, 767, 162, 667, 243, 737, 241, 731, 336, 325, 378, 360, 446, 229, 427, 77, 298, 166, 303, 117, 433, 308, 289)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(2, 1, 5, 6), PackedInt32Array(7, 8, 9, 10, 11), PackedInt32Array(4, 12, 13, 14, 0), PackedInt32Array(15, 16, 17, 18, 19), PackedInt32Array(20, 15, 19), PackedInt32Array(21, 20, 19, 22), PackedInt32Array(23, 21, 22, 24), PackedInt32Array(23, 24, 25, 14), PackedInt32Array(13, 23, 14), PackedInt32Array(26, 4, 3, 27, 28), PackedInt32Array(6, 5, 28, 27), PackedInt32Array(29, 11, 10, 30, 31), PackedInt32Array(28, 31, 30, 32, 26)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(90, 52, 269, 49, 257, 142, 149, 153, 166, 303, 308, 289, 325, 378, 428, 379, 420, 245, 546, 244, 667, 243, 675, 75, 906, 70, 910, 245, 918, 487, 816, 487, 813, 345, 810, 161, 767, 162, 737, 241, 731, 336, 571, 334, 529, 386, 443, 516, 333, 511, 229, 427, 117, 433, 77, 298, 68, 157), PackedVector2Array(360, 446, 362, 473, 427, 471, 419, 405)])
 
 [node name="PathFinding" type="Node2D"]
 
-[node name="Dummy1" parent="." instance=ExtResource( 1 )]
-position = Vector2( 507, 314 )
+[node name="Dummy1" parent="." instance=ExtResource("1")]
+position = Vector2(507, 314)
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="Dummy1"]
 avoidance_enabled = true
 max_speed = 600.0
 
 [node name="Navigator" type="Node2D" parent="Dummy1"]
-script = ExtResource( 2 )
+script = ExtResource("2")
 agent = NodePath("../NavigationAgent2D")
 
-[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="."]
-navpoly = SubResource( 1 )
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("1")
 
-[node name="Sprite" type="KinematicBody2D" parent="."]
-position = Vector2( 235, 353 )
+[node name="Sprite2D" type="CharacterBody2D" parent="."]
+position = Vector2(235, 353)
 
-[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="Sprite"]
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="Sprite2D"]
 
-[node name="Sprite" type="Sprite" parent="Sprite"]
-texture = ExtResource( 3 )
+[node name="Sprite2D" type="Sprite2D" parent="Sprite2D"]
+texture = ExtResource("3")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Sprite"]
-polygon = PoolVector2Array( -52, -39, 57, -46, 55, 44, -57, 46 )
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Sprite2D"]
+polygon = PackedVector2Array(-52, -39, 57, -46, 55, 44, -57, 46)

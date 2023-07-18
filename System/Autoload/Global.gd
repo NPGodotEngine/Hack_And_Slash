@@ -41,7 +41,7 @@ func add_to_scene_tree(object:Node, deferrd:bool = true) -> void:
 func is_in_threshold(threshold, from_range, to_range) -> bool:
 	# RNG
 	randomize()
-	var rolled_chance = rand_range(from_range, to_range)
+	var rolled_chance = randf_range(from_range, to_range)
 	if (rolled_chance < threshold or 
 		is_equal_approx(rolled_chance, threshold)):
 		return true
@@ -55,27 +55,26 @@ func is_in_threshold(threshold, from_range, to_range) -> bool:
 # `path`: directory path to search 
 func find_file_in_directory(file_name:String, path:String="res://"):
 	var absolute_file_path = null
-	var directory: Directory = Directory.new()
-	var dir_state: int = directory.open(path)
-	if not dir_state == OK:
+	var opend_dir := DirAccess.open(path)
+	if opend_dir == null || DirAccess.get_open_error() != OK:
 		push_error("Unable to open directory %s" % path)
 		return null
 
-	if directory.list_dir_begin(true, true) != OK:
+	if opend_dir.list_dir_begin()  != OK:# TODOConverter3To4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 		push_error("Unable to open directory %s" % path)
 		return null
 
-	var file_or_dir: String = directory.get_next()
+	var file_or_dir: String = opend_dir.get_next()
 	while file_or_dir != "":
-		if directory.current_is_dir():
-			absolute_file_path = find_file_in_directory(file_name, path.plus_file(file_or_dir))
-			if absolute_file_path != null: break
-		else:
-			if file_or_dir == file_name:
-				 absolute_file_path = path.plus_file(file_or_dir)
-				 break;
-		file_or_dir = directory.get_next()
-	
+		if opend_dir.current_is_dir():
+			absolute_file_path = find_file_in_directory(file_name, path.path_join(file_or_dir))
+			if absolute_file_path != null: 
+				break
+		elif file_or_dir == file_name:
+			absolute_file_path = path.path_join(file_or_dir)
+			break
+		file_or_dir = opend_dir.get_next()
+
 	return absolute_file_path
 
 # Create an instance from file name
@@ -92,9 +91,9 @@ func create_instance(file_name:String, extension:String = "tscn", search_dir:Str
 	if file_path == null:
 		return null
 	
-	var instance: Node = load(file_path).instance()
+	var instance: Node = load(file_path).instantiate()
 	if instance:
-		 return instance
+		return instance
 		
 	return null
 	

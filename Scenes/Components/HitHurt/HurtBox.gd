@@ -10,7 +10,9 @@ signal take_damage(hit_damage)
 func _ready() -> void:
     monitorable = false
     collision_mask = 0
-    connect("area_entered", self, "_on_area_entered")
+    connect("area_entered", Callable(self, "_on_area_entered"))
+
+    super._ready()
 
 func _on_area_entered(area:Area2D) -> void:
     if area is HitBox:

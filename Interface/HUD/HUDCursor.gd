@@ -3,9 +3,11 @@ extends Control
 # warning-ignore-all: UNUSED_ARGUMENT
 
 
-export (bool) var cursor_always_visible: bool = false
+@export var cursor_always_visible: bool = false
 
 func _process(delta: float) -> void:
+    super._process(delta)
+
     if cursor_always_visible:
         Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
         return

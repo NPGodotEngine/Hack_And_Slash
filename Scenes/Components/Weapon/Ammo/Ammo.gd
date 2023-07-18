@@ -1,4 +1,4 @@
-tool
+@tool
 class_name Ammo
 extends Node
 
@@ -27,31 +27,31 @@ signal begin_reloading(ammo_context)
 # Emit when reloading end
 signal end_reloading(ammo_context)
 
-export(float) var bullet_speed = 200.0
-export(float) var bullet_life_span = 3.0
-export(float) var bullet_penetration_chance = 0.0
+@export var bullet_speed: float = 200.0
+@export var bullet_life_span: float = 3.0
+@export var bullet_penetration_chance: float = 0.0
 
 # The actual bullet scene
 ##
 # To be used to instantiate a new bullet
-export(PackedScene) var bullet_scene: PackedScene = null
+@export var bullet_scene: PackedScene = null
 
 # Infinite ammo
-export (bool) var infinite_ammo: bool = false
+@export var infinite_ammo: bool = false
 
 # Fill ammo when ammo component start
-export (bool) var fill_ammo_when_start: bool = true
+@export var fill_ammo_when_start: bool = true
 
 # How many rounds per clip
-export (int, 1, 5000) var rounds_per_clip: int = 10 setget _set_round_per_clip
+@export_range(1, 5000) var rounds_per_clip: int = 10: set = _set_round_per_clip
 
 # Duration for reload ammo
-export (float, 0.1, 20.0) var reload_duration: float = 2.0
+@export_range(0.1, 20.0) var reload_duration: float = 2.0
 
-var progress: AmmoReloadProgress setget no_set, get_progress
+var progress: AmmoReloadProgress: get = get_progress, set = no_set
 
 # Number of rounds left in a clip
-var _round_left: int = 0 setget _set_round_left
+var _round_left: int = 0: set = _set_round_left
 
 # Timer for reload
 var _reload_timer: Timer = null
@@ -64,7 +64,7 @@ var _is_reloading: bool = false
 ## Getter Setter##
 
 
-func no_set(value):
+func no_set(_value):
 	pass
 
 func get_progress() -> AmmoReloadProgress:
@@ -101,14 +101,19 @@ func _set_round_left(value:int) -> void:
 
 ## Override ##
 
-func _get_configuration_warning() -> String:
-    if bullet_scene == null:
-        return "bullet_scene is missing"
-    return ""
+func _get_configuration_warnings() -> PackedStringArray:
+	if not super._get_configuration_warnings().is_empty():
+		return super._get_configuration_warnings()
+		
+	if bullet_scene == null:
+		return ["bullet_scene is missing"]
+	return []
 
 func _ready() -> void:
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		return
+	
+	super._ready()
 		
 	if fill_ammo_when_start:
 		_set_round_left(rounds_per_clip)
@@ -120,7 +125,7 @@ func _ready() -> void:
 	_reload_timer.name = "ReloadTimer"
 	add_child(_reload_timer)
 	_reload_timer.one_shot = true
-	_reload_timer.connect("timeout", self, "_on_reload_timer_timeout")
+	_reload_timer.connect("timeout", Callable(self, "_on_reload_timer_timeout"))
 
 ## Override ##
 	

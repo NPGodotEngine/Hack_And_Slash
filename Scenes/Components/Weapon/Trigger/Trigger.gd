@@ -1,4 +1,4 @@
-tool
+@tool
 class_name Trigger
 extends Node
 
@@ -13,7 +13,7 @@ signal trigger_pulled()
 
 
 # Duration before next trigger pull from last trigger pulled
-export (float, 0.1, 10) var trigger_duration: float = 1.0
+@export_range(0.1, 10.0) var trigger_duration: float = 1.0
 
 
 

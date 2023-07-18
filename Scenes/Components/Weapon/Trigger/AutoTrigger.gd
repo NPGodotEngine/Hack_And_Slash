@@ -13,6 +13,8 @@ var _is_trigger_ready: bool = true
 
 
 func _ready() -> void:
+	super._ready()
+	
 	if _trigger_timer:
 		_trigger_timer.queue_free()
 
@@ -20,7 +22,7 @@ func _ready() -> void:
 	_trigger_timer.name = "TriggerTimer"
 	add_child(_trigger_timer)
 	_trigger_timer.one_shot = true
-	_trigger_timer.connect("timeout", self, "_on_trigger_timer_timeout")
+	_trigger_timer.connect("timeout", Callable(self, "_on_trigger_timer_timeout"))
 
 func pull_trigger() -> void:
 	if not _is_trigger_ready:

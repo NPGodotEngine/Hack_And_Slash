@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=2]
 
-[ext_resource path="res://Assets/Weapons/Weapons_sheet.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Weapons/Weapons_sheet.png" type="Texture2D" id=1]
 [ext_resource path="res://Scenes/Prefabs/Weapons/AA12/AA12_Attr.tres" type="Resource" id=2]
 [ext_resource path="res://Scenes/Components/Weapon/Weapons/ShotgunWeapon.gd" type="Script" id=3]
 [ext_resource path="res://Scenes/Components/Weapon/Ammo/ShotgunAmmo.tscn" type="PackedScene" id=4]
@@ -56,13 +56,13 @@ trigger_duration = 0.65
 [node name="MuzzleFlash" parent="." instance=ExtResource( 6 )]
 position = Vector2( 38, 2 )
 
-[node name="FirePoint" type="Position2D" parent="."]
+[node name="FirePoint" type="Marker2D" parent="."]
 position = Vector2( 32, 1 )
 
 [node name="Appearance" type="Node2D" parent="."]
 position = Vector2( 3, 6 )
 
-[node name="weapon" type="Sprite" parent="Appearance"]
+[node name="weapon" type="Sprite2D" parent="Appearance"]
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 4, 85, 56, 22 )

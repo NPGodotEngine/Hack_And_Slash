@@ -15,12 +15,12 @@
 radius = 17.0
 
 [sub_resource type="RectangleShape2D" id=10]
-extents = Vector2( 17, 22 )
+size = Vector2( 17, 22 )
 
 [sub_resource type="CircleShape2D" id=8]
 radius = 213.021
 
-[node name="Dummy2" type="KinematicBody2D"]
+[node name="Dummy2" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 7
 script = ExtResource( 2 )

@@ -1,8 +1,8 @@
 class_name Bullet
 extends Node2D
 
-# warning-ignore-all: UNUSED_ARGUMENT
 # warning-ignore-all: RETURN_VALUE_DISCARDED
+# warning-ignore-all: UNUSED_PARAMETER
 
 
 
@@ -10,7 +10,7 @@ extends Node2D
 var bullet_type: int = Global.BulletType.PROJECTILE
 
 # Bullet hit damage
-var hit_damage: HitDamage = null setget _set_hit_damage
+var hit_damage: HitDamage = null: set = _set_hit_damage
 
 func _set_hit_damage(value:HitDamage) -> void:
     if value is HitDamage:
@@ -18,5 +18,5 @@ func _set_hit_damage(value:HitDamage) -> void:
         _hit_damage_updated(hit_damage)
 
 # Call internally when hit damage is updated
-func _hit_damage_updated(damage:HitDamage) -> void:
+func _hit_damage_updated(_damage:HitDamage) -> void:
     pass

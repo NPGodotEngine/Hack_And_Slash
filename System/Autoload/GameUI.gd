@@ -8,10 +8,10 @@ const GUI_GROUP_NAME = "GUI"
 # Point to game world's GUI instance
 ##
 # Setting this value does nothing
-var gui: GUI setget no_set, get_gui
+var gui: GUI: get = get_gui, set = no_set
 
 
-func no_set(value) -> void:
+func no_set(_active_treevalue) -> void:
 	pass
 
 func get_gui() -> GUI:

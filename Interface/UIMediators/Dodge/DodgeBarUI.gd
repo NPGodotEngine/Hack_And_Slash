@@ -1,28 +1,31 @@
-tool
+@tool
 extends Node
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 # warning-ignore-all: UNUSED_ARGUMENT
 
 
-export (NodePath) var dodgeComponent: NodePath
+@export var dodgeComponent: NodePath
 
 # Whether to update UI in physics process or not
-export (bool) var physics_update: bool = true
+@export var physics_update: bool = true
 
-onready var _dodge_comp: DodgeComponent = get_node(dodgeComponent) as DodgeComponent
+@onready var _dodge_comp: DodgeComponent = get_node(dodgeComponent) as DodgeComponent
 
-func _get_configuration_warning() -> String:
+func _get_configuration_warnings() -> PackedStringArray:
+    if not super._get_configuration_warnings().is_empty():
+        return super._get_configuration_warnings()
+
     if dodgeComponent.is_empty():
-        return "dodgeComponent node path is missing"
+        return ["dodgeComponent node path is missing"]
     if not get_node(dodgeComponent) is DodgeComponent:
-        return "dodgeComponent must be DodgeComponent"
+        return ["dodgeComponent must be DodgeComponent"]
 
-    return ""
+    return []
 
 func _ready() -> void:
-    _dodge_comp.connect("dodge_cooldown_end", self, "_on_dodge_cooldown_end")
-    _dodge_comp.connect("dodge_finished", self, "_on_dodge_finished")
+    _dodge_comp.connect("dodge_cooldown_end", Callable(self, "_on_dodge_cooldown_end"))
+    _dodge_comp.connect("dodge_finished", Callable(self, "_on_dodge_finished"))
 
     if physics_update:
         set_physics_process(true)
@@ -30,6 +33,8 @@ func _ready() -> void:
     else:
         set_physics_process(false)
         set_process(true)
+    
+    super._ready()
 
 func _on_dodge_cooldown_end() -> void:
     UIEvents.emit_signal("player_dodge_updated", 100.0, 100.0)
@@ -37,10 +42,10 @@ func _on_dodge_cooldown_end() -> void:
 func _on_dodge_finished() -> void:
     UIEvents.emit_signal("player_dodge_updated", 0.0, 100.0)
 
-func _process(delta) -> void:
+func _process(_delta) -> void:
     update_dodge_bar_ui()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
     update_dodge_bar_ui()
 
 func update_dodge_bar_ui() -> void:

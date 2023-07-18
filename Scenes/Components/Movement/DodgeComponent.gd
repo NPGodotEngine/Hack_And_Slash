@@ -1,4 +1,4 @@
-tool
+@tool
 class_name DodgeComponent
 extends Node
 
@@ -20,7 +20,7 @@ class DodgeVisualEffect:
 	var effect: Node2D = null
 
 class DodgeParticlesEffect:
-	var particles: Particles2D = null
+	var particles: GPUParticles2D = null
 
 # Emit when dodge begin
 signal dodge_begin()
@@ -43,48 +43,48 @@ signal display_dodge_particles(particles_effect)
 
 
 # Node path to KenimaticBody2D
-export(NodePath) var target: NodePath
+@export var target: NodePath
 
 # Dodge speed
-export (float) var dodge_speed: float = 2000.0
+@export var dodge_speed: float = 2000.0
 
 # Dodge duration
-export (float) var dodge_duration: float = 0.2
+@export var dodge_duration: float = 0.2
 
 # Dodge delay recover
-export (float) var dodge_delay_recover: float = 0.2
+@export var dodge_delay_recover: float = 0.2
 
 # Dodge cooldown duration
-export (float) var dodge_cooldown_duration: float = 1.0 
+@export var dodge_cooldown_duration: float = 1.0 
 
 # The layer mask target will be in during dodging
-export (int, LAYERS_2D_PHYSICS)	var dodge_layer: int = 0
+@export_flags_2d_physics var dodge_layer: int = 0
 
 # The mask target will be in during dodging
-export (int, LAYERS_2D_PHYSICS) var dodge_mask: int = 0
+@export_flags_2d_physics var dodge_mask: int = 0
 
 # dodge effect
-export (PackedScene) var dodge_effect: PackedScene
+@export var dodge_effect: PackedScene
 
 # dodge particles
-export (PackedScene) var dodge_particles: PackedScene
+@export var dodge_particles: PackedScene
 
 
-onready var _target: KinematicBody2D = get_node(target) as KinematicBody2D
-onready var _dodge_timer: Timer = $DodgeTimer
-onready var _cooldown_timer: Timer = $CooldownTimer
-onready var _dodge_delay_recover_timer: Timer = $DelayTimer
+@onready var _target: CharacterBody2D = get_node(target) as CharacterBody2D
+@onready var _dodge_timer: Timer = $DodgeTimer
+@onready var _cooldown_timer: Timer = $CooldownTimer
+@onready var _dodge_delay_recover_timer: Timer = $DelayTimer
 
 # Return dodge progress
 ##
 # Setting this value does nothing
-var dodge_progress: DodgeProgress = null setget no_set, get_dodge_progress
+var dodge_progress: DodgeProgress = null: get = get_dodge_progress, set = no_set
 
 # Return `true` if dodge can be performed
 # otherwise `false`
 ##
 # Setting this value does nothing
-var is_dodge_avaliable: bool = true setget no_set, get_is_dodge_avaliable
+var is_dodge_avaliable: bool = true: get = get_is_dodge_avaliable, set = no_set
 
 # Reference to target's layer mask
 var _target_layer: int = 0
@@ -128,19 +128,24 @@ func get_is_dodge_avaliable() -> bool:
 		return false
 	return true
 
-func _get_configuration_warning() -> String:
+func _get_configuration_warnings() -> PackedStringArray:
+	if not super._get_configuration_warnings().is_empty():
+		return super._get_configuration_warnings()
+		
 	if target.is_empty():
-		return "target node path is missing"
+		return ["target node path is missing"]
 	
-	if not get_node(target) is KinematicBody2D:
-		return "target must be a KinematicBody2D node" 
+	if not get_node(target) is CharacterBody2D:
+		return ["target must be a CharacterBody2D node" ]
 
-	return ""
+	return []
 
 func _ready() -> void:
-	_dodge_timer.connect("timeout", self, "_on_dodge_timer_timeout")
-	_cooldown_timer.connect("timeout", self, "_on_cooldown_timer_timeout")
-	_dodge_delay_recover_timer.connect("timeout", self, "_on_dodge_delay_timeout")
+	_dodge_timer.connect("timeout", Callable(self, "_on_dodge_timer_timeout"))
+	_cooldown_timer.connect("timeout", Callable(self, "_on_cooldown_timer_timeout"))
+	_dodge_delay_recover_timer.connect("timeout", Callable(self, "_on_dodge_delay_timeout"))
+
+	super._ready()
 
 func _on_dodge_delay_timeout() -> void:
 	_is_delay_recover = false
@@ -190,10 +195,13 @@ func process_dodge(direction:Vector2) -> void:
 
 	if _is_dodging:
 		var dodge_velocity: Vector2 = direction * dodge_speed
-		_target.move_and_slide(dodge_velocity, Vector2.ZERO)
+		_target.set_velocity(dodge_velocity)
+		_target.set_up_direction(Vector2.ZERO)
+		_target.move_and_slide()
+		_target.velocity
 
 		if dodge_effect:
-			var effect = dodge_effect.instance()
+			var effect = dodge_effect.instantiate()
 			var dodge_visual_effect: DodgeVisualEffect = DodgeVisualEffect.new()
 			dodge_visual_effect.effect = effect
 			emit_signal("display_dodge_effect", dodge_visual_effect)
@@ -217,14 +225,14 @@ func process_dodge(direction:Vector2) -> void:
 		
 		# handle dodge particles
 		if dodge_particles:
-			var particles = dodge_particles.instance()
+			var particles = dodge_particles.instantiate()
 
 			# set particles direction
-			if particles is Particles2D:
+			if particles is GPUParticles2D:
 				var dir_norm: Vector2 = direction.normalized()
 				particles.process_material.direction = -Vector3(dir_norm.x, dir_norm.y, 0.0)
 			else:
-				push_error("dodge particles is not a Particles2D node")
+				push_error("dodge particles is not a GPUParticles2D node")
 
 			var particles_effect: DodgeParticlesEffect = DodgeParticlesEffect.new()
 			particles_effect.particles = particles

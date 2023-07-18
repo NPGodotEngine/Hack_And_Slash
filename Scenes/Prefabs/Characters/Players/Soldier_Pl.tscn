@@ -21,9 +21,9 @@ radius = 19.0
 height = 14.0
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 15, 23 )
+size = Vector2( 15, 23 )
 
-[node name="Soldier" type="KinematicBody2D" groups=["Player"]]
+[node name="Soldier" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 7
 script = ExtResource( 1 )
 

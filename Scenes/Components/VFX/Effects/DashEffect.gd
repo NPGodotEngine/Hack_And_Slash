@@ -5,17 +5,18 @@ extends Node2D
 
 
 enum TRANSITION_TYPES  { 
-    LINEAR = 0,
-    SINE = 1,
-    QUINT = 2,
-    QUART = 3,
-    QUAD = 4,
-    EXPO = 5,
-    ELASTIC = 6,
-    CUBIC = 7,
-    CIRC = 8,
-    BOUNCE = 9,
-    BACK = 10
+    LINEAR = Tween.TRANS_LINEAR,
+    SINE = Tween.TRANS_SINE,
+    QUINT = Tween.TRANS_QUINT,
+    QUART = Tween.TRANS_QUART,
+    QUAD = Tween.TRANS_QUAD,
+    EXPO = Tween.TRANS_EXPO,
+    ELASTIC = Tween.TRANS_ELASTIC,
+    CUBIC = Tween.TRANS_CUBIC,
+    CIRC = Tween.TRANS_CIRC,
+    BOUNCE = Tween.TRANS_BOUNCE,
+    BACK = Tween.TRANS_BACK,
+    SPRING = Tween.TRANS_SPRING
 }
 
 enum EASE_TYPES {
@@ -26,40 +27,34 @@ enum EASE_TYPES {
 }
 
 # Fade duration
-export (float) var fade_duration: float = 0.3
+@export var fade_duration: float = 0.3
 
 # Scale factor
 ##
 # The higher the value the smaller it will scale to
 # Default 1.0 not scale
-export (float, 1.0, 10.0) var scale_factor: float = 1.0
+@export_range(1.0, 10.0) var scale_factor: float = 1.0
 
 # Initial color for modulate
-export (Color) var initial_color: Color = Color(1.0, 1.0, 1.0, 1.0)
+@export var initial_color: Color = Color(1.0, 1.0, 1.0, 1.0)
 
 # Final color for modulate
-export (Color) var final_color: Color = Color(1.0, 1.0, 1.0, 0.0)
-
-# Transition type of tween
-export (TRANSITION_TYPES) var trans_type: int = TRANSITION_TYPES.LINEAR
-
-# Ease type of tween
-export (EASE_TYPES) var ease_type: int = EASE_TYPES.EASE_IN_OUT
+@export var final_color: Color = Color(1.0, 1.0, 1.0, 0.0)
 
 # Delay of tween
-export (float) var delay: float = 0.0
+@export var delay: float = 0.0
 
-
-onready var _tween: Tween = $Tween
 
 func _ready() -> void:
-    _tween.interpolate_property(self, "modulate", initial_color, final_color, 
-        fade_duration, trans_type, ease_type, delay)
-    _tween.interpolate_property(self, "scale", Vector2.ONE, Vector2.ONE / scale_factor, 
-        fade_duration, trans_type, ease_type, delay)
-    _tween.start()
-
-func _physics_process(delta: float) -> void:
-    if modulate.a <= 0.0:
-        queue_free()
+    super._ready()
+    
+    var tween := create_tween()
+    tween.tween_property(self, "modulate",final_color, fade_duration)\
+        .set_trans(Tween.TRANS_LINEAR)\
+        .set_ease(Tween.EASE_IN_OUT)\
+        .set_delay(delay)
+    tween.tween_property(self, "scale", Vector2.ONE / scale_factor, fade_duration)\
+        .set_trans(Tween.TRANS_LINEAR)\
+        .set_ease(Tween.EASE_IN_OUT)
+    tween.tween_callback(queue_free)
         

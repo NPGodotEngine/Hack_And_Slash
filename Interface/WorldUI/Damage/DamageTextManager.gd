@@ -4,7 +4,9 @@ extends Node
 
 
 func _ready() -> void:
-    UIEvents.connect("display_damage_text", self, "_on_display_damage_text")
+    UIEvents.connect("display_damage_text", Callable(self, "_on_display_damage_text"))
+
+    super._ready()
 
 func _on_display_damage_text(hit_damage:HitDamage, total_damage:float, damage_text_ui) -> void:
     if damage_text_ui:
@@ -16,7 +18,7 @@ func _on_display_damage_text(hit_damage:HitDamage, total_damage:float, damage_te
             dmg_str,
             is_critical, 
             color,
-            Color.black,
+            Color.BLACK,
             "-",
             " (Crit)" if is_critical else ""
         )

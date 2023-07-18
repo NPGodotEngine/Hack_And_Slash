@@ -3,6 +3,6 @@
 [ext_resource path="res://Interface/Components/HealthBar/HealthBar.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Interface/UIMediators/HealthBar/FloatHealthBarUI.gd" type="Script" id=2]
 
-[node name="FloatHealthBarUI" type="Position2D"]
+[node name="FloatHealthBarUI" type="Marker2D"]
 script = ExtResource( 2 )
 healthbar_scene = ExtResource( 1 )

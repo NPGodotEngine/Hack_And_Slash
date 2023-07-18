@@ -5,9 +5,9 @@
 [ext_resource path="res://Interface/Components/HealthBar/HealthBar.gd" type="Script" id=3]
 
 [node name="HealthBar" type="MarginContainer"]
-margin_right = 50.0
-margin_bottom = 6.0
-rect_min_size = Vector2( 50, 6 )
+offset_right = 50.0
+offset_bottom = 6.0
+custom_minimum_size = Vector2( 50, 6 )
 script = ExtResource( 3 )
 
 [node name="Tween" type="Tween" parent="."]

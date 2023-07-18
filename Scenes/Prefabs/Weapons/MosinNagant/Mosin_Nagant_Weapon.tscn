@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scenes/Prefabs/Weapons/MosinNagant/Mosin_Nagant_Attr.tres" type="Resource" id=1]
-[ext_resource path="res://Assets/Weapons/Weapons_sheet.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Weapons/Weapons_sheet.png" type="Texture2D" id=2]
 [ext_resource path="res://Scenes/Components/Damage/RangedDamageComponent.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Components/CriticalStrike/CriticalComponent.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Interface/Components/ReloadIndicator/ReloadIndicator.tscn" type="PackedScene" id=5]
@@ -55,13 +55,13 @@ rounds_per_clip = 6
 [node name="MuzzleFlash" parent="." instance=ExtResource( 12 )]
 position = Vector2( 36, 1 )
 
-[node name="FirePoint" type="Position2D" parent="."]
+[node name="FirePoint" type="Marker2D" parent="."]
 position = Vector2( 30, 0 )
 
 [node name="Appearance" type="Node2D" parent="."]
 position = Vector2( 0, 3 )
 
-[node name="weapon" type="Sprite" parent="Appearance"]
+[node name="weapon" type="Sprite2D" parent="Appearance"]
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 67, 91, 58, 10 )

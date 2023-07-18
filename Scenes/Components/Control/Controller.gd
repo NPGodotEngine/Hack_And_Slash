@@ -1,12 +1,14 @@
-tool
+@tool
 class_name Controller
 extends Node
 
-export(bool) var enable_controller: bool = true
+@export var enable_controller: bool = true
 
 func _ready() -> void:
-    if Engine.editor_hint:
+    if Engine.is_editor_hint():
         return 
+
+    super._ready()
         
     if enable_controller:
         call_deferred("enable_control")

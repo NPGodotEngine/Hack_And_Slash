@@ -1,12 +1,12 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Interface/Components/ReloadIndicator/CircularFillBar.gd" type="Script" id=1]
-[ext_resource path="res://Assets/CircularBar/Reloading_bar.png" type="Texture" id=2]
+[ext_resource path="res://Assets/CircularBar/Reloading_bar.png" type="Texture2D" id=2]
 
-[node name="CircularFillBar" type="TextureProgress"]
-margin_right = 40.0
-margin_bottom = 40.0
-rect_min_size = Vector2( 40, 40 )
+[node name="CircularFillBar" type="TextureProgressBar"]
+offset_right = 40.0
+offset_bottom = 40.0
+custom_minimum_size = Vector2( 40, 40 )
 value = 100.0
 texture_progress = ExtResource( 2 )
 fill_mode = 4

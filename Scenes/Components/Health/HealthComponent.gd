@@ -49,15 +49,15 @@ signal max_health_updated(max_health_context)
 
 
 # Max health
-export (float) var max_health: float = 100.0 setget set_max_health
+@export var max_health: float = 100.0: set = set_max_health
 
 # Low health threshold
 # alert when health is equal
 # or lower than this value
-export (float) var low_health_threshold: float = 25.0
+@export var low_health_threshold: float = 25.0
 
 # Current health
-var _health: float = max_health setget set_health
+var _health: float = max_health: set = set_health
 
 
 

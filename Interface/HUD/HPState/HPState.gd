@@ -5,10 +5,12 @@ extends HBoxContainer
 # warning-ignore-all: UNUSED_ARGUMENT
 
 
-onready var healthbar: HealthBar = $HealthBar
+@onready var healthbar: HealthBar = $HealthBar
 
 func _ready() -> void:
-	UIEvents.connect("player_health_updated", self, "_on_player_health_updated")
+	UIEvents.connect("player_health_updated", Callable(self, "_on_player_health_updated"))
+
+	super._ready()
 
 func _on_player_health_updated(health, max_health) -> void:
 	healthbar.health = health

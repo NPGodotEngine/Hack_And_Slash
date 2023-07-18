@@ -1,11 +1,15 @@
-[gd_resource type="Theme" load_steps=3 format=2]
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://bsr2r3ekdaf0f"]
 
-[ext_resource path="res://Interface/Montserrat-Bold.ttf" type="DynamicFontData" id=1]
+[ext_resource type="FontFile" uid="uid://byydby0hs516a" path="res://Interface/Montserrat-Bold.ttf" id="1"]
 
-[sub_resource type="DynamicFont" id=1]
-size = 27
-use_mipmaps = true
-font_data = ExtResource( 1 )
+[sub_resource type="FontFile" id="1"]
+fallbacks = Array[Font]([ExtResource("1")])
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
 
 [resource]
-Label/fonts/font = SubResource( 1 )
+Label/fonts/font = SubResource("1")

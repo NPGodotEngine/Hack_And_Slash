@@ -3,7 +3,7 @@
 # and implement execute method then call
 # reload method at right time to 
 # begin reloading process
-tool 
+@tool 
 class_name Weapon
 extends Node2D
 
@@ -32,7 +32,7 @@ signal weapon_attributes_updated(weapon)
 
 
 # Weapon attributes resource
-export(Resource) var weapon_attributes:Resource = null setget set_weapon_attributes
+@export var weapon_attributes: Resource = null: set = set_weapon_attributes
 
 
 # Weapon manager manage this weapon
@@ -50,7 +50,7 @@ func set_weapon_attributes(value:Resource) -> void:
 	weapon_attributes = value
 
 	if not is_inside_tree():
-		yield(self, "ready")
+		await self.ready
 		apply_weapon_attributes(value)
 	else:
 		apply_weapon_attributes(value)
@@ -59,25 +59,31 @@ func set_weapon_attributes(value:Resource) -> void:
 
 
 
-func _get_configuration_warning() -> String:
+func _get_configuration_warnings() -> PackedStringArray:
+	if not super._get_configuration_warnings().is_empty():
+		return super._get_configuration_warnings()
+		
 	if weapon_attributes:
 		if not weapon_attributes is WeaponAttributes:
-			return "weapon_attributes must be a WeaponAttributes resource"
+			return ["weapon_attributes must be a WeaponAttributes resource"]
 	else:
-		return "a default weapon_attributes must be given"
-	return ""
+		return ["a default weapon_attributes must be given"]
+	return []
 
 func _ready() -> void:
+	super._ready()
 	pass
 
 func _physics_process(delta: float) -> void:
+	super._physics_process(delta)
+
 	update_weapon_skin()
 
-func queue_free() -> void:
-	for child in get_children():
-		remove_child(child)
-		child.queue_free()
-	.queue_free()
+# func queue_free() -> void:
+# 	for child in get_children():
+# 		remove_child(child)
+# 		child.queue_free()
+# 	super.queue_free()
 
 # Get hit damage for this weapon
 func get_hit_damage() -> HitDamage:
@@ -133,7 +139,7 @@ func inactive() -> void:
 # Apply weapon attributes
 # subclass must call this at parent class
 # at end of code
-func apply_weapon_attributes(attributes:WeaponAttributes) -> void:
+func apply_weapon_attributes(_attributes:WeaponAttributes) -> void:
 	emit_signal("weapon_attributes_updated", self)
 
 func serialize() -> Dictionary:
@@ -143,7 +149,7 @@ func serialize() -> Dictionary:
 	
 	return state
 
-func deserialize(dict:Dictionary) -> void:
+func deserialize(_dict:Dictionary) -> void:
 	pass
 
 

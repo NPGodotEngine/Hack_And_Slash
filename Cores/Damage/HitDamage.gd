@@ -2,7 +2,7 @@
 # 
 # Deliver this information Upon hitting character
 class_name HitDamage
-extends Reference
+extends RefCounted
 
 # Attacker
 var _attacker = null
@@ -20,7 +20,7 @@ var _is_critical: bool = false
 var _critical_multiplier: float = 0.0
 
 # Color of damage number
-var _color_of_damage: Color = Color.white
+var _color_of_damage: Color = Color.WHITE
 
 # Initialization
 func init(attacker, weapon, damage:float, is_critical:bool, critical_multiplier:float, color_of_damage:Color) -> HitDamage:
@@ -39,5 +39,5 @@ func get_default() -> HitDamage:
     _damage = 0
     _is_critical = false
     _critical_multiplier = 0.0
-    _color_of_damage = Color.white
+    _color_of_damage = Color.WHITE
     return self

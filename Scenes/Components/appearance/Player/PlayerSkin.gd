@@ -1,4 +1,4 @@
-tool
+@tool
 extends CharacterSkin
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
@@ -9,20 +9,20 @@ extends CharacterSkin
 const DODGE = "dodge"
 const HIT = "hit"
 
-export(NodePath) var dodge: NodePath
+@export var dodge: NodePath
 
-onready var _dodge: DodgeComponent = get_node(dodge)
+@onready var _dodge: DodgeComponent = get_node(dodge)
 
-onready var _anim_player: AnimationPlayer = $AnimationPlayer
+@onready var _anim_player: AnimationPlayer = $AnimationPlayer
 
-func _get_configuration_warning() -> String:
-    if not ._get_configuration_warning() == "":
-        return ._get_configuration_warning()
+func _get_configuration_warnings() -> PackedStringArray:
+    if not super._get_configuration_warnings().is_empty():
+        return super._get_configuration_warnings()
 
     if dodge.is_empty():
-        return "dodge node path is missing"
+        return ["dodge node path is missing"]
     if not get_node(dodge) is DodgeComponent:
-        return "dodge must be a DodgeComponent node"
+        return ["dodge must be a DodgeComponent node"]
     
     var anim_player_exists = false
     for child in get_children():
@@ -30,20 +30,22 @@ func _get_configuration_warning() -> String:
             anim_player_exists = true
             break
     if not anim_player_exists:
-        return "Must have a child node of AnimationPlayer with name AnimationPlayer"
+        return ["Must have a child node of AnimationPlayer with name AnimationPlayer"]
 
-    return ""
+    return []
 
 func _ready() -> void:
-    _character.connect("on_character_take_damage", self, "_on_charater_take_damage")
+    _character.connect("on_character_take_damage", Callable(self, "_on_charater_take_damage"))
 
-func _on_charater_take_damage(hit_damage:HitDamage, total_damage:int) -> void:
+    super._ready()
+
+func _on_charater_take_damage(_hit_damage:HitDamage, _total_damage:int) -> void:
     _anim_player.play("hit")
 
 func _on_anim_finished() -> void:
     if animation == DIE:
         randomize()
-        var index: float = rand_range(0.0, 1.0)
+        var index: float = randf_range(0.0, 1.0)
         if index <= 0.5:
             _anim_player.play("die_roll_forward")
         else:
@@ -56,7 +58,7 @@ func process_animation(delta:float) -> void:
     if _dodge._is_dodging:
         play(DODGE)
     else:
-        .process_animation(delta)
+        super.process_animation(delta)
 
 func update_skin() -> void:
     # change facing direction

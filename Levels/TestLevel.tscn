@@ -1,57 +1,55 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=10 format=3 uid="uid://c7u7pt0v7abmy"]
 
-[ext_resource path="res://Assets/books_2.png" type="Texture" id=2]
-[ext_resource path="res://Character/Mobs/Dummy/Dummy2.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Levels/TestLevel.gd" type="Script" id=4]
-[ext_resource path="res://Scenes/Prefabs/Spawners/PlayerSpawner.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Character/Mobs/Dummy/DummyChase.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Character/Mobs/Dummy/Dummy1.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Interface/GUI.tscn" type="PackedScene" id=8]
+[ext_resource type="Texture2D" uid="uid://dbwvq5mm6sr1w" path="res://Assets/books_2.png" id="2"]
+[ext_resource type="PackedScene" path="res://Character/Mobs/Dummy/Dummy2.tscn" id="3"]
+[ext_resource type="Script" path="res://Levels/TestLevel.gd" id="4"]
+[ext_resource type="PackedScene" path="res://Scenes/Prefabs/Spawners/PlayerSpawner.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://Character/Mobs/Dummy/DummyChase.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://Character/Mobs/Dummy/Dummy1.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://Interface/GUI.tscn" id="8"]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 52, 40 )
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(52, 40)
 
-[sub_resource type="Environment" id=2]
+[sub_resource type="Environment" id="2"]
 background_mode = 4
 glow_enabled = true
-glow_levels/1 = true
-glow_levels/2 = true
-glow_levels/3 = false
-glow_levels/5 = false
+glow_levels/1 = 1.0
+glow_levels/2 = 1.0
+glow_levels/3 = 0.0
+glow_levels/5 = 0.0
 glow_intensity = 0.4
-glow_bicubic_upscale = true
-glow_high_quality = true
 
 [node name="TestLevel" type="Node2D"]
-script = ExtResource( 4 )
+script = ExtResource("4")
 test_weapon_name = "AA12"
 
-[node name="GUI" parent="." instance=ExtResource( 8 )]
+[node name="GUI" parent="." instance=ExtResource("8")]
 
 [node name="Prop" type="StaticBody2D" parent="."]
-position = Vector2( 563, 301 )
+position = Vector2(563, 301)
 collision_layer = 4
 collision_mask = 0
 
-[node name="Sprite" type="Sprite" parent="Prop"]
-texture = ExtResource( 2 )
+[node name="Sprite2D" type="Sprite2D" parent="Prop"]
+texture = ExtResource("2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Prop"]
-shape = SubResource( 1 )
+shape = SubResource("1")
 
-[node name="PlayerSpawner" parent="." instance=ExtResource( 5 )]
-position = Vector2( 200, 205 )
-list = [ "Soldier" ]
+[node name="PlayerSpawner" parent="." instance=ExtResource("5")]
+position = Vector2(200, 205)
 spawn_radius = 100.0
+list = Array[String](["Soldier"])
 
-[node name="Dummy" parent="." instance=ExtResource( 7 )]
-position = Vector2( 667, 465 )
+[node name="Dummy" parent="." instance=ExtResource("7")]
+position = Vector2(667, 465)
 
-[node name="Dummy2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 823, 522 )
+[node name="Dummy2" parent="." instance=ExtResource("3")]
+position = Vector2(823, 522)
 
-[node name="Dummy3" parent="." instance=ExtResource( 6 )]
-position = Vector2( 868, 113 )
+[node name="Dummy3" parent="." instance=ExtResource("6")]
+position = Vector2(868, 113)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 2 )
+environment = SubResource("2")

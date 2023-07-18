@@ -1,5 +1,5 @@
 class_name Character
-extends KinematicBody2D
+extends CharacterBody2D
 
 # warning-ignore-all: UNUSED_SIGNAL
 

@@ -1,4 +1,4 @@
-tool
+@tool
 class_name BurstTrigger
 extends Trigger
 
@@ -6,10 +6,10 @@ extends Trigger
 
 
 # Number of bursts for each trigger pulled
-export (int, 2, 100) var number_of_bursts = 3
+@export_range(2, 100) var number_of_bursts: int = 3
 
 # Duration for a burst process
-export (float) var burst_duration: float = 1.0
+@export var burst_duration: float = 1.0
 
 
 # Number of bursts left
@@ -36,13 +36,18 @@ var _is_trigger_ready: bool = true
 
 
 
-func _get_configuration_warning() -> String:
-    if is_equal_approx(burst_duration, 0):
-        return "burst duration can't be %f, increase burst duration" % burst_duration
+func _get_configuration_warnings() -> PackedStringArray:
+    if not super._get_configuration_warnings().is_empty():
+        return super._get_configuration_warnings()
 
-    return ""
+    if is_equal_approx(burst_duration, 0):
+        return ["burst duration can't be %f, increase burst duration" % burst_duration]
+
+    return []
 
 func _ready() -> void:
+    super._ready()
+
     assert(not is_equal_approx(burst_duration, 0), "burst duration can't be 0.0")
 
     # make sure we have equal amount of burst to setting
@@ -56,7 +61,7 @@ func _ready() -> void:
     _timer_per_burst.name = "TimerPerBurst"
     add_child(_timer_per_burst)
     _timer_per_burst.one_shot = true
-    _timer_per_burst.connect("timeout", self, "_on_timer_per_burst_timeout")
+    _timer_per_burst.connect("timeout", Callable(self, "_on_timer_per_burst_timeout"))
     
     if _wait_next_burst_timer:
         _wait_next_burst_timer.queue_free()
@@ -65,7 +70,7 @@ func _ready() -> void:
     _wait_next_burst_timer.name = "WaitNextBurstTimer"
     add_child(_wait_next_burst_timer)
     _wait_next_burst_timer.one_shot = true
-    _wait_next_burst_timer.connect("timeout", self, "_on_wait_next_burst_timer_timeout")
+    _wait_next_burst_timer.connect("timeout", Callable(self, "_on_wait_next_burst_timer_timeout"))
 
     
 func pull_trigger() -> void:

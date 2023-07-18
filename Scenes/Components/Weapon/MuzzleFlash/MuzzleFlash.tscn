@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Assets/Particles/Particles_sheet.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Particles/Particles_sheet.png" type="Texture2D" id=1]
 [ext_resource path="res://Scenes/Components/Weapon/MuzzleFlash/MuzzleFlash.gd" type="Script" id=2]
 
-[node name="MuzzleFlash" type="Sprite"]
+[node name="MuzzleFlash" type="Sprite2D"]
 texture = ExtResource( 1 )
 hframes = 4
 vframes = 3

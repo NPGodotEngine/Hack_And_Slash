@@ -9,30 +9,32 @@ extends Character
 
 
 # Weapon manager
-onready var _weapon_manager: WeaponManager = $WeaponManager
+@onready var _weapon_manager: WeaponManager = $WeaponManager
 
-onready var _health_comp: HealthComponent = $HealthComponent
-onready var _exp_comp: ExpComponent = $ExpComponent
-onready var _movement_comp: MovementComponent = $MovementComponent
-onready var _hurt_box: HurtBox = $HurtBox
-onready var _dodge_comp: DodgeComponent = $DodgeComponent
+@onready var _health_comp: HealthComponent = $HealthComponent
+@onready var _exp_comp: ExpComponent = $ExpComponent
+@onready var _movement_comp: MovementComponent = $MovementComponent
+@onready var _hurt_box: HurtBox = $HurtBox
+@onready var _dodge_comp: DodgeComponent = $DodgeComponent
 
 
 
 var is_dead: bool = false
 
 func _ready() -> void:
-	_hurt_box.connect("take_damage", self, "_on_take_damage")
+	_hurt_box.connect("take_damage", Callable(self, "_on_take_damage"))
 
-	_exp_comp.connect("progress_updated", self, "_on_progress_updated")
-	_exp_comp.connect("max_progress_reached", self, "_on_max_progress_reached")
-	_exp_comp.connect("xp_updated", self, "_on_xp_updated")
-	_exp_comp.connect("xp_required_updated", self, "_on_xp_required_updated")
+	_exp_comp.connect("progress_updated", Callable(self, "_on_progress_updated"))
+	_exp_comp.connect("max_progress_reached", Callable(self, "_on_max_progress_reached"))
+	_exp_comp.connect("xp_updated", Callable(self, "_on_xp_updated"))
+	_exp_comp.connect("xp_required_updated", Callable(self, "_on_xp_required_updated"))
 
-	_health_comp.connect("die", self, "_on_die")
+	_health_comp.connect("die", Callable(self, "_on_die"))
 	
-	_dodge_comp.connect("dodge_begin", self, "_on_dodge_begin")
-	_dodge_comp.connect("dodge_finished", self, "_on_dodge_finished")
+	_dodge_comp.connect("dodge_begin", Callable(self, "_on_dodge_begin"))
+	_dodge_comp.connect("dodge_finished", Callable(self, "_on_dodge_finished"))
+
+	super._ready()
 
 func _on_dodge_begin() -> void:
 	_weapon_manager.disable_weapon_manager()
@@ -93,7 +95,7 @@ func _on_die() -> void:
 
 	for child in get_children():
 		if child is CollisionShape2D:
-			child .set_deferred("disabled", true)
+			child.set_deferred("disabled", true)
 
 
 # Heal character
@@ -104,7 +106,8 @@ func heal(amount:int) -> void:
 
 # for testing health bar
 func _unhandled_input(event: InputEvent) -> void:
-
+	super._unhandled_input(event)
+	
 	if event.is_action_pressed("ui_down"): 
 		if not is_dead:
 			# var added_xp = rand_range(100.0, 440.0)
@@ -117,10 +120,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		var hit_damage = HitDamage.new().init(
 			null, 
 			null, 
-			rand_range(1.0, 10.0), 
+			randf_range(1.0, 10.0), 
 			crit,
 			0.0,
-			Color.red if crit else Color.white)
+			Color.RED if crit else Color.WHITE)
 		_on_take_damage(hit_damage)
 		
 	

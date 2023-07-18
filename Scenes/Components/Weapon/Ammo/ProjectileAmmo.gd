@@ -1,4 +1,4 @@
-tool
+@tool
 class_name ProjectileAmmo
 extends Ammo
 
@@ -13,7 +13,7 @@ func consume_ammo() -> Projectile:
     if _is_reloading or _round_left == 0:
         return null
     
-    var bullet: Projectile = bullet_scene.instance()
+    var bullet: Projectile = bullet_scene.instantiate()
     assert(bullet, "Can't instance bullet from %s" % bullet_scene)
     assert(bullet is Projectile, "Bullet is not a type of Projectile")
     

@@ -21,6 +21,8 @@ var saved_data: SavedData = null
 
 
 func _init() -> void:
+	super._init()
+	
 	saved_data = load_saved_data()
 
 # Return a saved data
@@ -30,19 +32,16 @@ func _init() -> void:
 ##
 # Return `null` if error happend
 func load_saved_data() -> SavedData:
-	var file: File = File.new()
-	var save_file_path: String = SAVE_FOLDER.plus_file(SAVE_NAME_TEMPLATE)
+	var save_file_path: String = SAVE_FOLDER.path_join(SAVE_NAME_TEMPLATE)
 	var data: SavedData = null
 
 	# create a new save if not exists or load existing one
-	if not file.file_exists(save_file_path):
+	if not FileAccess.file_exists(save_file_path):
 		push_warning("Save game file %s dose not exist, create a new save" % save_file_path)
 
 		# Make sure directory exists
-		var directory: Directory = Directory.new()
-
-		if not directory.dir_exists(SAVE_FOLDER):
-			var mk_dir_state: int =  directory.make_dir_recursive(SAVE_FOLDER)
+		if not DirAccess.dir_exists_absolute(SAVE_FOLDER):
+			var mk_dir_state: int =  DirAccess.make_dir_recursive_absolute(SAVE_FOLDER)
 			if not mk_dir_state == OK:
 				push_error("Create directory for new saved data fail %s, code: %d" % 
 						[SAVE_FOLDER, mk_dir_state])
@@ -77,8 +76,8 @@ func save_game_data() -> void:
 	emit_signal("save_game", saved_data)
 
 	# Save game
-	var save_file_path: String = SAVE_FOLDER.plus_file(SAVE_NAME_TEMPLATE)
-	var save_state: int = ResourceSaver.save(save_file_path, saved_data)
+	var save_file_path: String = SAVE_FOLDER.path_join(SAVE_NAME_TEMPLATE)
+	var save_state: int = ResourceSaver.save(saved_data, save_file_path)
 	if not save_state == OK:
 		push_error("Save game fail at path %s, code %d" % [save_file_path, save_state])
 

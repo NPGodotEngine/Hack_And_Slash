@@ -7,7 +7,7 @@ extends Node
 # -spread_range_degree
 # to
 # spread_range_degree
-export (float) var spread_range_degree = 10.0
+@export var spread_range_degree = 10.0
 
 # Return a new random normalized 
 # direction in `Vector2` from given direction
@@ -24,8 +24,8 @@ func get_random_spread(from_direction:Vector2, scaler:float = 1.0) -> Vector2:
 
     # get random rotation
     var scaled_spread_range: float = spread_range_degree * (1.0 -scaler)
-    var rand_rotation: float = rand_range(-scaled_spread_range, scaled_spread_range)
-    rand_rotation = deg2rad(rand_rotation)
+    var rand_rotation: float = randf_range(-scaled_spread_range, scaled_spread_range)
+    rand_rotation = deg_to_rad(rand_rotation)
 
     # rotate direction
     direction = direction.rotated(rand_rotation)

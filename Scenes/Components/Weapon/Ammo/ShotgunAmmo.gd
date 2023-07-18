@@ -1,10 +1,10 @@
-tool
+@tool
 class_name ShotgunAmmo
 extends Ammo
 
 # `true` penetration chance is picked randomly
 # between 0.0 ~ bullet penetration chance
-export (bool) var random_penetration: bool = true
+@export var random_penetration: bool = true
 
 # Consume a projectile which contain number 
 # of rounds
@@ -21,7 +21,7 @@ func consume_ammo(rounds_per_shot) -> Array:
     var rounds: Array = []
 
     for _i in rounds_per_shot:
-        var bullet: Projectile = bullet_scene.instance()
+        var bullet: Projectile = bullet_scene.instantiate()
         assert(bullet, "Can't instance bullet from %s" % bullet_scene)
         assert(bullet is Projectile, "Bullet is not a type of Projectile")
         
@@ -29,7 +29,7 @@ func consume_ammo(rounds_per_shot) -> Array:
         bullet.life_span = bullet_life_span
         if random_penetration:
             randomize()
-            bullet.penetration_chance = rand_range(0.0, bullet_penetration_chance)
+            bullet.penetration_chance = randf_range(0.0, bullet_penetration_chance)
         else:
             bullet.penetration_chance = bullet_penetration_chance
 

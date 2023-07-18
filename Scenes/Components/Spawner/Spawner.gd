@@ -1,18 +1,20 @@
 class_name Spawner
-extends Sprite
+extends Sprite2D
 
 # warning-ignore-all: UNUSED_ARGUMENT
 
 
-export (Array, String) var list := []
-export (int, 0, 100) var spawn_chance_percent := 100
-export (int) var num_spawn := 1
+@export var list :Array[String] = []
+@export_range(0, 100) var spawn_chance_percent :int = 100
+@export var num_spawn :int = 1
 
 func _ready() -> void:
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		return
 	texture = null
 	randomize()
+
+	super._ready()
 
 func spawn() -> void:
 	if not list:
@@ -27,5 +29,5 @@ func spawn() -> void:
 		
 		handle_spawn(list[random_name_index])
 
-func handle_spawn(resource_name:String) -> void:
+func handle_spawn(_resource_name:String) -> void:
 	pass
