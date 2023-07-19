@@ -11,9 +11,6 @@ var target = null
 var is_target_in_sight: bool = false
 
 func _get_configuration_warnings() -> PackedStringArray:
-    if not super._get_configuration_warnings().is_empty():
-        return super._get_configuration_warnings()
-
     if target_detector.is_empty():
         return ["target_detector node path is missing"]
     if not get_node(target_detector) is TargetDetector:
@@ -27,8 +24,6 @@ func _ready() -> void:
     _target_detector.connect("target_detected", Callable(self, "_on_target_detected"))
     _target_detector.connect("target_lost", Callable(self, "_on_target_lost"))
 
-    super._ready()
-
 func _on_target_detected(detected_context:TargetDetector.DetectedContext) -> void:
     raycast.enabled = true
     if target == null:
@@ -41,8 +36,8 @@ func _on_target_lost(_target_lost_context:TargetDetector.TargetLostContext) -> v
     is_target_in_sight = false
 
 func _physics_process(delta: float) -> void:
-    super._physics_process(delta)
-    
+    super(delta)
+
     if target != null and raycast.enabled:
         # update raycast
         var target_dir: Vector2 = global_position.direction_to(target.global_position)

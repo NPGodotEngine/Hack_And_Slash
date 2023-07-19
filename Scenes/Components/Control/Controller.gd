@@ -7,8 +7,6 @@ extends Node
 func _ready() -> void:
     if Engine.is_editor_hint():
         return 
-
-    super._ready()
         
     if enable_controller:
         call_deferred("enable_control")

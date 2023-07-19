@@ -8,8 +8,6 @@ extends HBoxContainer
 func _ready() -> void:
     UIEvents.connect("player_dodge_updated", Callable(self, "_on_player_dodge_updated"))
 
-    super._ready()
-
 func _on_player_dodge_updated(progress:float, duration:float) -> void:
     update_dodge_bar(progress, duration)
 

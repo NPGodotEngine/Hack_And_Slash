@@ -33,12 +33,9 @@ extends Line2D
 var _ticks := 0.0
 
 func _ready():
-	super._ready()
-
 	clear_points()
 
 func _process(delta):
-	super._process(delta)
 	if _ticks >=  1 / frame_per_seconds:
 		# add a new point
 		var point: Vector2 = Vector2.ZERO

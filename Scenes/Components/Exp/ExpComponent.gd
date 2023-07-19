@@ -66,8 +66,6 @@ var _xp_required: float = 0.0: get = get_xp_required, set = set_xp_required
 
 
 func _ready() -> void:
-    super._ready()
-    
     _xp_required = calculate_xp_required(_progress)
 
     if log_level_xp:

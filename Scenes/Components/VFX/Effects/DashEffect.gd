@@ -46,8 +46,6 @@ enum EASE_TYPES {
 
 
 func _ready() -> void:
-    super._ready()
-    
     var tween := create_tween()
     tween.tween_property(self, "modulate",final_color, fade_duration)\
         .set_trans(Tween.TRANS_LINEAR)\

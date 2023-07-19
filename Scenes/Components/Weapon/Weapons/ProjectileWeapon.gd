@@ -27,8 +27,8 @@ extends Weapon
 	
 
 func _get_configuration_warnings() -> PackedStringArray:
-	if not super._get_configuration_warnings().is_empty():
-		return super._get_configuration_warnings()
+	if not super().is_empty():
+		return super()
 	
 	if accuracy.is_empty():
 		return ["accuracy node path is missing"]
@@ -66,8 +66,6 @@ func _get_configuration_warnings() -> PackedStringArray:
 	return []
 
 func _ready() -> void:
-	super._ready()
-	
 	_trigger.connect("trigger_pulled", Callable(self, "_on_trigger_pulled"))
 
 	if weapon_attributes:
@@ -152,11 +150,11 @@ func cancel_alt_execution() -> void:
 	pass
 
 func active() -> void:
-	super.active()
+	super()
 	self.show()
 
 func inactive() -> void:
-	super.inactive()
+	super()
 	self.hide()
 
 func apply_weapon_attributes(attributes:WeaponAttributes) -> void:
@@ -169,5 +167,5 @@ func apply_weapon_attributes(attributes:WeaponAttributes) -> void:
 	_ammo.reload_duration = attributes.reload_duration
 	_ammo.rounds_per_clip = attributes.round_per_clip
 
-	super.apply_weapon_attributes(attributes)
+	super(attributes)
 

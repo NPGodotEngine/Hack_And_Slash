@@ -34,7 +34,6 @@ func _ready() -> void:
 	_dodge_comp.connect("dodge_begin", Callable(self, "_on_dodge_begin"))
 	_dodge_comp.connect("dodge_finished", Callable(self, "_on_dodge_finished"))
 
-	super._ready()
 
 func _on_dodge_begin() -> void:
 	_weapon_manager.disable_weapon_manager()
@@ -106,7 +105,7 @@ func heal(amount:int) -> void:
 
 # for testing health bar
 func _unhandled_input(event: InputEvent) -> void:
-	super._unhandled_input(event)
+	super(event)
 	
 	if event.is_action_pressed("ui_down"): 
 		if not is_dead:

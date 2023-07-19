@@ -16,8 +16,8 @@ const HIT = "hit"
 @onready var _anim_player: AnimationPlayer = $AnimationPlayer
 
 func _get_configuration_warnings() -> PackedStringArray:
-    if not super._get_configuration_warnings().is_empty():
-        return super._get_configuration_warnings()
+    if not super().is_empty():
+        return super()
 
     if dodge.is_empty():
         return ["dodge node path is missing"]
@@ -35,9 +35,13 @@ func _get_configuration_warnings() -> PackedStringArray:
     return []
 
 func _ready() -> void:
+    super()
+    if Engine.is_editor_hint():
+        return
+        
     _character.connect("on_character_take_damage", Callable(self, "_on_charater_take_damage"))
 
-    super._ready()
+    
 
 func _on_charater_take_damage(_hit_damage:HitDamage, _total_damage:int) -> void:
     _anim_player.play("hit")
@@ -58,7 +62,7 @@ func process_animation(delta:float) -> void:
     if _dodge._is_dodging:
         play(DODGE)
     else:
-        super.process_animation(delta)
+        super(delta)
 
 func update_skin() -> void:
     # change facing direction

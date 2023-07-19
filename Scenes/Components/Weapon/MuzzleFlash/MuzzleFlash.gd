@@ -19,9 +19,6 @@ enum flash_type {
 @onready var _flash_duration_timer: Timer = $FlashDurationTimer
 
 func _get_configuration_warnings() -> PackedStringArray:
-    if not super._get_configuration_warnings().is_empty():
-        return super._get_configuration_warnings()
-
     if flash_small_frames.size() == 0:
         return ["You must define frame numbers for small flash"]
     if flash_medium_frames.size() == 0:
@@ -33,8 +30,6 @@ func _get_configuration_warnings() -> PackedStringArray:
 func _ready() -> void:
     if Engine.is_editor_hint():
         return
-    
-    super._ready()
 
     randomize()
     self.hide()

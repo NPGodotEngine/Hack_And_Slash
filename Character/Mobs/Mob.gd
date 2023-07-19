@@ -20,7 +20,6 @@ func _ready() -> void:
 			mob_behavior_ai = child
 			break
 	
-	super._ready()
 
 func _on_take_damage(hit_damage:HitDamage) -> void:
 	# if character is dead do nothing

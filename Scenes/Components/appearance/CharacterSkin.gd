@@ -30,9 +30,6 @@ var _velocity: Vector2 = Vector2.ZERO
 
 
 func _get_configuration_warnings() -> PackedStringArray:
-	if not super._get_configuration_warnings().is_empty():
-		return super._get_configuration_warnings()
-
 	if movement.is_empty():
 		return ["movement node path is missing"]
 	if not get_node(movement) is MovementComponent:
@@ -51,8 +48,6 @@ func _get_configuration_warnings() -> PackedStringArray:
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
-	
-	super._ready()
 
 	# wait for parent node to be ready
 	var _player = get_parent()
@@ -65,7 +60,6 @@ func _ready() -> void:
 	play(IDLE)
 
 func _physics_process(delta: float) -> void:
-	super._physics_process(delta)
 
 	if Engine.is_editor_hint():
 		return

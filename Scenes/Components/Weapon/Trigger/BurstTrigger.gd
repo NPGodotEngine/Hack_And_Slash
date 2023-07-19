@@ -37,16 +37,13 @@ var _is_trigger_ready: bool = true
 
 
 func _get_configuration_warnings() -> PackedStringArray:
-    if not super._get_configuration_warnings().is_empty():
-        return super._get_configuration_warnings()
-
     if is_equal_approx(burst_duration, 0):
         return ["burst duration can't be %f, increase burst duration" % burst_duration]
 
     return []
 
 func _ready() -> void:
-    super._ready()
+    super()
 
     assert(not is_equal_approx(burst_duration, 0), "burst duration can't be 0.0")
 
@@ -62,7 +59,7 @@ func _ready() -> void:
     add_child(_timer_per_burst)
     _timer_per_burst.one_shot = true
     _timer_per_burst.connect("timeout", Callable(self, "_on_timer_per_burst_timeout"))
-    
+
     if _wait_next_burst_timer:
         _wait_next_burst_timer.queue_free()
 

@@ -33,33 +33,35 @@ var _ignored_bodies: Array = []
 
 ## Override ##
 func _init() -> void:
-	super._init()
+	super()
 	bullet_type = Global.BulletType.PROJECTILE
 	
 func _ready() -> void:
-	if Engine.is_editor_hint(): return
+	super()
+	if Engine.is_editor_hint(): 
+		return
 
 	_life_span_timer = Timer.new()
 	_life_span_timer.name = "LifeSpanTimer"
 	add_child(_life_span_timer)
 	_life_span_timer.one_shot = true
 	_life_span_timer.connect("timeout", Callable(self, "queue_free"))
-	super._ready()
+	
 
 func _exit_tree() -> void:
 	if _life_span_timer:
 		_life_span_timer.disconnect("timeout", Callable(self, "queue_free"))
 	
-	super._exit_tree()
+	super()
 
 func _process(delta: float) -> void:
-	super._process(delta)
+	super(delta)
 
 	if Engine.is_editor_hint():
 		update_configuration_warnings()
 
 func _physics_process(delta: float) -> void:
-	super._physics_process(delta)
+	super(delta)
 
 	if Engine.is_editor_hint(): return
 	_move_projectile(delta)

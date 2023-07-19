@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://bw7p5rv0jc4aq"]
 
-[ext_resource path="res://Interface/HUD/WeaponCrosshair/WeaponCrosshair.gd" type="Script" id=1]
+[ext_resource type="Script" path="res://Interface/HUD/WeaponCrosshair/WeaponCrosshair.gd" id="1"]
 
 [node name="WeaponCrosshair" type="Node"]
-script = ExtResource( 1 )
+script = ExtResource("1")

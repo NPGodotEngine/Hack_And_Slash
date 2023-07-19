@@ -12,8 +12,6 @@ func _ready() -> void:
     collision_mask = 0
     connect("area_entered", Callable(self, "_on_area_entered"))
 
-    super._ready()
-
 func _on_area_entered(area:Area2D) -> void:
     if area is HitBox:
         var hit_box: HitBox = area as HitBox

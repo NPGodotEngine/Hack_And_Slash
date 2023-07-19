@@ -5,8 +5,8 @@
 [ext_resource type="Script" path="res://Levels/TestLevel.gd" id="4"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/Spawners/PlayerSpawner.tscn" id="5"]
 [ext_resource type="PackedScene" path="res://Character/Mobs/Dummy/DummyChase.tscn" id="6"]
-[ext_resource type="PackedScene" path="res://Character/Mobs/Dummy/Dummy1.tscn" id="7"]
-[ext_resource type="PackedScene" path="res://Interface/GUI.tscn" id="8"]
+[ext_resource type="PackedScene" uid="uid://dtd0g6r5dmhvj" path="res://Character/Mobs/Dummy/Dummy1.tscn" id="7"]
+[ext_resource type="PackedScene" uid="uid://ugy5fauyv4jx" path="res://Interface/GUI.tscn" id="8"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(52, 40)

@@ -68,8 +68,6 @@ func set_current_weapon_index(value:int) -> void:
 	
 
 func _ready() -> void:
-	super._ready()
-	
 	load_preset_weapons()
 
 	GameSaver.connect("save_game", Callable(self, "_on_save_game"))

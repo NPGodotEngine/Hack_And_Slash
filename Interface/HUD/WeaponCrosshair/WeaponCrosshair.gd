@@ -16,8 +16,9 @@ var _crosshair: Node2D
 
 
 func _ready() -> void:
-	super._ready()
-
+	if Engine.is_editor_hint():
+		return
+		
 	_crosshair = crosshair_scene.instantiate() as Node2D
 	_crosshair.hide()
 
@@ -33,9 +34,6 @@ func _ready() -> void:
 	_crosshair.show()
 
 func _get_configuration_warnings() -> PackedStringArray:
-	if not super._get_configuration_warnings().is_empty():
-		return super._get_configuration_warnings()
-
 	if weapon.is_empty():
 		return ["weapon node path is missing"]
 	if not get_node(weapon) is Weapon:
@@ -63,11 +61,9 @@ func _on_begin_reloading(_ammo_context) -> void:
 func _on_end_reloading(_ammo_context) -> void:
 	_crosshair.show()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
-	
-	super._process(delta)
 	
 	if _crosshair:
 		_crosshair.global_position = _crosshair.get_global_mouse_position()

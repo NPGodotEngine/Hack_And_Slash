@@ -22,10 +22,8 @@ func _ready() -> void:
 
 	_destroy_timer.connect("timeout", Callable(self, "queue_free"))
 
-	super._ready()
-
 func _process(delta: float) -> void:
-	super._process(delta)
+	super(delta)
 
 	_velocity += _gravity * delta
 	global_position += _velocity * delta

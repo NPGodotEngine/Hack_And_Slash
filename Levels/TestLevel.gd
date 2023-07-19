@@ -3,8 +3,6 @@ extends Node2D
 @export var test_weapon_name: String = "AKM"
  
 func _ready() -> void:
-	super._ready()
-	
 	for player_spanwer in get_tree().get_nodes_in_group("PlayerSpawner"):
 		player_spanwer.spawn()
 	

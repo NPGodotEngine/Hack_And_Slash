@@ -13,8 +13,6 @@ var _is_trigger_ready: bool = true
 
 
 func _ready() -> void:
-	super._ready()
-	
 	if _trigger_timer:
 		_trigger_timer.queue_free()
 

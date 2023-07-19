@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://byk66rn231q1m"]
 
-[ext_resource path="res://Scenes/Components/Damage/RangedDamageComponent.gd" type="Script" id=1]
+[ext_resource type="Script" path="res://Scenes/Components/Damage/RangedDamageComponent.gd" id="1"]
 
 [node name="RangedDamageComponent" type="Node"]
-script = ExtResource( 1 )
+script = ExtResource("1")

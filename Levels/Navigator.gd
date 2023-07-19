@@ -11,8 +11,6 @@ func _ready():
 
 	nav_agent.connect("velocity_computed", Callable(self, "_on_velocity_computed"))
 
-	super._ready()
-
 	call_deferred("actor_setup")
 
 func actor_setup() -> void:
@@ -23,8 +21,8 @@ func set_movement_target(movement_target: Vector2):
 	nav_agent.set_target_position(movement_target)
 
 func _physics_process(delta: float) -> void:
-	super._physics_process(delta)
-	
+	super(delta)
+
 	if Input.is_action_pressed("primary"):
 		set_movement_target(get_global_mouse_position())
 		return

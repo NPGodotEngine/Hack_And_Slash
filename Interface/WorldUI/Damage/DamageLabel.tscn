@@ -1,127 +1,140 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=3 uid="uid://b4m4a3hj8q8hr"]
 
-[ext_resource path="res://Interface/Montserrat-Bold.ttf" type="FontFile" id=1]
-[ext_resource path="res://Interface/WorldUI/Damage/DamageLabel.gd" type="Script" id=2]
+[ext_resource type="FontFile" uid="uid://byydby0hs516a" path="res://Interface/Montserrat-Bold.ttf" id="1"]
+[ext_resource type="Script" path="res://Interface/WorldUI/Damage/DamageLabel.gd" id="2"]
 
-[sub_resource type="FontFile" id=1]
-outline_size = 1
-font_data = ExtResource( 1 )
+[sub_resource type="FontFile" id="1"]
+fallbacks = Array[Font]([ExtResource("1")])
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id="2"]
 length = 0.001
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("Label:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PackedFloat32Array( 0 ),
-"transitions": PackedFloat32Array( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [ Vector2( 1, 1 ) ]
+"values": [Vector2(1, 1)]
 }
 tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath("Label:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"times": PackedFloat32Array( 0 ),
-"transitions": PackedFloat32Array( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ) ]
+"values": [Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id="4"]
 resource_name = "critical"
 length = 0.6
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("Label:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PackedFloat32Array( 0, 0.2, 0.6 ),
-"transitions": PackedFloat32Array( 0.329877, 1, 1 ),
+"times": PackedFloat32Array(0, 0.2, 0.6),
+"transitions": PackedFloat32Array(0.329877, 1, 1),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1.6, 1.6 ), Vector2( 1e-05, 1e-05 ) ]
+"values": [Vector2(1, 1), Vector2(1.6, 1.6), Vector2(1e-05, 1e-05)]
 }
 tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"times": PackedFloat32Array( 0.6 ),
-"transitions": PackedFloat32Array( 1 ),
-"values": [ {
-"args": [  ],
-"method": "queue_free"
-} ]
+"times": PackedFloat32Array(0.6),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
 }
 tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
 tracks/2/path = NodePath("Label:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
 tracks/2/keys = {
-"times": PackedFloat32Array( 0.4, 0.6 ),
-"transitions": PackedFloat32Array( 1, 1 ),
+"times": PackedFloat32Array(0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id="3"]
 resource_name = "damage"
 length = 0.6
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("Label:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PackedFloat32Array( 0, 0.2, 0.6 ),
-"transitions": PackedFloat32Array( 0.329877, 1, 1 ),
+"times": PackedFloat32Array(0, 0.2, 0.6),
+"transitions": PackedFloat32Array(0.329877, 1, 1),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1.2, 1.2 ), Vector2( 1e-05, 1e-05 ) ]
+"values": [Vector2(1, 1), Vector2(1.2, 1.2), Vector2(1e-05, 1e-05)]
 }
 tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"times": PackedFloat32Array( 0.6 ),
-"transitions": PackedFloat32Array( 1 ),
-"values": [ {
-"args": [  ],
-"method": "queue_free"
-} ]
+"times": PackedFloat32Array(0.6),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
 }
 tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
 tracks/2/path = NodePath("Label:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
 tracks/2/keys = {
-"times": PackedFloat32Array( 0.4, 0.6 ),
-"transitions": PackedFloat32Array( 1, 1 ),
+"times": PackedFloat32Array(0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_am10c"]
+_data = {
+"RESET": SubResource("2"),
+"critical": SubResource("4"),
+"damage": SubResource("3")
 }
 
 [node name="DamageLabel" type="Node2D"]
-script = ExtResource( 2 )
+script = ExtResource("2")
 
 [node name="Label" type="Label" parent="."]
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -130,17 +143,15 @@ offset_left = -20.0
 offset_top = -10.5
 offset_right = 20.0
 offset_bottom = 10.5
-pivot_offset = Vector2( 20, 10.5 )
-theme_override_colors/font_outline_color = Color( 0, 0, 0, 1 )
-theme_override_fonts/font = SubResource( 1 )
+pivot_offset = Vector2(20, 10.5)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("1")
 text = "-1"
-align = 1
-valign = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/RESET = SubResource( 2 )
-anims/critical = SubResource( 4 )
-anims/damage = SubResource( 3 )
+libraries = {
+"": SubResource("AnimationLibrary_am10c")
+}
 
 [node name="DestroyTimer" type="Timer" parent="."]
 wait_time = 0.5

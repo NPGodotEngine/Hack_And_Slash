@@ -11,9 +11,6 @@ extends Marker2D
 
 
 func _get_configuration_warnings() -> PackedStringArray:
-	if not super._get_configuration_warnings().is_empty():
-		return super._get_configuration_warnings()
-		
 	if damage_text == null:
 		return ["damage text PackedScene is missing"]
 	
@@ -25,10 +22,11 @@ func _get_configuration_warnings() -> PackedStringArray:
 	return []
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+		
 	if _character != null:
 		_character.connect("on_character_take_damage", Callable(self, "on_take_damage"))
-	
-	super._ready()
 
 func on_take_damage(hit_damage, total_damage) -> void:
 	if damage_text == null: return

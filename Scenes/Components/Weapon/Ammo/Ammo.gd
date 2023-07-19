@@ -102,9 +102,6 @@ func _set_round_left(value:int) -> void:
 ## Override ##
 
 func _get_configuration_warnings() -> PackedStringArray:
-	if not super._get_configuration_warnings().is_empty():
-		return super._get_configuration_warnings()
-		
 	if bullet_scene == null:
 		return ["bullet_scene is missing"]
 	return []
@@ -112,8 +109,6 @@ func _get_configuration_warnings() -> PackedStringArray:
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
-	
-	super._ready()
 		
 	if fill_ammo_when_start:
 		_set_round_left(rounds_per_clip)

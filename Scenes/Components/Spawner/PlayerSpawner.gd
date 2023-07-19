@@ -36,8 +36,7 @@ func draw_circle_arc(center, radius, angle_from, angle_to, color):
 	for index_point in range(nb_points):
 		draw_line(points_arc[index_point], points_arc[index_point + 1], color, 2.0)
 
-func _process(delta: float) -> void:
-	super._process(delta)
+func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		queue_redraw()
 

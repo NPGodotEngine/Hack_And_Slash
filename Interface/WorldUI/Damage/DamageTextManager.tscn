@@ -1,7 +1,6 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://wf83kbe3yuv6"]
 
-[ext_resource path="res://Interface/WorldUI/Damage/DamageTextManager.gd" type="Script" id=1]
+[ext_resource type="Script" path="res://Interface/WorldUI/Damage/DamageTextManager.gd" id="1"]
 
 [node name="DamageTextManager" type="Node"]
-script = ExtResource( 1 )
-damage_text_scene = null
+script = ExtResource("1")

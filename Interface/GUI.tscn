@@ -1,19 +1,19 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=5 format=3 uid="uid://ugy5fauyv4jx"]
 
-[ext_resource path="res://Interface/GUI.gd" type="Script" id=1]
-[ext_resource path="res://Interface/WorldUI/Damage/DamageTextManager.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Interface/HUD/HUD.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Interface/WorldUI/HealthBar/FloatHealthBarManager.tscn" type="PackedScene" id=5]
+[ext_resource type="Script" path="res://Interface/GUI.gd" id="1"]
+[ext_resource type="PackedScene" path="res://Interface/WorldUI/Damage/DamageTextManager.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://Interface/HUD/HUD.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://Interface/WorldUI/HealthBar/FloatHealthBarManager.tscn" id="5"]
 
 [node name="GUI" type="CanvasLayer" groups=["GUI"]]
-script = ExtResource( 1 )
+script = ExtResource("1")
 
 [node name="WorldUI" type="CanvasLayer" parent="."]
 
-[node name="DamageTextManager" parent="WorldUI" instance=ExtResource( 2 )]
+[node name="DamageTextManager" parent="WorldUI" instance=ExtResource("2")]
 
-[node name="FloatHealthBarManager" parent="WorldUI" instance=ExtResource( 5 )]
+[node name="FloatHealthBarManager" parent="WorldUI" instance=ExtResource("5")]
 
-[node name="HUD" parent="." instance=ExtResource( 3 )]
+[node name="HUD" parent="." instance=ExtResource("3")]
 
 [node name="UI" type="CanvasLayer" parent="."]

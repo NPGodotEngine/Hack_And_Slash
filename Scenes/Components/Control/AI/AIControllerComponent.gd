@@ -15,9 +15,6 @@ extends Controller
 
 
 func _get_configuration_warnings() -> PackedStringArray:
-	if not super._get_configuration_warnings().is_empty():
-		return super._get_configuration_warnings()
-
 	if target_follower.is_empty():
 		return ["target_follower node path is missing"]
 	if not get_node(target_follower) is TargetFollowerComponent:
@@ -30,12 +27,12 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 
 func enable_control() -> void:
-	super.enable_control()
+	super()
 	if _target_follower:
 		_target_follower.enable_follow = true
 
 func disable_control() -> void:
-	super.disable_control()
+	super()
 	if _target_follower:
 		_target_follower.enable_follow = false
 

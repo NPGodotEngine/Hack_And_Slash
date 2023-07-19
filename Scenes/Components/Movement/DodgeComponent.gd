@@ -129,9 +129,6 @@ func get_is_dodge_avaliable() -> bool:
 	return true
 
 func _get_configuration_warnings() -> PackedStringArray:
-	if not super._get_configuration_warnings().is_empty():
-		return super._get_configuration_warnings()
-		
 	if target.is_empty():
 		return ["target node path is missing"]
 	
@@ -144,8 +141,6 @@ func _ready() -> void:
 	_dodge_timer.connect("timeout", Callable(self, "_on_dodge_timer_timeout"))
 	_cooldown_timer.connect("timeout", Callable(self, "_on_cooldown_timer_timeout"))
 	_dodge_delay_recover_timer.connect("timeout", Callable(self, "_on_dodge_delay_timeout"))
-
-	super._ready()
 
 func _on_dodge_delay_timeout() -> void:
 	_is_delay_recover = false

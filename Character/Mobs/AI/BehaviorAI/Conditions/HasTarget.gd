@@ -8,7 +8,6 @@ extends ConditionLeaf
 var detected_target
 
 func _ready() -> void:
-	super._ready()
 	await get_tree().root.ready
 
 	_target_dector.connect("target_detected", Callable(self, "_on_target_detected"))
@@ -17,7 +16,7 @@ func _ready() -> void:
 
 
 func tick(actor:Node, blackboard:Blackboard):
-	super.tick(actor, blackboard)
+	super(actor, blackboard)
 
 	if detected_target != null:
 		blackboard.set_value("detected_target", detected_target)

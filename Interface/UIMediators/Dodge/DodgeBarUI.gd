@@ -13,9 +13,6 @@ extends Node
 @onready var _dodge_comp: DodgeComponent = get_node(dodgeComponent) as DodgeComponent
 
 func _get_configuration_warnings() -> PackedStringArray:
-    if not super._get_configuration_warnings().is_empty():
-        return super._get_configuration_warnings()
-
     if dodgeComponent.is_empty():
         return ["dodgeComponent node path is missing"]
     if not get_node(dodgeComponent) is DodgeComponent:
@@ -24,6 +21,9 @@ func _get_configuration_warnings() -> PackedStringArray:
     return []
 
 func _ready() -> void:
+    if Engine.is_editor_hint():
+        return
+
     _dodge_comp.connect("dodge_cooldown_end", Callable(self, "_on_dodge_cooldown_end"))
     _dodge_comp.connect("dodge_finished", Callable(self, "_on_dodge_finished"))
 
@@ -33,8 +33,6 @@ func _ready() -> void:
     else:
         set_physics_process(false)
         set_process(true)
-    
-    super._ready()
 
 func _on_dodge_cooldown_end() -> void:
     UIEvents.emit_signal("player_dodge_updated", 100.0, 100.0)

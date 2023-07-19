@@ -10,11 +10,9 @@ extends GPUParticles2D
 var _delay: float = 0.1
 
 func _ready() -> void:
-    super._ready()
-    
-    timer.connect("timeout", Callable(self, "queue_free"))
-    timer.start(lifetime + particles.lifetime + _delay)
-    particles.emitting = true
-    particles.process_material.direction = process_material.direction
-    await get_tree().create_timer(_delay).timeout
-    emitting=true
+   timer.connect("timeout", Callable(self, "queue_free"))
+   timer.start(lifetime + particles.lifetime + _delay)
+   particles.emitting = true
+   particles.process_material.direction = process_material.direction
+   await get_tree().create_timer(_delay).timeout
+   emitting=true

@@ -18,8 +18,6 @@ var weapon_attributes := {}
 var player_characters := {}
 
 func _ready() -> void:
-    super._ready()
-    
     iterate_directory(weapons_res_path, "load_weapon_resource")
     iterate_directory(player_character_res_path, "load_player_character_resource")
     print(player_characters)

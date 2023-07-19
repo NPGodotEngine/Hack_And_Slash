@@ -7,8 +7,8 @@ extends Projectile
 
 
 func _get_configuration_warnings() -> PackedStringArray:
-    if not super._get_configuration_warnings().is_empty():
-        return super._get_configuration_warnings()
+    if not super().is_empty():
+        return super()
         
     var hit_box_node: HitBox = get_node("HitBox")
     if hit_box_node == null:
@@ -17,9 +17,11 @@ func _get_configuration_warnings() -> PackedStringArray:
     return []
     
 func _ready() -> void:
+    if Engine.is_editor_hint():
+        return
+    super()
     $HitBox.connect("contacted_hurt_box", Callable(self, "_on_contact_hurt_box"))
     $HitBox.connect("contacted_static_body", Callable(self, "_on_contact_static_body"))
-    super._ready()
 
 func _on_contact_hurt_box(hurt_box:HurtBox) -> void:
     if _ignored_bodies.has(hurt_box): 

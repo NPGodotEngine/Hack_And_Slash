@@ -26,9 +26,6 @@ var target = null
 
 
 func _get_configuration_warnings() -> PackedStringArray:
-	if not super._get_configuration_warnings().is_empty():
-		return super._get_configuration_warnings()
-		
 	if movement.is_empty():
 		return ["movement node path is missing"]
 	if not get_node(movement) is MovementComponent:
@@ -39,15 +36,7 @@ func _get_configuration_warnings() -> PackedStringArray:
 		return ["actor must be a CharacterBody2D"]  
 	return []
 
-func _ready() -> void:
-	if Engine.is_editor_hint():
-		return
-	
-	super._ready()
-
 func _physics_process(delta: float) -> void:
-	super. _physics_process(delta)
-
 	if Engine.is_editor_hint():
 		return
 

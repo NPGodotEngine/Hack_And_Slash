@@ -21,8 +21,8 @@ var saved_data: SavedData = null
 
 
 func _init() -> void:
-	super._init()
-	
+	super()
+
 	saved_data = load_saved_data()
 
 # Return a saved data

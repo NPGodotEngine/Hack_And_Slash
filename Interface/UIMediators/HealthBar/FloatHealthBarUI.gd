@@ -21,9 +21,6 @@ var healthbar:HealthBar
 var _pos: Marker2D
 
 func _get_configuration_warnings() -> PackedStringArray:
-	if not super._get_configuration_warnings().is_empty():
-		return super._get_configuration_warnings()
-
 	if healthComponent.is_empty():
 		return ["healthComponent node path is missing"]
 	if not get_node(healthComponent) is HealthComponent:
@@ -32,13 +29,14 @@ func _get_configuration_warnings() -> PackedStringArray:
 	return []
 
 func _init() -> void:
-	super._init()
+	super()
 
 	_pos = Marker2D.new()
 	
 func _ready() -> void:
-	super._ready()
-
+	if Engine.is_editor_hint():
+		return
+		
 	healthbar = healthbar_scene.instantiate() as HealthBar
 
 	# add to ui
@@ -65,11 +63,9 @@ func _on_max_health_updated(max_health_context:HealthComponent.MaxHealthContext)
 func _on_die() -> void:
 	_pos.hide()
 	
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
-	
-	super._process(delta)
 
 	_pos.global_position = get_global_transform_with_canvas().origin
 

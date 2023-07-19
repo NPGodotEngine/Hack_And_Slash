@@ -59,10 +59,7 @@ func set_weapon_attributes(value:Resource) -> void:
 
 
 
-func _get_configuration_warnings() -> PackedStringArray:
-	if not super._get_configuration_warnings().is_empty():
-		return super._get_configuration_warnings()
-		
+func _get_configuration_warnings() -> PackedStringArray:		
 	if weapon_attributes:
 		if not weapon_attributes is WeaponAttributes:
 			return ["weapon_attributes must be a WeaponAttributes resource"]
@@ -70,12 +67,8 @@ func _get_configuration_warnings() -> PackedStringArray:
 		return ["a default weapon_attributes must be given"]
 	return []
 
-func _ready() -> void:
-	super._ready()
-	pass
-
 func _physics_process(delta: float) -> void:
-	super._physics_process(delta)
+	super(delta)
 
 	update_weapon_skin()
 

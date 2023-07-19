@@ -57,8 +57,6 @@ func set_detect_area2d(value:bool) -> void:
 
 
 func _ready() -> void:
-    super._ready()
-    
     collision_layer = 0
     set_detect_kinematic_body2d(detect_kinematic_body2d)
     set_detect_area2d(detect_area2d)

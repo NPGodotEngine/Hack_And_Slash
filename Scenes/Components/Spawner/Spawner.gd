@@ -14,8 +14,6 @@ func _ready() -> void:
 	texture = null
 	randomize()
 
-	super._ready()
-
 func spawn() -> void:
 	if not list:
 		return

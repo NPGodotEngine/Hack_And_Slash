@@ -11,8 +11,8 @@ const HIT = "hit"
 @onready var _anim_player: AnimationPlayer = $AnimationPlayer
 
 func _get_configuration_warnings() -> PackedStringArray:
-	if not super._get_configuration_warnings().is_empty():
-		return super._get_configuration_warnings()
+	if not super().is_empty():
+		return super()
 	
 	var anim_player_exists = false
 	for child in get_children():
@@ -25,9 +25,9 @@ func _get_configuration_warnings() -> PackedStringArray:
 	return []
 
 func _ready() -> void:
+	super()
 	_character.connect("on_character_take_damage", Callable(self, "_on_charater_take_damage"))
 
-	super._ready()
 
 func _on_charater_take_damage(hit_damage:HitDamage, total_damage:int) -> void:
 	_anim_player.play("hit")

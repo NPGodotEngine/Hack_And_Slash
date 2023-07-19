@@ -35,100 +35,95 @@ var _is_dodging: bool = false
 var _dodge_direction: Vector2 = Vector2.RIGHT
 
 func _get_configuration_warnings() -> PackedStringArray:
-    if not super._get_configuration_warnings().is_empty():
-        return super._get_configuration_warnings()
+	if movement.is_empty():
+		return ["movement node path is missing"]
+	if not get_node(movement) is MovementComponent:
+		return ["movement must be a MovementComponent node"]
 
-    if movement.is_empty():
-        return ["movement node path is missing"]
-    if not get_node(movement) is MovementComponent:
-        return ["movement must be a MovementComponent node"]
+	if dodge.is_empty():
+		return ["dodge node path is missing"]
+	if not get_node(dodge) is DodgeComponent:
+		return ["dodge must be a DodgeComponent node"  ]
 
-    if dodge.is_empty():
-        return ["dodge node path is missing"]
-    if not get_node(dodge) is DodgeComponent:
-        return ["dodge must be a DodgeComponent node"  ]
+	if weapon_manager.is_empty():
+		return ["weapon_manager node path is missing"]
+	if not get_node(weapon_manager) is WeaponManager:
+		return ["weapon_manager must be WeaponManager node"]
 
-    if weapon_manager.is_empty():
-        return ["weapon_manager node path is missing"]
-    if not get_node(weapon_manager) is WeaponManager:
-        return ["weapon_manager must be WeaponManager node"]
+	if actor.is_empty():
+		return ["actor node path is missing"]
+	if not get_node(actor) is Player:
+			return ["actor must be Player node"]
 
-    if actor.is_empty():
-        return ["actor node path is missing"]
-    if not get_node(actor) is Player:
-            return ["actor must be Player node"]
-
-    return []
+	return []
 
 func _ready() -> void:
-    _dodge.connect("dodge_finished", Callable(self, "_on_dodge_finished"))
-    _dodge.connect("dodge_cooldown_begin", Callable(self, "_on_dodge_cooldown_begin"))
-    _dodge.connect("dodge_cooldown_end", Callable(self, "_on_dodge_cooldown_end"))
+	_dodge.connect("dodge_finished", Callable(self, "_on_dodge_finished"))
+	_dodge.connect("dodge_cooldown_begin", Callable(self, "_on_dodge_cooldown_begin"))
+	_dodge.connect("dodge_cooldown_end", Callable(self, "_on_dodge_cooldown_end"))
 
-    super._ready()
+	super()
 
 func _on_dodge_finished() -> void:
-    _is_dodging = false
+	_is_dodging = false
 
 func _on_dodge_cooldown_begin() -> void:
-    print("dodge cooldown begin")
+	print("dodge cooldown begin")
 
 func _on_dodge_cooldown_end() -> void:
-    print("dodge cooldown end")
+	print("dodge cooldown end")
 
 func _physics_process(delta: float) -> void:
-    super._physics_process(delta)
+	if Engine.is_editor_hint():
+		return
 
-    if Engine.is_editor_hint():
-        return
-    
-    if _actor.is_dead:
-        return
+	if _actor.is_dead:
+		return
 
-    update_movement()
-    update_weapon_input()
+	update_movement()
+	update_weapon_input()
 
 func enable_control() -> void:
-    super.enable_control()
+	super()
 
 func disable_control() -> void:
-    super.disable_control()
+	super()
 
 func update_movement() -> void:
-    if _movement == null:
-        return
-    
-    if not _is_dodging:
-        # Get direction from input
-        var direction: Vector2 = Vector2(
-            Input.get_axis("move_left", "move_right"),
-            Input.get_axis("move_up", "move_down")
-        ).normalized()
+	if _movement == null:
+		return
+	
+	if not _is_dodging:
+		# Get direction from input
+		var direction: Vector2 = Vector2(
+			Input.get_axis("move_left", "move_right"),
+			Input.get_axis("move_up", "move_down")
+		).normalized()
 
-        _movement.process_move(direction)
-    else:
-        _dodge.process_dodge(_dodge_direction)
+		_movement.process_move(direction)
+	else:
+		_dodge.process_dodge(_dodge_direction)
 
-    if (Input.is_action_just_pressed("Dodge") and 
-        not _is_dodging and _dodge.is_dodge_avaliable):
-        _is_dodging = true
-        _dodge_direction = Vector2(
-            Input.get_axis("move_left", "move_right"),
-            Input.get_axis("move_up", "move_down")
-        ).normalized()
-    
+	if (Input.is_action_just_pressed("Dodge") and 
+		not _is_dodging and _dodge.is_dodge_avaliable):
+		_is_dodging = true
+		_dodge_direction = Vector2(
+			Input.get_axis("move_left", "move_right"),
+			Input.get_axis("move_up", "move_down")
+		).normalized()
+	
 func update_weapon_input() -> void:
-    if _weapon_manager == null:
-        return
+	if _weapon_manager == null:
+		return
 
-    # execute weapon 
-    if Input.is_action_pressed("primary"): 
-        _weapon_manager.execute_weapon()
-    elif Input.is_action_just_released("primary"):
-        _weapon_manager.cancel_weapon_execution()
+	# execute weapon 
+	if Input.is_action_pressed("primary"): 
+		_weapon_manager.execute_weapon()
+	elif Input.is_action_just_released("primary"):
+		_weapon_manager.cancel_weapon_execution()
 
-    if Input.is_action_pressed("secondary"):
-        _weapon_manager.execute_weapon_alt()
-    elif Input.is_action_just_released("secondary"):
-        _weapon_manager.cancel_weapon_alt_execution()
+	if Input.is_action_pressed("secondary"):
+		_weapon_manager.execute_weapon_alt()
+	elif Input.is_action_just_released("secondary"):
+		_weapon_manager.cancel_weapon_alt_execution()
 

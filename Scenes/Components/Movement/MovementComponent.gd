@@ -46,9 +46,6 @@ var movement_speed_multiplier: float = 1.0
 var _velocity: Vector2 = Vector2.ZERO
 
 func _get_configuration_warnings() -> PackedStringArray:
-	if not super._get_configuration_warnings().is_empty():
-		return super._get_configuration_warnings()
-		
 	if target.is_empty():
 		return ["target node path is missing"]
 	

@@ -1,10 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://jxaapvsk5ay1"]
 
-[ext_resource path="res://Scenes/Components/VFX/Effects/DashEffect.gd" type="Script" id=1]
+[ext_resource type="Script" path="res://Scenes/Components/VFX/Effects/DashEffect.gd" id="1"]
 
 [node name="DashEffect" type="Node2D"]
-script = ExtResource( 1 )
-initial_color = Color( 0.541176, 0.541176, 0.541176, 0.501961 )
-trans_type = 8
-
-[node name="Tween" type="Tween" parent="."]
+script = ExtResource("1")
+initial_color = Color(0.541176, 0.541176, 0.541176, 0.501961)

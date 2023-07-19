@@ -8,9 +8,6 @@ extends Node
 @onready var _health_comp: HealthComponent = get_node(healthComponent) as HealthComponent
 
 func _get_configuration_warnings() -> PackedStringArray:
-    if not super._get_configuration_warnings().is_empty():
-        return super._get_configuration_warnings()
-
     if healthComponent.is_empty():
         return ["healthComponent node path is missing"]
     if not get_node(healthComponent) is HealthComponent:
@@ -19,12 +16,13 @@ func _get_configuration_warnings() -> PackedStringArray:
     return []
 
 func _ready() -> void:
+    if Engine.is_editor_hint():
+        return
+
     _health_comp.connect("health_updated", Callable(self, "_on_health_updated"))
     _health_comp.connect("max_health_updated", Callable(self, "_on_max_health_updated"))
     UIEvents.emit_signal("player_health_updated",
         _health_comp._health, _health_comp.max_health)
-    
-    super._ready()
 
 func _on_health_updated(health_context:HealthComponent.HealthContext) -> void:
     UIEvents.emit_signal("player_health_updated", 

@@ -23,8 +23,6 @@ func set_max_dodge_value(value:float) -> void:
     bar_under.value = bar_under.max_value
 
 func _ready() -> void:
-    super._ready()
-    
     update_bar_color()
 
 func update_bar_color() -> void:
