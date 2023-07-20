@@ -19,9 +19,9 @@ const DIE = "die"
 @export var character: NodePath
 
 # MovementComponent
-@onready var _movement: MovementComponent = get_node(movement)
-@onready var _health_comp: HealthComponent = get_node(health)
-@onready var _character: Character = get_node(character)
+@onready var _movement: MovementComponent = get_node_or_null(movement)
+@onready var _health_comp: HealthComponent = get_node_or_null(health)
+@onready var _character: Character = get_node_or_null(character)
 
 
 # Velocity from MovementComponent

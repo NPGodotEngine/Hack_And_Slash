@@ -7,7 +7,7 @@ extends Marker2D
 @export var character: NodePath
 @export var damage_text: PackedScene
 
-@onready var _character: Character = get_node(character) as Character
+@onready var _character: Character = get_node_or_null(character)
 
 
 func _get_configuration_warnings() -> PackedStringArray:

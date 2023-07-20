@@ -14,14 +14,14 @@ extends Weapon
 @export var muzzle_flash: NodePath
 @export var muzzle_flash_duration: float = 0.1
 
-@onready var _accuracy: AccuracyComponent = get_node(accuracy) as AccuracyComponent
-@onready var _ranged_damage: RangedDamageComponent = get_node(ranged_damage) as RangedDamageComponent
-@onready var _critical: CriticalComponent = get_node(critical) as CriticalComponent
-@onready var _angle_spread: AngleSpreadComponent = get_node(angle_spread) as AngleSpreadComponent
-@onready var _trigger: Trigger = get_node(trigger) as Trigger
-@onready var _ammo: Ammo = get_node(ammo) as Ammo
+@onready var _accuracy: AccuracyComponent = get_node_or_null(accuracy)
+@onready var _ranged_damage: RangedDamageComponent = get_node_or_null(ranged_damage)
+@onready var _critical: CriticalComponent = get_node_or_null(critical)
+@onready var _angle_spread: AngleSpreadComponent = get_node_or_null(angle_spread)
+@onready var _trigger: Trigger = get_node_or_null(trigger)
+@onready var _ammo: Ammo = get_node_or_null(ammo)
 @onready var _fire_points: Array = get_fire_points()
-@onready var _muzzle_flash: MuzzleFlash = get_node(muzzle_flash) as MuzzleFlash
+@onready var _muzzle_flash: MuzzleFlash = get_node_or_null(muzzle_flash)
 
 
 	

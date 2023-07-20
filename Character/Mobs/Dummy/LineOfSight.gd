@@ -4,7 +4,7 @@ extends Node2D
 @export var distance: float = 100.0
 @export var target_detector_ref: NodePath
 
-@onready var _target_detector: TargetDetector = get_node(target_detector_ref) as TargetDetector
+@onready var _target_detector: TargetDetector = get_node_or_null(target_detector_ref)
 @onready var raycast: RayCast2D = $RayCast2D
 
 var target = null

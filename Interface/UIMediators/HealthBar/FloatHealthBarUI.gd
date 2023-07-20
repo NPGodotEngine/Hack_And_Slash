@@ -10,7 +10,7 @@ extends Marker2D
 @export var healthbar_scene: PackedScene
 @export var healthbar_size: Vector2 = Vector2(1.0, 1.0)
 
-@onready var _health_comp: HealthComponent = get_node(healthComponent) as HealthComponent
+@onready var _health_comp: HealthComponent = get_node_or_null(healthComponent)
 
 # Health bar UI
 # var healthbar:HealthBar

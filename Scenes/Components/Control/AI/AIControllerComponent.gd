@@ -10,8 +10,8 @@ extends Controller
 @export var actor: NodePath
 @export var target_follower: NodePath
 
-@onready var _target_follower: TargetFollowerComponent = get_node(target_follower) as TargetFollowerComponent
-@onready var _actor: CharacterBody2D = get_node(actor) as CharacterBody2D
+@onready var _target_follower: TargetFollowerComponent = get_node_or_null(target_follower)
+@onready var _actor: CharacterBody2D = get_node_or_null(actor)
 
 
 func _get_configuration_warnings() -> PackedStringArray:

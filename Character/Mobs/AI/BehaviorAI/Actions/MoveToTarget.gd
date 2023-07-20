@@ -2,7 +2,7 @@ extends ActionLeaf
 
 @export var move_component_ref: NodePath
 
-@onready var _move_comp: MovementComponent = get_node(move_component_ref) as MovementComponent
+@onready var _move_comp: MovementComponent = get_node_or_null(move_component_ref)
 
 func tick(actor:Node, blackboard:Blackboard):
 	if blackboard.get_value("detected_target") != null:

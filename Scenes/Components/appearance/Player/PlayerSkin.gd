@@ -11,7 +11,7 @@ const HIT = "hit"
 
 @export var dodge: NodePath
 
-@onready var _dodge: DodgeComponent = get_node(dodge)
+@onready var _dodge: DodgeComponent = get_node_or_null(dodge)
 
 @onready var _anim_player: AnimationPlayer = $AnimationPlayer
 

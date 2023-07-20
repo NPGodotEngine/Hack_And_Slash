@@ -9,8 +9,8 @@ extends Node
 @export var weapon: NodePath
 @export var ammo: NodePath
 
-@onready var _weapon: Weapon = get_node(weapon) as Weapon
-@onready var _ammo: Ammo = get_node(ammo) as Ammo
+@onready var _weapon: Weapon = get_node_or_null(weapon)
+@onready var _ammo: Ammo = get_node_or_null(ammo)
 
 func _get_configuration_warnings() -> PackedStringArray:
     if weapon.is_empty():

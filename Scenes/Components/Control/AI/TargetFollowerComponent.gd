@@ -18,8 +18,8 @@ extends Node
 # Target will never out of range
 @export var permanent_target: bool = false
 
-@onready var _movement: MovementComponent = get_node(movement) as MovementComponent
-@onready var _actor: CharacterBody2D = get_node(actor) as CharacterBody2D
+@onready var _movement: MovementComponent = get_node_or_null(movement)
+@onready var _actor: CharacterBody2D = get_node_or_null(actor)
 
 # The target this follower will move to
 var target = null

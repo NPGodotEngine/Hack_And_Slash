@@ -37,7 +37,7 @@ signal velocity_updated(velocity_context)
 # Movement speed
 @export var movement_speed: float = 200.0
 
-@onready var _target: CharacterBody2D = get_node(target) as CharacterBody2D
+@onready var _target: CharacterBody2D = get_node_or_null(target)
 
 # Movement speed multiplier
 var movement_speed_multiplier: float = 1.0

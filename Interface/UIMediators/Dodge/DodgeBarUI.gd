@@ -10,7 +10,7 @@ extends Node
 # Whether to update UI in physics process or not
 @export var physics_update: bool = true
 
-@onready var _dodge_comp: DodgeComponent = get_node(dodgeComponent) as DodgeComponent
+@onready var _dodge_comp: DodgeComponent = get_node_or_null(dodgeComponent)
 
 func _get_configuration_warnings() -> PackedStringArray:
     if dodgeComponent.is_empty():

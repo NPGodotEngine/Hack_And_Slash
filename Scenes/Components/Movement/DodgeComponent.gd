@@ -70,7 +70,7 @@ signal display_dodge_particles(particles_effect)
 @export var dodge_particles: PackedScene
 
 
-@onready var _target: CharacterBody2D = get_node(target) as CharacterBody2D
+@onready var _target: CharacterBody2D = get_node_or_null(target)
 @onready var _dodge_timer: Timer = $DodgeTimer
 @onready var _cooldown_timer: Timer = $CooldownTimer
 @onready var _dodge_delay_recover_timer: Timer = $DelayTimer

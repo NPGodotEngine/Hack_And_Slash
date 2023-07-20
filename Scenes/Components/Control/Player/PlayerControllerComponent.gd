@@ -20,15 +20,15 @@ extends Controller
 @export var actor: NodePath
 
 # MovementComponent
-@onready var _movement: MovementComponent = get_node(movement) as MovementComponent
+@onready var _movement: MovementComponent = get_node_or_null(movement)
 
 # DodgeComponent
-@onready var _dodge: DodgeComponent = get_node(dodge) as DodgeComponent
+@onready var _dodge: DodgeComponent = get_node_or_null(dodge)
 
 # WeaponManager
-@onready var _weapon_manager: WeaponManager = get_node(weapon_manager) as WeaponManager
+@onready var _weapon_manager: WeaponManager = get_node_or_null(weapon_manager)
 
-@onready var _actor: Player = get_node(actor) as Player
+@onready var _actor: Player = get_node_or_null(actor)
 
 # Whether actor is in dodging or not
 var _is_dodging: bool = false

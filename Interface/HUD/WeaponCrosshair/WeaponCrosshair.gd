@@ -9,8 +9,8 @@ extends Node
 @export var ammo_ref: NodePath
 @export var crosshair_scene: PackedScene
 
-@onready var _weapon: Weapon = get_node(weapon_ref) as Weapon
-@onready var _ammo:Ammo = get_node(ammo_ref) as Ammo
+@onready var _weapon: Weapon = get_node_or_null(weapon_ref)
+@onready var _ammo:Ammo = get_node_or_null(ammo_ref)
 
 var _crosshair: Node2D
 

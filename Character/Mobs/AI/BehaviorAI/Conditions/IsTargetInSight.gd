@@ -3,7 +3,7 @@ extends ConditionLeaf
 
 @export var line_of_sight_ref: NodePath
 
-@onready var _line_of_sight: LineOfSight = get_node(line_of_sight_ref) as LineOfSight
+@onready var _line_of_sight: LineOfSight = get_node_or_null(line_of_sight_ref)
 
 func tick(_actor:Node, blackboard:Blackboard):
 	var target = blackboard.get_value("detected_target")

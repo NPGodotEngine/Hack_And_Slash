@@ -5,7 +5,7 @@ extends Node
 
 @export var healthComponent: NodePath
 
-@onready var _health_comp: HealthComponent = get_node(healthComponent) as HealthComponent
+@onready var _health_comp: HealthComponent = get_node_or_null(healthComponent)
 
 func _get_configuration_warnings() -> PackedStringArray:
     if healthComponent.is_empty():

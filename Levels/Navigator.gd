@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var agent: NodePath
-@onready var nav_agent: NavigationAgent2D = get_node(agent) as NavigationAgent2D
+@onready var nav_agent: NavigationAgent2D = get_node_or_null(agent)
 
 func _ready():
 	# These values need to be adjusted for the actor's speed
