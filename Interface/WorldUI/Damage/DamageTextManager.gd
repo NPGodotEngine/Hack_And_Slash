@@ -1,4 +1,4 @@
-extends Node
+extends Control
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 

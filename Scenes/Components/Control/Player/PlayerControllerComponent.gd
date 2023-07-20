@@ -73,7 +73,7 @@ func _on_dodge_cooldown_begin() -> void:
 func _on_dodge_cooldown_end() -> void:
 	print("dodge cooldown end")
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
 

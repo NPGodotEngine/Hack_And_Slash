@@ -102,7 +102,7 @@ var _is_cooldown: bool = false
 var _is_delay_recover: bool = false
 
 
-func no_set(value):
+func no_set(_value):
 	pass
 
 func get_dodge_progress() -> DodgeProgress:
@@ -191,9 +191,8 @@ func process_dodge(direction:Vector2) -> void:
 	if _is_dodging:
 		var dodge_velocity: Vector2 = direction * dodge_speed
 		_target.set_velocity(dodge_velocity)
-		_target.set_up_direction(Vector2.ZERO)
 		_target.move_and_slide()
-		_target.velocity
+		# _target.velocity
 
 		if dodge_effect:
 			var effect = dodge_effect.instantiate()

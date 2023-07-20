@@ -36,6 +36,7 @@ script = ExtResource("3")
 target = NodePath("..")
 
 [node name="HealthComponent" parent="." instance=ExtResource("6")]
+max_health = 500.0
 
 [node name="MobSkin" parent="." instance=ExtResource("1")]
 sprite_frames = ExtResource("5_4x6v5")
@@ -62,7 +63,7 @@ shape = SubResource("8")
 actor = NodePath("..")
 
 [node name="FloatHealthBar" parent="." instance=ExtResource("8")]
-position = Vector2(0, -60)
+position = Vector2(0, -35)
 healthComponent = NodePath("../HealthComponent")
 
 [node name="DamageTextUI" parent="." instance=ExtResource("10")]

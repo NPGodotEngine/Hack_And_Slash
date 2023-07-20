@@ -60,10 +60,10 @@ func _ready() -> void:
 	play(IDLE)
 
 func _physics_process(delta: float) -> void:
-
 	if Engine.is_editor_hint():
 		return
-	
+
+	update_skin()
 	process_animation(delta)
 
 func _on_velocity_updated(velocity_context:MovementComponent.VelocityContext) -> void:
@@ -80,7 +80,6 @@ func process_animation(_delta:float) -> void:
 	if _health_comp._health <= 0.0:
 		return 
 
-	update_skin()
 	if abs(_velocity.x) <= 0.1 and abs(_velocity.y) <= 0.1:
 		play(IDLE)
 	elif get_global_mouse_position().x < global_position.x and _velocity.x > 0.0:

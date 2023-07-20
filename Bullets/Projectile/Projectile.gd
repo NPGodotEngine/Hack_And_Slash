@@ -111,4 +111,3 @@ func add_ignored_bodies(bodies:Array) -> void:
 			_ignored_bodies.append(body)
 		else:
 			assert(false, "%s can not be added as it is not a Node" % body.name)
-

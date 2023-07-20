@@ -41,9 +41,3 @@ signal add_weapon_crosshair(crosshair)
 ##
 # `reload_indicator`: indicator Node2D object
 signal add_weapon_reload_indicator(reload_indicator)
-
-# Emit when a float health bar ui need to be added
-# to World UI
-##
-# `float_health_bar_ui`: the ui for float health bar
-signal add_float_health_bar_ui(float_health_bar_ui)

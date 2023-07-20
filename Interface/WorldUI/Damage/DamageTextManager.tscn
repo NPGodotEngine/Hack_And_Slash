@@ -2,5 +2,7 @@
 
 [ext_resource type="Script" path="res://Interface/WorldUI/Damage/DamageTextManager.gd" id="1"]
 
-[node name="DamageTextManager" type="Node"]
+[node name="DamageTextManager" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1")
