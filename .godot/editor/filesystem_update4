@@ -1,16 +1,1 @@
-res://Interface/HUD/WeaponCrosshair/WeaponCrosshair.gd
-res://default_env.tres
-res://Levels/TestLevel.tscn
-res://Character/Mobs/Animations/Mob_anim.tres
-res://System/Style/UI_theme.tres
-res://Character/Player/Animations/Soldier_anim.tres
-res://Character/Mobs/Dummy/Dummy1.tscn
-res://Character/Mobs/Dummy/DummyChase.tscn
-res://Character/Mobs/AI/MobAI.tscn
-res://Scenes/Prefabs/Characters/Players/Soldier_Pl.tscn
-res://Scenes/Prefabs/Weapons/AKM/AKM_Weapon.tscn
-res://Scenes/Prefabs/Weapons/Beretta/Beretta_Weapon.tscn
-res://Scenes/Prefabs/Weapons/M4A1/M4A1_Weapon.tscn
-res://Scenes/Prefabs/Weapons/MosinNagant/Mosin_Nagant_Weapon.tscn
-res://Scenes/Prefabs/Weapons/Template/WeaponTemplate_Weapon.tscn
-res://Scenes/Prefabs/Weapons/AA12/AA12_Weapon.tscn
+res://Scenes/Components/appearance/Mob/MobSkin.gd

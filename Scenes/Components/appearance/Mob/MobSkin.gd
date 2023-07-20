@@ -25,11 +25,14 @@ func _get_configuration_warnings() -> PackedStringArray:
 	return []
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+
 	super()
 	_character.connect("on_character_take_damage", Callable(self, "_on_charater_take_damage"))
 
 
-func _on_charater_take_damage(hit_damage:HitDamage, total_damage:int) -> void:
+func _on_charater_take_damage(_hit_damage:HitDamage, _total_damage:int) -> void:
 	_anim_player.play("hit")
 
 func _on_anim_finished() -> void:
