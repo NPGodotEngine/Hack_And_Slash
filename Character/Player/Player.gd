@@ -22,6 +22,7 @@ extends Character
 var is_dead: bool = false
 
 func _ready() -> void:
+	super()
 	_hurt_box.connect("take_damage", Callable(self, "_on_take_damage"))
 
 	_exp_comp.connect("progress_updated", Callable(self, "_on_progress_updated"))
@@ -105,8 +106,6 @@ func heal(amount:int) -> void:
 
 # for testing health bar
 func _unhandled_input(event: InputEvent) -> void:
-	super(event)
-	
 	if event.is_action_pressed("ui_down"): 
 		if not is_dead:
 			# var added_xp = rand_range(100.0, 440.0)

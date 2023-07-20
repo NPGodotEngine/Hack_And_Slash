@@ -22,19 +22,16 @@ func set_paried_hurt_box(hurt_box) -> void:
 
 	
 func _ready() -> void:
-	collision_layer = 0
 	connect("body_entered", Callable(self, "_on_body_entered"))
 
 func _on_body_entered(body:Node) -> void:
 	if body is StaticBody2D:
 		emit_signal("contacted_static_body", body)
 
-# Add new hit mask
-func add_hit_mask(new_mask:int) -> void:
-	# bitwise OR
-	collision_mask |= new_mask
+# Add new mask to layer
+func add_layer_mask(new_mask:int) -> void:
+	collision_layer |= new_mask
 
-# Remove a hit mask
-func remove_hit_mask(mask:int) -> void:
-	# bitwise XOR
-	collision_mask ^= mask
+# Remove a mask from layer
+func remove_layer_mask(mask:int) -> void:
+	collision_layer ^= mask

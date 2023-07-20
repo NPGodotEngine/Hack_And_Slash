@@ -35,9 +35,7 @@ func _on_target_lost(_target_lost_context:TargetDetector.TargetLostContext) -> v
         target = null
     is_target_in_sight = false
 
-func _physics_process(delta: float) -> void:
-    super(delta)
-
+func _physics_process(_delta: float) -> void:
     if target != null and raycast.enabled:
         # update raycast
         var target_dir: Vector2 = global_position.direction_to(target.global_position)

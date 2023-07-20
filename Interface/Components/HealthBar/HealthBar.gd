@@ -39,6 +39,8 @@ func set_max_health(value:float) -> void:
 
 	health_bar_over.max_value = max_health
 	health_bar_under.max_value = max_health
+	
+	update_health_bar_color()
 
 func _ready() -> void:
 	update_health_bar_color()

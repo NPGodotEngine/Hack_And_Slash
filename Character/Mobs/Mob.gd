@@ -12,6 +12,7 @@ var mob_behavior_ai: BeehaveTree
 var is_dead: bool = false
 
 func _ready() -> void:
+	super()
 	_hurt_box.connect("take_damage", Callable(self, "_on_take_damage"))
 	_health_comp.connect("die", Callable(self, "_on_die"))
 

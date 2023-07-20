@@ -67,9 +67,13 @@ func _get_configuration_warnings() -> PackedStringArray:
 		return ["a default weapon_attributes must be given"]
 	return []
 
-func _physics_process(delta: float) -> void:
-	super(delta)
+func _ready() -> void:
+	pass
 
+func _process(_delta:float) -> void:
+	pass
+
+func _physics_process(_delta: float) -> void:
 	update_weapon_skin()
 
 # func queue_free() -> void:

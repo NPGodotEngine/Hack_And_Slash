@@ -18,7 +18,7 @@ var healthbar:HealthBar
 # A position 2d whose global position will 
 # be updated by this component with healthbar 
 # ui attached as child
-var _pos: Marker2D
+var _pos: Node2D
 
 func _get_configuration_warnings() -> PackedStringArray:
 	if healthComponent.is_empty():
@@ -31,7 +31,7 @@ func _get_configuration_warnings() -> PackedStringArray:
 func _init() -> void:
 	super()
 
-	_pos = Marker2D.new()
+	_pos = Node2D.new()
 	
 func _ready() -> void:
 	if Engine.is_editor_hint():
@@ -69,11 +69,10 @@ func _process(_delta: float) -> void:
 
 	_pos.global_position = get_global_transform_with_canvas().origin
 
-# func queue_free() -> void:
-# 	if _pos.get_parent():
-# 		_pos.get_parent().remove_child(_pos)
-# 		_pos.queue_free()
-# 	super.queue_free()
+func _exit_tree() -> void:
+	if _pos.get_parent():
+		_pos.get_parent().remove_child(_pos)
+		_pos.queue_free()
 
 func configure_healthbar() -> void:
 	healthbar.max_health = _health_comp.max_health

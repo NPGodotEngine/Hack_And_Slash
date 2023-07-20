@@ -1,82 +1,82 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=17 format=3 uid="uid://bp0rrbdkw3mm0"]
 
-[ext_resource path="res://Assets/Weapons/Weapons_sheet.png" type="Texture2D" id=1]
-[ext_resource path="res://Scenes/Prefabs/Weapons/AA12/AA12_Attr.tres" type="Resource" id=2]
-[ext_resource path="res://Scenes/Components/Weapon/Weapons/ShotgunWeapon.gd" type="Script" id=3]
-[ext_resource path="res://Scenes/Components/Weapon/Ammo/ShotgunAmmo.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Bullets/Projectile/ProjectileBullet/ProjectileBullet.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scenes/Components/Weapon/MuzzleFlash/MuzzleFlash.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/Components/Accuracy/AccuracyComponent.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Scenes/Components/Weapon/Trigger/AutoTrigger.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Scenes/Components/Damage/RangedDamageComponent.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Scenes/Components/CriticalStrike/CriticalComponent.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Scenes/Components/Spread/AngleSpreadComponent.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Interface/HUD/WeaponReloadIndicator/WeaponReloadIndicator.tscn" type="PackedScene" id=12]
-[ext_resource path="res://Interface/Components/Crosshair/Crosshair.tscn" type="PackedScene" id=13]
-[ext_resource path="res://Interface/HUD/WeaponCrosshair/WeaponCrosshair.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Interface/Components/ReloadIndicator/ReloadIndicator.tscn" type="PackedScene" id=15]
-[ext_resource path="res://Interface/UIMediators/Ammo/AmmoUI.tscn" type="PackedScene" id=17]
+[ext_resource type="Texture2D" uid="uid://sjn5us35476j" path="res://Assets/Weapons/Weapons_sheet.png" id="1"]
+[ext_resource type="Resource" path="res://Scenes/Prefabs/Weapons/AA12/AA12_Attr.tres" id="2"]
+[ext_resource type="Script" path="res://Scenes/Components/Weapon/Weapons/ShotgunWeapon.gd" id="3"]
+[ext_resource type="PackedScene" uid="uid://b5fu2s50k8kao" path="res://Scenes/Components/Weapon/Ammo/ShotgunAmmo.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://bfomehf0p7kg8" path="res://Bullets/Projectile/ProjectileBullet/ProjectileBullet.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://Scenes/Components/Weapon/MuzzleFlash/MuzzleFlash.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://Scenes/Components/Accuracy/AccuracyComponent.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://Scenes/Components/Weapon/Trigger/AutoTrigger.tscn" id="8"]
+[ext_resource type="PackedScene" uid="uid://byk66rn231q1m" path="res://Scenes/Components/Damage/RangedDamageComponent.tscn" id="9"]
+[ext_resource type="PackedScene" uid="uid://k0s0m3pogx2h" path="res://Scenes/Components/CriticalStrike/CriticalComponent.tscn" id="10"]
+[ext_resource type="PackedScene" uid="uid://cv64mrumrrebf" path="res://Scenes/Components/Spread/AngleSpreadComponent.tscn" id="11"]
+[ext_resource type="PackedScene" uid="uid://cm0u7m5sjctj7" path="res://Interface/HUD/WeaponReloadIndicator/WeaponReloadIndicator.tscn" id="12"]
+[ext_resource type="PackedScene" path="res://Interface/Components/Crosshair/Crosshair.tscn" id="13"]
+[ext_resource type="PackedScene" uid="uid://bw7p5rv0jc4aq" path="res://Interface/HUD/WeaponCrosshair/WeaponCrosshair.tscn" id="14"]
+[ext_resource type="PackedScene" path="res://Interface/Components/ReloadIndicator/ReloadIndicator.tscn" id="15"]
+[ext_resource type="PackedScene" uid="uid://qhd2epbujiwg" path="res://Interface/UIMediators/Ammo/AmmoUI.tscn" id="17"]
 
 [node name="AA12" type="Node2D"]
-script = ExtResource( 3 )
-weapon_attributes = ExtResource( 2 )
+script = ExtResource("3")
 accuracy = NodePath("AccuracyComponent")
 ranged_damage = NodePath("RangedDamageComponent")
 critical = NodePath("CriticalComponent")
 angle_spread = NodePath("AngleSpreadComponent")
 trigger = NodePath("AutoTrigger")
 ammo = NodePath("ShotgunAmmo")
-fire_points = [ NodePath("FirePoint") ]
+fire_points = [NodePath("FirePoint")]
 muzzle_flash = NodePath("MuzzleFlash")
+weapon_attributes = ExtResource("2")
 
-[node name="RangedDamageComponent" parent="." instance=ExtResource( 9 )]
+[node name="RangedDamageComponent" parent="." instance=ExtResource("9")]
 max_damage = 18.0
 min_damage = 10.0
 
-[node name="CriticalComponent" parent="." instance=ExtResource( 10 )]
+[node name="CriticalComponent" parent="." instance=ExtResource("10")]
 critical_chance = 0.4
 
-[node name="AccuracyComponent" parent="." instance=ExtResource( 7 )]
+[node name="AccuracyComponent" parent="." instance=ExtResource("7")]
 accuracy = 0.1
 
-[node name="AngleSpreadComponent" parent="." instance=ExtResource( 11 )]
+[node name="AngleSpreadComponent" parent="." instance=ExtResource("11")]
 spread_range_degree = 6.5
 
-[node name="ShotgunAmmo" parent="." instance=ExtResource( 4 )]
+[node name="ShotgunAmmo" parent="." instance=ExtResource("4")]
 bullet_speed = 1500.0
 bullet_life_span = 2.0
 bullet_penetration_chance = 0.3
-bullet_scene = ExtResource( 5 )
+bullet_scene = ExtResource("5")
 rounds_per_clip = 20
 reload_duration = 1.6
 
-[node name="AutoTrigger" parent="." instance=ExtResource( 8 )]
+[node name="AutoTrigger" parent="." instance=ExtResource("8")]
 trigger_duration = 0.65
 
-[node name="MuzzleFlash" parent="." instance=ExtResource( 6 )]
-position = Vector2( 38, 2 )
+[node name="MuzzleFlash" parent="." instance=ExtResource("6")]
+position = Vector2(38, 2)
 
 [node name="FirePoint" type="Marker2D" parent="."]
-position = Vector2( 32, 1 )
+position = Vector2(32, 1)
 
 [node name="Appearance" type="Node2D" parent="."]
-position = Vector2( 3, 6 )
+position = Vector2(3, 6)
 
 [node name="weapon" type="Sprite2D" parent="Appearance"]
-texture = ExtResource( 1 )
+texture = ExtResource("1")
 region_enabled = true
-region_rect = Rect2( 4, 85, 56, 22 )
+region_rect = Rect2(4, 85, 56, 22)
 
-[node name="WeaponCrosshair" parent="." instance=ExtResource( 14 )]
+[node name="WeaponCrosshair" parent="." instance=ExtResource("14")]
 weapon = NodePath("..")
 ammo = NodePath("../ShotgunAmmo")
-crosshair_scene = ExtResource( 13 )
+crosshair_scene = ExtResource("13")
 
-[node name="WeaponReloadIndicator" parent="." instance=ExtResource( 12 )]
+[node name="WeaponReloadIndicator" parent="." instance=ExtResource("12")]
 weapon = NodePath("..")
 ammo = NodePath("../ShotgunAmmo")
-reloadbar_scene = ExtResource( 15 )
+reloadbar_scene = ExtResource("15")
 
-[node name="AmmoUI" parent="." instance=ExtResource( 17 )]
+[node name="AmmoUI" parent="." instance=ExtResource("17")]
 weapon = NodePath("..")
 ammo = NodePath("../ShotgunAmmo")

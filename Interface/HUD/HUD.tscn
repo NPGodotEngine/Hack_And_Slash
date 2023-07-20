@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://b5opgp2ha8duk"]
 
 [ext_resource type="Script" path="res://Interface/HUD/HUD.gd" id="1"]
-[ext_resource type="PackedScene" path="res://Interface/HUD/HPState/HPState.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://Interface/HUD/DodgeState/DodgeState.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://Interface/HUD/AmmoState/AmmoState.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://dvx6a7fk4mtac" path="res://Interface/HUD/HPState/HPState.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://clo3j0r6nmgf0" path="res://Interface/HUD/DodgeState/DodgeState.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://c18xre6euvsis" path="res://Interface/HUD/AmmoState/AmmoState.tscn" id="4"]
 [ext_resource type="Theme" uid="uid://bsr2r3ekdaf0f" path="res://System/Style/UI_theme.tres" id="5"]
 [ext_resource type="Script" path="res://Interface/HUD/HUDCursor.gd" id="6"]
 
@@ -17,25 +17,27 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -40.0
 grow_vertical = 0
+size_flags_horizontal = 4
 theme = ExtResource("5")
 theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PlayerState"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerState"]
 layout_mode = 2
-theme_override_constants/separation = 658
+size_flags_horizontal = 0
+size_flags_vertical = 8
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PlayerState/HBoxContainer"]
-layout_mode = 2
-
-[node name="HPState" parent="PlayerState/HBoxContainer/VBoxContainer" instance=ExtResource("2")]
+[node name="HPState" parent="PlayerState/VBoxContainer" instance=ExtResource("2")]
 layout_mode = 2
 
-[node name="DodgeState" parent="PlayerState/HBoxContainer/VBoxContainer" instance=ExtResource("3")]
+[node name="DodgeState" parent="PlayerState/VBoxContainer" instance=ExtResource("3")]
 layout_mode = 2
 
-[node name="AmmoState" parent="PlayerState/HBoxContainer" instance=ExtResource("4")]
+[node name="AmmoState" parent="PlayerState" instance=ExtResource("4")]
 layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
 
 [node name="HUDCursor" type="Control" parent="."]
 layout_mode = 3

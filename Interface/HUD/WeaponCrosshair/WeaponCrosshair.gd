@@ -68,13 +68,11 @@ func _process(_delta: float) -> void:
 	if _crosshair:
 		_crosshair.global_position = _crosshair.get_global_mouse_position()
 
-# func queue_free() -> void:
-#     if _crosshair:
-#         _crosshair.queue_free()
+func _exit_tree() -> void:
+	if _crosshair:
+		_crosshair.queue_free()
 
-#         if _crosshair.get_parent():
-#             _crosshair.get_parent().remove_child(_crosshair)
-	
-#     super.queue_free()
+		if _crosshair.get_parent():
+			_crosshair.get_parent().remove_child(_crosshair)
 
 

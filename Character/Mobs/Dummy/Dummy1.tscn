@@ -4,20 +4,20 @@
 [ext_resource type="Script" path="res://Character/Mobs/Mob.gd" id="2"]
 [ext_resource type="Script" path="res://Scenes/Components/Movement/MovementComponent.gd" id="3"]
 [ext_resource type="Script" path="res://Scenes/Components/HitHurt/HurtBox.gd" id="4"]
-[ext_resource type="PackedScene" path="res://Scenes/Components/Detection/TargetDetector.tscn" id="5"]
+[ext_resource type="PackedScene" uid="uid://dyq742s55trax" path="res://Scenes/Components/Detection/TargetDetector.tscn" id="5"]
 [ext_resource type="SpriteFrames" uid="uid://b8oiaeihislm3" path="res://Character/Mobs/Animations/Mob_anim.tres" id="5_4x6v5"]
-[ext_resource type="PackedScene" path="res://Scenes/Components/Health/HealthComponent.tscn" id="6"]
-[ext_resource type="PackedScene" path="res://Interface/WorldUI/Damage/DamageLabel.tscn" id="7"]
-[ext_resource type="PackedScene" path="res://Interface/UIMediators/HealthBar/FloatHealthBarUI.tscn" id="8"]
+[ext_resource type="PackedScene" uid="uid://eaiyf65ypdbm" path="res://Scenes/Components/Health/HealthComponent.tscn" id="6"]
+[ext_resource type="PackedScene" uid="uid://b4m4a3hj8q8hr" path="res://Interface/WorldUI/Damage/DamageLabel.tscn" id="7"]
+[ext_resource type="PackedScene" uid="uid://bxygst4b7f1ek" path="res://Interface/UIMediators/HealthBar/FloatHealthBarUI.tscn" id="8"]
 [ext_resource type="PackedScene" path="res://Scenes/Components/Control/AI/AIControllerComponent.tscn" id="9"]
-[ext_resource type="PackedScene" path="res://Interface/UIMediators/Damage/DamageTextUI.tscn" id="10"]
+[ext_resource type="PackedScene" uid="uid://cvcnfm58je70e" path="res://Interface/UIMediators/Damage/DamageTextUI.tscn" id="10"]
 
 [sub_resource type="CapsuleShape2D" id="9"]
-radius = 18.0
-height = 36.0
+radius = 16.0
+height = 52.0
 
 [sub_resource type="RectangleShape2D" id="10"]
-size = Vector2(14, 22)
+size = Vector2(30, 44)
 
 [sub_resource type="CircleShape2D" id="8"]
 radius = 213.021
@@ -45,8 +45,8 @@ health = NodePath("../HealthComponent")
 character = NodePath("..")
 
 [node name="HurtBox" type="Area2D" parent="."]
-collision_layer = 2
-collision_mask = 0
+collision_layer = 0
+collision_mask = 8
 script = ExtResource("4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]

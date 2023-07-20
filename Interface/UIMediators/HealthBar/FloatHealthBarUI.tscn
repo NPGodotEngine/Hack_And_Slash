@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bxygst4b7f1ek"]
 
-[ext_resource type="PackedScene" path="res://Interface/Components/HealthBar/HealthBar.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://2pmhnuhvk0tn" path="res://Interface/Components/HealthBar/HealthBar.tscn" id="1"]
 [ext_resource type="Script" path="res://Interface/UIMediators/HealthBar/FloatHealthBarUI.gd" id="2"]
 
 [node name="FloatHealthBarUI" type="Marker2D"]

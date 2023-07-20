@@ -1,39 +1,37 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=7 format=3 uid="uid://bfomehf0p7kg8"]
 
-[ext_resource path="res://Assets/Particles/Particles_sheet.png" type="Texture2D" id=1]
-[ext_resource path="res://Bullets/Projectile/ProjectileBullet/ProjectileBullet.gd" type="Script" id=3]
-[ext_resource path="res://Scenes/Components/HitHurt/HitBox.gd" type="Script" id=4]
-[ext_resource path="res://Scenes/Components/Trail/BulletTrail.tscn" type="PackedScene" id=5]
+[ext_resource type="Texture2D" uid="uid://dcg7sdbr01y42" path="res://Assets/Particles/Particles_sheet.png" id="1"]
+[ext_resource type="Script" path="res://Bullets/Projectile/ProjectileBullet/ProjectileBullet.gd" id="3"]
+[ext_resource type="Script" path="res://Scenes/Components/HitHurt/HitBox.gd" id="4"]
+[ext_resource type="PackedScene" uid="uid://d1uk115njfkna" path="res://Scenes/Components/Trail/BulletTrail.tscn" id="5"]
 
-[sub_resource type="CanvasItemMaterial" id=2]
+[sub_resource type="CanvasItemMaterial" id="2"]
 blend_mode = 1
 
-[sub_resource type="CapsuleShape2D" id=3]
-radius = 5.0
-height = 3.62396e-05
+[sub_resource type="CircleShape2D" id="CircleShape2D_h7dyl"]
+radius = 3.16228
 
 [node name="ProjectileBullet" type="Node2D"]
-script = ExtResource( 3 )
+script = ExtResource("3")
 
-[node name="BulletTrail" parent="." instance=ExtResource( 5 )]
-points = PackedVector2Array(  )
+[node name="BulletTrail" parent="." instance=ExtResource("5")]
+points = PackedVector2Array(0, 0, -15, 0, -30, 0, -45, 0, -60, 0, -75, 0, -90, 0, -105, 0, -120, 0, -135, 0)
 width = 7.0
 point_distance = 15.0
 max_points = 10
 
 [node name="Skin" type="Sprite2D" parent="."]
-material = SubResource( 2 )
-position = Vector2( -1, 1 )
-scale = Vector2( 2.66667, 2.5 )
-texture = ExtResource( 1 )
+material = SubResource("2")
+scale = Vector2(2.66667, 2.5)
+texture = ExtResource("1")
 region_enabled = true
-region_rect = Rect2( 30, 30, 4, 3 )
+region_rect = Rect2(30, 30, 4, 3)
 
 [node name="HitBox" type="Area2D" parent="."]
-collision_layer = 0
+collision_layer = 8
 collision_mask = 6
-script = ExtResource( 4 )
+script = ExtResource("4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 rotation = 1.5708
-shape = SubResource( 3 )
+shape = SubResource("CircleShape2D_h7dyl")

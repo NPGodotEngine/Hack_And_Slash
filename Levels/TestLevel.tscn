@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://c7u7pt0v7abmy"]
+[gd_scene load_steps=9 format=3 uid="uid://c7u7pt0v7abmy"]
 
 [ext_resource type="Texture2D" uid="uid://dbwvq5mm6sr1w" path="res://Assets/books_2.png" id="2"]
-[ext_resource type="PackedScene" path="res://Character/Mobs/Dummy/Dummy2.tscn" id="3"]
 [ext_resource type="Script" path="res://Levels/TestLevel.gd" id="4"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/Spawners/PlayerSpawner.tscn" id="5"]
-[ext_resource type="PackedScene" path="res://Character/Mobs/Dummy/DummyChase.tscn" id="6"]
+[ext_resource type="PackedScene" uid="uid://d0djly3hdieh1" path="res://Character/Mobs/Dummy/DummyChase.tscn" id="6"]
 [ext_resource type="PackedScene" uid="uid://dtd0g6r5dmhvj" path="res://Character/Mobs/Dummy/Dummy1.tscn" id="7"]
 [ext_resource type="PackedScene" uid="uid://ugy5fauyv4jx" path="res://Interface/GUI.tscn" id="8"]
 
@@ -22,7 +21,6 @@ glow_intensity = 0.4
 
 [node name="TestLevel" type="Node2D"]
 script = ExtResource("4")
-test_weapon_name = "AA12"
 
 [node name="GUI" parent="." instance=ExtResource("8")]
 
@@ -45,10 +43,7 @@ list = Array[String](["Soldier"])
 [node name="Dummy" parent="." instance=ExtResource("7")]
 position = Vector2(667, 465)
 
-[node name="Dummy2" parent="." instance=ExtResource("3")]
-position = Vector2(823, 522)
-
-[node name="Dummy3" parent="." instance=ExtResource("6")]
+[node name="DummyChase" parent="." instance=ExtResource("6")]
 position = Vector2(868, 113)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

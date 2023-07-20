@@ -51,8 +51,6 @@ func _ready() -> void:
 func _exit_tree() -> void:
 	if _life_span_timer:
 		_life_span_timer.disconnect("timeout", Callable(self, "queue_free"))
-	
-	super()
 
 func _process(delta: float) -> void:
 	super(delta)
