@@ -2,18 +2,18 @@
 extends Node2D
 
 @export var distance: float = 100.0
-@export var target_detector: NodePath
+@export var target_detector_ref: NodePath
 
-@onready var _target_detector: TargetDetector = get_node(target_detector) as TargetDetector
+@onready var _target_detector: TargetDetector = get_node(target_detector_ref) as TargetDetector
 @onready var raycast: RayCast2D = $RayCast2D
 
 var target = null
 var is_target_in_sight: bool = false
 
 func _get_configuration_warnings() -> PackedStringArray:
-    if target_detector.is_empty():
+    if target_detector_ref.is_empty():
         return ["target_detector node path is missing"]
-    if not get_node(target_detector) is TargetDetector:
+    if not get_node(target_detector_ref) is TargetDetector:
         return ["target_detector must be a TargetDetector"]
     return []
 

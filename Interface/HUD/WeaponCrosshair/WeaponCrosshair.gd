@@ -5,12 +5,12 @@ extends Node
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 
 
-@export var weapon: NodePath
-@export var ammo: NodePath
+@export var weapon_ref: NodePath
+@export var ammo_ref: NodePath
 @export var crosshair_scene: PackedScene
 
-@onready var _weapon: Weapon = get_node(weapon) as Weapon
-@onready var _ammo:Ammo = get_node(ammo) as Ammo
+@onready var _weapon: Weapon = get_node(weapon_ref) as Weapon
+@onready var _ammo:Ammo = get_node(ammo_ref) as Ammo
 
 var _crosshair: Node2D
 
@@ -34,13 +34,13 @@ func _ready() -> void:
 	_crosshair.show()
 
 func _get_configuration_warnings() -> PackedStringArray:
-	if weapon.is_empty():
+	if weapon_ref.is_empty():
 		return ["weapon node path is missing"]
-	if not get_node(weapon) is Weapon:
+	if not get_node(weapon_ref) is Weapon:
 		return ["weapon must be a type of Weapon"]
-	if ammo.is_empty():
+	if ammo_ref.is_empty():
 		return ["ammo node path is missing"]
-	if not get_node(ammo) is Ammo:
+	if not get_node(ammo_ref) is Ammo:
 		return ["ammo must be a type of Ammo"]
 	if crosshair_scene == null:
 		return ["crosshair_scene is missing"]

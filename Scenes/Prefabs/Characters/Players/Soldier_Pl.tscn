@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c5u1fo5wxprwf" path="res://Interface/UIMediators/HealthBar/HealthBarUI.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://raxiir4ncr5u" path="res://Interface/UIMediators/Dodge/DodgeBarUI.tscn" id="3"]
 [ext_resource type="SpriteFrames" uid="uid://c2hypuk0rk6ct" path="res://Character/Player/Animations/Soldier_anim.tres" id="3_ffd46"]
-[ext_resource type="PackedScene" path="res://Scenes/Prefabs/Weapons/AKM/AKM_Weapon.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://bk64jl45sgip5" path="res://Scenes/Prefabs/Weapons/AKM/AKM_Weapon.tscn" id="4"]
 [ext_resource type="PackedScene" uid="uid://d0eke1fpqy05t" path="res://Scenes/Components/Movement/MovementComponent.tscn" id="6"]
 [ext_resource type="PackedScene" path="res://Scenes/Components/Control/Player/PlayerControllerComponent.tscn" id="7"]
 [ext_resource type="PackedScene" path="res://Scenes/Components/appearance/Player/PlayerSkin.tscn" id="8"]

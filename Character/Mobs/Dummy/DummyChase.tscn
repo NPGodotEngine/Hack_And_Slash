@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://eaiyf65ypdbm" path="res://Scenes/Components/Health/HealthComponent.tscn" id="6"]
 [ext_resource type="PackedScene" uid="uid://bxygst4b7f1ek" path="res://Interface/UIMediators/HealthBar/FloatHealthBarUI.tscn" id="7"]
 [ext_resource type="PackedScene" path="res://Scenes/Components/Control/AI/TargetFollowerComponent.tscn" id="8"]
-[ext_resource type="PackedScene" path="res://Character/Mobs/AI/MobAI.tscn" id="9"]
+[ext_resource type="PackedScene" uid="uid://6j1d25osdilt" path="res://Character/Mobs/AI/MobAI.tscn" id="9"]
 [ext_resource type="PackedScene" path="res://Character/Mobs/AI/AIComponents/LineOfSight.tscn" id="10"]
 [ext_resource type="PackedScene" uid="uid://b4m4a3hj8q8hr" path="res://Interface/WorldUI/Damage/DamageLabel.tscn" id="11"]
 [ext_resource type="PackedScene" uid="uid://cvcnfm58je70e" path="res://Interface/UIMediators/Damage/DamageTextUI.tscn" id="12"]
@@ -74,6 +74,18 @@ healthComponent = NodePath("../HealthComponent")
 
 [node name="MobAI" parent="." instance=ExtResource("9")]
 
+[node name="TargetDetected" parent="MobAI/Either/WaitForTarget" index="0"]
+target_detector_ref = NodePath("../../../../TargetDetector")
+target_follower_ref = NodePath("../../../../TargetFollowerComponent")
+
+[node name="IsTargetInSight" parent="MobAI/Either/AttackTarget/WaitTargetInSight" index="0"]
+line_of_sight_ref = NodePath("../../../../../LineOfSight")
+
+[node name="MoveToTarget" parent="MobAI/Either/AttackTarget/WaitTargetInSight" index="1"]
+move_component_ref = NodePath("../../../../../MovementComponent")
+
 [node name="DamageTextUI" parent="." instance=ExtResource("12")]
 character = NodePath("..")
 damage_text = ExtResource("11")
+
+[editable path="MobAI"]

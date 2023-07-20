@@ -1,9 +1,9 @@
 extends ConditionLeaf
 
-@export var target_detector: NodePath
-@export var target_follower: NodePath
+@export var target_detector_ref: NodePath
+@export var target_follower_ref: NodePath
 
-@onready var _target_dector: TargetDetector = get_node(target_detector) as TargetDetector
+@onready var _target_dector: TargetDetector = get_node(target_detector_ref) as TargetDetector
 
 var detected_target
 

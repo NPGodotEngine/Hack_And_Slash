@@ -68,13 +68,13 @@ region_enabled = true
 region_rect = Rect2(4, 85, 56, 22)
 
 [node name="WeaponCrosshair" parent="." instance=ExtResource("14")]
-weapon = NodePath("..")
-ammo = NodePath("../ShotgunAmmo")
+weapon_ref = NodePath("..")
+ammo_ref = NodePath("../ShotgunAmmo")
 crosshair_scene = ExtResource("13")
 
 [node name="WeaponReloadIndicator" parent="." instance=ExtResource("12")]
-weapon = NodePath("..")
-ammo = NodePath("../ShotgunAmmo")
+weapon_ref = NodePath("..")
+ammo_ref = NodePath("../ShotgunAmmo")
 reloadbar_scene = ExtResource("15")
 
 [node name="AmmoUI" parent="." instance=ExtResource("17")]
