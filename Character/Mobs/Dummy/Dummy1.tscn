@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://dtd0g6r5dmhvj"]
 
-[ext_resource type="PackedScene" path="res://Scenes/Components/appearance/Mob/MobSkin.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://dppm0px1m1nvx" path="res://Scenes/Components/appearance/Mob/MobSkin.tscn" id="1"]
 [ext_resource type="Script" path="res://Character/Mobs/Mob.gd" id="2"]
 [ext_resource type="Script" path="res://Scenes/Components/Movement/MovementComponent.gd" id="3"]
 [ext_resource type="Script" path="res://Scenes/Components/HitHurt/HurtBox.gd" id="4"]
