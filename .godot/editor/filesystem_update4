@@ -16,3 +16,4 @@ res://Scenes/Components/Movement/MovementComponent.gd
 res://Character/Mobs/AI/AIComponents/LineOfSight.gd
 res://Scenes/Components/Detection/TargetDetector.gd
 res://Character/Mobs/Dummy/DummyChase.tscn
+res://Interface/UIMediators/HealthBar/FloatHealthBarUI.gd
