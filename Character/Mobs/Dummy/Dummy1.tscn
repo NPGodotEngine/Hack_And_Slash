@@ -1,11 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://dtd0g6r5dmhvj"]
+[gd_scene load_steps=14 format=3 uid="uid://dtd0g6r5dmhvj"]
 
 [ext_resource type="PackedScene" uid="uid://dppm0px1m1nvx" path="res://Scenes/Components/appearance/Mob/MobSkin.tscn" id="1"]
 [ext_resource type="Script" path="res://Character/Mobs/Mob.gd" id="2"]
-[ext_resource type="Script" path="res://Scenes/Components/Movement/MovementComponent.gd" id="3"]
+[ext_resource type="PackedScene" uid="uid://d0eke1fpqy05t" path="res://Scenes/Components/Movement/MovementComponent.tscn" id="2_rxekl"]
 [ext_resource type="Script" path="res://Scenes/Components/HitHurt/HurtBox.gd" id="4"]
 [ext_resource type="PackedScene" uid="uid://dyq742s55trax" path="res://Scenes/Components/Detection/TargetDetector.tscn" id="5"]
-[ext_resource type="SpriteFrames" uid="uid://b8oiaeihislm3" path="res://Character/Mobs/Animations/Mob_anim.tres" id="5_4x6v5"]
 [ext_resource type="PackedScene" uid="uid://eaiyf65ypdbm" path="res://Scenes/Components/Health/HealthComponent.tscn" id="6"]
 [ext_resource type="PackedScene" uid="uid://b4m4a3hj8q8hr" path="res://Interface/WorldUI/Damage/DamageLabel.tscn" id="7"]
 [ext_resource type="PackedScene" uid="uid://bxygst4b7f1ek" path="res://Interface/UIMediators/HealthBar/FloatHealthBarUI.tscn" id="8"]
@@ -31,19 +30,17 @@ script = ExtResource("2")
 position = Vector2(1, 0)
 shape = SubResource("9")
 
-[node name="MovementComponent" type="Node" parent="."]
-script = ExtResource("3")
-target = NodePath("..")
+[node name="MovementComponent" parent="." instance=ExtResource("2_rxekl")]
 
 [node name="HealthComponent" parent="." instance=ExtResource("6")]
 max_health = 500.0
 
+[node name="FloatHealthBar" parent="HealthComponent" instance=ExtResource("8")]
+position = Vector2(0, -35)
+
 [node name="MobSkin" parent="." instance=ExtResource("1")]
-sprite_frames = ExtResource("5_4x6v5")
-animation = &"die"
-movement = NodePath("../MovementComponent")
-health = NodePath("../HealthComponent")
-character = NodePath("..")
+movement_ref = NodePath("../MovementComponent")
+health_ref = NodePath("../HealthComponent")
 
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 0
@@ -62,10 +59,5 @@ shape = SubResource("8")
 [node name="AIControllerComponent" parent="." instance=ExtResource("9")]
 actor = NodePath("..")
 
-[node name="FloatHealthBar" parent="." instance=ExtResource("8")]
-position = Vector2(0, -35)
-healthComponent = NodePath("../HealthComponent")
-
 [node name="DamageTextUI" parent="." instance=ExtResource("10")]
-character = NodePath("..")
 damage_text = ExtResource("7")

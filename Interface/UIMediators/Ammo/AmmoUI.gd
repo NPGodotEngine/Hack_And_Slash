@@ -5,21 +5,23 @@ extends Node
 # warning-ignore-all: UNUSED_ARGUMENT
 
 
+## NodePath to weapon
+@export var weapon_ref: NodePath
 
-@export var weapon: NodePath
-@export var ammo: NodePath
+## NodePath to ammo
+@export var ammo_ref: NodePath
 
-@onready var _weapon: Weapon = get_node_or_null(weapon)
-@onready var _ammo: Ammo = get_node_or_null(ammo)
+@onready var _weapon: Weapon = get_node_or_null(weapon_ref)
+@onready var _ammo: Ammo = get_node_or_null(ammo_ref)
 
 func _get_configuration_warnings() -> PackedStringArray:
-    if weapon.is_empty():
+    if weapon_ref.is_empty():
         return ["weapon node path is missing"]
-    if not get_node(weapon) is Weapon:
+    if not get_node(weapon_ref) is Weapon:
         return ["weapon must be a type of Weapon"]
-    if ammo.is_empty():
+    if ammo_ref.is_empty():
         return ["ammo node path is missing"]
-    if not get_node(ammo) is Ammo:
+    if not get_node(ammo_ref) is Ammo:
         return ["ammo must be a type of Ammo"]
 
     return []

@@ -14,10 +14,10 @@ signal damage_updated(damage_context)
 
 
 
-# Current damage
+## Current damage
 @export var damage: float = 10.0: get = get_damage, set = set_damage
 
-# Color for damage
+## Color for damage
 @export var damage_color: Color = Color.WHITE
 
 # Damage multiplier

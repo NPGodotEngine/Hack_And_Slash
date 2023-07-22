@@ -74,5 +74,5 @@ region_enabled = true
 region_rect = Rect2(3, 22, 58, 20)
 
 [node name="AmmoUI" parent="." instance=ExtResource("13")]
-weapon = NodePath("..")
-ammo = NodePath("../ProjectileAmmo")
+weapon_ref = NodePath("..")
+ammo_ref = NodePath("../ProjectileAmmo")

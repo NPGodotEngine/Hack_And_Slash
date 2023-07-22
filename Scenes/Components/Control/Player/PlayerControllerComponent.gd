@@ -8,61 +8,60 @@ extends Controller
 
 
 
-# Node path to MovementComponent
-@export var movement: NodePath
+# Nodepath to MovementComponent
+@export var movement_ref: NodePath
 
-# Node path to DodgeComponent
-@export var dodge: NodePath
+# Nodepath to DodgeComponent
+@export var dodge_ref: NodePath
 
-# Node path to WeaponManager
-@export var weapon_manager: NodePath
+# Nodepath to WeaponManager
+@export var weapon_manager_ref: NodePath
 
-@export var actor: NodePath
 
 # MovementComponent
-@onready var _movement: MovementComponent = get_node_or_null(movement)
+@onready var _movement: MovementComponent = get_node_or_null(movement_ref)
 
 # DodgeComponent
-@onready var _dodge: DodgeComponent = get_node_or_null(dodge)
+@onready var _dodge: DodgeComponent = get_node_or_null(dodge_ref)
 
 # WeaponManager
-@onready var _weapon_manager: WeaponManager = get_node_or_null(weapon_manager)
+@onready var _weapon_manager: WeaponManager = get_node_or_null(weapon_manager_ref)
 
-@onready var _actor: Player = get_node_or_null(actor)
+var _player: Player = null
 
 # Whether actor is in dodging or not
 var _is_dodging: bool = false
 var _dodge_direction: Vector2 = Vector2.RIGHT
 
 func _get_configuration_warnings() -> PackedStringArray:
-	if movement.is_empty():
+	if not is_instance_of(get_parent(), Player):
+		return ["This node must be a child of Player node"]
+
+	if movement_ref.is_empty():
 		return ["movement node path is missing"]
-	if not get_node(movement) is MovementComponent:
+	if not get_node(movement_ref) is MovementComponent:
 		return ["movement must be a MovementComponent node"]
-
-	if dodge.is_empty():
+	if dodge_ref.is_empty():
 		return ["dodge node path is missing"]
-	if not get_node(dodge) is DodgeComponent:
-		return ["dodge must be a DodgeComponent node"  ]
-
-	if weapon_manager.is_empty():
+	if not get_node(dodge_ref) is DodgeComponent:
+		return ["dodge must be a DodgeComponent node"]
+	if weapon_manager_ref.is_empty():
 		return ["weapon_manager node path is missing"]
-	if not get_node(weapon_manager) is WeaponManager:
+	if not get_node(weapon_manager_ref) is WeaponManager:
 		return ["weapon_manager must be WeaponManager node"]
-
-	if actor.is_empty():
-		return ["actor node path is missing"]
-	if not get_node(actor) is Player:
-			return ["actor must be Player node"]
 
 	return []
 
 func _ready() -> void:
+	super()
+	if Engine.is_editor_hint():
+		return
+	
+	await  get_parent().ready
+	_player = get_parent() as Player
 	_dodge.connect("dodge_finished", Callable(self, "_on_dodge_finished"))
 	_dodge.connect("dodge_cooldown_begin", Callable(self, "_on_dodge_cooldown_begin"))
 	_dodge.connect("dodge_cooldown_end", Callable(self, "_on_dodge_cooldown_end"))
-
-	super()
 
 func _on_dodge_finished() -> void:
 	_is_dodging = false
@@ -77,7 +76,7 @@ func _physics_process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
 
-	if _actor.is_dead:
+	if _player.is_dead:
 		return
 
 	update_movement()

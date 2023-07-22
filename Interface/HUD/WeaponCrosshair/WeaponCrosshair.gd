@@ -4,9 +4,13 @@ extends Node
 # warning-ignore-all: UNUSED_ARGUMENT
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 
-
+## NodePath to weapon
 @export var weapon_ref: NodePath
+
+## NodePath to ammo
 @export var ammo_ref: NodePath
+
+## PackedScene for crosshair
 @export var crosshair_scene: PackedScene
 
 @onready var _weapon: Weapon = get_node_or_null(weapon_ref)

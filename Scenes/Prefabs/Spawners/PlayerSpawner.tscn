@@ -1,8 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://cq047pq2p7j1"]
 
-[ext_resource path="res://Scenes/Components/Spawner/PlayerSpawner.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Icons/spawner_player.svg" type="Texture2D" id=2]
+[ext_resource type="Script" path="res://Scenes/Components/Spawner/PlayerSpawner.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://bq1wr8xer24sm" path="res://Assets/Icons/spawner_player.svg" id="2"]
 
 [node name="PlayerSpawner" type="Sprite2D" groups=["PlayerSpawner"]]
-texture = ExtResource( 2 )
-script = ExtResource( 1 )
+texture = ExtResource("2")
+script = ExtResource("1")

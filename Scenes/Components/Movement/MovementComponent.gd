@@ -1,6 +1,6 @@
 @tool
 class_name MovementComponent
-extends Node
+extends Node2D
 
 # warning-ignore-all: UNUSED_ARGUMENT
 
@@ -15,9 +15,6 @@ class VelocityContext extends Resource:
 signal velocity_updated(velocity_context)
 
 
-
-# Node path to KenimaticBody2D
-@export var target: NodePath
 
 # Max movement speed
 @export var max_movement_speed: float = 400.0
@@ -37,7 +34,7 @@ signal velocity_updated(velocity_context)
 # Movement speed
 @export var movement_speed: float = 200.0
 
-@onready var _target: CharacterBody2D = get_node_or_null(target)
+var _target: CharacterBody2D = null
 
 # Movement speed multiplier
 var movement_speed_multiplier: float = 1.0
@@ -46,13 +43,17 @@ var movement_speed_multiplier: float = 1.0
 var _velocity: Vector2 = Vector2.ZERO
 
 func _get_configuration_warnings() -> PackedStringArray:
-	if target.is_empty():
-		return ["target node path is missing"]
-	
-	if not get_node(target) is CharacterBody2D:
-		return ["target must be a CharacterBody2D node" ]
+	if not is_instance_of(get_parent(), CharacterBody2D):
+		return ["This node must be a child of CharacterBody2D node"]
 
 	return []
+
+func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+	
+	await get_parent().ready
+	_target = get_parent() as CharacterBody2D
 
 # Perform movement
 # Called this method in physics process in order
@@ -60,7 +61,7 @@ func _get_configuration_warnings() -> PackedStringArray:
 ##
 # `direction`: movement direction
 func process_move(direction:Vector2) -> void:
-	if _target == null or target.is_empty():
+	if _target == null:
 		push_error("Could not find target to move")
 		return
 

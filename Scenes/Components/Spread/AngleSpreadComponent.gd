@@ -1,12 +1,12 @@
 class_name AngleSpreadComponent
 extends Node
 
-# Spread range in degree
+## Spread range in degree
 ##
-# The final range would be from
-# -spread_range_degree
-# to
-# spread_range_degree
+## The final range would be from
+## -spread_range_degree
+## to
+## spread_range_degree
 @export var spread_range_degree = 10.0
 
 # Return a new random normalized 

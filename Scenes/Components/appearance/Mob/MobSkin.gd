@@ -10,10 +10,15 @@ const HIT = "hit"
 
 @onready var _anim_player: AnimationPlayer = $AnimationPlayer
 
+var _character: Character = null
+
 func _get_configuration_warnings() -> PackedStringArray:
 	if not super().is_empty():
 		return super()
 	
+	if not is_instance_of(get_parent(), Character):
+		return ["This node must be a child of Character node"]
+
 	var anim_player_exists = false
 	for child in get_children():
 		if child is AnimationPlayer:
@@ -25,10 +30,12 @@ func _get_configuration_warnings() -> PackedStringArray:
 	return []
 
 func _ready() -> void:
+	super()
 	if Engine.is_editor_hint():
 		return
 
-	super()
+	await get_parent().ready
+	_character = get_parent() as Character
 	_character.connect("on_character_take_damage", Callable(self, "_on_charater_take_damage"))
 
 

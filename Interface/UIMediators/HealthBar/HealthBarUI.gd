@@ -3,22 +3,20 @@ extends Node
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 
-@export var healthComponent: NodePath
-
-@onready var _health_comp: HealthComponent = get_node_or_null(healthComponent)
+var _health_comp: HealthComponent = null
 
 func _get_configuration_warnings() -> PackedStringArray:
-    if healthComponent.is_empty():
-        return ["healthComponent node path is missing"]
-    if not get_node(healthComponent) is HealthComponent:
-        return ["healthComponent must be HealthComponent"]
+    if not is_instance_of(get_parent(), HealthComponent):
+        return ["This node must be child of HealthComponent node"]
 
     return []
 
 func _ready() -> void:
     if Engine.is_editor_hint():
         return
-
+    
+    await get_parent().ready
+    _health_comp = get_parent() as HealthComponent
     _health_comp.connect("health_updated", Callable(self, "_on_health_updated"))
     _health_comp.connect("max_health_updated", Callable(self, "_on_max_health_updated"))
     UIEvents.emit_signal("player_health_updated",

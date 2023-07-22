@@ -12,7 +12,7 @@ signal trigger_pulled()
 
 
 
-# Duration before next trigger pull from last trigger pulled
+## Duration before next trigger pull from last trigger pulled
 @export_range(0.1, 10.0) var trigger_duration: float = 1.0
 
 

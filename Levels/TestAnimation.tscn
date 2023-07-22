@@ -1,11 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://bdblo8l7iy72k"]
 
-[ext_resource path="res://Character/Player/Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Interface/GUI.tscn" type="PackedScene" id=2]
+[ext_resource type="PackedScene" uid="uid://ugy5fauyv4jx" path="res://Interface/GUI.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://duxaqp4iun7ch" path="res://Scenes/Prefabs/Characters/Players/TemplatePlayer/TemplatePlayer_Pl.tscn" id="2_js3rq"]
 
 [node name="TestAnimation" type="Node2D"]
 
-[node name="GUI" parent="." instance=ExtResource( 2 )]
+[node name="GUI" parent="." instance=ExtResource("2")]
 
-[node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 361, 328 )
+[node name="TemplatePlayer" parent="." instance=ExtResource("2_js3rq")]

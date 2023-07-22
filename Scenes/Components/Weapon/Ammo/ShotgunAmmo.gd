@@ -2,8 +2,8 @@
 class_name ShotgunAmmo
 extends Ammo
 
-# `true` penetration chance is picked randomly
-# between 0.0 ~ bullet penetration chance
+## `true` penetration chance is picked randomly
+## between 0.0 ~ bullet penetration chance
 @export var random_penetration: bool = true
 
 # Consume a projectile which contain number 

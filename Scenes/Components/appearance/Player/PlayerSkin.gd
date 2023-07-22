@@ -9,19 +9,25 @@ extends CharacterSkin
 const DODGE = "dodge"
 const HIT = "hit"
 
-@export var dodge: NodePath
+## NodePath to DodgeComponent
+@export var dodge_ref: NodePath
 
-@onready var _dodge: DodgeComponent = get_node_or_null(dodge)
+@onready var _dodge: DodgeComponent = get_node_or_null(dodge_ref)
 
 @onready var _anim_player: AnimationPlayer = $AnimationPlayer
+
+var _character: Character = null
 
 func _get_configuration_warnings() -> PackedStringArray:
 	if not super().is_empty():
 		return super()
 
-	if dodge.is_empty():
+	if not is_instance_of(get_parent(), Character):
+		return ["This node must be a child of Character node"]
+
+	if dodge_ref.is_empty():
 		return ["dodge node path is missing"]
-	if not get_node(dodge) is DodgeComponent:
+	if not get_node(dodge_ref) is DodgeComponent:
 		return ["dodge must be a DodgeComponent node"]
 	
 	var anim_player_exists = false
@@ -38,7 +44,9 @@ func _ready() -> void:
 	super()
 	if Engine.is_editor_hint():
 		return
-		
+
+	await get_parent().ready
+	_character = get_parent() as Character	
 	_character.connect("on_character_take_damage", Callable(self, "_on_charater_take_damage"))
 
 	

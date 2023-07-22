@@ -12,8 +12,8 @@ extends Character
 @onready var _weapon_manager: WeaponManager = $WeaponManager
 
 @onready var _health_comp: HealthComponent = $HealthComponent
-@onready var _exp_comp: ExpComponent = $ExpComponent
-@onready var _movement_comp: MovementComponent = $MovementComponent
+# @onready var _exp_comp: ExpComponent = $ExpComponent
+# @onready var _movement_comp: MovementComponent = $MovementComponent
 @onready var _hurt_box: HurtBox = $HurtBox
 @onready var _dodge_comp: DodgeComponent = $DodgeComponent
 
@@ -24,14 +24,7 @@ var is_dead: bool = false
 func _ready() -> void:
 	super()
 	_hurt_box.connect("take_damage", Callable(self, "_on_take_damage"))
-
-	_exp_comp.connect("progress_updated", Callable(self, "_on_progress_updated"))
-	_exp_comp.connect("max_progress_reached", Callable(self, "_on_max_progress_reached"))
-	_exp_comp.connect("xp_updated", Callable(self, "_on_xp_updated"))
-	_exp_comp.connect("xp_required_updated", Callable(self, "_on_xp_required_updated"))
-
 	_health_comp.connect("die", Callable(self, "_on_die"))
-	
 	_dodge_comp.connect("dodge_begin", Callable(self, "_on_dodge_begin"))
 	_dodge_comp.connect("dodge_finished", Callable(self, "_on_dodge_finished"))
 
@@ -106,12 +99,12 @@ func heal(amount:int) -> void:
 
 # for testing health bar
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_down"): 
-		if not is_dead:
-			# var added_xp = rand_range(100.0, 440.0)
-			var added_xp = 1000000.0
-			print("added xp %f" % added_xp)
-			_exp_comp.increase_xp(added_xp)
+	# if event.is_action_pressed("ui_down"): 
+	# 	if not is_dead:
+	# 		var added_xp = rand_range(100.0, 440.0)
+	# 		var added_xp = 1000000.0
+	# 		print("added xp %f" % added_xp)
+	# 		_exp_comp.increase_xp(added_xp)
 	
 	if event.is_action_pressed("ui_left"):
 		var crit = randi()%2

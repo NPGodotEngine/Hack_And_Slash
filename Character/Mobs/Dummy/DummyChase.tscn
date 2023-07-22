@@ -1,11 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://d0djly3hdieh1"]
+[gd_scene load_steps=16 format=3 uid="uid://d0djly3hdieh1"]
 
 [ext_resource type="PackedScene" uid="uid://dppm0px1m1nvx" path="res://Scenes/Components/appearance/Mob/MobSkin.tscn" id="1"]
 [ext_resource type="Script" path="res://Character/Mobs/Mob.gd" id="2"]
-[ext_resource type="Script" path="res://Scenes/Components/Movement/MovementComponent.gd" id="3"]
 [ext_resource type="Script" path="res://Scenes/Components/HitHurt/HurtBox.gd" id="4"]
 [ext_resource type="PackedScene" uid="uid://dyq742s55trax" path="res://Scenes/Components/Detection/TargetDetector.tscn" id="5"]
-[ext_resource type="SpriteFrames" uid="uid://b8oiaeihislm3" path="res://Character/Mobs/Animations/Mob_anim.tres" id="5_tp2bq"]
 [ext_resource type="PackedScene" uid="uid://eaiyf65ypdbm" path="res://Scenes/Components/Health/HealthComponent.tscn" id="6"]
 [ext_resource type="PackedScene" uid="uid://bxygst4b7f1ek" path="res://Interface/UIMediators/HealthBar/FloatHealthBarUI.tscn" id="7"]
 [ext_resource type="PackedScene" path="res://Scenes/Components/Control/AI/TargetFollowerComponent.tscn" id="8"]
@@ -13,6 +11,7 @@
 [ext_resource type="PackedScene" path="res://Character/Mobs/AI/AIComponents/LineOfSight.tscn" id="10"]
 [ext_resource type="PackedScene" uid="uid://b4m4a3hj8q8hr" path="res://Interface/WorldUI/Damage/DamageLabel.tscn" id="11"]
 [ext_resource type="PackedScene" uid="uid://cvcnfm58je70e" path="res://Interface/UIMediators/Damage/DamageTextUI.tscn" id="12"]
+[ext_resource type="PackedScene" uid="uid://d0eke1fpqy05t" path="res://Scenes/Components/Movement/MovementComponent.tscn" id="12_8o6l0"]
 
 [sub_resource type="CapsuleShape2D" id="9"]
 radius = 17.0
@@ -33,19 +32,17 @@ script = ExtResource("2")
 position = Vector2(1, 0)
 shape = SubResource("9")
 
-[node name="MovementComponent" type="Node" parent="."]
-script = ExtResource("3")
-target = NodePath("..")
+[node name="MovementComponent" parent="." instance=ExtResource("12_8o6l0")]
 
 [node name="HealthComponent" parent="." instance=ExtResource("6")]
 max_health = 1000.0
 
+[node name="FloatHealthBar" parent="HealthComponent" instance=ExtResource("7")]
+position = Vector2(0, -35)
+
 [node name="MobSkin" parent="." instance=ExtResource("1")]
-sprite_frames = ExtResource("5_tp2bq")
-animation = &"die"
-movement = NodePath("../MovementComponent")
-health = NodePath("../HealthComponent")
-character = NodePath("..")
+movement_ref = NodePath("../MovementComponent")
+health_ref = NodePath("../HealthComponent")
 
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 0
@@ -62,13 +59,8 @@ shape = SubResource("10")
 shape = SubResource("8")
 
 [node name="TargetFollowerComponent" parent="." instance=ExtResource("8")]
-movement = NodePath("../MovementComponent")
 actor = NodePath("..")
 permanent_target = true
-
-[node name="FloatHealthBar" parent="." instance=ExtResource("7")]
-position = Vector2(0, -35)
-healthComponent = NodePath("../HealthComponent")
 
 [node name="LineOfSight" parent="." instance=ExtResource("10")]
 
@@ -81,11 +73,7 @@ target_follower_ref = NodePath("../../../../TargetFollowerComponent")
 [node name="IsTargetInSight" parent="MobAI/Either/AttackTarget/WaitTargetInSight" index="0"]
 line_of_sight_ref = NodePath("../../../../../LineOfSight")
 
-[node name="MoveToTarget" parent="MobAI/Either/AttackTarget/WaitTargetInSight" index="1"]
-move_component_ref = NodePath("../../../../../MovementComponent")
-
 [node name="DamageTextUI" parent="." instance=ExtResource("12")]
-character = NodePath("..")
 damage_text = ExtResource("11")
 
 [editable path="MobAI"]

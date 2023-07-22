@@ -27,25 +27,28 @@ signal begin_reloading(ammo_context)
 # Emit when reloading end
 signal end_reloading(ammo_context)
 
+## Bullet speed
 @export var bullet_speed: float = 200.0
+
+## Bullet life span
 @export var bullet_life_span: float = 3.0
+
+## Bullet penetration chance
 @export var bullet_penetration_chance: float = 0.0
 
-# The actual bullet scene
-##
-# To be used to instantiate a new bullet
+## To be used to instantiate a new bullet
 @export var bullet_scene: PackedScene = null
 
-# Infinite ammo
+## If `true` no ammo will be consumed
 @export var infinite_ammo: bool = false
 
-# Fill ammo when ammo component start
+## Full ammo when start
 @export var fill_ammo_when_start: bool = true
 
-# How many rounds per clip
-@export_range(1, 5000) var rounds_per_clip: int = 10: set = _set_round_per_clip
+## How many rounds per clip
+@export_range(1, 100000) var rounds_per_clip: int = 10: set = _set_round_per_clip
 
-# Duration for reload ammo
+## How long does it take to reload ammo
 @export_range(0.1, 20.0) var reload_duration: float = 2.0
 
 var progress: AmmoReloadProgress: get = get_progress, set = no_set

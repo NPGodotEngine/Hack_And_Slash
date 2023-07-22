@@ -34,24 +34,22 @@ signal critical_chance_updated(critical_chance_context)
 
 
 
-# Critical strike multiplier
-##
-# Used to increase damage
+## Critical strike multiplier
 @export var critical_multiplier: float = 1.0: set = set_critical_multiplier
 
-# Minimum critical strike chance
+## Minimum critical strike chance
 @export var min_critical_chance: float = 0.0: set = set_min_critical_chance
 
-# Maximum critical strike chance
+## Maximum critical strike chance
 @export var max_critical_chance: float = 1.0: set = set_max_critical_chance
 
-# Color of critical strike
+## Color of critical strike
 @export var critical_color: Color = Color.RED
 
-# Critical strike chance
+## Critical strike chance
 ##
-# The chance to hit a
-# critical strike
+## The chance to hit a
+## critical strike
 @export_range(0.0, 1.0) var critical_chance: float = 0.3: set = set_critical_strike_chance
 
 

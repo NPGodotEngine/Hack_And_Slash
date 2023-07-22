@@ -1,0 +1,71 @@
+[gd_scene load_steps=17 format=3 uid="uid://duxaqp4iun7ch"]
+
+[ext_resource type="Script" path="res://Character/Player/Player.gd" id="1_fy235"]
+[ext_resource type="PackedScene" uid="uid://d0eke1fpqy05t" path="res://Scenes/Components/Movement/MovementComponent.tscn" id="2_vl4rm"]
+[ext_resource type="PackedScene" uid="uid://ba0hec2dequmb" path="res://Scenes/Components/Movement/DodgeComponent.tscn" id="3_61uwl"]
+[ext_resource type="PackedScene" uid="uid://raxiir4ncr5u" path="res://Interface/UIMediators/Dodge/DodgeBarUI.tscn" id="4_k04xu"]
+[ext_resource type="PackedScene" uid="uid://eaiyf65ypdbm" path="res://Scenes/Components/Health/HealthComponent.tscn" id="5_0mn8g"]
+[ext_resource type="PackedScene" uid="uid://c5u1fo5wxprwf" path="res://Interface/UIMediators/HealthBar/HealthBarUI.tscn" id="6_uy2pf"]
+[ext_resource type="PackedScene" uid="uid://bxygst4b7f1ek" path="res://Interface/UIMediators/HealthBar/FloatHealthBarUI.tscn" id="7_qmlqy"]
+[ext_resource type="PackedScene" uid="uid://j4inalcgj8yf" path="res://Scenes/Components/appearance/Player/PlayerSkin.tscn" id="8_fye5t"]
+[ext_resource type="PackedScene" path="res://Scenes/Components/Weapon/WeaponManager/WeaponManager.tscn" id="9_xma41"]
+[ext_resource type="PackedScene" uid="uid://bk64jl45sgip5" path="res://Scenes/Prefabs/Weapons/AKM/AKM_Weapon.tscn" id="10_awyn0"]
+[ext_resource type="Script" path="res://Scenes/Components/HitHurt/HurtBox.gd" id="11_c3xmh"]
+[ext_resource type="PackedScene" uid="uid://cvcnfm58je70e" path="res://Interface/UIMediators/Damage/DamageTextUI.tscn" id="12_dd10i"]
+[ext_resource type="PackedScene" uid="uid://b4m4a3hj8q8hr" path="res://Interface/WorldUI/Damage/DamageLabel.tscn" id="13_bmsbg"]
+[ext_resource type="PackedScene" path="res://Scenes/Components/Control/Player/PlayerControllerComponent.tscn" id="14_ghpqs"]
+
+[sub_resource type="CapsuleShape2D" id="1"]
+radius = 18.0
+height = 54.0
+
+[sub_resource type="RectangleShape2D" id="2"]
+size = Vector2(28, 42)
+
+[node name="TemplatePlayer" type="CharacterBody2D" groups=["Player"]]
+collision_mask = 7
+motion_mode = 1
+script = ExtResource("1_fy235")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("1")
+
+[node name="MovementComponent" parent="." instance=ExtResource("2_vl4rm")]
+
+[node name="DodgeComponent" parent="." instance=ExtResource("3_61uwl")]
+dodge_mask = 4
+
+[node name="DodgeBarUI" parent="DodgeComponent" instance=ExtResource("4_k04xu")]
+
+[node name="HealthComponent" parent="." instance=ExtResource("5_0mn8g")]
+
+[node name="HealthBarUI" parent="HealthComponent" instance=ExtResource("6_uy2pf")]
+
+[node name="FloatHealthBar" parent="HealthComponent" instance=ExtResource("7_qmlqy")]
+position = Vector2(0, -35)
+
+[node name="CharacterSkin" parent="." instance=ExtResource("8_fye5t")]
+dodge_ref = NodePath("../DodgeComponent")
+movement_ref = NodePath("../MovementComponent")
+health_ref = NodePath("../HealthComponent")
+
+[node name="WeaponManager" parent="." instance=ExtResource("9_xma41")]
+preset_weapons = Array[PackedScene]([ExtResource("10_awyn0")])
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_mask = 8
+script = ExtResource("11_c3xmh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(1, -1)
+shape = SubResource("2")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="DamageTextUI" parent="." instance=ExtResource("12_dd10i")]
+damage_text = ExtResource("13_bmsbg")
+
+[node name="PlayerControllerComponent" parent="." instance=ExtResource("14_ghpqs")]
+movement_ref = NodePath("../MovementComponent")
+dodge_ref = NodePath("../DodgeComponent")
+weapon_manager_ref = NodePath("../WeaponManager")

@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dbwvq5mm6sr1w" path="res://Assets/books_2.png" id="2"]
 [ext_resource type="Script" path="res://Levels/TestLevel.gd" id="4"]
-[ext_resource type="PackedScene" path="res://Scenes/Prefabs/Spawners/PlayerSpawner.tscn" id="5"]
+[ext_resource type="PackedScene" uid="uid://cq047pq2p7j1" path="res://Scenes/Prefabs/Spawners/PlayerSpawner.tscn" id="5"]
 [ext_resource type="PackedScene" uid="uid://d0djly3hdieh1" path="res://Character/Mobs/Dummy/DummyChase.tscn" id="6"]
 [ext_resource type="PackedScene" uid="uid://dtd0g6r5dmhvj" path="res://Character/Mobs/Dummy/Dummy1.tscn" id="7"]
 [ext_resource type="PackedScene" uid="uid://ugy5fauyv4jx" path="res://Interface/GUI.tscn" id="8"]

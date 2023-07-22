@@ -1,76 +1,83 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=3 uid="uid://j4inalcgj8yf"]
 
-[ext_resource path="res://Scenes/Components/appearance/Player/PlayerSkin.gd" type="Script" id=1]
-[ext_resource path="res://Character/Player/Animations/Soldier_anim.tres" type="SpriteFrames" id=2]
+[ext_resource type="Script" path="res://Scenes/Components/appearance/Player/PlayerSkin.gd" id="1"]
+[ext_resource type="SpriteFrames" uid="uid://c2hypuk0rk6ct" path="res://Character/Player/Animations/Soldier_anim.tres" id="2"]
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="Animation" id="1"]
 length = 0.001
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath(".:rotation_degrees")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PackedFloat32Array( 0 ),
-"transitions": PackedFloat32Array( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [ 0.0 ]
+"values": [0.0]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id="3"]
 resource_name = "die_roll_backward"
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath(".:rotation_degrees")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PackedFloat32Array( 0, 0.5, 1 ),
-"transitions": PackedFloat32Array( 3, 0.06, 1 ),
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(3, 0.06, 1),
 "update": 0,
-"values": [ 0.0, -45.0, -90.0 ]
+"values": [0.0, -45.0, -90.0]
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id="2"]
 resource_name = "die_roll_forward"
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath(".:rotation_degrees")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PackedFloat32Array( 0, 0.5, 1 ),
-"transitions": PackedFloat32Array( 3, 0.06, 1 ),
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(3, 0.06, 1),
 "update": 0,
-"values": [ 0.0, 45.0, 90.0 ]
+"values": [0.0, 45.0, 90.0]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id="4"]
 resource_name = "hit"
 length = 0.5
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath(".:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PackedFloat32Array( 0, 0.1, 0.5 ),
-"transitions": PackedFloat32Array( 1, 0.03, 1 ),
+"times": PackedFloat32Array(0, 0.1, 0.5),
+"transitions": PackedFloat32Array(1, 0.03, 1),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+"values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jq3is"]
+_data = {
+"RESET": SubResource("1"),
+"die_roll_backward": SubResource("3"),
+"die_roll_forward": SubResource("2"),
+"hit": SubResource("4")
 }
 
 [node name="PlayerSkin" type="AnimatedSprite2D"]
-frames = ExtResource( 2 )
-animation = "die"
-script = ExtResource( 1 )
+sprite_frames = ExtResource("2")
+animation = &"die"
+script = ExtResource("1")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/RESET = SubResource( 1 )
-anims/die_roll_backward = SubResource( 3 )
-anims/die_roll_forward = SubResource( 2 )
-anims/hit = SubResource( 4 )
+libraries = {
+"": SubResource("AnimationLibrary_jq3is")
+}

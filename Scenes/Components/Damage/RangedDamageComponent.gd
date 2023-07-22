@@ -1,10 +1,10 @@
 class_name RangedDamageComponent
 extends DamageComponent
 
-# Max damage
+## Max damage
 @export var max_damage: float = 1000.0
 
-# Min damage
+## Min damage
 @export var min_damage: float = 1.0
 
 

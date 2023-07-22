@@ -78,5 +78,5 @@ ammo_ref = NodePath("../ShotgunAmmo")
 reloadbar_scene = ExtResource("15")
 
 [node name="AmmoUI" parent="." instance=ExtResource("17")]
-weapon = NodePath("..")
-ammo = NodePath("../ShotgunAmmo")
+weapon_ref = NodePath("..")
+ammo_ref = NodePath("../ShotgunAmmo")

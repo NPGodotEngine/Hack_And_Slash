@@ -11,6 +11,7 @@ enum flash_type {
     LARGE = 4
 }
 
+## How is the flash should appear
 @export var flash_duration: float = 0.1
 @export var flash_small_frames: Array[int] = []
 @export var flash_medium_frames: Array[int] = []

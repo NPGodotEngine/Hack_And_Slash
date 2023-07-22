@@ -1,6 +1,6 @@
 @tool
 class_name DodgeComponent
-extends Node
+extends Node2D
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 # warning-ignore-all: UNUSED_ARGUMENT
@@ -42,9 +42,6 @@ signal display_dodge_particles(particles_effect)
 
 
 
-# Node path to KenimaticBody2D
-@export var target: NodePath
-
 # Dodge speed
 @export var dodge_speed: float = 2000.0
 
@@ -70,10 +67,11 @@ signal display_dodge_particles(particles_effect)
 @export var dodge_particles: PackedScene
 
 
-@onready var _target: CharacterBody2D = get_node_or_null(target)
 @onready var _dodge_timer: Timer = $DodgeTimer
 @onready var _cooldown_timer: Timer = $CooldownTimer
 @onready var _dodge_delay_recover_timer: Timer = $DelayTimer
+
+var _target: CharacterBody2D = null
 
 # Return dodge progress
 ##
@@ -129,15 +127,16 @@ func get_is_dodge_avaliable() -> bool:
 	return true
 
 func _get_configuration_warnings() -> PackedStringArray:
-	if target.is_empty():
-		return ["target node path is missing"]
-	
-	if not get_node(target) is CharacterBody2D:
-		return ["target must be a CharacterBody2D node" ]
+	if not is_instance_of(get_parent(), CharacterBody2D):
+		return ["This node must be a child of CharacterBody2D node"]
 
 	return []
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+
+	_target = get_parent()
 	_dodge_timer.connect("timeout", Callable(self, "_on_dodge_timer_timeout"))
 	_cooldown_timer.connect("timeout", Callable(self, "_on_cooldown_timer_timeout"))
 	_dodge_delay_recover_timer.connect("timeout", Callable(self, "_on_dodge_delay_timeout"))
@@ -181,7 +180,7 @@ func _on_cooldown_timer_timeout() -> void:
 ##
 # `direction`: dodge direction
 func process_dodge(direction:Vector2) -> void:
-	if _target == null or target.is_empty():
+	if _target == null:
 		push_error("Could not find target to dodge")
 		return
 

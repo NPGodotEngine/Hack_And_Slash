@@ -5,25 +5,23 @@ extends Node
 # warning-ignore-all: UNUSED_ARGUMENT
 
 
-@export var dodgeComponent: NodePath
-
-# Whether to update UI in physics process or not
+## Whether to update UI in physics process or not
 @export var physics_update: bool = true
 
-@onready var _dodge_comp: DodgeComponent = get_node_or_null(dodgeComponent)
+var _dodge_comp: DodgeComponent = null
 
 func _get_configuration_warnings() -> PackedStringArray:
-    if dodgeComponent.is_empty():
-        return ["dodgeComponent node path is missing"]
-    if not get_node(dodgeComponent) is DodgeComponent:
-        return ["dodgeComponent must be DodgeComponent"]
+    if not is_instance_of(get_parent(), DodgeComponent):
+        return ["This node must be a child of DodgeComponent node"] 
 
     return []
 
 func _ready() -> void:
     if Engine.is_editor_hint():
         return
-
+    
+    await get_parent().ready
+    _dodge_comp = get_parent() as DodgeComponent
     _dodge_comp.connect("dodge_cooldown_end", Callable(self, "_on_dodge_cooldown_end"))
     _dodge_comp.connect("dodge_finished", Callable(self, "_on_dodge_finished"))
 
