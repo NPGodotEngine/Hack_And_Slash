@@ -3,7 +3,7 @@ extends MarginContainer
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 
-@export var interpolation_duration: float = 0.4
+@export var interpolation_duration: float = 0.001
 @export var interpolation_delay: float = 0.3
 
 @export  var health_color: Color = Color.GREEN
@@ -15,6 +15,8 @@ extends MarginContainer
 
 @onready var health_bar_under: TextureProgressBar = $HealthBarUnder
 @onready var health_bar_over: TextureProgressBar = $HealthBarOver
+
+var value_tween: Tween
 
 var health: float = 100.0: set = set_health
 var max_health: float = 100.0: set = set_max_health
@@ -28,11 +30,14 @@ func set_health(value:float) -> void:
 	update_health_bar_color()
 
 	# tween health bar under
-	var value_tween := create_tween()
-	value_tween.tween_property(health_bar_under, "value", health, interpolation_duration)\
-		.set_trans(Tween.TRANS_SINE)\
-		.set_ease(Tween.EASE_OUT)\
-		.set_delay(interpolation_delay)
+	if value_tween:
+		value_tween.kill()
+	value_tween = create_tween()
+	var tweener = value_tween.tween_property(health_bar_under, "value", health, interpolation_duration)\
+							.set_trans(Tween.TRANS_SINE)\
+							.set_ease(Tween.EASE_OUT)
+	if not is_zero_approx(interpolation_delay):
+		tweener.set_delay(interpolation_delay)
 
 func set_max_health(value:float) -> void:
 	max_health = round(value)

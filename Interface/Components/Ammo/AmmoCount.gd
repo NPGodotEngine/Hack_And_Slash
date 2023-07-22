@@ -19,7 +19,9 @@ var max_ammo_count: int: set = set_max_ammo_count
 
 var _transition_type: int = Tween.TRANS_QUART
     
-    
+var scale_tween: Tween
+var color_tween: Tween
+
 func set_ammo_count(value:int) -> void:
     ammo_count = value
     current_ammo.text = str(ammo_count)
@@ -36,7 +38,9 @@ func set_max_ammo_count(value:int) -> void:
 func consume_ammo_anim() -> void:
     current_ammo.pivot_offset = current_ammo.size / 2.0
 
-    var scale_tween := create_tween()
+    if scale_tween:
+        scale_tween.kill()
+    scale_tween = create_tween()
     scale_tween.tween_property(current_ammo, "scale", scale_to, anim_duration/ 2.0)\
         .set_trans(_transition_type)\
         .set_ease(Tween.EASE_IN_OUT)
@@ -44,7 +48,9 @@ func consume_ammo_anim() -> void:
         .set_trans(_transition_type)\
         .set_ease(Tween.EASE_OUT_IN)
 
-    var color_tween := create_tween()
+    if color_tween:
+        color_tween.kill()
+    color_tween = create_tween()
     color_tween.tween_property(current_ammo, "modulate", to_color, anim_duration/ 2.0)\
         .set_trans(_transition_type)\
         .set_ease(Tween.EASE_IN_OUT) 
@@ -56,10 +62,12 @@ func ammo_deplete_anim() -> void:
     current_ammo.pivot_offset = current_ammo.size / 2.0
     current_ammo.scale = Vector2.ONE
 
-    var color_tween := create_tween()
+    if color_tween:
+        color_tween.kill()
+    color_tween = create_tween()
     color_tween.tween_property(current_ammo, "modulate", to_color, deplete_anim_duration/ 2.0)\
         .set_trans(Tween.TRANS_LINEAR)\
-        .set_ease(Tween.EASE_IN_OUT) 
+        .set_ease(Tween.EASE_IN_OUT)
 
     color_tween.tween_property(current_ammo, "modulate", from_color, deplete_anim_duration/ 2.0)\
         .set_trans(Tween.TRANS_LINEAR)\

@@ -1,8 +1,11 @@
-res://Character/Player/Player.gd
+res://Scenes/Components/appearance/Mob/MobSkin.gd
+res://Interface/Components/Ammo/AmmoCount.gd
+res://Interface/Components/HealthBar/HealthBar.gd
 res://default_env.tres
 res://Levels/TestLevel.tscn
 res://Character/Mobs/Animations/Mob_anim.tres
 res://System/Style/UI_theme.tres
-res://Character/Player/Animations/Soldier_anim.tres
-res://Scenes/Components/appearance/Mob/MobSkin.tscn
-res://Scenes/Components/appearance/Player/PlayerSkin.tscn
+res://Interface/Components/HealthBar/HealthBar.tscn
+res://Character/Mobs/Dummy/Dummy1.tscn
+res://Interface/UIMediators/HealthBar/FloatHealthBarUI.tscn
+res://Scenes/Components/VFX/Effects/DashEffect.gd

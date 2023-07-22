@@ -44,7 +44,6 @@ enum EASE_TYPES {
 # Delay of tween
 @export var delay: float = 0.0
 
-
 func _ready() -> void:
     var tween := create_tween()
     tween.tween_property(self, "modulate",final_color, fade_duration)\
