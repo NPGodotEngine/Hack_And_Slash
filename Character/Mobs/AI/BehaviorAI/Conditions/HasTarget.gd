@@ -1,11 +1,18 @@
 extends ConditionLeaf
 
 @export var target_detector_ref: NodePath
-@export var target_follower_ref: NodePath
+# @export var target_follower_ref: NodePath
 
 @onready var _target_dector: TargetDetector = get_node_or_null(target_detector_ref)
 
 var detected_target
+
+func _get_configuration_warnings():
+	if target_detector_ref.is_empty():
+		return ["target detector node path is missin"]
+	if not get_node(target_detector_ref) is TargetDetector:
+		return ["target detector must be a TargetDetector"]
+	return []
 
 func _ready() -> void:
 	await get_tree().root.ready

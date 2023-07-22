@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://d0djly3hdieh1"]
+[gd_scene load_steps=15 format=3 uid="uid://d0djly3hdieh1"]
 
 [ext_resource type="PackedScene" uid="uid://dppm0px1m1nvx" path="res://Scenes/Components/appearance/Mob/MobSkin.tscn" id="1"]
 [ext_resource type="Script" path="res://Character/Mobs/Mob.gd" id="2"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://dyq742s55trax" path="res://Scenes/Components/Detection/TargetDetector.tscn" id="5"]
 [ext_resource type="PackedScene" uid="uid://eaiyf65ypdbm" path="res://Scenes/Components/Health/HealthComponent.tscn" id="6"]
 [ext_resource type="PackedScene" uid="uid://bxygst4b7f1ek" path="res://Interface/UIMediators/HealthBar/FloatHealthBarUI.tscn" id="7"]
-[ext_resource type="PackedScene" path="res://Scenes/Components/Control/AI/TargetFollowerComponent.tscn" id="8"]
 [ext_resource type="PackedScene" uid="uid://6j1d25osdilt" path="res://Character/Mobs/AI/MobAI.tscn" id="9"]
 [ext_resource type="PackedScene" path="res://Character/Mobs/AI/AIComponents/LineOfSight.tscn" id="10"]
 [ext_resource type="PackedScene" uid="uid://b4m4a3hj8q8hr" path="res://Interface/WorldUI/Damage/DamageLabel.tscn" id="11"]
@@ -58,20 +57,18 @@ shape = SubResource("10")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TargetDetector"]
 shape = SubResource("8")
 
-[node name="TargetFollowerComponent" parent="." instance=ExtResource("8")]
-actor = NodePath("..")
-permanent_target = true
-
 [node name="LineOfSight" parent="." instance=ExtResource("10")]
 
 [node name="MobAI" parent="." instance=ExtResource("9")]
 
 [node name="TargetDetected" parent="MobAI/Either/WaitForTarget" index="0"]
 target_detector_ref = NodePath("../../../../TargetDetector")
-target_follower_ref = NodePath("../../../../TargetFollowerComponent")
 
 [node name="IsTargetInSight" parent="MobAI/Either/AttackTarget/WaitTargetInSight" index="0"]
 line_of_sight_ref = NodePath("../../../../../LineOfSight")
+
+[node name="MoveToTarget" parent="MobAI/Either/AttackTarget/WaitTargetInSight" index="1"]
+move_component_ref = NodePath("../../../../../MovementComponent")
 
 [node name="DamageTextUI" parent="." instance=ExtResource("12")]
 damage_text = ExtResource("11")

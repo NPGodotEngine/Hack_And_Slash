@@ -9,3 +9,10 @@ res://Interface/Components/HealthBar/HealthBar.tscn
 res://Character/Mobs/Dummy/Dummy1.tscn
 res://Interface/UIMediators/HealthBar/FloatHealthBarUI.tscn
 res://Scenes/Components/VFX/Effects/DashEffect.gd
+res://Character/Mobs/AI/BehaviorAI/Actions/MoveToTarget.gd
+res://Character/Mobs/AI/BehaviorAI/Conditions/HasTarget.gd
+res://Character/Mobs/AI/BehaviorAI/Conditions/IsTargetInSight.gd
+res://Scenes/Components/Movement/MovementComponent.gd
+res://Character/Mobs/AI/AIComponents/LineOfSight.gd
+res://Scenes/Components/Detection/TargetDetector.gd
+res://Character/Mobs/Dummy/DummyChase.tscn
