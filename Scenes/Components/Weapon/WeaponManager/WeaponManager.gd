@@ -107,11 +107,10 @@ func load_preset_weapons() -> void:
 			add_weapon(wp_instance)
 			wp_instance.inactive()
 
-# Execute current weapon's main fire
+## Execute current weapon's main fire
 ##
-# `from_position` global position for weapon to shoot from
-# `to_position` global position for weapon to shoot to
-func execute_weapon() -> void:
+## `fire_at`: global position the weapon will fire at
+func execute_weapon(fire_at:Vector2) -> void:
 	if not _is_enabled:
 		return
 
@@ -120,7 +119,7 @@ func execute_weapon() -> void:
 
 	var weapon: Weapon = weapon_slots[current_weapon_index]
 	if weapon:
-		weapon.execute()
+		weapon.execute(fire_at)
 
 # Cancel current weapon's main fire
 ##
@@ -133,11 +132,10 @@ func cancel_weapon_execution() -> void:
 	if weapon:
 		weapon.cancel_execution()
 
-# Excute current weapon's alternative fire
+## Excute current weapon's alternative fire
 ##
-# `from_position` global position for weapon to shoot from
-# `to_position` global position for weapon to shoot to
-func execute_weapon_alt() -> void:
+## `fire_at`: global position the weapon will fire at
+func execute_weapon_alt(fire_at:Vector2) -> void:
 	if not _is_enabled:
 		return
 		
@@ -146,7 +144,7 @@ func execute_weapon_alt() -> void:
 
 	var weapon: Weapon = weapon_slots[current_weapon_index]
 	if weapon:
-		weapon.execute_alt()
+		weapon.execute_alt(fire_at)
 
 # Cancel current weapon's alternative fire 
 func cancel_weapon_alt_execution() -> void:

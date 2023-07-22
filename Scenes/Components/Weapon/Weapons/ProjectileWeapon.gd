@@ -22,8 +22,6 @@ extends Weapon
 @onready var _ammo: Ammo = get_node_or_null(ammo)
 @onready var _fire_points: Array = get_fire_points()
 @onready var _muzzle_flash: MuzzleFlash = get_node_or_null(muzzle_flash)
-
-
 	
 
 func _get_configuration_warnings() -> PackedStringArray:
@@ -85,17 +83,17 @@ func _on_trigger_pulled() -> void:
 	for point in _fire_points:
 		if _ammo._is_reloading:
 			return
-		var position = (point as Marker2D).global_position
-		var global_mouse_position = get_global_mouse_position()
-		var distance: float = position.distance_to(global_mouse_position)
-		var end_position = _angle_spread.get_random_spread(global_position.direction_to(global_mouse_position), 
-												_accuracy.accuracy) * distance + position
+		var muzzle_position = (point as Marker2D).global_position
+		# var global_mouse_position = get_global_mouse_position()
+		var distance: float = muzzle_position.distance_to(current_fire_position)
+		var end_position = _angle_spread.get_random_spread(global_position.direction_to(current_fire_position), 
+												_accuracy.accuracy) * distance + muzzle_position
 		var hit_damage: HitDamage = get_hit_damage()
 		var bullet: Projectile = projectile_ammo.consume_ammo()
 		bullet.hit_damage = hit_damage
 		bullet.show_behind_parent = true
 		Global.add_to_scene_tree(bullet)
-		bullet.setup_direction(position, end_position)
+		bullet.setup_direction(muzzle_position, end_position)
 
 		puff_muzzle_flash()
 
@@ -137,17 +135,18 @@ func get_fire_points() -> Array:
 		points.append(get_node(node_path))
 	return points
 
-func execute() -> void:
+func execute(fire_at:Vector2) -> void:
+	super(fire_at)
 	_trigger.pull_trigger()
 
 func cancel_execution() -> void:
-	pass
+	super()
 
-func execute_alt() -> void:
-	pass
+func execute_alt(fire_at:Vector2) -> void:
+	super(fire_at)
 
 func cancel_alt_execution() -> void:
-	pass
+	super()
 
 func active() -> void:
 	super()

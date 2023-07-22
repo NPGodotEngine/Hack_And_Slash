@@ -22,6 +22,7 @@ max_points = 10
 
 [node name="Skin" type="Sprite2D" parent="."]
 material = SubResource("2")
+position = Vector2(-2, 0)
 scale = Vector2(2.66667, 2.5)
 texture = ExtResource("1")
 region_enabled = true

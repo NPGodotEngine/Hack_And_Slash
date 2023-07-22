@@ -21,16 +21,14 @@ func _on_trigger_pulled() -> void:
 		bullet.hit_damage = get_hit_damage()
 		bullet.show_behind_parent = true
 
-	var global_mouse_position = get_global_mouse_position()
-
 	for point in _fire_points:
-		var position = (point as Marker2D).global_position
-		var distance: float = position.distance_to(global_mouse_position)
+		var muzzle_position = (point as Marker2D).global_position
+		var distance: float = muzzle_position.distance_to(current_fire_position)
 
 		for bullet in rounds:
-			var end_position = _angle_spread.get_random_spread(global_position.direction_to(global_mouse_position), 
-													_accuracy.accuracy) * distance + position
+			var end_position = _angle_spread.get_random_spread(global_position.direction_to(current_fire_position), 
+													_accuracy.accuracy) * distance + muzzle_position
 			Global.add_to_scene_tree(bullet)
-			bullet.setup_direction(position, end_position)
+			bullet.setup_direction(muzzle_position, end_position)
 
 	puff_muzzle_flash()

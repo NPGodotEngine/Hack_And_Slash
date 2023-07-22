@@ -1,13 +1,9 @@
-@tool
 class_name Controller
-extends Node
+extends Node2D
 
 @export var enable_controller: bool = true
 
 func _ready() -> void:
-    if Engine.is_editor_hint():
-        return 
-        
     if enable_controller:
         call_deferred("enable_control")
     else:

@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://raxiir4ncr5u" path="res://Interface/UIMediators/Dodge/DodgeBarUI.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://bk64jl45sgip5" path="res://Scenes/Prefabs/Weapons/AKM/AKM_Weapon.tscn" id="4"]
 [ext_resource type="PackedScene" uid="uid://d0eke1fpqy05t" path="res://Scenes/Components/Movement/MovementComponent.tscn" id="6"]
-[ext_resource type="PackedScene" path="res://Scenes/Components/Control/Player/PlayerControllerComponent.tscn" id="7"]
+[ext_resource type="PackedScene" uid="uid://cxr47rxftiaym" path="res://Scenes/Components/Control/Player/PlayerControllerComponent.tscn" id="7"]
 [ext_resource type="PackedScene" uid="uid://j4inalcgj8yf" path="res://Scenes/Components/appearance/Player/PlayerSkin.tscn" id="8"]
 [ext_resource type="PackedScene" uid="uid://ba0hec2dequmb" path="res://Scenes/Components/Movement/DodgeComponent.tscn" id="10"]
 [ext_resource type="PackedScene" path="res://Scenes/Components/Weapon/WeaponManager/WeaponManager.tscn" id="11"]

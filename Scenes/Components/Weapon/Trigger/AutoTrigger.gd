@@ -7,9 +7,6 @@ extends Trigger
 # Trigger timer
 var _trigger_timer: Timer = null
 
-# Is trigger ready to be pulled
-var _is_trigger_ready: bool = true
-
 
 
 func _ready() -> void:

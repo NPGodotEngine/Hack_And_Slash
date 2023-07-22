@@ -35,8 +35,14 @@ signal weapon_attributes_updated(weapon)
 @export var weapon_attributes: Resource = null: set = set_weapon_attributes
 
 
-# Weapon manager manage this weapon
+## Weapon manager manage this weapon
 var weapon_manager = null
+
+## weapon's primary fire position
+var current_fire_position: Vector2 = Vector2.ZERO
+
+## Weapon's alt fire position
+var current_alt_fire_position: Vector2 = Vector2.ZERO
 
 
 ## Getter Setter ##
@@ -86,13 +92,11 @@ func _physics_process(_delta: float) -> void:
 func get_hit_damage() -> HitDamage:
 	return null
 
-# Execute weapon
+## Execute weapon
 ##
-# `from_position` global position for weapon to shoot from
-# `to_position` global position for weapon to shoot to
-# `direction` for weapon's projectile to travel
-func execute() -> void:
-	pass
+## `fire_at`: the global position bullet will travel to
+func execute(fire_at:Vector2) -> void:
+	current_fire_position = fire_at
 
 # Cancel weapon execution
 ##
@@ -100,13 +104,11 @@ func execute() -> void:
 func cancel_execution() -> void:
 	pass
 
-# Execute weapon's alternative fire
+## Execute weapon's alternative fire
 ##
-# `from_position` global position for weapon to shoot from
-# `to_position` global position for weapon to shoot to
-# `direction` for weapon's projectile to travel
-func execute_alt() -> void:
-	pass
+## `fire_at`: the global position bullet will travel to
+func execute_alt(fire_at:Vector2) -> void:
+	current_alt_fire_position = fire_at
 
 # Cancel weapon's alternative fire execution
 ##

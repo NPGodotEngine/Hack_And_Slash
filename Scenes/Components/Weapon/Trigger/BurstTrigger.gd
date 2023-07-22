@@ -31,9 +31,6 @@ var _is_bursting: bool = false
 
 var _is_wating_for_next_process: bool = false
 
-# Is trigger ready to be pulled
-var _is_trigger_ready: bool = true
-
 
 
 func _get_configuration_warnings() -> PackedStringArray:
