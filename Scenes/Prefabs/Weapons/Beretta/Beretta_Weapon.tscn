@@ -10,11 +10,11 @@
 [ext_resource type="PackedScene" path="res://Scenes/Components/Weapon/Trigger/AutoTrigger.tscn" id="8"]
 [ext_resource type="PackedScene" uid="uid://byk66rn231q1m" path="res://Scenes/Components/Damage/RangedDamageComponent.tscn" id="9"]
 [ext_resource type="PackedScene" uid="uid://k0s0m3pogx2h" path="res://Scenes/Components/CriticalStrike/CriticalComponent.tscn" id="10"]
-[ext_resource type="PackedScene" uid="uid://cv64mrumrrebf" path="res://Scenes/Components/Spread/AngleSpreadComponent.tscn" id="11"]
+[ext_resource type="PackedScene" uid="uid://cv64mrumrrebf" path="res://Scenes/Components/Spread/RadiusSpreadComponent.tscn" id="11"]
 [ext_resource type="PackedScene" uid="uid://cm0u7m5sjctj7" path="res://Interface/HUD/WeaponReloadIndicator/WeaponReloadIndicator.tscn" id="12"]
 [ext_resource type="PackedScene" uid="uid://bxmwmm2rwqlo7" path="res://Interface/HUD/Crosshair/DefaultCrosshair/Crosshair.tscn" id="13_5cndn"]
 [ext_resource type="PackedScene" uid="uid://bw7p5rv0jc4aq" path="res://Interface/UIMediators/WeaponCrosshair/WeaponCrosshair.tscn" id="14"]
-[ext_resource type="PackedScene" uid="uid://52g60ackh5ls" path="res://Interface/Components/ReloadIndicator/ReloadIndicator.tscn" id="15"]
+[ext_resource type="PackedScene" uid="uid://52g60ackh5ls" path="res://Interface/HUD/ReloadIndicator/ReloadIndicator.tscn" id="15"]
 [ext_resource type="PackedScene" uid="uid://qhd2epbujiwg" path="res://Interface/UIMediators/Ammo/AmmoUI.tscn" id="17"]
 
 [node name="Beretta" type="Node2D"]
@@ -22,7 +22,7 @@ script = ExtResource("3")
 accuracy = NodePath("AccuracyComponent")
 ranged_damage = NodePath("RangedDamageComponent")
 critical = NodePath("CriticalComponent")
-angle_spread = NodePath("AngleSpreadComponent")
+radius_spread = NodePath("RadiusSpreadComponent")
 trigger = NodePath("AutoTrigger")
 ammo = NodePath("ProjectileAmmo")
 fire_points = [NodePath("FirePoint")]
@@ -39,8 +39,7 @@ critical_chance = 0.2
 [node name="AccuracyComponent" parent="." instance=ExtResource("7")]
 accuracy = 0.9
 
-[node name="AngleSpreadComponent" parent="." instance=ExtResource("11")]
-spread_range_degree = 5.0
+[node name="RadiusSpreadComponent" parent="." instance=ExtResource("11")]
 
 [node name="AutoTrigger" parent="." instance=ExtResource("8")]
 trigger_duration = 0.8

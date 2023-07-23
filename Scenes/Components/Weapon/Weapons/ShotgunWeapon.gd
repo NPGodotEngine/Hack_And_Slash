@@ -23,12 +23,10 @@ func _on_trigger_pulled() -> void:
 
 	for point in _fire_points:
 		var muzzle_position = (point as Marker2D).global_position
-		var distance: float = muzzle_position.distance_to(current_fire_position)
 
 		for bullet in rounds:
-			var end_position = _angle_spread.get_random_spread(global_position.direction_to(current_fire_position), 
-													_accuracy.accuracy) * distance + muzzle_position
+			var spread_point: Vector2 = _radius_spread.get_random_spread_point(current_fire_position)
 			Global.add_to_scene_tree(bullet)
-			bullet.setup_direction(muzzle_position, end_position)
+			bullet.setup_direction(muzzle_position, spread_point)
 
 	puff_muzzle_flash()

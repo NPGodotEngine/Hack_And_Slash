@@ -73,6 +73,9 @@ func _process(_delta: float) -> void:
 		_reload_indicator.update_reload_progress(progress.progress, progress.max_progress)
 
 func _exit_tree():
+	if Engine.is_editor_hint():
+		return
+		
 	if _reload_indicator.get_parent():
 		_reload_indicator.get_parent().remove_child(_reload_indicator)
 		_reload_indicator.queue_free()

@@ -7,7 +7,7 @@ extends Weapon
 @export var accuracy: NodePath
 @export var ranged_damage: NodePath
 @export var critical: NodePath
-@export var angle_spread: NodePath
+@export var radius_spread: NodePath
 @export var trigger: NodePath
 @export var ammo: NodePath
 @export var fire_points: Array # (Array, NodePath)
@@ -17,7 +17,7 @@ extends Weapon
 @onready var _accuracy: AccuracyComponent = get_node_or_null(accuracy)
 @onready var _ranged_damage: RangedDamageComponent = get_node_or_null(ranged_damage)
 @onready var _critical: CriticalComponent = get_node_or_null(critical)
-@onready var _angle_spread: AngleSpreadComponent = get_node_or_null(angle_spread)
+@onready var _radius_spread: RadiusSpreadComponent = get_node_or_null(radius_spread)
 @onready var _trigger: Trigger = get_node_or_null(trigger)
 @onready var _ammo: Ammo = get_node_or_null(ammo)
 @onready var _fire_points: Array = get_fire_points()
@@ -32,10 +32,10 @@ func _get_configuration_warnings() -> PackedStringArray:
 		return ["accuracy node path is missing"]
 	if not get_node(accuracy) is AccuracyComponent:
 		return ["accuracy must be a AccuracyComponent node"]
-	if angle_spread.is_empty():
-		return ["angle_spread node path is missing"]
-	if not get_node(angle_spread) is AngleSpreadComponent:
-		return ["angle_spread must be a AngleSpreadComponent node"]
+	if radius_spread.is_empty():
+		return ["radius_spread node path is missing"]
+	if not get_node(radius_spread) is RadiusSpreadComponent:
+		return ["radius_spread must be a RadiusSpreadComponent node"]
 	if trigger.is_empty():
 		return ["trigger node path is missing"]
 	if not get_node(trigger) is Trigger:
@@ -84,16 +84,13 @@ func _on_trigger_pulled() -> void:
 		if _ammo._is_reloading:
 			return
 		var muzzle_position = (point as Marker2D).global_position
-		# var global_mouse_position = get_global_mouse_position()
-		var distance: float = muzzle_position.distance_to(current_fire_position)
-		var end_position = _angle_spread.get_random_spread(global_position.direction_to(current_fire_position), 
-												_accuracy.accuracy) * distance + muzzle_position
+		var spread_point: Vector2 = _radius_spread.get_random_spread_point(current_fire_position)
 		var hit_damage: HitDamage = get_hit_damage()
 		var bullet: Projectile = projectile_ammo.consume_ammo()
 		bullet.hit_damage = hit_damage
 		bullet.show_behind_parent = true
 		Global.add_to_scene_tree(bullet)
-		bullet.setup_direction(muzzle_position, end_position)
+		bullet.setup_direction(muzzle_position, spread_point)
 
 		puff_muzzle_flash()
 
@@ -162,6 +159,7 @@ func apply_weapon_attributes(attributes:WeaponAttributes) -> void:
 	_critical.critical_chance = attributes.critical_chance
 	_critical.critical_multiplier = attributes.critical_multiplier
 	_accuracy.accuracy = attributes.accuracy
+	_radius_spread.spread_radius = attributes.spread_radius
 	_trigger.trigger_duration = attributes.trigger_duration
 	_ammo.reload_duration = attributes.reload_duration
 	_ammo.rounds_per_clip = attributes.round_per_clip

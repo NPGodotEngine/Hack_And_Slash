@@ -9,6 +9,7 @@ min_damage = 15.0
 critical_chance = 0.2
 critical_multiplier = 1.5
 accuracy = 0.7
+spread_radius = 5.0
 trigger_duration = 0.1
 reload_duration = 1.5
 round_per_clip = 30

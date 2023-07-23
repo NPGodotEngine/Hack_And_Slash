@@ -4,9 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://sjn5us35476j" path="res://Assets/Weapons/Weapons_sheet.png" id="2"]
 [ext_resource type="PackedScene" uid="uid://byk66rn231q1m" path="res://Scenes/Components/Damage/RangedDamageComponent.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://k0s0m3pogx2h" path="res://Scenes/Components/CriticalStrike/CriticalComponent.tscn" id="4"]
-[ext_resource type="PackedScene" uid="uid://52g60ackh5ls" path="res://Interface/Components/ReloadIndicator/ReloadIndicator.tscn" id="5"]
+[ext_resource type="PackedScene" uid="uid://52g60ackh5ls" path="res://Interface/HUD/ReloadIndicator/ReloadIndicator.tscn" id="5"]
 [ext_resource type="PackedScene" uid="uid://bw7p5rv0jc4aq" path="res://Interface/UIMediators/WeaponCrosshair/WeaponCrosshair.tscn" id="6"]
-[ext_resource type="PackedScene" uid="uid://cv64mrumrrebf" path="res://Scenes/Components/Spread/AngleSpreadComponent.tscn" id="7"]
+[ext_resource type="PackedScene" uid="uid://cv64mrumrrebf" path="res://Scenes/Components/Spread/RadiusSpreadComponent.tscn" id="7"]
 [ext_resource type="PackedScene" uid="uid://daai6upojrqn1" path="res://Scenes/Components/Weapon/Ammo/ProjectileAmmo.tscn" id="8"]
 [ext_resource type="PackedScene" path="res://Scenes/Components/Accuracy/AccuracyComponent.tscn" id="10"]
 [ext_resource type="PackedScene" path="res://Scenes/Components/Weapon/Trigger/AutoTrigger.tscn" id="11"]
@@ -22,7 +22,7 @@ script = ExtResource("15")
 accuracy = NodePath("AccuracyComponent")
 ranged_damage = NodePath("RangedDamageComponent")
 critical = NodePath("CriticalComponent")
-angle_spread = NodePath("AngleSpreadComponent")
+radius_spread = NodePath("RadiusSpreadComponent")
 trigger = NodePath("AutoTrigger")
 ammo = NodePath("ProjectileAmmo")
 fire_points = [NodePath("FirePoint")]
@@ -40,7 +40,7 @@ critical_chance = 0.4
 [node name="AccuracyComponent" parent="." instance=ExtResource("10")]
 accuracy = 0.9
 
-[node name="AngleSpreadComponent" parent="." instance=ExtResource("7")]
+[node name="RadiusSpreadComponent" parent="." instance=ExtResource("7")]
 
 [node name="AutoTrigger" parent="." instance=ExtResource("11")]
 trigger_duration = 1.5
