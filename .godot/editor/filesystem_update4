@@ -31,3 +31,4 @@ res://Interface/Components/Ammo/AmmoCount.gd
 res://Interface/Components/Ammo/AmmoCount.tscn
 res://Interface/UIMediators/Ammo/AmmoUI.gd
 res://System/Style/UI_Panel.tres
+res://Interface/HUD/Crosshair/DefaultCrosshair/Crosshair.gd
