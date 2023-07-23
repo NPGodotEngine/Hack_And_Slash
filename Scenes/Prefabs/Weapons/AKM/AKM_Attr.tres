@@ -1,9 +1,9 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" script_class="WeaponAttributes" load_steps=2 format=3 uid="uid://cj3xdimma4xhu"]
 
-[ext_resource path="res://Scenes/Components/Weapon/Weapons/WeaponAttributes.gd" type="Script" id=1]
+[ext_resource type="Script" path="res://Scenes/Components/Weapon/Weapons/WeaponAttributes.gd" id="1"]
 
 [resource]
-script = ExtResource( 1 )
+script = ExtResource("1")
 max_damage = 25.0
 min_damage = 15.0
 critical_chance = 0.2

@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://bxmwmm2rwqlo7"]
+
+[ext_resource type="Script" path="res://Interface/HUD/Crosshair/DefaultCrosshair/Crosshair.gd" id="1_ygk5y"]
+[ext_resource type="PackedScene" uid="uid://cq714xx5og1cf" path="res://Interface/HUD/Crosshair/DefaultCrosshair/povit.tscn" id="2_ccmoc"]
+[ext_resource type="PackedScene" uid="uid://cffui5txkxmse" path="res://Interface/HUD/Crosshair/DefaultCrosshair/Center.tscn" id="2_kjfyy"]
+
+[node name="Crosshair" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_ygk5y")
+
+[node name="Center" parent="." instance=ExtResource("2_kjfyy")]
+
+[node name="Reticle" type="Node2D" parent="."]
+
+[node name="Povit" parent="Reticle" instance=ExtResource("2_ccmoc")]
+
+[node name="Povit2" parent="Reticle" instance=ExtResource("2_ccmoc")]
+rotation = 1.5708
+
+[node name="Povit3" parent="Reticle" instance=ExtResource("2_ccmoc")]
+rotation = 3.14159
+
+[node name="Povit4" parent="Reticle" instance=ExtResource("2_ccmoc")]
+rotation = -1.5708

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bw7p5rv0jc4aq"]
+
+[ext_resource type="Script" path="res://Interface/UIMediators/WeaponCrosshair/WeaponCrosshair.gd" id="1_es54t"]
+
+[node name="WeaponCrosshair" type="Node2D"]
+z_index = 2
+script = ExtResource("1_es54t")

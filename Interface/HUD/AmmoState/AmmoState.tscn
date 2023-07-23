@@ -1,31 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://c18xre6euvsis"]
+[gd_scene load_steps=2 format=3 uid="uid://c18xre6euvsis"]
 
 [ext_resource type="PackedScene" uid="uid://br47w61qb8npa" path="res://Interface/Components/Ammo/AmmoCount.tscn" id="1"]
-[ext_resource type="Script" path="res://Interface/HUD/AmmoState/AmmoState.gd" id="2"]
-[ext_resource type="Texture2D" uid="uid://b53fppvhv28a2" path="res://Assets/UI/Ammo_outline_icon.png" id="3"]
-[ext_resource type="Texture2D" uid="uid://de0tp0jjne7il" path="res://Assets/UI/Ammo_inner_icon.png" id="4"]
 
-[node name="AmmoState" type="HBoxContainer"]
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("2")
-
-[node name="CenterContainer" type="CenterContainer" parent="."]
-layout_mode = 2
-
-[node name="AmmoInner" type="TextureRect" parent="CenterContainer"]
-self_modulate = Color(0.784314, 0.72549, 0.235294, 1)
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-texture = ExtResource("4")
-expand_mode = 1
-
-[node name="AmmoOutline" type="TextureRect" parent="CenterContainer"]
-self_modulate = Color(0.188235, 0.180392, 0.180392, 1)
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-texture = ExtResource("3")
-expand_mode = 1
+[node name="AmmoState" type="MarginContainer"]
+offset_right = 38.0
+offset_bottom = 24.0
 
 [node name="AmmoCount" parent="." instance=ExtResource("1")]
 layout_mode = 2

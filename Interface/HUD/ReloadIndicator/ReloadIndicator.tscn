@@ -1,0 +1,88 @@
+[gd_scene load_steps=8 format=3 uid="uid://52g60ackh5ls"]
+
+[ext_resource type="Script" path="res://Interface/HUD/ReloadIndicator/ReloadIndicator.gd" id="1_50yrb"]
+[ext_resource type="Texture2D" uid="uid://bw33pustswfkh" path="res://Assets/UI/HUD/Reload/ReloadBar_under.png" id="2_xgjq7"]
+[ext_resource type="Texture2D" uid="uid://b8r3do5gkrx1d" path="res://Assets/UI/HUD/Reload/ReloadBar_cover.png" id="3_d5qdh"]
+
+[sub_resource type="Animation" id="Animation_c37vv"]
+resource_name = "pop"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(-2, -0.5, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1.5, 1.5), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_pjc08"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_tdt1g"]
+resource_name = "shrink"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3),
+"transitions": PackedFloat32Array(-2, -0.5, 2),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.5, 1.5), Vector2(1e-05, 1e-05)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ffg6y"]
+_data = {
+"RESET": SubResource("Animation_pjc08"),
+"pop": SubResource("Animation_c37vv"),
+"shrink": SubResource("Animation_tdt1g")
+}
+
+[node name="ReloadIndicator" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_50yrb")
+
+[node name="ProgressBar" type="TextureProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.5
+offset_top = -20.0
+offset_right = 34.5
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+texture_under = ExtResource("2_xgjq7")
+texture_progress = ExtResource("3_d5qdh")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ffg6y")
+}

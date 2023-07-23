@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cq714xx5og1cf"]
+
+[node name="Povit" type="Node2D"]
+
+[node name="Base" type="Node2D" parent="."]
+position = Vector2(10, 0)
+
+[node name="Border" type="Line2D" parent="Base"]
+points = PackedVector2Array(0, 0, 10, 0)
+default_color = Color(0, 0, 0, 1)
+begin_cap_mode = 1
+end_cap_mode = 1
+
+[node name="Line" type="Line2D" parent="Base/Border"]
+points = PackedVector2Array(0, 0, 10, 0)
+width = 6.0
+begin_cap_mode = 1
+end_cap_mode = 1

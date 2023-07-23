@@ -1,5 +1,5 @@
 class_name AmmoCount
-extends MarginContainer
+extends HBoxContainer
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 
@@ -11,64 +11,79 @@ extends MarginContainer
 @export var to_color: Color = Color.RED
 
 
-@onready var current_ammo: Label = $HBoxContainer/CurrentAmmo
-@onready var max_ammo: Label = $HBoxContainer/MaxAmmo
+@onready var current_ammo: Label = $CurrentAmmo
+@onready var max_ammo: Label = $MaxAmmo
 
 var ammo_count: int: set = set_ammo_count
 var max_ammo_count: int: set = set_max_ammo_count
 
 var _transition_type: int = Tween.TRANS_QUART
-    
+	
 var scale_tween: Tween
 var color_tween: Tween
 
 func set_ammo_count(value:int) -> void:
-    ammo_count = value
-    current_ammo.text = str(ammo_count)
+	ammo_count = value
+	current_ammo.text = str(ammo_count)
 
-    if ammo_count != 0:
-        consume_ammo_anim()
-    else:
-        ammo_deplete_anim()
+	if ammo_count != 0:
+		consume_ammo_anim()
+	else:
+		ammo_deplete_anim()
 
 func set_max_ammo_count(value:int) -> void:
-    max_ammo_count = value
-    max_ammo.text = str(max_ammo_count)
+	max_ammo_count = value
+	max_ammo.text = str(max_ammo_count)
+
+func _ready() -> void:
+	UIEvents.connect("player_ammo_updated", Callable(self, "_on_player_ammo_updated"))
+	UIEvents.connect("hide_player_ammo_ui", Callable(self, "_on_hide_player_ammo_ui"))
+	UIEvents.connect("show_player_ammo_ui", Callable(self, "_on_show_player_ammo_ui"))
+
+func _on_player_ammo_updated(ammo_count_value:int, max_ammo_count_value:int) -> void:
+	set_ammo_count(ammo_count_value)
+	set_max_ammo_count(max_ammo_count_value)
+
+func _on_show_player_ammo_ui() -> void:
+	self.show()
+	
+func _on_hide_player_ammo_ui() -> void:
+	self.hide()
 
 func consume_ammo_anim() -> void:
-    current_ammo.pivot_offset = current_ammo.size / 2.0
+	current_ammo.pivot_offset = current_ammo.size / 2.0
 
-    if scale_tween:
-        scale_tween.kill()
-    scale_tween = create_tween()
-    scale_tween.tween_property(current_ammo, "scale", scale_to, anim_duration/ 2.0)\
-        .set_trans(_transition_type)\
-        .set_ease(Tween.EASE_IN_OUT)
-    scale_tween.tween_property(current_ammo, "scale", Vector2.ONE, anim_duration/ 2.0)\
-        .set_trans(_transition_type)\
-        .set_ease(Tween.EASE_OUT_IN)
+	if scale_tween:
+		scale_tween.kill()
+	scale_tween = create_tween()
+	scale_tween.tween_property(current_ammo, "scale", scale_to, anim_duration/ 2.0)\
+		.set_trans(_transition_type)\
+		.set_ease(Tween.EASE_IN_OUT)
+	scale_tween.tween_property(current_ammo, "scale", Vector2.ONE, anim_duration/ 2.0)\
+		.set_trans(_transition_type)\
+		.set_ease(Tween.EASE_OUT_IN)
 
-    if color_tween:
-        color_tween.kill()
-    color_tween = create_tween()
-    color_tween.tween_property(current_ammo, "modulate", to_color, anim_duration/ 2.0)\
-        .set_trans(_transition_type)\
-        .set_ease(Tween.EASE_IN_OUT) 
-    color_tween.tween_property(current_ammo, "modulate", from_color, anim_duration/ 2.0)\
-        .set_trans(_transition_type)\
-        .set_ease(Tween.EASE_OUT_IN)
+	if color_tween:
+		color_tween.kill()
+	color_tween = create_tween()
+	color_tween.tween_property(current_ammo, "modulate", to_color, anim_duration/ 2.0)\
+		.set_trans(_transition_type)\
+		.set_ease(Tween.EASE_IN_OUT) 
+	color_tween.tween_property(current_ammo, "modulate", from_color, anim_duration/ 2.0)\
+		.set_trans(_transition_type)\
+		.set_ease(Tween.EASE_OUT_IN)
 
 func ammo_deplete_anim() -> void:
-    current_ammo.pivot_offset = current_ammo.size / 2.0
-    current_ammo.scale = Vector2.ONE
+	current_ammo.pivot_offset = current_ammo.size / 2.0
+	current_ammo.scale = Vector2.ONE
 
-    if color_tween:
-        color_tween.kill()
-    color_tween = create_tween()
-    color_tween.tween_property(current_ammo, "modulate", to_color, deplete_anim_duration/ 2.0)\
-        .set_trans(Tween.TRANS_LINEAR)\
-        .set_ease(Tween.EASE_IN_OUT)
+	if color_tween:
+		color_tween.kill()
+	color_tween = create_tween()
+	color_tween.tween_property(current_ammo, "modulate", to_color, deplete_anim_duration/ 2.0)\
+		.set_trans(Tween.TRANS_LINEAR)\
+		.set_ease(Tween.EASE_IN_OUT)
 
-    color_tween.tween_property(current_ammo, "modulate", from_color, deplete_anim_duration/ 2.0)\
-        .set_trans(Tween.TRANS_LINEAR)\
-        .set_ease(Tween.EASE_OUT_IN) 
+	color_tween.tween_property(current_ammo, "modulate", from_color, deplete_anim_duration/ 2.0)\
+		.set_trans(Tween.TRANS_LINEAR)\
+		.set_ease(Tween.EASE_OUT_IN) 

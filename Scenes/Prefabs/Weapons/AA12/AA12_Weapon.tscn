@@ -12,9 +12,9 @@
 [ext_resource type="PackedScene" uid="uid://k0s0m3pogx2h" path="res://Scenes/Components/CriticalStrike/CriticalComponent.tscn" id="10"]
 [ext_resource type="PackedScene" uid="uid://cv64mrumrrebf" path="res://Scenes/Components/Spread/AngleSpreadComponent.tscn" id="11"]
 [ext_resource type="PackedScene" uid="uid://cm0u7m5sjctj7" path="res://Interface/HUD/WeaponReloadIndicator/WeaponReloadIndicator.tscn" id="12"]
-[ext_resource type="PackedScene" path="res://Interface/Components/Crosshair/Crosshair.tscn" id="13"]
-[ext_resource type="PackedScene" uid="uid://bw7p5rv0jc4aq" path="res://Interface/HUD/WeaponCrosshair/WeaponCrosshair.tscn" id="14"]
-[ext_resource type="PackedScene" path="res://Interface/Components/ReloadIndicator/ReloadIndicator.tscn" id="15"]
+[ext_resource type="PackedScene" uid="uid://bw7p5rv0jc4aq" path="res://Interface/UIMediators/WeaponCrosshair/WeaponCrosshair.tscn" id="14"]
+[ext_resource type="PackedScene" uid="uid://52g60ackh5ls" path="res://Interface/Components/ReloadIndicator/ReloadIndicator.tscn" id="15"]
+[ext_resource type="PackedScene" uid="uid://bxmwmm2rwqlo7" path="res://Interface/HUD/Crosshair/DefaultCrosshair/Crosshair.tscn" id="16_f8a26"]
 [ext_resource type="PackedScene" uid="uid://qhd2epbujiwg" path="res://Interface/UIMediators/Ammo/AmmoUI.tscn" id="17"]
 
 [node name="AA12" type="Node2D"]
@@ -67,16 +67,16 @@ texture = ExtResource("1")
 region_enabled = true
 region_rect = Rect2(4, 85, 56, 22)
 
-[node name="WeaponCrosshair" parent="." instance=ExtResource("14")]
-weapon_ref = NodePath("..")
-ammo_ref = NodePath("../ShotgunAmmo")
-crosshair_scene = ExtResource("13")
-
 [node name="WeaponReloadIndicator" parent="." instance=ExtResource("12")]
 weapon_ref = NodePath("..")
 ammo_ref = NodePath("../ShotgunAmmo")
-reloadbar_scene = ExtResource("15")
+reload_indicator_scene = ExtResource("15")
 
 [node name="AmmoUI" parent="." instance=ExtResource("17")]
 weapon_ref = NodePath("..")
 ammo_ref = NodePath("../ShotgunAmmo")
+
+[node name="WeaponCrosshair" parent="." instance=ExtResource("14")]
+weapon_ref = NodePath("..")
+ammo_ref = NodePath("../ShotgunAmmo")
+crosshair_scene = ExtResource("16_f8a26")
