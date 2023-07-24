@@ -18,11 +18,15 @@ func actor_setup() -> void:
 	set_movement_target(get_parent().global_position)
 
 func set_movement_target(movement_target: Vector2):
-	nav_agent.set_target_position(movement_target)
+	nav_agent.target_position = movement_target
 
-func _physics_process(delta: float) -> void:
-	super(delta)
+	await nav_agent.path_changed
+	var line2d := owner.get_node("Line2D")
+	line2d.clear_points()
+	for point in nav_agent.get_current_navigation_result().path:
+		line2d.add_point(line2d.to_local(point))
 
+func _physics_process(_delta: float) -> void:
 	if Input.is_action_pressed("primary"):
 		set_movement_target(get_global_mouse_position())
 		return
@@ -32,7 +36,6 @@ func _physics_process(delta: float) -> void:
 
 	var current_agent_position: Vector2 = get_parent().global_position
 	var next_path_position: Vector2 = nav_agent.get_next_path_position()
-	print(next_path_position)
 
 	var new_velocity: Vector2 = next_path_position - current_agent_position
 	new_velocity = new_velocity.normalized()

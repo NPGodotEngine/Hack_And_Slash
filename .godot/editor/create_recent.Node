@@ -1,3 +1,10 @@
+Node2D
+NavigationObstacle2D
+AnimationPlayer
+CollisionShape2D
+Line2D
+CollisionPolygon2D
+StaticBody2D
 PanelContainer
 Panel
 MarginContainer
@@ -7,11 +14,8 @@ Container
 HBoxContainer
 ColorRect
 VBoxContainer
-AnimationPlayer
 TextureProgressBar
 Control
-Node2D
-Line2D
 HealthBar
 CanvasLayer
 Marker2D
