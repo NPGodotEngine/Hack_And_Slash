@@ -34,6 +34,10 @@ func _physics_process(_delta: float) -> void:
 	if nav_agent.is_navigation_finished():
 		return
 
+	if nav_agent.distance_to_target() <= nav_agent.path_max_distance:
+		nav_agent.target_position = get_parent().global_position
+		return
+
 	var current_agent_position: Vector2 = get_parent().global_position
 	var next_path_position: Vector2 = nav_agent.get_next_path_position()
 

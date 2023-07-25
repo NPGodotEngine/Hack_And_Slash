@@ -47,6 +47,7 @@ signal health_updated(health_context)
 signal max_health_updated(max_health_context)
 
 
+@export var invulnerable: bool = false
 
 # Max health
 @export var max_health: float = 100.0: set = set_max_health
@@ -114,6 +115,9 @@ func set_health(value:float) -> void:
 # `damage_amount`: amount of damage to reduce helath
 # negative value result in nothing
 func damage(damage_amount:float) -> void:
+	if invulnerable:
+		return
+		
 	# do nothing if negative value
 	if damage_amount < 0.0 or sign(damage_amount) < 0.0:
 		return

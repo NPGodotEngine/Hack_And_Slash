@@ -1,3 +1,5 @@
+res://Character/Mobs/AI/BehaviorAI/Actions
+res://Character/Mobs/AI/BehaviorAI/Conditions
 res://System/Style
 res://Interface/HUD/Crosshair/DefaultCrosshair
 res://Scenes/Prefabs/Weapons/AA12

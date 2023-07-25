@@ -4,11 +4,15 @@
 [ext_resource type="Script" path="res://Levels/TestLevel.gd" id="4"]
 [ext_resource type="PackedScene" uid="uid://cq047pq2p7j1" path="res://Scenes/Prefabs/Spawners/PlayerSpawner.tscn" id="5"]
 [ext_resource type="PackedScene" uid="uid://d0djly3hdieh1" path="res://Character/Mobs/Dummy/DummyChase.tscn" id="6"]
-[ext_resource type="PackedScene" uid="uid://dtd0g6r5dmhvj" path="res://Character/Mobs/Dummy/Dummy1.tscn" id="7"]
 [ext_resource type="PackedScene" uid="uid://ugy5fauyv4jx" path="res://Interface/GUI.tscn" id="8"]
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_hg0lx"]
+vertices = PackedVector2Array(647, 359, 1235, 710, -34, 702, 490, 357, 1196, -57, 637, 238, -30, -38, 487, 244)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 1, 0, 5), PackedInt32Array(3, 2, 6, 7), PackedInt32Array(7, 6, 4, 5)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-30, -38, -34, 702, 1235, 710, 1196, -57), PackedVector2Array(487, 244, 490, 357, 647, 359, 637, 238)])
+
 [sub_resource type="RectangleShape2D" id="1"]
-size = Vector2(52, 40)
+size = Vector2(110, 82)
 
 [sub_resource type="Environment" id="2"]
 background_mode = 4
@@ -24,27 +28,30 @@ script = ExtResource("4")
 
 [node name="GUI" parent="." instance=ExtResource("8")]
 
-[node name="Prop" type="StaticBody2D" parent="."]
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_hg0lx")
+
+[node name="Prop" type="StaticBody2D" parent="NavigationRegion2D"]
 position = Vector2(563, 301)
 collision_layer = 4
 collision_mask = 0
 
-[node name="Sprite2D" type="Sprite2D" parent="Prop"]
+[node name="Sprite2D" type="Sprite2D" parent="NavigationRegion2D/Prop"]
 texture = ExtResource("2")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Prop"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NavigationRegion2D/Prop"]
 shape = SubResource("1")
 
-[node name="PlayerSpawner" parent="." instance=ExtResource("5")]
+[node name="PlayerSpawner" parent="NavigationRegion2D" instance=ExtResource("5")]
 position = Vector2(200, 205)
 spawn_radius = 100.0
 list = Array[String](["Soldier"])
 
-[node name="Dummy" parent="." instance=ExtResource("7")]
-position = Vector2(667, 465)
-
-[node name="DummyChase" parent="." instance=ExtResource("6")]
+[node name="DummyChase" parent="NavigationRegion2D" instance=ExtResource("6")]
 position = Vector2(868, 113)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("2")
+
+[editable path="NavigationRegion2D/DummyChase"]
+[editable path="NavigationRegion2D/DummyChase/Vision"]

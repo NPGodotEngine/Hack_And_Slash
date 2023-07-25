@@ -1,16 +1,27 @@
-[gd_scene load_steps=15 format=3 uid="uid://d0djly3hdieh1"]
+[gd_scene load_steps=25 format=3 uid="uid://d0djly3hdieh1"]
 
 [ext_resource type="PackedScene" uid="uid://dppm0px1m1nvx" path="res://Scenes/Components/appearance/Mob/MobSkin.tscn" id="1"]
 [ext_resource type="Script" path="res://Character/Mobs/Mob.gd" id="2"]
 [ext_resource type="Script" path="res://Scenes/Components/HitHurt/HurtBox.gd" id="4"]
-[ext_resource type="PackedScene" uid="uid://dyq742s55trax" path="res://Scenes/Components/Detection/TargetDetector.tscn" id="5"]
 [ext_resource type="PackedScene" uid="uid://eaiyf65ypdbm" path="res://Scenes/Components/Health/HealthComponent.tscn" id="6"]
 [ext_resource type="PackedScene" uid="uid://bxygst4b7f1ek" path="res://Interface/UIMediators/HealthBar/FloatHealthBarUI.tscn" id="7"]
-[ext_resource type="PackedScene" uid="uid://6j1d25osdilt" path="res://Character/Mobs/AI/MobAI.tscn" id="9"]
-[ext_resource type="PackedScene" path="res://Character/Mobs/AI/AIComponents/LineOfSight.tscn" id="10"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/AIComponents/TargetFinder.gd" id="9_y57rb"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Blackboard/EnemyBlackboard.gd" id="10_dk5x7"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="10_ose4x"]
 [ext_resource type="PackedScene" uid="uid://b4m4a3hj8q8hr" path="res://Interface/WorldUI/Damage/DamageLabel.tscn" id="11"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="11_ylkaq"]
 [ext_resource type="PackedScene" uid="uid://cvcnfm58je70e" path="res://Interface/UIMediators/Damage/DamageTextUI.tscn" id="12"]
 [ext_resource type="PackedScene" uid="uid://d0eke1fpqy05t" path="res://Scenes/Components/Movement/MovementComponent.tscn" id="12_8o6l0"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="12_303hf"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/inverter.gd" id="13_owso0"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Conditions/IsAlive.gd" id="14_1jp76"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Conditions/HasTarget.gd" id="15_voi7v"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/FindPathToTarget.gd" id="17_eovyb"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/RotateVision.gd" id="18_dddax"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/ApprochTarget.gd" id="18_sbggo"]
+[ext_resource type="PackedScene" uid="uid://kf8tqdlm8c5t" path="res://addons/vision_cone_2d/vision_cone_2d_template.tscn" id="19_aev7p"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Conditions/IsTargetInRange.gd" id="19_kpysy"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/RangeAttack.gd" id="20_tt7c6"]
 
 [sub_resource type="CapsuleShape2D" id="9"]
 radius = 17.0
@@ -18,9 +29,6 @@ height = 34.0
 
 [sub_resource type="RectangleShape2D" id="10"]
 size = Vector2(28, 38)
-
-[sub_resource type="CircleShape2D" id="8"]
-radius = 213.021
 
 [node name="DummyChase" type="CharacterBody2D"]
 collision_layer = 2
@@ -31,10 +39,17 @@ script = ExtResource("2")
 position = Vector2(1, 0)
 shape = SubResource("9")
 
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+unique_name_in_owner = true
+path_max_distance = 60.0
+avoidance_enabled = true
+debug_enabled = true
+
 [node name="MovementComponent" parent="." instance=ExtResource("12_8o6l0")]
+unique_name_in_owner = true
 
 [node name="HealthComponent" parent="." instance=ExtResource("6")]
-max_health = 1000.0
+unique_name_in_owner = true
 
 [node name="FloatHealthBar" parent="HealthComponent" instance=ExtResource("7")]
 position = Vector2(0, -35)
@@ -52,25 +67,63 @@ script = ExtResource("4")
 position = Vector2(2, 0)
 shape = SubResource("10")
 
-[node name="TargetDetector" parent="." instance=ExtResource("5")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TargetDetector"]
-shape = SubResource("8")
-
-[node name="LineOfSight" parent="." instance=ExtResource("10")]
-
-[node name="MobAI" parent="." instance=ExtResource("9")]
-
-[node name="TargetDetected" parent="MobAI/Either/WaitForTarget" index="0"]
-target_detector_ref = NodePath("../../../../TargetDetector")
-
-[node name="IsTargetInSight" parent="MobAI/Either/AttackTarget/WaitTargetInSight" index="0"]
-line_of_sight_ref = NodePath("../../../../../LineOfSight")
-
-[node name="MoveToTarget" parent="MobAI/Either/AttackTarget/WaitTargetInSight" index="1"]
-move_component_ref = NodePath("../../../../../MovementComponent")
-
 [node name="DamageTextUI" parent="." instance=ExtResource("12")]
 damage_text = ExtResource("11")
 
-[editable path="MobAI"]
+[node name="TargetFinder" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("9_y57rb")
+seeking_freq = 0.4
+
+[node name="Vision" parent="." instance=ExtResource("19_aev7p")]
+unique_name_in_owner = true
+angle_deg = 45
+collision_layer_mask = 4
+
+[node name="Blackboard" type="Node" parent="."]
+script = ExtResource("10_dk5x7")
+
+[node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard")]
+script = ExtResource("10_ose4x")
+actor_node_path = NodePath("..")
+blackboard = NodePath("../Blackboard")
+
+[node name="Either" type="Node" parent="BeehaveTree"]
+script = ExtResource("11_ylkaq")
+
+[node name="IsNotAlive" type="Node" parent="BeehaveTree/Either"]
+script = ExtResource("13_owso0")
+
+[node name="IsAlive" type="Node" parent="BeehaveTree/Either/IsNotAlive"]
+script = ExtResource("14_1jp76")
+
+[node name="HasNoTarget" type="Node" parent="BeehaveTree/Either"]
+script = ExtResource("13_owso0")
+
+[node name="HasTarget" type="Node" parent="BeehaveTree/Either/HasNoTarget"]
+script = ExtResource("15_voi7v")
+
+[node name="RangeAttack" type="Node" parent="BeehaveTree/Either"]
+script = ExtResource("12_303hf")
+
+[node name="RotateVision" type="Node" parent="BeehaveTree/Either/RangeAttack"]
+script = ExtResource("18_dddax")
+angle_offset = -90.0
+rotation_speed = 0.5
+
+[node name="IsTargetInRange" type="Node" parent="BeehaveTree/Either/RangeAttack"]
+script = ExtResource("19_kpysy")
+
+[node name="RangeAttack" type="Node" parent="BeehaveTree/Either/RangeAttack"]
+script = ExtResource("20_tt7c6")
+
+[node name="MoveToTarget" type="Node" parent="BeehaveTree/Either"]
+script = ExtResource("12_303hf")
+
+[node name="FindPathToTarget" type="Node" parent="BeehaveTree/Either/MoveToTarget"]
+script = ExtResource("17_eovyb")
+
+[node name="ApprochTarget" type="Node" parent="BeehaveTree/Either/MoveToTarget"]
+script = ExtResource("18_sbggo")
+
+[editable path="Vision"]

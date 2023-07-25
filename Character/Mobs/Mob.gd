@@ -39,8 +39,6 @@ func _on_take_damage(hit_damage:HitDamage) -> void:
 
 func _on_die() -> void:
 	is_dead = true
-	if mob_behavior_ai:
-		mob_behavior_ai.disable()
 		
 	if _hurt_box:
 		var collision_shape: CollisionShape2D = _hurt_box.get_child(0)
@@ -49,10 +47,4 @@ func _on_die() -> void:
 	for child in get_children():
 		if child is CollisionShape2D:
 			child.set_deferred("disabled", true)
-
-# func queue_free() -> void:
-# 	for child in get_children():
-# 		remove_child(child)
-# 		child.queue_free()
-# 	super.queue_free()
 
