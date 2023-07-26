@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://bjdlkdsf4c0h6"]
 
-[ext_resource type="Resource" path="res://Scenes/Prefabs/Weapons/MosinNagant/Mosin_Nagant_Attr.tres" id="1"]
+[ext_resource type="Resource" uid="uid://jioilm334esh" path="res://Scenes/Prefabs/Weapons/Player/MosinNagant/Mosin_Nagant_Attr.tres" id="1"]
 [ext_resource type="Texture2D" uid="uid://sjn5us35476j" path="res://Assets/Weapons/Weapons_sheet.png" id="2"]
 [ext_resource type="PackedScene" uid="uid://byk66rn231q1m" path="res://Scenes/Components/Damage/RangedDamageComponent.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://k0s0m3pogx2h" path="res://Scenes/Components/CriticalStrike/CriticalComponent.tscn" id="4"]
@@ -41,6 +41,7 @@ critical_chance = 0.4
 accuracy = 0.9
 
 [node name="RadiusSpreadComponent" parent="." instance=ExtResource("7")]
+spread_radius = 2.0
 
 [node name="AutoTrigger" parent="." instance=ExtResource("11")]
 trigger_duration = 1.5

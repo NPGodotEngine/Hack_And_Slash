@@ -1,9 +1,10 @@
-[gd_scene load_steps=27 format=3 uid="uid://d0djly3hdieh1"]
+[gd_scene load_steps=28 format=3 uid="uid://d0djly3hdieh1"]
 
 [ext_resource type="PackedScene" uid="uid://dppm0px1m1nvx" path="res://Scenes/Components/appearance/Mob/MobSkin.tscn" id="1"]
 [ext_resource type="Script" path="res://Character/Mobs/Mob.gd" id="2"]
 [ext_resource type="Script" path="res://Scenes/Components/HitHurt/HurtBox.gd" id="4"]
 [ext_resource type="PackedScene" uid="uid://eaiyf65ypdbm" path="res://Scenes/Components/Health/HealthComponent.tscn" id="6"]
+[ext_resource type="PackedScene" uid="uid://bp1ulvtmrw220" path="res://Scenes/Prefabs/Weapons/Enemy/AKM.tscn" id="6_x660f"]
 [ext_resource type="PackedScene" uid="uid://bxygst4b7f1ek" path="res://Interface/UIMediators/HealthBar/FloatHealthBarUI.tscn" id="7"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/AIComponents/TargetFinder.gd" id="9_y57rb"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Blackboard/EnemyBlackboard.gd" id="10_dk5x7"]
@@ -63,6 +64,8 @@ health_ref = NodePath("../HealthComponent")
 
 [node name="WeaponPlaceholder" type="Node2D" parent="."]
 unique_name_in_owner = true
+
+[node name="AKM" parent="WeaponPlaceholder" instance=ExtResource("6_x660f")]
 
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 0

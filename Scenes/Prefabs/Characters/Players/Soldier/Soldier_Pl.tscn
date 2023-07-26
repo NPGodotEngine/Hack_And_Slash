@@ -3,11 +3,11 @@
 [ext_resource type="Script" path="res://Character/Player/Player.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://c5u1fo5wxprwf" path="res://Interface/UIMediators/HealthBar/HealthBarUI.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://raxiir4ncr5u" path="res://Interface/UIMediators/Dodge/DodgeBarUI.tscn" id="3"]
-[ext_resource type="PackedScene" uid="uid://bk64jl45sgip5" path="res://Scenes/Prefabs/Weapons/AKM/AKM_Weapon.tscn" id="4"]
 [ext_resource type="PackedScene" uid="uid://d0eke1fpqy05t" path="res://Scenes/Components/Movement/MovementComponent.tscn" id="6"]
 [ext_resource type="PackedScene" uid="uid://cxr47rxftiaym" path="res://Scenes/Components/Control/Player/PlayerControllerComponent.tscn" id="7"]
 [ext_resource type="PackedScene" uid="uid://j4inalcgj8yf" path="res://Scenes/Components/appearance/Player/PlayerSkin.tscn" id="8"]
 [ext_resource type="PackedScene" uid="uid://ba0hec2dequmb" path="res://Scenes/Components/Movement/DodgeComponent.tscn" id="10"]
+[ext_resource type="PackedScene" uid="uid://0jg6d47t67mi" path="res://Scenes/Prefabs/Weapons/Player/Beretta/Beretta_Weapon.tscn" id="10_o3osa"]
 [ext_resource type="PackedScene" path="res://Scenes/Components/Weapon/WeaponManager/WeaponManager.tscn" id="11"]
 [ext_resource type="PackedScene" uid="uid://cvcnfm58je70e" path="res://Interface/UIMediators/Damage/DamageTextUI.tscn" id="12"]
 [ext_resource type="PackedScene" uid="uid://eaiyf65ypdbm" path="res://Scenes/Components/Health/HealthComponent.tscn" id="13"]
@@ -51,7 +51,7 @@ movement_ref = NodePath("../MovementComponent")
 health_ref = NodePath("../HealthComponent")
 
 [node name="WeaponManager" parent="." instance=ExtResource("11")]
-preset_weapons = Array[PackedScene]([ExtResource("4")])
+preset_weapons = Array[PackedScene]([ExtResource("10_o3osa")])
 
 [node name="HurtBox" type="Area2D" parent="."]
 collision_mask = 8

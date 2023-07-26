@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=3 uid="uid://bp0rrbdkw3mm0"]
 
 [ext_resource type="Texture2D" uid="uid://sjn5us35476j" path="res://Assets/Weapons/Weapons_sheet.png" id="1"]
-[ext_resource type="Resource" path="res://Scenes/Prefabs/Weapons/AA12/AA12_Attr.tres" id="2"]
+[ext_resource type="Resource" uid="uid://b2p7t4bfyk78c" path="res://Scenes/Prefabs/Weapons/Player/AA12/AA12_Attr.tres" id="2"]
 [ext_resource type="Script" path="res://Scenes/Components/Weapon/Weapons/ShotgunWeapon.gd" id="3"]
 [ext_resource type="PackedScene" uid="uid://b5fu2s50k8kao" path="res://Scenes/Components/Weapon/Ammo/ShotgunAmmo.tscn" id="4"]
 [ext_resource type="PackedScene" uid="uid://bfomehf0p7kg8" path="res://Bullets/Projectile/ProjectileBullet/ProjectileBullet.tscn" id="5"]
@@ -40,6 +40,7 @@ critical_chance = 0.4
 accuracy = 0.1
 
 [node name="RadiusSpreadComponent" parent="." instance=ExtResource("11")]
+spread_radius = 17.0
 
 [node name="ShotgunAmmo" parent="." instance=ExtResource("4")]
 bullet_speed = 1500.0
