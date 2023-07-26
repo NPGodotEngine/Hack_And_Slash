@@ -1,8 +1,9 @@
 NavigationObstacle2D
+ActionLeaf
+Sprite2D
+Node2D
 Line2D
 TimeLimiterDecorator
-ActionLeaf
-Node2D
 SelectorComposite
 SelectorReactiveComposite
 ConditionLeaf
@@ -29,4 +30,3 @@ ColorRect
 VBoxContainer
 TextureProgressBar
 Control
-HealthBar

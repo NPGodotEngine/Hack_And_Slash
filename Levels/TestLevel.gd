@@ -3,8 +3,11 @@ extends Node2D
 @export var test_weapon_name: String = "AKM"
  
 func _ready() -> void:
-	for player_spanwer in get_tree().get_nodes_in_group("PlayerSpawner"):
-		player_spanwer.spawn()
+	for obj in get_tree().get_nodes_in_group("PlayerSpawner"):
+		obj.spawn()
+
+	for obj in get_tree().get_nodes_in_group("EnemySpawner"):
+		obj.spawn()
 	
 	await get_tree().process_frame
 	GameSaver.save_game_data()

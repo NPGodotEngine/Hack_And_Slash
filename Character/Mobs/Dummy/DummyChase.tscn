@@ -125,7 +125,6 @@ script = ExtResource("18_pn0m5")
 [node name="RotateVision" type="Node" parent="BeehaveTree/Either/RangeAttack"]
 script = ExtResource("18_dddax")
 angle_offset = -90.0
-interpolate = null
 rotation_speed = 0.5
 
 [node name="TimeLimiterDecorator" type="Node" parent="BeehaveTree/Either/RangeAttack"]
@@ -143,6 +142,5 @@ script = ExtResource("17_eovyb")
 
 [node name="ApprochTarget" type="Node" parent="BeehaveTree/Either/MoveToTarget"]
 script = ExtResource("18_sbggo")
-proximate_to_target = null
 
 [editable path="Vision"]

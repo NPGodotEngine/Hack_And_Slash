@@ -30,8 +30,9 @@ region_rect = Rect2(30, 30, 4, 3)
 
 [node name="HitBox" type="Area2D" parent="."]
 collision_layer = 8
-collision_mask = 6
+collision_mask = 4
 script = ExtResource("4")
+target_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 rotation = 1.5708
