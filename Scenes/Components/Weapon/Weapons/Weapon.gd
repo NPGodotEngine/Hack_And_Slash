@@ -100,11 +100,6 @@ func _physics_process(_delta: float) -> void:
 		return
 	pass
 
-func _exit_tree() -> void:
-	for child in get_children():
-		remove_child(child)
-		child.queue_free()
-
 ## Get hit damage for this weapon
 func get_hit_damage() -> HitDamage:
 	return null

@@ -64,6 +64,9 @@ func _get_configuration_warnings() -> PackedStringArray:
 	return []
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+		
 	_trigger.connect("trigger_pulled", Callable(self, "_on_trigger_pulled"))
 
 	if weapon_attributes:
