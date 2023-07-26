@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://c7u7pt0v7abmy"]
+[gd_scene load_steps=10 format=3 uid="uid://c7u7pt0v7abmy"]
 
 [ext_resource type="Texture2D" uid="uid://dbwvq5mm6sr1w" path="res://Assets/books_2.png" id="2"]
 [ext_resource type="Script" path="res://Levels/TestLevel.gd" id="4"]
 [ext_resource type="PackedScene" uid="uid://cq047pq2p7j1" path="res://Scenes/Prefabs/Spawners/PlayerSpawner.tscn" id="5"]
-[ext_resource type="PackedScene" uid="uid://d0djly3hdieh1" path="res://Character/Mobs/Dummy/DummyChase.tscn" id="6"]
+[ext_resource type="PackedScene" uid="uid://b7mcc7yk2uwwp" path="res://Scenes/Prefabs/Spawners/EnemySpawner.tscn" id="5_goa35"]
+[ext_resource type="Texture2D" uid="uid://ce3x1x8jts5bc" path="res://Assets/Icons/spawner_mob.svg" id="6_uwile"]
 [ext_resource type="PackedScene" uid="uid://ugy5fauyv4jx" path="res://Interface/GUI.tscn" id="8"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_hg0lx"]
@@ -45,11 +46,15 @@ shape = SubResource("1")
 
 [node name="PlayerSpawner" parent="NavigationRegion2D" instance=ExtResource("5")]
 position = Vector2(200, 205)
-spawn_radius = 100.0
 list = Array[String](["Soldier"])
+spawn_radius = 100.0
 
-[node name="DummyChase" parent="NavigationRegion2D" instance=ExtResource("6")]
-position = Vector2(868, 113)
+[node name="EnemySpawner" parent="NavigationRegion2D" instance=ExtResource("5_goa35")]
+position = Vector2(1023, 164)
+texture = ExtResource("6_uwile")
+list = Array[String](["Bandit"])
+num_spawn = 2
+spawn_radius = 100.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("2")

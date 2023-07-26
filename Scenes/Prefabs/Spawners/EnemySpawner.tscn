@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7mcc7yk2uwwp"]
+
+[ext_resource type="Script" path="res://Scenes/Components/Spawner/EnemySpanwer.gd" id="1_biroq"]
+
+[node name="EnemySpawner" type="Sprite2D" groups=["EnemySpawner"]]
+script = ExtResource("1_biroq")

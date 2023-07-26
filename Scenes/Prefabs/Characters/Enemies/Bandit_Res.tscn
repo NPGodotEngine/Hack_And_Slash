@@ -45,7 +45,6 @@ shape = SubResource("9")
 unique_name_in_owner = true
 path_max_distance = 60.0
 avoidance_enabled = true
-debug_enabled = true
 
 [node name="MovementComponent" parent="." instance=ExtResource("2_yuy3u")]
 unique_name_in_owner = true
@@ -66,13 +65,8 @@ unique_name_in_owner = true
 
 [node name="AKM" parent="WeaponPlaceholder" instance=ExtResource("6_rjphx")]
 
-[node name="DebugAimingLine" type="Line2D" parent="WeaponPlaceholder/AKM"]
-points = PackedVector2Array(29, 0, 1000, 0)
-width = 2.0
-default_color = Color(0, 0, 0, 0.431373)
-
 [node name="HurtBox" type="Area2D" parent="."]
-collision_layer = 0
+collision_layer = 2
 collision_mask = 8
 script = ExtResource("7_h4eox")
 
@@ -92,6 +86,9 @@ seeking_freq = 0.4
 unique_name_in_owner = true
 angle_deg = 120
 collision_layer_mask = 4
+
+[node name="VisionConeRenderer" parent="Vision" index="0"]
+color = Color(0.431373, 0.929412, 0.278431, 0)
 
 [node name="Blackboard" type="Node" parent="."]
 script = ExtResource("12_qutf1")
@@ -125,7 +122,6 @@ script = ExtResource("19_cb86f")
 [node name="RotateVision" type="Node" parent="BeehaveTree/Either/RangeAttack"]
 script = ExtResource("20_t7kqu")
 angle_offset = -90.0
-interpolate = null
 rotation_speed = 0.5
 
 [node name="TimeLimiterDecorator" type="Node" parent="BeehaveTree/Either/RangeAttack"]
@@ -143,6 +139,5 @@ script = ExtResource("23_4xdij")
 
 [node name="ApprochTarget" type="Node" parent="BeehaveTree/Either/MoveToTarget"]
 script = ExtResource("24_6gg17")
-proximate_to_target = null
 
 [editable path="Vision"]

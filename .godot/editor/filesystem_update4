@@ -11,3 +11,15 @@ res://Scenes/Prefabs/Characters/Players/Soldier/Soldier_Res.tscn
 res://Scenes/Prefabs/Characters/Enemies/Bandit_Res.tscn
 res://Levels/TestLevel.gd
 res://Scenes/Components/Weapon/WeaponManager/WeaponManager.gd
+res://Scenes/Prefabs/Weapons/Player/AA12/AA12_Attr_Res.tres
+res://Scenes/Prefabs/Weapons/Player/AKM/AKM_Attr_Res.tres
+res://Scenes/Prefabs/Weapons/Player/Beretta/Beretta_Attr_Res.tres
+res://Scenes/Components/Spawner/PlayerSpawner.gd
+res://Scenes/Components/Spawner/Spawner.gd
+res://Character/Player/Player.gd
+res://Scenes/Components/Spawner/EnemySpanwer.gd
+res://Character/Mobs/Mob.gd
+res://Scenes/Prefabs/Spawners/EnemySpawner.tscn
+res://Character/Mobs/AI/BehaviorAI/Actions/RangeAttack.gd
+res://Character/Mobs/AI/BehaviorAI/Conditions/IsAlive.gd
+res://Character/Mobs/AI/BehaviorAI/Actions/RotateVision.gd
