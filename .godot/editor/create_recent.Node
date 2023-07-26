@@ -1,6 +1,8 @@
+NavigationObstacle2D
+Line2D
+TimeLimiterDecorator
 ActionLeaf
 Node2D
-Line2D
 SelectorComposite
 SelectorReactiveComposite
 ConditionLeaf
@@ -13,7 +15,6 @@ InverterDecorator
 NavigationRegion2D
 NavigationAgent2D
 BeehaveTree
-NavigationObstacle2D
 AnimationPlayer
 CollisionShape2D
 StaticBody2D
@@ -29,4 +30,3 @@ VBoxContainer
 TextureProgressBar
 Control
 HealthBar
-CanvasLayer

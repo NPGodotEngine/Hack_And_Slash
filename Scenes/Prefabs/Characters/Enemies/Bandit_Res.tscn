@@ -1,0 +1,148 @@
+[gd_scene load_steps=27 format=3 uid="uid://bgf1bwu7i3bpo"]
+
+[ext_resource type="Script" path="res://Character/Mobs/Mob.gd" id="1_rtk6x"]
+[ext_resource type="PackedScene" uid="uid://d0eke1fpqy05t" path="res://Scenes/Components/Movement/MovementComponent.tscn" id="2_yuy3u"]
+[ext_resource type="PackedScene" uid="uid://eaiyf65ypdbm" path="res://Scenes/Components/Health/HealthComponent.tscn" id="3_3s8ia"]
+[ext_resource type="PackedScene" uid="uid://bxygst4b7f1ek" path="res://Interface/UIMediators/HealthBar/FloatHealthBarUI.tscn" id="4_82p1s"]
+[ext_resource type="PackedScene" uid="uid://dppm0px1m1nvx" path="res://Scenes/Components/appearance/Mob/MobSkin.tscn" id="5_8fdhb"]
+[ext_resource type="PackedScene" uid="uid://bp1ulvtmrw220" path="res://Scenes/Prefabs/Weapons/Enemy/AKM.tscn" id="6_rjphx"]
+[ext_resource type="Script" path="res://Scenes/Components/HitHurt/HurtBox.gd" id="7_h4eox"]
+[ext_resource type="PackedScene" uid="uid://cvcnfm58je70e" path="res://Interface/UIMediators/Damage/DamageTextUI.tscn" id="8_2ycoi"]
+[ext_resource type="PackedScene" uid="uid://b4m4a3hj8q8hr" path="res://Interface/WorldUI/Damage/DamageLabel.tscn" id="9_g4hoi"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/AIComponents/TargetFinder.gd" id="10_c80t1"]
+[ext_resource type="PackedScene" uid="uid://kf8tqdlm8c5t" path="res://addons/vision_cone_2d/vision_cone_2d_template.tscn" id="11_d8ulm"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Blackboard/EnemyBlackboard.gd" id="12_qutf1"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="13_yaxxw"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="14_wynjw"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/inverter.gd" id="15_otsny"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Conditions/IsAlive.gd" id="16_tnibi"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Conditions/HasTarget.gd" id="17_24g8l"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="18_1babq"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/FaceTarget.gd" id="19_cb86f"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/RotateVision.gd" id="20_t7kqu"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/time_limiter.gd" id="21_cllw6"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/RangeAttack.gd" id="22_f3y1r"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/FindPathToTarget.gd" id="23_4xdij"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/ApprochTarget.gd" id="24_6gg17"]
+
+[sub_resource type="CapsuleShape2D" id="9"]
+radius = 17.0
+height = 34.0
+
+[sub_resource type="RectangleShape2D" id="10"]
+size = Vector2(28, 38)
+
+[node name="Bandit" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("1_rtk6x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 0)
+shape = SubResource("9")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+unique_name_in_owner = true
+path_max_distance = 60.0
+avoidance_enabled = true
+debug_enabled = true
+
+[node name="MovementComponent" parent="." instance=ExtResource("2_yuy3u")]
+unique_name_in_owner = true
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_3s8ia")]
+unique_name_in_owner = true
+
+[node name="FloatHealthBar" parent="HealthComponent" instance=ExtResource("4_82p1s")]
+position = Vector2(0, -35)
+
+[node name="MobSkin" parent="." instance=ExtResource("5_8fdhb")]
+unique_name_in_owner = true
+movement_ref = NodePath("../MovementComponent")
+health_ref = NodePath("../HealthComponent")
+
+[node name="WeaponPlaceholder" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="AKM" parent="WeaponPlaceholder" instance=ExtResource("6_rjphx")]
+
+[node name="DebugAimingLine" type="Line2D" parent="WeaponPlaceholder/AKM"]
+points = PackedVector2Array(29, 0, 1000, 0)
+width = 2.0
+default_color = Color(0, 0, 0, 0.431373)
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("7_h4eox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(2, 0)
+shape = SubResource("10")
+
+[node name="DamageTextUI" parent="." instance=ExtResource("8_2ycoi")]
+damage_text = ExtResource("9_g4hoi")
+
+[node name="TargetFinder" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("10_c80t1")
+seeking_freq = 0.4
+
+[node name="Vision" parent="." instance=ExtResource("11_d8ulm")]
+unique_name_in_owner = true
+angle_deg = 120
+collision_layer_mask = 4
+
+[node name="Blackboard" type="Node" parent="."]
+script = ExtResource("12_qutf1")
+
+[node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard")]
+script = ExtResource("13_yaxxw")
+actor_node_path = NodePath("..")
+blackboard = NodePath("../Blackboard")
+
+[node name="Either" type="Node" parent="BeehaveTree"]
+script = ExtResource("14_wynjw")
+
+[node name="IsNotAlive" type="Node" parent="BeehaveTree/Either"]
+script = ExtResource("15_otsny")
+
+[node name="IsAlive" type="Node" parent="BeehaveTree/Either/IsNotAlive"]
+script = ExtResource("16_tnibi")
+
+[node name="HasNoTarget" type="Node" parent="BeehaveTree/Either"]
+script = ExtResource("15_otsny")
+
+[node name="HasTarget" type="Node" parent="BeehaveTree/Either/HasNoTarget"]
+script = ExtResource("17_24g8l")
+
+[node name="RangeAttack" type="Node" parent="BeehaveTree/Either"]
+script = ExtResource("18_1babq")
+
+[node name="FaceTarget" type="Node" parent="BeehaveTree/Either/RangeAttack"]
+script = ExtResource("19_cb86f")
+
+[node name="RotateVision" type="Node" parent="BeehaveTree/Either/RangeAttack"]
+script = ExtResource("20_t7kqu")
+angle_offset = -90.0
+interpolate = null
+rotation_speed = 0.5
+
+[node name="TimeLimiterDecorator" type="Node" parent="BeehaveTree/Either/RangeAttack"]
+script = ExtResource("21_cllw6")
+wait_time = 2.0
+
+[node name="RangeAttack" type="Node" parent="BeehaveTree/Either/RangeAttack/TimeLimiterDecorator"]
+script = ExtResource("22_f3y1r")
+
+[node name="MoveToTarget" type="Node" parent="BeehaveTree/Either"]
+script = ExtResource("18_1babq")
+
+[node name="FindPathToTarget" type="Node" parent="BeehaveTree/Either/MoveToTarget"]
+script = ExtResource("23_4xdij")
+
+[node name="ApprochTarget" type="Node" parent="BeehaveTree/Either/MoveToTarget"]
+script = ExtResource("24_6gg17")
+proximate_to_target = null
+
+[editable path="Vision"]

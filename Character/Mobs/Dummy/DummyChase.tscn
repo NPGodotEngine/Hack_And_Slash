@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://d0djly3hdieh1"]
+[gd_scene load_steps=27 format=3 uid="uid://d0djly3hdieh1"]
 
 [ext_resource type="PackedScene" uid="uid://dppm0px1m1nvx" path="res://Scenes/Components/appearance/Mob/MobSkin.tscn" id="1"]
 [ext_resource type="Script" path="res://Character/Mobs/Mob.gd" id="2"]
@@ -22,9 +22,8 @@
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/FaceTarget.gd" id="18_pn0m5"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/ApprochTarget.gd" id="18_sbggo"]
 [ext_resource type="PackedScene" uid="uid://kf8tqdlm8c5t" path="res://addons/vision_cone_2d/vision_cone_2d_template.tscn" id="19_aev7p"]
-[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Conditions/IsTargetInRange.gd" id="19_kpysy"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/RangeAttack.gd" id="20_tt7c6"]
-[ext_resource type="Script" path="res://Character/Mobs/Dummy/RotateWeapon.gd" id="21_oirnp"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/time_limiter.gd" id="23_1a6rs"]
 
 [sub_resource type="CapsuleShape2D" id="9"]
 radius = 17.0
@@ -67,6 +66,11 @@ unique_name_in_owner = true
 
 [node name="AKM" parent="WeaponPlaceholder" instance=ExtResource("6_x660f")]
 
+[node name="DebugAimingLine" type="Line2D" parent="WeaponPlaceholder/AKM"]
+points = PackedVector2Array(29, 0, 1000, 0)
+width = 2.0
+default_color = Color(0, 0, 0, 0.431373)
+
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 8
@@ -86,7 +90,7 @@ seeking_freq = 0.4
 
 [node name="Vision" parent="." instance=ExtResource("19_aev7p")]
 unique_name_in_owner = true
-angle_deg = 45
+angle_deg = 120
 collision_layer_mask = 4
 
 [node name="Blackboard" type="Node" parent="."]
@@ -124,13 +128,11 @@ angle_offset = -90.0
 interpolate = null
 rotation_speed = 0.5
 
-[node name="RotateWeapon" type="Node" parent="BeehaveTree/Either/RangeAttack"]
-script = ExtResource("21_oirnp")
+[node name="TimeLimiterDecorator" type="Node" parent="BeehaveTree/Either/RangeAttack"]
+script = ExtResource("23_1a6rs")
+wait_time = 2.0
 
-[node name="IsTargetInRange" type="Node" parent="BeehaveTree/Either/RangeAttack"]
-script = ExtResource("19_kpysy")
-
-[node name="RangeAttack" type="Node" parent="BeehaveTree/Either/RangeAttack"]
+[node name="RangeAttack" type="Node" parent="BeehaveTree/Either/RangeAttack/TimeLimiterDecorator"]
 script = ExtResource("20_tt7c6")
 
 [node name="MoveToTarget" type="Node" parent="BeehaveTree/Either"]

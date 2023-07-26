@@ -1,0 +1,82 @@
+[gd_scene load_steps=17 format=3 uid="uid://bp0rrbdkw3mm0"]
+
+[ext_resource type="Script" path="res://Scenes/Components/Weapon/Weapons/ShotgunWeapon.gd" id="1_mdi4v"]
+[ext_resource type="Resource" uid="uid://b2p7t4bfyk78c" path="res://Scenes/Prefabs/Weapons/Attributes/AA12_Attr_Res.tres" id="2_scsxh"]
+[ext_resource type="PackedScene" uid="uid://byk66rn231q1m" path="res://Scenes/Components/Damage/RangedDamageComponent.tscn" id="3_cjuyu"]
+[ext_resource type="PackedScene" uid="uid://k0s0m3pogx2h" path="res://Scenes/Components/CriticalStrike/CriticalComponent.tscn" id="4_i81wd"]
+[ext_resource type="PackedScene" path="res://Scenes/Components/Accuracy/AccuracyComponent.tscn" id="5_2tu5t"]
+[ext_resource type="PackedScene" uid="uid://cv64mrumrrebf" path="res://Scenes/Components/Spread/RadiusSpreadComponent.tscn" id="6_ds7lq"]
+[ext_resource type="PackedScene" uid="uid://b5fu2s50k8kao" path="res://Scenes/Components/Weapon/Ammo/ShotgunAmmo.tscn" id="7_oehb5"]
+[ext_resource type="PackedScene" uid="uid://bfomehf0p7kg8" path="res://Bullets/Projectile/ProjectileBullet/ProjectileBullet.tscn" id="8_v3kr8"]
+[ext_resource type="PackedScene" path="res://Scenes/Components/Weapon/Trigger/AutoTrigger.tscn" id="9_wilvs"]
+[ext_resource type="PackedScene" path="res://Scenes/Components/Weapon/MuzzleFlash/MuzzleFlash.tscn" id="10_5260l"]
+[ext_resource type="Texture2D" uid="uid://sjn5us35476j" path="res://Assets/Weapons/Weapons_sheet.png" id="11_rh0gl"]
+[ext_resource type="PackedScene" uid="uid://cm0u7m5sjctj7" path="res://Interface/HUD/WeaponReloadIndicator/WeaponReloadIndicator.tscn" id="12_663w3"]
+[ext_resource type="PackedScene" uid="uid://52g60ackh5ls" path="res://Interface/HUD/ReloadIndicator/ReloadIndicator.tscn" id="13_qe4lf"]
+[ext_resource type="PackedScene" uid="uid://qhd2epbujiwg" path="res://Interface/UIMediators/Ammo/AmmoUI.tscn" id="14_bfyo7"]
+[ext_resource type="PackedScene" uid="uid://bw7p5rv0jc4aq" path="res://Interface/UIMediators/WeaponCrosshair/WeaponCrosshair.tscn" id="15_uex3b"]
+[ext_resource type="PackedScene" uid="uid://bxmwmm2rwqlo7" path="res://Interface/HUD/Crosshair/DefaultCrosshair/Crosshair.tscn" id="16_o3rdu"]
+
+[node name="AA12" type="Node2D"]
+script = ExtResource("1_mdi4v")
+accuracy = NodePath("AccuracyComponent")
+ranged_damage = NodePath("RangedDamageComponent")
+critical = NodePath("CriticalComponent")
+radius_spread = NodePath("RadiusSpreadComponent")
+trigger = NodePath("AutoTrigger")
+ammo = NodePath("ShotgunAmmo")
+fire_points = [NodePath("FirePoint")]
+muzzle_flash = NodePath("MuzzleFlash")
+weapon_attributes = ExtResource("2_scsxh")
+
+[node name="RangedDamageComponent" parent="." instance=ExtResource("3_cjuyu")]
+max_damage = 18.0
+min_damage = 10.0
+
+[node name="CriticalComponent" parent="." instance=ExtResource("4_i81wd")]
+critical_chance = 0.4
+
+[node name="AccuracyComponent" parent="." instance=ExtResource("5_2tu5t")]
+accuracy = 0.1
+
+[node name="RadiusSpreadComponent" parent="." instance=ExtResource("6_ds7lq")]
+spread_radius = 17.0
+
+[node name="ShotgunAmmo" parent="." instance=ExtResource("7_oehb5")]
+bullet_speed = 1500.0
+bullet_life_span = 2.0
+bullet_penetration_chance = 0.3
+bullet_scene = ExtResource("8_v3kr8")
+rounds_per_clip = 20
+reload_duration = 1.6
+
+[node name="AutoTrigger" parent="." instance=ExtResource("9_wilvs")]
+trigger_duration = 0.65
+
+[node name="MuzzleFlash" parent="." instance=ExtResource("10_5260l")]
+position = Vector2(38, 2)
+
+[node name="FirePoint" type="Marker2D" parent="."]
+position = Vector2(32, 1)
+
+[node name="Appearance" type="Node2D" parent="."]
+position = Vector2(3, 6)
+
+[node name="weapon" type="Sprite2D" parent="Appearance"]
+texture = ExtResource("11_rh0gl")
+region_enabled = true
+region_rect = Rect2(4, 85, 56, 22)
+
+[node name="WeaponReloadIndicator" parent="." instance=ExtResource("12_663w3")]
+weapon_ref = NodePath("..")
+ammo_ref = NodePath("../ShotgunAmmo")
+reload_indicator_scene = ExtResource("13_qe4lf")
+
+[node name="AmmoUI" parent="." instance=ExtResource("14_bfyo7")]
+weapon_ref = NodePath("..")
+ammo_ref = NodePath("../ShotgunAmmo")
+
+[node name="WeaponCrosshair" parent="." instance=ExtResource("15_uex3b")]
+weapon_ref = NodePath("..")
+ammo_ref = NodePath("../ShotgunAmmo")
+crosshair_scene = ExtResource("16_o3rdu")

@@ -9,37 +9,37 @@ class VelocityContext extends Resource:
 	var previous_velocity: Vector2 = Vector2.ZERO
 	var updated_velocity: Vector2 = Vector2.ZERO
 
-# Emit when velocity changed
+## Emit when velocity changed
 ##
-# `velocity_context`: class `VelocityContext`
+## `velocity_context`: class `VelocityContext`
 signal velocity_updated(velocity_context)
 
 
 
-# Max movement speed
+## Max movement speed
 @export var max_movement_speed: float = 400.0
 
-# Min movement speed
+## Min movement speed
 @export var min_movement_speed: float = 10.0
 
 
 
-# How fast can player turn from 
-# one direction to another
+## How fast can player turn from 
+## one direction to another
 ##
-# The higher the value the faster player can turn
-# and less the smooth of player motion would be
+## The higher the value the faster player can turn
+## and less the smooth of player motion would be
 @export_range(0.1, 1.0) var drag_factor: float = 0.5
 
-# Movement speed
+## Movement speed
 @export var movement_speed: float = 200.0
 
 var _target: CharacterBody2D = null
 
-# Movement speed multiplier
+## Movement speed multiplier
 var movement_speed_multiplier: float = 1.0
 
-# Current velocity
+## Current velocity
 var _velocity: Vector2 = Vector2.ZERO
 
 func _get_configuration_warnings() -> PackedStringArray:
@@ -55,11 +55,11 @@ func _ready() -> void:
 	await get_parent().ready
 	_target = get_parent() as CharacterBody2D
 
-# Perform movement
-# Called this method in physics process in order
-# to update movement
+## Perform movement
+## Called this method in physics process in order
+## to update movement
 ##
-# `direction`: movement direction
+## `direction`: movement direction
 func process_move(direction:Vector2) -> void:
 	if _target == null:
 		push_error("Could not find target to move")
@@ -87,10 +87,10 @@ func process_move(direction:Vector2) -> void:
 
 	emit_signal("velocity_updated", velocity_context)
 
-# Transform a movement speed and
-# return a new transformed movement speed
+## Transform a movement speed and
+## return a new transformed movement speed
 ##
-# `speed`: speed to be transformed
+## `speed`: speed to be transformed
 func transformMovementSpeed(speed:float) -> float:
 	var new_speed: float = speed
 

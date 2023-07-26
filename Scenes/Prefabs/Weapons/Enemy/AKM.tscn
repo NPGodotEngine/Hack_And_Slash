@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://bp1ulvtmrw220"]
 
 [ext_resource type="Script" path="res://Scenes/Components/Weapon/Weapons/ProjectileWeapon.gd" id="1_gswpi"]
-[ext_resource type="Resource" uid="uid://cj3xdimma4xhu" path="res://Scenes/Prefabs/Weapons/Player/AKM/AKM_Attr.tres" id="2_b1bod"]
+[ext_resource type="Resource" uid="uid://cj3xdimma4xhu" path="res://Scenes/Prefabs/Weapons/Attributes/AKM_Attr_Res.tres" id="2_b1bod"]
 [ext_resource type="PackedScene" uid="uid://byk66rn231q1m" path="res://Scenes/Components/Damage/RangedDamageComponent.tscn" id="3_1iyas"]
 [ext_resource type="PackedScene" uid="uid://k0s0m3pogx2h" path="res://Scenes/Components/CriticalStrike/CriticalComponent.tscn" id="4_1xu0p"]
 [ext_resource type="PackedScene" uid="uid://cv64mrumrrebf" path="res://Scenes/Components/Spread/RadiusSpreadComponent.tscn" id="5_icdp3"]
