@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://eaiyf65ypdbm" path="res://Scenes/Components/Health/HealthComponent.tscn" id="3_3s8ia"]
 [ext_resource type="PackedScene" uid="uid://bxygst4b7f1ek" path="res://Interface/UIMediators/HealthBar/FloatHealthBarUI.tscn" id="4_82p1s"]
 [ext_resource type="PackedScene" uid="uid://dppm0px1m1nvx" path="res://Scenes/Components/appearance/Mob/MobSkin.tscn" id="5_8fdhb"]
-[ext_resource type="PackedScene" uid="uid://bp1ulvtmrw220" path="res://Scenes/Prefabs/Weapons/Enemy/AKM.tscn" id="6_rjphx"]
+[ext_resource type="PackedScene" uid="uid://brlulgkg8gbu2" path="res://Scenes/Prefabs/Weapons/Enemy/Beretta.tscn" id="6_nndxi"]
 [ext_resource type="Script" path="res://Scenes/Components/HitHurt/HurtBox.gd" id="7_h4eox"]
 [ext_resource type="PackedScene" uid="uid://cvcnfm58je70e" path="res://Interface/UIMediators/Damage/DamageTextUI.tscn" id="8_2ycoi"]
 [ext_resource type="PackedScene" uid="uid://b4m4a3hj8q8hr" path="res://Interface/WorldUI/Damage/DamageLabel.tscn" id="9_g4hoi"]
@@ -45,6 +45,7 @@ shape = SubResource("9")
 unique_name_in_owner = true
 path_max_distance = 60.0
 avoidance_enabled = true
+radius = 30.0
 
 [node name="MovementComponent" parent="." instance=ExtResource("2_yuy3u")]
 unique_name_in_owner = true
@@ -63,12 +64,13 @@ health_ref = NodePath("../HealthComponent")
 [node name="WeaponPlaceholder" type="Node2D" parent="."]
 unique_name_in_owner = true
 
-[node name="AKM" parent="WeaponPlaceholder" instance=ExtResource("6_rjphx")]
+[node name="Beretta" parent="WeaponPlaceholder" instance=ExtResource("6_nndxi")]
 
 [node name="HurtBox" type="Area2D" parent="."]
-collision_layer = 2
+collision_layer = 0
 collision_mask = 8
 script = ExtResource("7_h4eox")
+type_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2(2, 0)

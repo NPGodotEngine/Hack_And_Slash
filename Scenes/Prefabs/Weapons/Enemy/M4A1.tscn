@@ -1,0 +1,63 @@
+[gd_scene load_steps=12 format=3 uid="uid://6o85gf3q374q"]
+
+[ext_resource type="Script" path="res://Scenes/Components/Weapon/Weapons/ProjectileWeapon.gd" id="1_da58o"]
+[ext_resource type="Resource" uid="uid://wp38nfmm3dq8" path="res://Scenes/Prefabs/Weapons/Player/M4A1/M4A1_Attr_Res.tres" id="2_muam6"]
+[ext_resource type="PackedScene" uid="uid://byk66rn231q1m" path="res://Scenes/Components/Damage/RangedDamageComponent.tscn" id="3_qp6jl"]
+[ext_resource type="PackedScene" uid="uid://k0s0m3pogx2h" path="res://Scenes/Components/CriticalStrike/CriticalComponent.tscn" id="4_4pm0f"]
+[ext_resource type="PackedScene" path="res://Scenes/Components/Accuracy/AccuracyComponent.tscn" id="5_7p2vo"]
+[ext_resource type="PackedScene" uid="uid://cv64mrumrrebf" path="res://Scenes/Components/Spread/RadiusSpreadComponent.tscn" id="6_8ht3c"]
+[ext_resource type="PackedScene" path="res://Scenes/Components/Weapon/Trigger/AutoTrigger.tscn" id="7_bhw4f"]
+[ext_resource type="PackedScene" uid="uid://daai6upojrqn1" path="res://Scenes/Components/Weapon/Ammo/ProjectileAmmo.tscn" id="8_ga16i"]
+[ext_resource type="PackedScene" uid="uid://bfomehf0p7kg8" path="res://Bullets/Projectile/ProjectileBullet/ProjectileBullet.tscn" id="9_ny2se"]
+[ext_resource type="PackedScene" path="res://Scenes/Components/Weapon/MuzzleFlash/MuzzleFlash.tscn" id="10_yw7ar"]
+[ext_resource type="Texture2D" uid="uid://sjn5us35476j" path="res://Assets/Weapons/Weapons_sheet.png" id="11_po5oj"]
+
+[node name="M4A1" type="Node2D"]
+script = ExtResource("1_da58o")
+accuracy = NodePath("AccuracyComponent")
+ranged_damage = NodePath("RangedDamageComponent")
+critical = NodePath("CriticalComponent")
+radius_spread = NodePath("RadiusSpreadComponent")
+trigger = NodePath("AutoTrigger")
+ammo = NodePath("ProjectileAmmo")
+fire_points = [NodePath("FirePoint")]
+muzzle_flash = NodePath("MuzzleFlash")
+weapon_attributes = ExtResource("2_muam6")
+
+[node name="RangedDamageComponent" parent="." instance=ExtResource("3_qp6jl")]
+max_damage = 16.0
+min_damage = 8.0
+
+[node name="CriticalComponent" parent="." instance=ExtResource("4_4pm0f")]
+critical_multiplier = 1.5
+critical_chance = 0.15
+
+[node name="AccuracyComponent" parent="." instance=ExtResource("5_7p2vo")]
+
+[node name="RadiusSpreadComponent" parent="." instance=ExtResource("6_8ht3c")]
+spread_radius = 5.0
+
+[node name="AutoTrigger" parent="." instance=ExtResource("7_bhw4f")]
+trigger_duration = 0.06
+
+[node name="ProjectileAmmo" parent="." instance=ExtResource("8_ga16i")]
+bullet_speed = 1500.0
+bullet_life_span = 2.0
+bullet_penetration_chance = 0.3
+bullet_scene = ExtResource("9_ny2se")
+rounds_per_clip = 30
+reload_duration = 1.5
+
+[node name="MuzzleFlash" parent="." instance=ExtResource("10_yw7ar")]
+position = Vector2(37, 2)
+
+[node name="FirePoint" type="Marker2D" parent="."]
+position = Vector2(31, 1)
+
+[node name="Appearance" type="Node2D" parent="."]
+position = Vector2(0, 6)
+
+[node name="weapon" type="Sprite2D" parent="Appearance"]
+texture = ExtResource("11_po5oj")
+region_enabled = true
+region_rect = Rect2(66, 22, 60, 20)

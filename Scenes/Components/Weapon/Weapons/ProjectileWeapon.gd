@@ -4,6 +4,11 @@ extends Weapon
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 
+## Emit when a bullet instantiated
+## bullet is type of `Bullet`
+## connect singal to configure bullet properties
+signal on_bullet_instantiated(bullet)
+
 @export var accuracy: NodePath
 @export var ranged_damage: NodePath
 @export var critical: NodePath
@@ -89,10 +94,27 @@ func _on_trigger_pulled() -> void:
 		var muzzle_position = (point as Marker2D).global_position
 		var spread_point: Vector2 = _radius_spread.get_random_spread_point(current_fire_position)
 		var hit_damage: HitDamage = get_hit_damage()
+
+		# consume an ammo
 		var bullet: Projectile = projectile_ammo.consume_ammo()
+		Global.add_to_scene_tree(bullet)
+
+		# configure bullet
 		bullet.hit_damage = hit_damage
 		bullet.show_behind_parent = true
-		Global.add_to_scene_tree(bullet)
+		
+		# emit bullet instantiated signal
+		emit_signal("on_bullet_instantiated", bullet)
+		
+		await bullet.ready
+		# configure bullet hit box's target mask
+		# asume owner is CharacterBody2D 
+		var weapon_owner: CollisionObject2D = owner
+		if  weapon_owner:
+			var owner_layer_mask: int = weapon_owner.collision_layer
+			bullet.remove_target_mask(owner_layer_mask)
+
+		# make bullet fly	
 		bullet.setup_direction(muzzle_position, spread_point)
 
 		puff_muzzle_flash()

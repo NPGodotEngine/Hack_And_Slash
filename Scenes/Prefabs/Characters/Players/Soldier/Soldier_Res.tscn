@@ -54,8 +54,10 @@ health_ref = NodePath("../HealthComponent")
 preset_weapons = Array[PackedScene]([ExtResource("10_32a4t")])
 
 [node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
 collision_mask = 8
 script = ExtResource("11_xy6p7")
+type_mask = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2(1, -1)

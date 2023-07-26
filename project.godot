@@ -84,8 +84,8 @@ Dodge={
 
 2d_physics/layer_1="Players"
 2d_physics/layer_2="Mobs"
-2d_physics/layer_3="Props"
-2d_physics/layer_4="Damage"
+2d_physics/layer_3="StaticProps"
+2d_physics/layer_4="HitHurt"
 
 [physics]
 

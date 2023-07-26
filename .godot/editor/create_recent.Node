@@ -1,7 +1,7 @@
+NavigationObstacle2D
 ActionLeaf
 Sprite2D
 Node2D
-NavigationObstacle2D
 Line2D
 TimeLimiterDecorator
 SelectorComposite
