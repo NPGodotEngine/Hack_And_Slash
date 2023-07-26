@@ -45,7 +45,7 @@ shape = SubResource("9")
 unique_name_in_owner = true
 path_max_distance = 60.0
 avoidance_enabled = true
-radius = 30.0
+radius = 37.0
 
 [node name="MovementComponent" parent="." instance=ExtResource("2_yuy3u")]
 unique_name_in_owner = true
