@@ -28,3 +28,4 @@ res://Scenes/Prefabs/Weapons/Enemy/AKM.tscn
 res://Scenes/Prefabs/Weapons/Enemy/Beretta.tscn
 res://System/Autoload/Global.gd
 res://Scenes/Components/Spread/RadiusSpreadComponent.gd
+res://Bullets/Projectile/ProjectileBullet/ProjectileBullet.gd
