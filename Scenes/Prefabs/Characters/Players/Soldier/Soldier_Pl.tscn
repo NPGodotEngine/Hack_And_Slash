@@ -38,6 +38,7 @@ dodge_mask = 4
 [node name="DodgeBarUI" parent="DodgeComponent" instance=ExtResource("3")]
 
 [node name="HealthComponent" parent="." instance=ExtResource("13")]
+invulnerable = true
 
 [node name="HealthBarUI" parent="HealthComponent" instance=ExtResource("2")]
 

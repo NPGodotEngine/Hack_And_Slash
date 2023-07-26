@@ -38,6 +38,7 @@ critical_multiplier = 1.5
 critical_chance = 0.2
 
 [node name="RadiusSpreadComponent" parent="." instance=ExtResource("7")]
+spread_radius = 5.0
 
 [node name="AccuracyComponent" parent="." instance=ExtResource("10")]
 accuracy = 0.7

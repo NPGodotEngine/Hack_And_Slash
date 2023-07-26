@@ -1,4 +1,4 @@
-class_name EnemeyBlackboard
+class_name EnemyBlackboard
 extends Blackboard
 
 ## To get value of dead status from blackboard

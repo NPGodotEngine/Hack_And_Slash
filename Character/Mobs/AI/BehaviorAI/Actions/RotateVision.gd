@@ -16,7 +16,7 @@ var elapsed: float = 0.0
 
 func tick(_actor:Node, blackboard:Blackboard) -> int:
 
-	var target_pos: Vector2 = blackboard.get_value(EnemeyBlackboard.TARGET_POSITION)
+	var target_pos: Vector2 = blackboard.get_value(EnemyBlackboard.TARGET_POSITION)
 
 	if target_pos == null:
 		return FAILURE

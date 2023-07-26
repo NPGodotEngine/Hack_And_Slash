@@ -50,6 +50,10 @@ list = Array[String](["Soldier"])
 [node name="DummyChase" parent="NavigationRegion2D" instance=ExtResource("6")]
 position = Vector2(868, 113)
 
+[node name="AKM" parent="NavigationRegion2D/DummyChase/WeaponPlaceholder" index="0"]
+rotation = -3.01214
+scale = Vector2(1, -1)
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("2")
 

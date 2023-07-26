@@ -96,27 +96,21 @@ func _on_trigger_pulled() -> void:
 
 func puff_muzzle_flash() -> void:
 	_muzzle_flash.flash(muzzle_flash_duration, 1|2|4)
-
-func update_weapon_skin() -> void:
-	if Engine.is_editor_hint():
-		return 
-	# Update weapon facing direction
-	var global_mouse_position := get_global_mouse_position()
 	
-	if global_mouse_position.x < global_position.x:
-		self.scale.y = -1.0 * self.scale.abs().y
-	else:
-		self.scale.y = 1.0 * self.scale.abs().y
-	
-	look_at(global_mouse_position)
 
 func get_hit_damage() -> HitDamage:
+	var attacker = null
+	if weapon_manager:
+		attacker = weapon_manager.get_parent()
+	else:
+		attacker = owner
+	
 	var damage: float = _ranged_damage.damage
 	var is_critical: bool = _critical.is_critical()
 	var color: Color = (_critical.critical_color if is_critical 
 							else _ranged_damage.damage_color)
 	var hit_damage: HitDamage = HitDamage.new().init(
-		weapon_manager.get_parent(),
+		attacker,
 		self,
 		damage,
 		is_critical,

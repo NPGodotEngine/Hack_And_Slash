@@ -107,6 +107,20 @@ func load_preset_weapons() -> void:
 			add_weapon(wp_instance)
 			wp_instance.inactive()
 
+## Point current weapon to a position
+##
+## `position`: global position
+func point_weapon_at(at_position:Vector2) -> void:
+	if not _is_enabled:
+		return
+
+	if weapon_slots.size() <= 0 or current_weapon_index == DEFAULT_WEAPON_INDEX: 
+		return
+
+	var weapon: Weapon = weapon_slots[current_weapon_index]
+	if weapon:
+		weapon.weapon_point_at_position = at_position
+
 ## Execute current weapon's main fire
 ##
 ## `fire_at`: global position the weapon will fire at

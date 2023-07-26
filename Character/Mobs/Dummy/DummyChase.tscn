@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://d0djly3hdieh1"]
+[gd_scene load_steps=27 format=3 uid="uid://d0djly3hdieh1"]
 
 [ext_resource type="PackedScene" uid="uid://dppm0px1m1nvx" path="res://Scenes/Components/appearance/Mob/MobSkin.tscn" id="1"]
 [ext_resource type="Script" path="res://Character/Mobs/Mob.gd" id="2"]
@@ -18,10 +18,12 @@
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Conditions/HasTarget.gd" id="15_voi7v"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/FindPathToTarget.gd" id="17_eovyb"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/RotateVision.gd" id="18_dddax"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/FaceTarget.gd" id="18_pn0m5"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/ApprochTarget.gd" id="18_sbggo"]
 [ext_resource type="PackedScene" uid="uid://kf8tqdlm8c5t" path="res://addons/vision_cone_2d/vision_cone_2d_template.tscn" id="19_aev7p"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Conditions/IsTargetInRange.gd" id="19_kpysy"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/RangeAttack.gd" id="20_tt7c6"]
+[ext_resource type="Script" path="res://Character/Mobs/Dummy/RotateWeapon.gd" id="21_oirnp"]
 
 [sub_resource type="CapsuleShape2D" id="9"]
 radius = 17.0
@@ -55,8 +57,12 @@ unique_name_in_owner = true
 position = Vector2(0, -35)
 
 [node name="MobSkin" parent="." instance=ExtResource("1")]
+unique_name_in_owner = true
 movement_ref = NodePath("../MovementComponent")
 health_ref = NodePath("../HealthComponent")
+
+[node name="WeaponPlaceholder" type="Node2D" parent="."]
+unique_name_in_owner = true
 
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 0
@@ -106,10 +112,17 @@ script = ExtResource("15_voi7v")
 [node name="RangeAttack" type="Node" parent="BeehaveTree/Either"]
 script = ExtResource("12_303hf")
 
+[node name="FaceTarget" type="Node" parent="BeehaveTree/Either/RangeAttack"]
+script = ExtResource("18_pn0m5")
+
 [node name="RotateVision" type="Node" parent="BeehaveTree/Either/RangeAttack"]
 script = ExtResource("18_dddax")
 angle_offset = -90.0
+interpolate = null
 rotation_speed = 0.5
+
+[node name="RotateWeapon" type="Node" parent="BeehaveTree/Either/RangeAttack"]
+script = ExtResource("21_oirnp")
 
 [node name="IsTargetInRange" type="Node" parent="BeehaveTree/Either/RangeAttack"]
 script = ExtResource("19_kpysy")
@@ -125,5 +138,6 @@ script = ExtResource("17_eovyb")
 
 [node name="ApprochTarget" type="Node" parent="BeehaveTree/Either/MoveToTarget"]
 script = ExtResource("18_sbggo")
+proximate_to_target = null
 
 [editable path="Vision"]

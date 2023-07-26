@@ -12,7 +12,7 @@ func _ready() -> void:
 	nav_agent.connect("velocity_computed", Callable(self, "_on_velocity_computed"))
 
 func tick(actor:Node, blackboard:Blackboard) -> int:
-	var is_dead: bool = blackboard.get_value(EnemeyBlackboard.IS_DEAD)
+	var is_dead: bool = blackboard.get_value(EnemyBlackboard.IS_DEAD)
 
 	if is_dead:
 		nav_agent.set_velocity(Vector2.ZERO)
@@ -26,7 +26,7 @@ func tick(actor:Node, blackboard:Blackboard) -> int:
 		nav_agent.set_velocity(Vector2.ZERO)
 		return SUCCESS
 
-	if target_in_vision(blackboard.get_value(EnemeyBlackboard.PLAYER_TARGET)):
+	if target_in_vision(blackboard.get_value(EnemyBlackboard.PLAYER_TARGET)):
 		nav_agent.set_velocity(Vector2.ZERO)
 		return FAILURE
 	

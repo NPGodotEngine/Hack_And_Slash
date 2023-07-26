@@ -115,6 +115,9 @@ func update_weapon_input() -> void:
 	if _weapon_manager == null:
 		return
 
+	# point weapon at
+	_weapon_manager.point_weapon_at(get_global_mouse_position())
+
 	# execute weapon 
 	if Input.is_action_pressed("primary"): 
 		_weapon_manager.execute_weapon(get_global_mouse_position())

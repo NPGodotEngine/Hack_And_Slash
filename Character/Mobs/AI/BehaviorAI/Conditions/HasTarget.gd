@@ -10,11 +10,11 @@ func _update_target(target) -> void:
 
 func tick(_actor:Node, blackboard:Blackboard) -> int:
 	if the_target != null:
-		blackboard.set_value(EnemeyBlackboard.TARGET_POSITION, the_target.global_position)
-		blackboard.set_value(EnemeyBlackboard.PLAYER_TARGET, the_target)
+		blackboard.set_value(EnemyBlackboard.TARGET_POSITION, the_target.global_position)
+		blackboard.set_value(EnemyBlackboard.PLAYER_TARGET, the_target)
 		the_target = null
 		return SUCCESS
 	else:
-		blackboard.set_value(EnemeyBlackboard.TARGET_POSITION, null)
-		blackboard.set_value(EnemeyBlackboard.PLAYER_TARGET, null)	
+		blackboard.set_value(EnemyBlackboard.TARGET_POSITION, null)
+		blackboard.set_value(EnemyBlackboard.PLAYER_TARGET, null)	
 		return FAILURE
