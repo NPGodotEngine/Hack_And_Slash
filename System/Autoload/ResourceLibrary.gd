@@ -4,7 +4,6 @@ const SCENE_RES_SUFFIX = "_Res.tscn"
 const WEAPON_ATTR_SUFFIX = "_Attr_Res.tres"
 
 const weapons_res_path = "res://Scenes/Prefabs/Weapons/"
-const weapon_attributes_res_path = "res://Scenes/Prefabs/Weapons/Attributes/"
 const player_character_res_path = "res://Scenes/Prefabs/Characters/Players/"
 const enemy_character_res_path = "res://Scenes/Prefabs/Characters/Enemies/"
 
@@ -22,7 +21,7 @@ var enemy_characters := {}
 
 func _ready() -> void:
 	iterate_directory(weapons_res_path, Callable(self, "load_resource"), weapons, SCENE_RES_SUFFIX)
-	iterate_directory(weapon_attributes_res_path, Callable(self, "load_resource"), weapon_attributes, WEAPON_ATTR_SUFFIX)
+	iterate_directory(weapons_res_path, Callable(self, "load_resource"), weapon_attributes, WEAPON_ATTR_SUFFIX)
 	iterate_directory(player_character_res_path, Callable(self, "load_resource"), player_characters, SCENE_RES_SUFFIX)
 	iterate_directory(enemy_character_res_path, Callable(self, "load_resource"), enemy_characters, SCENE_RES_SUFFIX)
 

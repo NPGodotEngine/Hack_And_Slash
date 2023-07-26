@@ -1,7 +1,4 @@
 res://System/Autoload/ResourceLibrary.gd
-res://Scenes/Components/Spawner/PlayerSpawner.gd
-res://Scenes/Components/Weapon/WeaponManager/WeaponManager.gd
-res://Levels/TestLevel.gd
 res://default_env.tres
 res://Scenes/Prefabs/Weapons/Player/AA12/AA12_Res.tscn
 res://Character/Mobs/Animations/Mob_anim.tres
@@ -12,3 +9,5 @@ res://Levels/TestLevel.tscn
 res://Character/Mobs/Dummy/DummyChase.tscn
 res://Scenes/Prefabs/Characters/Players/Soldier/Soldier_Res.tscn
 res://Scenes/Prefabs/Characters/Enemies/Bandit_Res.tscn
+res://Levels/TestLevel.gd
+res://Scenes/Components/Weapon/WeaponManager/WeaponManager.gd

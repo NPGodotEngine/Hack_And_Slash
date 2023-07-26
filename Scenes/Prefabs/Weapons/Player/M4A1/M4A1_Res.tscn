@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://bnh4qf3vvfrdo"]
 
-[ext_resource type="Resource" uid="uid://wp38nfmm3dq8" path="res://Scenes/Prefabs/Weapons/Attributes/M4A1_Attr_Res.tres" id="1"]
+[ext_resource type="Resource" uid="uid://wp38nfmm3dq8" path="res://Scenes/Prefabs/Weapons/Player/M4A1/M4A1_Attr_Res.tres" id="1"]
 [ext_resource type="Texture2D" uid="uid://sjn5us35476j" path="res://Assets/Weapons/Weapons_sheet.png" id="2"]
 [ext_resource type="PackedScene" uid="uid://byk66rn231q1m" path="res://Scenes/Components/Damage/RangedDamageComponent.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://k0s0m3pogx2h" path="res://Scenes/Components/CriticalStrike/CriticalComponent.tscn" id="4"]

@@ -25,6 +25,7 @@ glow_intensity = 0.4
 
 [node name="TestLevel" type="Node2D"]
 script = ExtResource("4")
+test_weapon_name = ""
 
 [node name="GUI" parent="." instance=ExtResource("8")]
 

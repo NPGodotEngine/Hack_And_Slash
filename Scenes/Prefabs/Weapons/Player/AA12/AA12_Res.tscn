@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=3 uid="uid://bp0rrbdkw3mm0"]
 
 [ext_resource type="Script" path="res://Scenes/Components/Weapon/Weapons/ShotgunWeapon.gd" id="1_mdi4v"]
-[ext_resource type="Resource" uid="uid://b2p7t4bfyk78c" path="res://Scenes/Prefabs/Weapons/Attributes/AA12_Attr_Res.tres" id="2_scsxh"]
+[ext_resource type="Resource" uid="uid://b2p7t4bfyk78c" path="res://Scenes/Prefabs/Weapons/Player/AA12/AA12_Attr_Res.tres" id="2_gx5uu"]
 [ext_resource type="PackedScene" uid="uid://byk66rn231q1m" path="res://Scenes/Components/Damage/RangedDamageComponent.tscn" id="3_cjuyu"]
 [ext_resource type="PackedScene" uid="uid://k0s0m3pogx2h" path="res://Scenes/Components/CriticalStrike/CriticalComponent.tscn" id="4_i81wd"]
 [ext_resource type="PackedScene" path="res://Scenes/Components/Accuracy/AccuracyComponent.tscn" id="5_2tu5t"]
@@ -27,7 +27,7 @@ trigger = NodePath("AutoTrigger")
 ammo = NodePath("ShotgunAmmo")
 fire_points = [NodePath("FirePoint")]
 muzzle_flash = NodePath("MuzzleFlash")
-weapon_attributes = ExtResource("2_scsxh")
+weapon_attributes = ExtResource("2_gx5uu")
 
 [node name="RangedDamageComponent" parent="." instance=ExtResource("3_cjuyu")]
 max_damage = 18.0
