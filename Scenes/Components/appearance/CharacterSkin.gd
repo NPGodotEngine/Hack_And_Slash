@@ -61,7 +61,7 @@ func _physics_process(delta: float) -> void:
 	process_animation(delta)
 
 func _on_velocity_updated(velocity_context:MovementComponent.VelocityContext) -> void:
-		_velocity = velocity_context.updated_velocity
+	_velocity = velocity_context.updated_velocity
 
 func _on_die() -> void:
 	play(DIE)

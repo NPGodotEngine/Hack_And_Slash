@@ -22,6 +22,9 @@ signal velocity_updated(velocity_context)
 ## Min movement speed
 @export var min_movement_speed: float = 10.0
 
+## Movement direction
+var movement_direction: Vector2 = Vector2.ZERO
+
 
 
 ## How fast can player turn from 
@@ -60,12 +63,12 @@ func _ready() -> void:
 ## to update movement
 ##
 ## `direction`: movement direction
-func process_move(direction:Vector2) -> void:
+func _physics_process(_delta) -> void:
 	if _target == null:
 		push_error("Could not find target to move")
 		return
 
-	var direction_norm: Vector2 = direction.normalized()
+	var direction_norm: Vector2 = movement_direction.normalized()
 
 	# transform movement speed
 	var transformed_speed: float = transformMovementSpeed(movement_speed)
@@ -77,7 +80,7 @@ func process_move(direction:Vector2) -> void:
 	var new_velocity = _velocity + steering_velocity
 	
 	var prev_velocity: Vector2 = _velocity
-	_target.set_velocity(new_velocity)
+	_target.velocity = new_velocity
 	_target.move_and_slide()
 	_velocity = _target.velocity
 

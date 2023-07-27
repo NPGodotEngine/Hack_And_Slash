@@ -51,4 +51,4 @@ func _physics_process(_delta: float) -> void:
 		_on_velocity_computed(new_velocity)
 
 func _on_velocity_computed(safe_velocity: Vector2) -> void:
-	(get_parent().get_node("MovementComponent") as MovementComponent).process_move(safe_velocity)
+	(get_parent().get_node("MovementComponent") as MovementComponent).movement_direction = safe_velocity

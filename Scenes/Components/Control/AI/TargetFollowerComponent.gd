@@ -55,4 +55,4 @@ func move_close_to_target():
 		return
 
 	direction *= sign(dist_to_target - keep_distance)
-	_movement.process_move(direction)
+	_movement.movement_direction = direction

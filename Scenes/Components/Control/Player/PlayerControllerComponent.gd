@@ -107,7 +107,7 @@ func update_movement() -> void:
 			Input.get_axis("move_up", "move_down")
 		)
 
-		_movement.process_move(direction)
+		_movement.movement_direction = direction
 	else:
 		_dodge.process_dodge(_dodge_direction)
 

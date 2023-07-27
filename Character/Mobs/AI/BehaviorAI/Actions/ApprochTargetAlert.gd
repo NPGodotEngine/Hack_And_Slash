@@ -8,22 +8,29 @@ extends ActionLeaf
 @onready var movement_comp: MovementComponent = get_node_or_null("%MovementComponent")
 @onready var vision_area: Area2D = get_node_or_null("%Vision/VisionConeArea")
 
-func _ready() -> void:
-	nav_agent.connect("velocity_computed", Callable(self, "_on_velocity_computed"))
 
 func tick(actor:Node, blackboard:Blackboard) -> int:
 	var is_dead: bool = blackboard.get_value(EnemyBlackboard.IS_DEAD)
 
+	connect_nav_agent()
+
 	if is_dead:
 		nav_agent.set_velocity(Vector2.ZERO)
+		movement_comp.movement_direction = Vector2.ZERO
+		disconnect_nav_agent()
 		return FAILURE
 
 	if is_target_reached():
+		nav_agent.set_velocity(Vector2.ZERO)
+		movement_comp.movement_direction = Vector2.ZERO
+		disconnect_nav_agent()
 		return SUCCESS
 	
 	# interrupt process when target in vision
 	if target_in_vision(blackboard.get_value(EnemyBlackboard.PLAYER_TARGET)):
 		nav_agent.set_velocity(Vector2.ZERO)
+		movement_comp.movement_direction = Vector2.ZERO
+		disconnect_nav_agent()
 		return FAILURE
 	
 	# Move toward target
@@ -40,8 +47,16 @@ func tick(actor:Node, blackboard:Blackboard) -> int:
 	return RUNNING
 
 func _on_velocity_computed(safe_velocity: Vector2) -> void:
-	movement_comp.process_move(safe_velocity)
+	movement_comp.movement_direction = safe_velocity
 
+
+func connect_nav_agent() -> void:
+	if not nav_agent.is_connected("velocity_computed", Callable(self, "_on_velocity_computed")):
+		nav_agent.connect("velocity_computed", Callable(self, "_on_velocity_computed"))
+
+func disconnect_nav_agent() -> void:
+	if nav_agent.is_connected("velocity_computed", Callable(self, "_on_velocity_computed")):
+		nav_agent.disconnect("velocity_computed", Callable(self, "_on_velocity_computed"))
 
 func is_target_reached() -> bool:
 	if nav_agent.is_navigation_finished():

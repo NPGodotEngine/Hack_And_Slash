@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bgf1bwu7i3bpo"]
+[gd_scene load_steps=32 format=3 uid="uid://bgf1bwu7i3bpo"]
 
 [ext_resource type="Script" path="res://Character/Mobs/Mob.gd" id="1_rtk6x"]
 [ext_resource type="PackedScene" uid="uid://d0eke1fpqy05t" path="res://Scenes/Components/Movement/MovementComponent.tscn" id="2_yuy3u"]
@@ -21,12 +21,11 @@
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="18_1babq"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/FaceTarget.gd" id="19_cb86f"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/RotateVision.gd" id="20_t7kqu"]
-[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/failer.gd" id="20_v0fde"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Conditions/HasClearSight.gd" id="21_4x300"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/decorators/time_limiter.gd" id="21_cllw6"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/RangeAttack.gd" id="22_f3y1r"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/FindPathToTarget.gd" id="23_4xdij"]
-[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/HasBetterPosition.gd" id="25_rrkwh"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/FindBetterPosition.gd" id="25_nej1v"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/ApproachTarget.gd" id="27_0a1k5"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Conditions/IsTargetInVision.gd" id="27_8aiq7"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/ApprochTargetAlert.gd" id="28_x4tse"]
@@ -50,6 +49,7 @@ shape = SubResource("9")
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 unique_name_in_owner = true
 avoidance_enabled = true
+debug_enabled = true
 
 [node name="MovementComponent" parent="." instance=ExtResource("2_yuy3u")]
 unique_name_in_owner = true
@@ -62,6 +62,7 @@ position = Vector2(0, -35)
 
 [node name="MobSkin" parent="." instance=ExtResource("5_8fdhb")]
 unique_name_in_owner = true
+animation = &"run"
 movement_ref = NodePath("../MovementComponent")
 health_ref = NodePath("../HealthComponent")
 
@@ -100,8 +101,6 @@ unique_name_in_owner = true
 angle_deg = 120
 max_distance = 200.0
 collision_layer_mask = 7
-debug_lines = true
-debug_shape = true
 
 [node name="Blackboard" type="Node" parent="."]
 script = ExtResource("12_qutf1")
@@ -129,10 +128,7 @@ script = ExtResource("17_24g8l")
 [node name="Combat" type="Node" parent="BeehaveTree/Either"]
 script = ExtResource("18_1babq")
 
-[node name="AlwaysFailDecorator" type="Node" parent="BeehaveTree/Either/Combat"]
-script = ExtResource("20_v0fde")
-
-[node name="IsTargetInVision" type="Node" parent="BeehaveTree/Either/Combat/AlwaysFailDecorator"]
+[node name="IsTargetInVision" type="Node" parent="BeehaveTree/Either/Combat"]
 script = ExtResource("27_8aiq7")
 
 [node name="Either" type="Node" parent="BeehaveTree/Either/Combat"]
@@ -159,23 +155,13 @@ wait_time = 2.0
 [node name="RangeAttack" type="Node" parent="BeehaveTree/Either/Combat/Either/GeneralAttack/TimeLimit"]
 script = ExtResource("22_f3y1r")
 
-[node name="HasNoBetterPosition" type="Node" parent="BeehaveTree/Either/Combat/Either"]
-script = ExtResource("15_otsny")
-
-[node name="HasBetterPosition" type="Node" parent="BeehaveTree/Either/Combat/Either/HasNoBetterPosition"]
-script = ExtResource("25_rrkwh")
-
-[node name="TimeLimit" type="Node" parent="BeehaveTree/Either/Combat/Either"]
-script = ExtResource("21_cllw6")
-wait_time = 5.0
-
-[node name="MoveToBetterPosition" type="Node" parent="BeehaveTree/Either/Combat/Either/TimeLimit"]
+[node name="MoveToBetterPosition" type="Node" parent="BeehaveTree/Either/Combat/Either"]
 script = ExtResource("18_1babq")
 
-[node name="FindPathToTarget" type="Node" parent="BeehaveTree/Either/Combat/Either/TimeLimit/MoveToBetterPosition"]
-script = ExtResource("23_4xdij")
+[node name="FindBetterPosition" type="Node" parent="BeehaveTree/Either/Combat/Either/MoveToBetterPosition"]
+script = ExtResource("25_nej1v")
 
-[node name="ApproachTarget" type="Node" parent="BeehaveTree/Either/Combat/Either/TimeLimit/MoveToBetterPosition"]
+[node name="ApproachTarget" type="Node" parent="BeehaveTree/Either/Combat/Either/MoveToBetterPosition"]
 script = ExtResource("27_0a1k5")
 
 [node name="MoveToTargetAlert" type="Node" parent="BeehaveTree/Either"]
