@@ -23,6 +23,7 @@ signal velocity_updated(velocity_context)
 @export var min_movement_speed: float = 10.0
 
 ## Movement direction
+## set direction to move 
 var movement_direction: Vector2 = Vector2.ZERO
 
 
@@ -58,12 +59,10 @@ func _ready() -> void:
 	await get_parent().ready
 	_target = get_parent() as CharacterBody2D
 
-## Perform movement
-## Called this method in physics process in order
-## to update movement
-##
-## `direction`: movement direction
 func _physics_process(_delta) -> void:
+	if Engine.is_editor_hint():
+		return
+
 	if _target == null:
 		push_error("Could not find target to move")
 		return

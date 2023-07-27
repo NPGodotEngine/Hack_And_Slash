@@ -9,6 +9,9 @@ func _ready():
 
 func locate_target() -> void:
 	await get_tree().create_timer(seeking_freq).timeout
-	var target = get_tree().get_nodes_in_group("Player")[0]
+	var target = null
+	for p in get_tree().get_nodes_in_group("Player"):
+		target = p
+		break
 	emit_signal("target_found", target)
 	locate_target()

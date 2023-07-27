@@ -4,7 +4,7 @@ extends ActionLeaf
 ## Radius from target to find better position
 @export_range(0.0, 200.0) var radius: float = 100.0
 
-@onready var nav_agent: NavigationAgent2D = get_node_or_null("%NavigationAgent2D")
+@onready var nav_agent: NavigationAgent2D = get_node_or_null("%PathFinder")
 
 func tick(_actor:Node, blackboard:Blackboard) -> int:
 	var target: Player = blackboard.get_value(EnemyBlackboard.PLAYER_TARGET)

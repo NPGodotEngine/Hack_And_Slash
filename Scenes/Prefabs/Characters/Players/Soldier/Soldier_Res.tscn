@@ -38,7 +38,6 @@ dodge_mask = 4
 [node name="DodgeBarUI" parent="DodgeComponent" instance=ExtResource("4_nctf1")]
 
 [node name="HealthComponent" parent="." instance=ExtResource("5_01gi0")]
-invulnerable = true
 
 [node name="HealthBarUI" parent="HealthComponent" instance=ExtResource("6_23t6a")]
 
@@ -74,4 +73,4 @@ dodge_ref = NodePath("../DodgeComponent")
 weapon_manager_ref = NodePath("../WeaponManager")
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
-radius = 37.97
+radius = 50.0

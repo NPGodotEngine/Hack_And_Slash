@@ -1,6 +1,6 @@
 extends ActionLeaf
 
-@onready var nav_agent: NavigationAgent2D = get_node_or_null("%NavigationAgent2D")
+@onready var nav_agent: NavigationAgent2D = get_node_or_null("%PathFinder")
 
 func tick(_actor:Node, blackboard:Blackboard) -> int:
 	var target = blackboard.get_value(EnemyBlackboard.PLAYER_TARGET)

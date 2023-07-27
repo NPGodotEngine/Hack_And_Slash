@@ -1,6 +1,7 @@
-[gd_scene load_steps=32 format=3 uid="uid://bgf1bwu7i3bpo"]
+[gd_scene load_steps=33 format=3 uid="uid://bgf1bwu7i3bpo"]
 
 [ext_resource type="Script" path="res://Character/Mobs/Mob.gd" id="1_rtk6x"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/AIComponents/PathFinder.gd" id="2_lu8ci"]
 [ext_resource type="PackedScene" uid="uid://d0eke1fpqy05t" path="res://Scenes/Components/Movement/MovementComponent.tscn" id="2_yuy3u"]
 [ext_resource type="PackedScene" uid="uid://eaiyf65ypdbm" path="res://Scenes/Components/Health/HealthComponent.tscn" id="3_3s8ia"]
 [ext_resource type="PackedScene" uid="uid://bxygst4b7f1ek" path="res://Interface/UIMediators/HealthBar/FloatHealthBarUI.tscn" id="4_82p1s"]
@@ -23,12 +24,12 @@
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/RotateVision.gd" id="20_t7kqu"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Conditions/HasClearSight.gd" id="21_4x300"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/decorators/time_limiter.gd" id="21_cllw6"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Conditions/IsTargetDead.gd" id="22_5r3nq"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/RangeAttack.gd" id="22_f3y1r"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/FindPathToTarget.gd" id="23_4xdij"]
-[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/FindBetterPosition.gd" id="25_nej1v"]
-[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/ApproachTarget.gd" id="27_0a1k5"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Conditions/IsTargetInVision.gd" id="27_8aiq7"]
-[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/ApprochTargetAlert.gd" id="28_x4tse"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/FindFlankingPosition.gd" id="27_xtiv0"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/MoveToPosition.gd" id="28_hh2mo"]
 
 [sub_resource type="CapsuleShape2D" id="9"]
 radius = 17.0
@@ -46,10 +47,14 @@ script = ExtResource("1_rtk6x")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("9")
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+[node name="PathFinder" type="NavigationAgent2D" parent="."]
 unique_name_in_owner = true
+target_desired_distance = 100.0
 avoidance_enabled = true
+radius = 50.0
 debug_enabled = true
+script = ExtResource("2_lu8ci")
+movement_ref = NodePath("../MovementComponent")
 
 [node name="MovementComponent" parent="." instance=ExtResource("2_yuy3u")]
 unique_name_in_owner = true
@@ -99,7 +104,6 @@ line_width = 3.25
 [node name="Vision" parent="." instance=ExtResource("11_d8ulm")]
 unique_name_in_owner = true
 angle_deg = 120
-max_distance = 200.0
 collision_layer_mask = 7
 
 [node name="Blackboard" type="Node" parent="."]
@@ -134,51 +138,63 @@ script = ExtResource("27_8aiq7")
 [node name="Either" type="Node" parent="BeehaveTree/Either/Combat"]
 script = ExtResource("14_wynjw")
 
-[node name="GeneralAttack" type="Node" parent="BeehaveTree/Either/Combat/Either"]
+[node name="GeneralACombat" type="Node" parent="BeehaveTree/Either/Combat/Either"]
 script = ExtResource("18_1babq")
 
-[node name="FaceTarget" type="Node" parent="BeehaveTree/Either/Combat/Either/GeneralAttack"]
+[node name="FaceTarget" type="Node" parent="BeehaveTree/Either/Combat/Either/GeneralACombat"]
 script = ExtResource("19_cb86f")
 
-[node name="RotateVision" type="Node" parent="BeehaveTree/Either/Combat/Either/GeneralAttack"]
+[node name="RotateVision" type="Node" parent="BeehaveTree/Either/Combat/Either/GeneralACombat"]
 script = ExtResource("20_t7kqu")
 angle_offset = -90.0
 rotation_speed = 0.5
 
-[node name="HasClearSight" type="Node" parent="BeehaveTree/Either/Combat/Either/GeneralAttack"]
+[node name="HasClearSight" type="Node" parent="BeehaveTree/Either/Combat/Either/GeneralACombat"]
 script = ExtResource("21_4x300")
 
-[node name="TimeLimit" type="Node" parent="BeehaveTree/Either/Combat/Either/GeneralAttack"]
+[node name="TimeLimit" type="Node" parent="BeehaveTree/Either/Combat/Either/GeneralACombat"]
 script = ExtResource("21_cllw6")
 wait_time = 2.0
 
-[node name="RangeAttack" type="Node" parent="BeehaveTree/Either/Combat/Either/GeneralAttack/TimeLimit"]
+[node name="Attack" type="Node" parent="BeehaveTree/Either/Combat/Either/GeneralACombat/TimeLimit"]
+script = ExtResource("14_wynjw")
+
+[node name="IsTargetDead" type="Node" parent="BeehaveTree/Either/Combat/Either/GeneralACombat/TimeLimit/Attack"]
+script = ExtResource("22_5r3nq")
+
+[node name="RangeAttack" type="Node" parent="BeehaveTree/Either/Combat/Either/GeneralACombat/TimeLimit/Attack"]
 script = ExtResource("22_f3y1r")
 
-[node name="MoveToBetterPosition" type="Node" parent="BeehaveTree/Either/Combat/Either"]
+[node name="MoveToFlankingPosition" type="Node" parent="BeehaveTree/Either/Combat/Either"]
 script = ExtResource("18_1babq")
 
-[node name="FindBetterPosition" type="Node" parent="BeehaveTree/Either/Combat/Either/MoveToBetterPosition"]
-script = ExtResource("25_nej1v")
+[node name="FindFlankingPosition" type="Node" parent="BeehaveTree/Either/Combat/Either/MoveToFlankingPosition"]
+script = ExtResource("27_xtiv0")
 
-[node name="ApproachTarget" type="Node" parent="BeehaveTree/Either/Combat/Either/MoveToBetterPosition"]
-script = ExtResource("27_0a1k5")
-
-[node name="MoveToTargetAlert" type="Node" parent="BeehaveTree/Either"]
-script = ExtResource("18_1babq")
-
-[node name="FindPathToTarget" type="Node" parent="BeehaveTree/Either/MoveToTargetAlert"]
-script = ExtResource("23_4xdij")
-
-[node name="FaceTarget" type="Node" parent="BeehaveTree/Either/MoveToTargetAlert"]
-script = ExtResource("19_cb86f")
-
-[node name="RotateVision" type="Node" parent="BeehaveTree/Either/MoveToTargetAlert"]
+[node name="RotateVision" type="Node" parent="BeehaveTree/Either/Combat/Either/MoveToFlankingPosition"]
 script = ExtResource("20_t7kqu")
 angle_offset = -90.0
 rotation_speed = 0.5
 
-[node name="ApprochTargetAlert" type="Node" parent="BeehaveTree/Either/MoveToTargetAlert"]
-script = ExtResource("28_x4tse")
+[node name="MoveToPosition" type="Node" parent="BeehaveTree/Either/Combat/Either/MoveToFlankingPosition"]
+script = ExtResource("28_hh2mo")
+alert = false
+
+[node name="MoveToPositionAlert" type="Node" parent="BeehaveTree/Either"]
+script = ExtResource("18_1babq")
+
+[node name="FindPathToTarget" type="Node" parent="BeehaveTree/Either/MoveToPositionAlert"]
+script = ExtResource("23_4xdij")
+
+[node name="FaceTarget" type="Node" parent="BeehaveTree/Either/MoveToPositionAlert"]
+script = ExtResource("19_cb86f")
+
+[node name="RotateVision" type="Node" parent="BeehaveTree/Either/MoveToPositionAlert"]
+script = ExtResource("20_t7kqu")
+angle_offset = -90.0
+rotation_speed = 0.5
+
+[node name="MoveToPosition" type="Node" parent="BeehaveTree/Either/MoveToPositionAlert"]
+script = ExtResource("28_hh2mo")
 
 [editable path="Vision"]
