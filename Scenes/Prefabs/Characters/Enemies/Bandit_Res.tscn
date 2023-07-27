@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bgf1bwu7i3bpo"]
+[gd_scene load_steps=29 format=3 uid="uid://bgf1bwu7i3bpo"]
 
 [ext_resource type="Script" path="res://Character/Mobs/Mob.gd" id="1_rtk6x"]
 [ext_resource type="PackedScene" uid="uid://d0eke1fpqy05t" path="res://Scenes/Components/Movement/MovementComponent.tscn" id="2_yuy3u"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cvcnfm58je70e" path="res://Interface/UIMediators/Damage/DamageTextUI.tscn" id="8_2ycoi"]
 [ext_resource type="PackedScene" uid="uid://b4m4a3hj8q8hr" path="res://Interface/WorldUI/Damage/DamageLabel.tscn" id="9_g4hoi"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/AIComponents/TargetFinder.gd" id="10_c80t1"]
+[ext_resource type="Script" path="res://Character/Mobs/LineOfSight.gd" id="11_b4pg5"]
 [ext_resource type="PackedScene" uid="uid://kf8tqdlm8c5t" path="res://addons/vision_cone_2d/vision_cone_2d_template.tscn" id="11_d8ulm"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Blackboard/EnemyBlackboard.gd" id="12_qutf1"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="13_yaxxw"]
@@ -20,6 +21,7 @@
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="18_1babq"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/FaceTarget.gd" id="19_cb86f"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/RotateVision.gd" id="20_t7kqu"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Conditions/HasClearSight.gd" id="21_4x300"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/decorators/time_limiter.gd" id="21_cllw6"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/RangeAttack.gd" id="22_f3y1r"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/FindPathToTarget.gd" id="23_4xdij"]
@@ -84,6 +86,13 @@ unique_name_in_owner = true
 script = ExtResource("10_c80t1")
 seeking_freq = 0.4
 
+[node name="LineOfSight" type="RayCast2D" parent="."]
+unique_name_in_owner = true
+collision_mask = 7
+script = ExtResource("11_b4pg5")
+debug_draw = true
+line_width = 3.25
+
 [node name="Vision" parent="." instance=ExtResource("11_d8ulm")]
 unique_name_in_owner = true
 angle_deg = 120
@@ -123,11 +132,14 @@ script = ExtResource("20_t7kqu")
 angle_offset = -90.0
 rotation_speed = 0.5
 
-[node name="TimeLimiterDecorator" type="Node" parent="BeehaveTree/Either/RangeAttack"]
+[node name="HasClearSight" type="Node" parent="BeehaveTree/Either/RangeAttack"]
+script = ExtResource("21_4x300")
+
+[node name="TimeLimitAttack" type="Node" parent="BeehaveTree/Either/RangeAttack"]
 script = ExtResource("21_cllw6")
 wait_time = 2.0
 
-[node name="RangeAttack" type="Node" parent="BeehaveTree/Either/RangeAttack/TimeLimiterDecorator"]
+[node name="RangeAttack" type="Node" parent="BeehaveTree/Either/RangeAttack/TimeLimitAttack"]
 script = ExtResource("22_f3y1r")
 
 [node name="MoveToTarget" type="Node" parent="BeehaveTree/Either"]
