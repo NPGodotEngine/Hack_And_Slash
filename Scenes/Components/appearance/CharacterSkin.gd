@@ -19,12 +19,14 @@ const DIE = "die"
 ## NodePath to HealthComponent
 @export var health_ref: NodePath
 
-# MovementComponent
+## MovementComponent
 @onready var _movement: MovementComponent = get_node_or_null(movement_ref)
+
+## HealthComponent
 @onready var _health_comp: HealthComponent = get_node_or_null(health_ref)
 
 
-# Velocity from MovementComponent
+## Velocity from MovementComponent
 var _velocity: Vector2 = Vector2.ZERO
 
 

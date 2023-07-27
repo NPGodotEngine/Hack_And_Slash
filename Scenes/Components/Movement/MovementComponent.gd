@@ -65,13 +65,13 @@ func process_move(direction:Vector2) -> void:
 		push_error("Could not find target to move")
 		return
 
-	direction = direction.normalized()
+	var direction_norm: Vector2 = direction.normalized()
 
 	# transform movement speed
 	var transformed_speed: float = transformMovementSpeed(movement_speed)
 
 	# Smoothing player turing direction
-	var desired_velocity := direction * transformed_speed
+	var desired_velocity: Vector2 = direction_norm * transformed_speed
 	var steering_velocity = desired_velocity - _velocity
 	steering_velocity  = steering_velocity * drag_factor
 	var new_velocity = _velocity + steering_velocity

@@ -6,8 +6,8 @@ extends Node2D
 func _ready():
 	# These values need to be adjusted for the actor's speed
 	# and the navigation layout.
-	nav_agent.path_desired_distance = 4.0
-	nav_agent.target_desired_distance = 4.0
+	# nav_agent.path_desired_distance = 4.0
+	# nav_agent.target_desired_distance = 4.0
 
 	nav_agent.connect("velocity_computed", Callable(self, "_on_velocity_computed"))
 
@@ -20,11 +20,11 @@ func actor_setup() -> void:
 func set_movement_target(movement_target: Vector2):
 	nav_agent.target_position = movement_target
 
-	await nav_agent.path_changed
-	var line2d := owner.get_node("Line2D")
-	line2d.clear_points()
-	for point in nav_agent.get_current_navigation_result().path:
-		line2d.add_point(line2d.to_local(point))
+	# await nav_agent.path_changed
+	# var line2d := owner.get_node("Line2D")
+	# line2d.clear_points()
+	# for point in nav_agent.get_current_navigation_result().path:
+	# 	line2d.add_point(line2d.to_local(point))
 
 func _physics_process(_delta: float) -> void:
 	if Input.is_action_pressed("primary"):
@@ -32,10 +32,12 @@ func _physics_process(_delta: float) -> void:
 		return
 
 	if nav_agent.is_navigation_finished():
+		nav_agent.set_velocity(Vector2.ZERO)
 		return
 
 	if nav_agent.distance_to_target() <= nav_agent.path_max_distance:
-		nav_agent.target_position = get_parent().global_position
+		# nav_agent.target_position = get_parent().global_position
+		nav_agent.set_velocity(Vector2.ZERO)
 		return
 
 	var current_agent_position: Vector2 = get_parent().global_position
@@ -44,7 +46,7 @@ func _physics_process(_delta: float) -> void:
 	var new_velocity: Vector2 = next_path_position - current_agent_position
 	new_velocity = new_velocity.normalized()
 	if nav_agent.avoidance_enabled:
-		nav_agent.set_velocity(new_velocity)
+		nav_agent.velocity = new_velocity
 	else:
 		_on_velocity_computed(new_velocity)
 

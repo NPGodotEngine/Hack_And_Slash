@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://b7eskjjerl8lm"]
+[gd_scene load_steps=11 format=3 uid="uid://b7eskjjerl8lm"]
 
 [ext_resource type="PackedScene" uid="uid://dtd0g6r5dmhvj" path="res://Character/Mobs/Dummy/Dummy1.tscn" id="1"]
 [ext_resource type="Script" path="res://Levels/Navigator.gd" id="2"]
 [ext_resource type="Texture2D" uid="uid://dbwvq5mm6sr1w" path="res://Assets/books_2.png" id="3"]
 [ext_resource type="Script" path="res://Levels/NavigationRegion.gd" id="3_brkbn"]
+[ext_resource type="PackedScene" uid="uid://kf8tqdlm8c5t" path="res://addons/vision_cone_2d/vision_cone_2d_template.tscn" id="5_uprds"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_5tu8q"]
 vertices = PackedVector2Array(1084, 316, 1088, 576, 938, 571, 960, 313, 314, 407, 890, 71, 69, 580, 155, 420, 67, 69, 162, 287, 312, 286)
@@ -82,21 +83,24 @@ libraries = {
 }
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="NavigationRegion2D/BookDynamic"]
-radius = 58.01
+radius = 58.0
 
 [node name="Dummy1" parent="NavigationRegion2D" instance=ExtResource("1")]
 position = Vector2(507, 314)
-
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="NavigationRegion2D/Dummy1"]
-path_max_distance = 30.0
-avoidance_enabled = true
-radius = 48.57
-max_speed = 600.0
-debug_enabled = true
+motion_mode = 1
 
 [node name="Navigator" type="Node2D" parent="NavigationRegion2D/Dummy1"]
 script = ExtResource("2")
 agent = NodePath("../NavigationAgent2D")
+
+[node name="VisionCone2D" parent="NavigationRegion2D/Dummy1" instance=ExtResource("5_uprds")]
+angle_deg = 90
+max_distance = 200.0
+debug_lines = true
+debug_shape = true
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="NavigationRegion2D/Dummy1"]
+avoidance_enabled = true
 
 [node name="Line2D" type="Line2D" parent="."]
 position = Vector2(507, 314)

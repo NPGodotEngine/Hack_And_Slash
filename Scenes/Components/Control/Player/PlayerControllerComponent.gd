@@ -72,15 +72,23 @@ func _on_dodge_cooldown_begin() -> void:
 func _on_dodge_cooldown_end() -> void:
 	print("dodge cooldown end")
 
-func _physics_process(_delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
 
 	if _player.is_dead:
 		return
 
-	update_movement()
 	update_weapon_input()
+
+func _physics_process(_delta):
+	if Engine.is_editor_hint():
+		return
+
+	if _player.is_dead:
+		return
+	
+	update_movement()
 
 func enable_control() -> void:
 	super()
@@ -97,7 +105,7 @@ func update_movement() -> void:
 		var direction: Vector2 = Vector2(
 			Input.get_axis("move_left", "move_right"),
 			Input.get_axis("move_up", "move_down")
-		).normalized()
+		)
 
 		_movement.process_move(direction)
 	else:

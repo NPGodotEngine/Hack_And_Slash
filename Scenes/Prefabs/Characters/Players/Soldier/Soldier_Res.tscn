@@ -74,4 +74,4 @@ dodge_ref = NodePath("../DodgeComponent")
 weapon_manager_ref = NodePath("../WeaponManager")
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
-radius = 33.19
+radius = 37.97
