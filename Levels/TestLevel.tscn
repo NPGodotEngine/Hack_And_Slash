@@ -53,7 +53,6 @@ spawn_radius = 100.0
 position = Vector2(1023, 164)
 texture = ExtResource("6_uwile")
 list = Array[String](["Bandit"])
-num_spawn = 2
 spawn_radius = 100.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

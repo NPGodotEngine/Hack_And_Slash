@@ -89,9 +89,6 @@ unique_name_in_owner = true
 angle_deg = 120
 collision_layer_mask = 4
 
-[node name="VisionConeRenderer" parent="Vision" index="0"]
-color = Color(0.431373, 0.929412, 0.278431, 0)
-
 [node name="Blackboard" type="Node" parent="."]
 script = ExtResource("12_qutf1")
 
