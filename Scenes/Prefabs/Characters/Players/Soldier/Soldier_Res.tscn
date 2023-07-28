@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b48fsuebt837e"]
+[gd_scene load_steps=18 format=3 uid="uid://b48fsuebt837e"]
 
 [ext_resource type="Script" path="res://Character/Player/Player.gd" id="1_5cmic"]
 [ext_resource type="PackedScene" uid="uid://d0eke1fpqy05t" path="res://Scenes/Components/Movement/MovementComponent.tscn" id="2_kiw01"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://cvcnfm58je70e" path="res://Interface/UIMediators/Damage/DamageTextUI.tscn" id="12_ja6nb"]
 [ext_resource type="PackedScene" uid="uid://b4m4a3hj8q8hr" path="res://Interface/WorldUI/Damage/DamageLabel.tscn" id="13_850le"]
 [ext_resource type="PackedScene" uid="uid://cxr47rxftiaym" path="res://Scenes/Components/Control/Player/PlayerControllerComponent.tscn" id="14_awola"]
+[ext_resource type="Script" path="res://Character/FlankingComponent.gd" id="15_oqtc3"]
 
 [sub_resource type="CapsuleShape2D" id="1"]
 radius = 18.0
@@ -75,3 +76,7 @@ weapon_manager_ref = NodePath("../WeaponManager")
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
 radius = 45.0
+
+[node name="FlankingComponent" type="Node2D" parent="."]
+script = ExtResource("15_oqtc3")
+collision_mask = 6

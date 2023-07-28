@@ -40,7 +40,7 @@ size = Vector2(28, 38)
 
 [node name="Bandit" type="CharacterBody2D"]
 collision_layer = 2
-collision_mask = 7
+collision_mask = 5
 motion_mode = 1
 script = ExtResource("1_rtk6x")
 
@@ -49,10 +49,14 @@ shape = SubResource("9")
 
 [node name="PathFinder" type="NavigationAgent2D" parent="."]
 unique_name_in_owner = true
-path_desired_distance = 30.0
+path_desired_distance = 100.0
 target_desired_distance = 100.0
 avoidance_enabled = true
-radius = 50.0
+radius = 40.0
+time_horizon_agents = 2.0
+time_horizon_obstacles = 2.0
+avoidance_layers = 2
+avoidance_mask = 7
 debug_enabled = true
 script = ExtResource("2_lu8ci")
 movement_ref = NodePath("../MovementComponent")
@@ -156,7 +160,7 @@ script = ExtResource("21_4x300")
 
 [node name="TimeLimit" type="Node" parent="BeehaveTree/Either/Combat/Either/GeneralACombat"]
 script = ExtResource("21_cllw6")
-wait_time = 2.0
+wait_time = 6.0
 
 [node name="Attack" type="Node" parent="BeehaveTree/Either/Combat/Either/GeneralACombat/TimeLimit"]
 script = ExtResource("14_wynjw")
