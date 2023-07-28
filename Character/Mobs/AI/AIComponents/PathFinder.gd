@@ -33,16 +33,19 @@ func _physics_process(_delta):
 		target_position = get_parent().global_position
 		return
 
+	# sync avoidance speed from movement component
+	max_speed = _movement_comp.max_movement_speed
+
 	# Move toward target
 	var current_agent_position: Vector2 = get_parent().global_position
 	var next_path_position: Vector2 = get_next_path_position()
 
-	var new_velocity: Vector2 = next_path_position - current_agent_position
-	new_velocity = new_velocity.normalized()
+	var direction: Vector2 = (next_path_position - current_agent_position).normalized()
+	var new_velocity = _movement_comp.direction_to_velocity(direction)
 	if avoidance_enabled:
 		velocity = new_velocity
 	else:
 		_on_velocity_computed(new_velocity)
 
 func _on_velocity_computed(safe_velocity: Vector2) -> void:
-	_movement_comp.movement_direction = safe_velocity
+	_movement_comp.movement_velocity = safe_velocity

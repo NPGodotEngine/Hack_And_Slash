@@ -22,9 +22,10 @@ signal velocity_updated(velocity_context)
 ## Min movement speed
 @export var min_movement_speed: float = 10.0
 
-## Movement direction
-## set direction to move 
-var movement_direction: Vector2 = Vector2.ZERO
+## Movement velocity a desired velocity to move
+## @
+## Set this value to make `CharacterBody2D` to move 
+var movement_velocity: Vector2 = Vector2.ZERO
 
 
 
@@ -40,10 +41,10 @@ var movement_direction: Vector2 = Vector2.ZERO
 
 var _target: CharacterBody2D = null
 
-## Movement speed multiplier
-var movement_speed_multiplier: float = 1.0
 
 ## Current velocity
+## or tracked velocity which
+## is calculated from `move_and_slide`
 var _velocity: Vector2 = Vector2.ZERO
 
 func _get_configuration_warnings() -> PackedStringArray:
@@ -67,14 +68,8 @@ func _physics_process(_delta) -> void:
 		push_error("Could not find target to move")
 		return
 
-	var direction_norm: Vector2 = movement_direction.normalized()
-
-	# transform movement speed
-	var transformed_speed: float = transformMovementSpeed(movement_speed)
-
 	# Smoothing player turing direction
-	var desired_velocity: Vector2 = direction_norm * transformed_speed
-	var steering_velocity = desired_velocity - _velocity
+	var steering_velocity = movement_velocity - _velocity
 	steering_velocity  = steering_velocity * drag_factor
 	var new_velocity = _velocity + steering_velocity
 	
@@ -89,17 +84,11 @@ func _physics_process(_delta) -> void:
 
 	emit_signal("velocity_updated", velocity_context)
 
-## Transform a movement speed and
-## return a new transformed movement speed
-##
-## `speed`: speed to be transformed
-func transformMovementSpeed(speed:float) -> float:
-	var new_speed: float = speed
-
-	# apply speed multiplier
-	new_speed *= movement_speed_multiplier
-
-	# capped speed
-	new_speed = min(max(new_speed, min_movement_speed), max_movement_speed)
-
-	return new_speed
+## Return velocity for given direction and speed
+## @
+## `direction`: normalized `Vector2`
+## `speed`: default to `movement_speed` if not given
+func direction_to_velocity(direction:Vector2, speed:float=movement_speed):
+	if not direction.is_normalized():
+		direction.normalized()
+	return direction * speed

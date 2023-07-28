@@ -29,7 +29,7 @@
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/FindPathToTarget.gd" id="23_4xdij"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Conditions/IsTargetInVision.gd" id="27_8aiq7"]
 [ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/FindFlankingPosition.gd" id="27_xtiv0"]
-[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/MoveToPosition.gd" id="28_hh2mo"]
+[ext_resource type="Script" path="res://Character/Mobs/AI/BehaviorAI/Actions/WaitForArrive.gd" id="29_e7lsd"]
 
 [sub_resource type="CapsuleShape2D" id="9"]
 radius = 17.0
@@ -49,6 +49,7 @@ shape = SubResource("9")
 
 [node name="PathFinder" type="NavigationAgent2D" parent="."]
 unique_name_in_owner = true
+path_desired_distance = 30.0
 target_desired_distance = 100.0
 avoidance_enabled = true
 radius = 50.0
@@ -58,6 +59,7 @@ movement_ref = NodePath("../MovementComponent")
 
 [node name="MovementComponent" parent="." instance=ExtResource("2_yuy3u")]
 unique_name_in_owner = true
+max_movement_speed = 1000.0
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_3s8ia")]
 unique_name_in_owner = true
@@ -174,10 +176,13 @@ script = ExtResource("27_xtiv0")
 [node name="RotateVision" type="Node" parent="BeehaveTree/Either/Combat/Either/MoveToFlankingPosition"]
 script = ExtResource("20_t7kqu")
 angle_offset = -90.0
-rotation_speed = 0.5
 
-[node name="MoveToPosition" type="Node" parent="BeehaveTree/Either/Combat/Either/MoveToFlankingPosition"]
-script = ExtResource("28_hh2mo")
+[node name="TimeLimit" type="Node" parent="BeehaveTree/Either/Combat/Either/MoveToFlankingPosition"]
+script = ExtResource("21_cllw6")
+wait_time = 10.0
+
+[node name="WaitForArrive" type="Node" parent="BeehaveTree/Either/Combat/Either/MoveToFlankingPosition/TimeLimit"]
+script = ExtResource("29_e7lsd")
 alert = false
 
 [node name="MoveToPositionAlert" type="Node" parent="BeehaveTree/Either"]
@@ -192,9 +197,12 @@ script = ExtResource("19_cb86f")
 [node name="RotateVision" type="Node" parent="BeehaveTree/Either/MoveToPositionAlert"]
 script = ExtResource("20_t7kqu")
 angle_offset = -90.0
-rotation_speed = 0.5
 
-[node name="MoveToPosition" type="Node" parent="BeehaveTree/Either/MoveToPositionAlert"]
-script = ExtResource("28_hh2mo")
+[node name="TimeLimit" type="Node" parent="BeehaveTree/Either/MoveToPositionAlert"]
+script = ExtResource("21_cllw6")
+wait_time = 12.0
+
+[node name="WaitForArrive" type="Node" parent="BeehaveTree/Either/MoveToPositionAlert/TimeLimit"]
+script = ExtResource("29_e7lsd")
 
 [editable path="Vision"]

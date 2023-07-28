@@ -16,7 +16,7 @@ func tick(actor:Node, blackboard:Blackboard) -> int:
 		nav_agent.target_position = actor.global_position
 		return FAILURE
 	
-	if nav_agent.is_navigation_finished():
+	if nav_agent.is_navigation_finished() || nav_agent.is_target_reached():
 		return SUCCESS
 
 	if alert and target_in_vision(player):
