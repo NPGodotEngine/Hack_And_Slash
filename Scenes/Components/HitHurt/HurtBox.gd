@@ -3,7 +3,7 @@ extends Area2D
 
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 
-# Emit when take damage
+## Emit when take damage
 signal take_damage(hit_damage)
 
 ## Bitwise mask
@@ -37,12 +37,12 @@ func _on_area_entered(area:Area2D) -> void:
 		hit_box.paired_hurt_box = self
 		emit_signal("take_damage", hit_box.hit_damage)
 
-# Add new hit mask
+## Add new hit mask
 func add_type_mask(new_mask:int) -> void:
 	# bitwise OR
 	type_mask |= new_mask
 
-# Remove a hit mask
+## Remove a hit mask
 func remove_type_mask(mask:int) -> void:
 	# bitwise XOR
 	type_mask ^= mask

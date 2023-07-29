@@ -22,6 +22,7 @@ func _ready() -> void:
 	super()
 	$HitBox.connect("contacted_hurt_box", Callable(self, "_on_contact_hurt_box"))
 	$HitBox.connect("contacted_static_body", Callable(self, "_on_contact_static_body"))
+	$HitBox.connect("contacted_tile_map", Callable(self, "_on_contact_tile_map"))
 
 func _on_contact_hurt_box(hurt_box:HurtBox) -> void:
 	if _ignored_bodies.has(hurt_box): 
@@ -34,6 +35,9 @@ func _on_contact_hurt_box(hurt_box:HurtBox) -> void:
 		queue_free()
 
 func _on_contact_static_body(_body:StaticBody2D) -> void:
+	queue_free()
+
+func _on_contact_tile_map(_tile_map:TileMap) -> void:
 	queue_free()
 
 func _hit_damage_updated(damage:HitDamage) -> void:

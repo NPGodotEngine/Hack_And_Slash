@@ -34,6 +34,7 @@ shape = SubResource("1")
 [node name="MovementComponent" parent="." instance=ExtResource("2_kiw01")]
 
 [node name="DodgeComponent" parent="." instance=ExtResource("3_f17x1")]
+dodge_speed = 800.0
 dodge_mask = 4
 
 [node name="DodgeBarUI" parent="DodgeComponent" instance=ExtResource("4_nctf1")]

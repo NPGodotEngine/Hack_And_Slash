@@ -21,7 +21,7 @@ func tick(actor:Node, blackboard:Blackboard) -> int:
 
 	if alert and target_in_vision(player):
 		nav_agent.target_position = actor.global_position
-		return FAILURE
+		return SUCCESS
 	
 	return RUNNING
 

@@ -23,9 +23,13 @@ enum BulletType {
 # `object` object to be added to scene tree
 # `deferrd` if `true` then object will be added to scene tree next frame
 # otherwise `false` add object immediatelly default is `true`
-func add_to_scene_tree(object:Node, deferrd:bool = true) -> void:
+func add_to_scene_tree(object:Node, deferrd:bool = true, group_name=null) -> void:
 	if object:
 		var scene: Node = get_tree().current_scene
+		if group_name:
+			var nodes := get_tree().get_nodes_in_group(group_name)
+			if not nodes.is_empty():
+				scene = nodes[0]
 		if deferrd:
 			scene.call_deferred("add_child", object)
 		else:

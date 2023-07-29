@@ -97,7 +97,7 @@ func _on_trigger_pulled() -> void:
 
 		# consume an ammo
 		var bullet: Projectile = projectile_ammo.consume_ammo()
-		Global.add_to_scene_tree(bullet)
+		Global.add_to_scene_tree(bullet, true, "Map")
 
 		# configure bullet
 		bullet.hit_damage = hit_damage

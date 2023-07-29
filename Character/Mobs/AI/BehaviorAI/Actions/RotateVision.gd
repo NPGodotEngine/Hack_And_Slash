@@ -9,6 +9,10 @@ extends ActionLeaf
 ## How fast should it be rotated
 @export_range(0.01, 1.0) var rotation_speed: float = 1.0
 
+## Rotation between current and target is smaller or equal
+## to this threshold will condiser rotation success
+@export_range(0.0, 360.0) var threshold_rotation_deg: float = 10.0 
+
 
 @onready var vision: VisionCone2D = get_node_or_null("%Vision")
 
@@ -24,7 +28,7 @@ func tick(_actor:Node, blackboard:Blackboard) -> int:
 	var current_rot: float = vision.global_rotation
 	var target_rot: float = current_rot + vision.get_angle_to(target_pos) + deg_to_rad(angle_offset)
 
-	if is_equal_approx(current_rot, target_rot):
+	if abs(target_rot - current_rot) < deg_to_rad(threshold_rotation_deg):
 		elapsed = 0.0
 		return SUCCESS
 	
