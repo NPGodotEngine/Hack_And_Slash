@@ -41,7 +41,6 @@ func _ready() -> void:
 	connect("body_entered", Callable(self, "_on_body_entered"))
 
 func _on_body_entered(body:Node) -> void:
-	print(body)
 	if body is StaticBody2D:
 		emit_signal("contacted_static_body", body)
 	if body is TileMap:
