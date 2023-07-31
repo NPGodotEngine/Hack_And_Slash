@@ -8,33 +8,23 @@ extends Controller
 
 
 @export var actor: NodePath
-@export var target_follower: NodePath
 
-@onready var _target_follower: TargetFollowerComponent = get_node_or_null(target_follower)
 @onready var _actor: CharacterBody2D = get_node_or_null(actor)
 
 
 func _get_configuration_warnings() -> PackedStringArray:
-	if target_follower.is_empty():
-		return ["target_follower node path is missing"]
-	if not get_node(target_follower) is TargetFollowerComponent:
-		return ["target_follower must be a TargetFollowerComponent" ] 
 	if actor.is_empty():
 		return ["actor node path is missing"]
 	if not get_node(actor) is CharacterBody2D:
-		return ["actor must be a CharacterBody2D" ] 
+		return ["actor must be a CharacterBody2D"] 
 	return []
 
 
 func enable_control() -> void:
 	super()
-	if _target_follower:
-		_target_follower.enable_follow = true
 
 func disable_control() -> void:
 	super()
-	if _target_follower:
-		_target_follower.enable_follow = false
 
 
 
