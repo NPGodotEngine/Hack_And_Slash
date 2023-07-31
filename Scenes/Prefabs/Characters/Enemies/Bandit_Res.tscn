@@ -49,15 +49,17 @@ shape = SubResource("9")
 
 [node name="PathFinder" type="NavigationAgent2D" parent="."]
 unique_name_in_owner = true
-path_desired_distance = 100.0
-target_desired_distance = 100.0
+path_desired_distance = 30.0
+target_desired_distance = 50.0
+path_max_distance = 20.0
 avoidance_enabled = true
-radius = 40.0
-time_horizon_agents = 2.0
-time_horizon_obstacles = 2.0
+radius = 30.0
 avoidance_layers = 2
 avoidance_mask = 7
 debug_enabled = true
+debug_use_custom = true
+debug_path_custom_color = Color(0.827451, 0.188235, 0.270588, 1)
+debug_path_custom_line_width = 2.0
 script = ExtResource("2_lu8ci")
 movement_ref = NodePath("../MovementComponent")
 
@@ -104,7 +106,6 @@ seeking_freq = 0.4
 unique_name_in_owner = true
 collision_mask = 7
 script = ExtResource("11_st404")
-debug_draw = true
 line_width = 3.25
 
 [node name="Vision" parent="." instance=ExtResource("11_d8ulm")]

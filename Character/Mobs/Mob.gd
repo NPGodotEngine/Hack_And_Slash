@@ -9,7 +9,6 @@ extends Character
 @onready var _hurt_box: HurtBox = $HurtBox
 
 var mob_behavior_ai: BeehaveTree
-var is_dead: bool = false
 
 func _ready() -> void:
 	super()
@@ -38,7 +37,7 @@ func _on_take_damage(hit_damage:HitDamage) -> void:
 	
 
 func _on_die() -> void:
-	is_dead = true
+	set_is_dead(true)
 		
 	if _hurt_box:
 		var collision_shape: CollisionShape2D = _hurt_box.get_child(0)

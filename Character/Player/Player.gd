@@ -18,9 +18,6 @@ extends Character
 @onready var _dodge_comp: DodgeComponent = $DodgeComponent
 
 
-
-var is_dead: bool = false
-
 func _ready() -> void:
 	super()
 	_hurt_box.connect("take_damage", Callable(self, "_on_take_damage"))
@@ -78,7 +75,7 @@ func _on_take_damage(hit_damage:HitDamage) -> void:
 
 func _on_die() -> void:
 	print("player die")
-	is_dead = true
+	set_is_dead(true)
 
 	_weapon_manager.disable_weapon_manager()
 

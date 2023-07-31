@@ -9,6 +9,18 @@ extends CharacterBody2D
 # `total_damage`: total damage in integer
 signal on_character_take_damage(hit_damage, total_damage)
 
+## Emit when character is dead
+signal on_character_dead()
+
+## Whether character is dead or not
+var is_dead: bool = false: set = set_is_dead
+
+func set_is_dead(value:bool) -> void:
+	is_dead = value
+
+	if is_dead:
+		emit_signal("on_character_dead")
+
 func _ready():
 	pass
 

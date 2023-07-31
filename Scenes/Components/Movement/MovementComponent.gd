@@ -39,7 +39,7 @@ var movement_velocity: Vector2 = Vector2.ZERO
 ## Movement speed
 @export var movement_speed: float = 200.0
 
-var _target: CharacterBody2D = null
+var _target: Character = null
 
 
 ## Current velocity
@@ -48,8 +48,8 @@ var _target: CharacterBody2D = null
 var _velocity: Vector2 = Vector2.ZERO
 
 func _get_configuration_warnings() -> PackedStringArray:
-	if not is_instance_of(get_parent(), CharacterBody2D):
-		return ["This node must be a child of CharacterBody2D node"]
+	if not is_instance_of(get_parent(), Character):
+		return ["This node must be a child of Character node"]
 
 	return []
 
@@ -58,7 +58,7 @@ func _ready() -> void:
 		return
 	
 	await get_parent().ready
-	_target = get_parent() as CharacterBody2D
+	_target = get_parent() as Character
 
 func _physics_process(_delta) -> void:
 	if Engine.is_editor_hint():
@@ -66,6 +66,9 @@ func _physics_process(_delta) -> void:
 
 	if _target == null:
 		push_error("Could not find target to move")
+		return
+
+	if _target.is_dead:
 		return
 
 	# Smoothing player turing direction
