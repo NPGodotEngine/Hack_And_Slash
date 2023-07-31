@@ -15,7 +15,7 @@ radius = 3.16228
 script = ExtResource("3")
 
 [node name="BulletTrail" parent="." instance=ExtResource("5")]
-points = PackedVector2Array(0, 0)
+points = PackedVector2Array(0, 0, -15, 0, -30, 0, -45, 0, -60, 0, -75, 0, -90, 0, -105, 0, -120, 0, -135, 0)
 width = 7.0
 point_distance = 15.0
 max_points = 10

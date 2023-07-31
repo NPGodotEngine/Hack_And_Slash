@@ -56,7 +56,6 @@ avoidance_enabled = true
 radius = 30.0
 avoidance_layers = 2
 avoidance_mask = 7
-debug_enabled = true
 debug_use_custom = true
 debug_path_custom_color = Color(0.827451, 0.188235, 0.270588, 1)
 debug_path_custom_line_width = 2.0
@@ -111,10 +110,8 @@ line_width = 3.25
 [node name="Vision" parent="." instance=ExtResource("11_d8ulm")]
 unique_name_in_owner = true
 angle_deg = 120
+ray_count = 20
 collision_layer_mask = 7
-
-[node name="VisionConeRenderer" parent="Vision" index="0"]
-color = Color(0.431373, 0.929412, 0.278431, 0.0705882)
 
 [node name="Blackboard" type="Node" parent="."]
 script = ExtResource("12_qutf1")
