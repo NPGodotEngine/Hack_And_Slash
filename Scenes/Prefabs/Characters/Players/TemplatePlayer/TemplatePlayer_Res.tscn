@@ -13,7 +13,7 @@
 [ext_resource type="Script" path="res://Scenes/Components/HitHurt/HurtBox.gd" id="11_c3xmh"]
 [ext_resource type="PackedScene" uid="uid://cvcnfm58je70e" path="res://Interface/UIMediators/Damage/DamageTextUI.tscn" id="12_dd10i"]
 [ext_resource type="PackedScene" uid="uid://b4m4a3hj8q8hr" path="res://Interface/WorldUI/Damage/DamageLabel.tscn" id="13_bmsbg"]
-[ext_resource type="PackedScene" uid="uid://cxr47rxftiaym" path="res://Scenes/Components/Control/Player/PlayerController.tscn" id="14_ghpqs"]
+[ext_resource type="PackedScene" path="res://Scenes/Components/Control/Player/PlayerController.tscn" id="14_ghpqs"]
 [ext_resource type="Script" path="res://Character/FlankingComponent.gd" id="15_ra2t7"]
 
 [sub_resource type="CapsuleShape2D" id="1"]
