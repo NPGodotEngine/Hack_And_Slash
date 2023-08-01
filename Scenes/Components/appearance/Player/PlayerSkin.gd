@@ -12,11 +12,15 @@ const HIT = "hit"
 ## NodePath to DodgeComponent
 @export var dodge_ref: NodePath
 
-@onready var _dodge: DodgeComponent = get_node_or_null(dodge_ref)
+## NodePath to PlayerController
+@export var player_controller_ref: NodePath
 
+@onready var _dodge: DodgeComponent = get_node_or_null(dodge_ref)
+@onready var _player_controller: PlayerController = get_node_or_null(player_controller_ref)
 @onready var _anim_player: AnimationPlayer = $AnimationPlayer
 
 var _character: Character = null
+var _can_update_skin: bool = true
 
 func _get_configuration_warnings() -> PackedStringArray:
 	if not super().is_empty():
@@ -29,6 +33,11 @@ func _get_configuration_warnings() -> PackedStringArray:
 		return ["dodge node path is missing"]
 	if not get_node(dodge_ref) is DodgeComponent:
 		return ["dodge must be a DodgeComponent node"]
+
+	if player_controller_ref.is_empty():
+		return ["player_controller_ref node path is missing"]
+	if not get_node(player_controller_ref) is PlayerController:
+		return ["player_controller_ref must be a PlayerController node"]
 	
 	var anim_player_exists = false
 	for child in get_children():
@@ -46,11 +55,18 @@ func _ready() -> void:
 		return
 
 	await get_parent().ready
+	_player_controller.connect("on_enabled_control", Callable(self, "_on_player_control_enabled"))
+	_player_controller.connect("on_disabled_control", Callable(self, "_on_player_control_disabled"))
 	_character = get_parent() as Character	
 	_character.connect("on_character_take_damage", Callable(self, "_on_charater_take_damage"))
 
 	
+func _on_player_control_enabled() -> void:
+	_can_update_skin = true
 
+func _on_player_control_disabled() -> void:
+	_can_update_skin = false
+	
 func _on_charater_take_damage(_hit_damage:HitDamage, _total_damage:int) -> void:
 	_anim_player.play("hit")
 
@@ -74,7 +90,9 @@ func process_animation(delta:float) -> void:
 
 func update_skin() -> void:
 	super()
-
+	
+	if not _can_update_skin:
+		return
 	# change facing direction
 	# base on mouse course relative to character
 	var global_mouse_position := get_global_mouse_position()

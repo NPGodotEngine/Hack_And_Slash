@@ -1,4 +1,3 @@
-@tool
 extends Spawner
 
 # warning-ignore-all: UNUSED_ARGUMENT

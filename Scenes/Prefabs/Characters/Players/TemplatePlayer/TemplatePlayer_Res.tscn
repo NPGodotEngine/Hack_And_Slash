@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://duxaqp4iun7ch"]
+[gd_scene load_steps=18 format=3 uid="uid://byvl72uvvas3r"]
 
 [ext_resource type="Script" path="res://Character/Player/Player.gd" id="1_fy235"]
 [ext_resource type="PackedScene" uid="uid://d0eke1fpqy05t" path="res://Scenes/Components/Movement/MovementComponent.tscn" id="2_vl4rm"]
@@ -9,11 +9,12 @@
 [ext_resource type="PackedScene" uid="uid://bxygst4b7f1ek" path="res://Interface/UIMediators/HealthBar/FloatHealthBarUI.tscn" id="7_qmlqy"]
 [ext_resource type="PackedScene" uid="uid://j4inalcgj8yf" path="res://Scenes/Components/appearance/Player/PlayerSkin.tscn" id="8_fye5t"]
 [ext_resource type="PackedScene" path="res://Scenes/Components/Weapon/WeaponManager/WeaponManager.tscn" id="9_xma41"]
-[ext_resource type="PackedScene" uid="uid://bk64jl45sgip5" path="res://Scenes/Prefabs/Weapons/AKM/AKM_Weapon.tscn" id="10_awyn0"]
+[ext_resource type="PackedScene" uid="uid://0jg6d47t67mi" path="res://Scenes/Prefabs/Weapons/Player/Beretta/Beretta_Res.tscn" id="10_rabeb"]
 [ext_resource type="Script" path="res://Scenes/Components/HitHurt/HurtBox.gd" id="11_c3xmh"]
 [ext_resource type="PackedScene" uid="uid://cvcnfm58je70e" path="res://Interface/UIMediators/Damage/DamageTextUI.tscn" id="12_dd10i"]
 [ext_resource type="PackedScene" uid="uid://b4m4a3hj8q8hr" path="res://Interface/WorldUI/Damage/DamageLabel.tscn" id="13_bmsbg"]
-[ext_resource type="PackedScene" path="res://Scenes/Components/Control/Player/PlayerControllerComponent.tscn" id="14_ghpqs"]
+[ext_resource type="PackedScene" uid="uid://cxr47rxftiaym" path="res://Scenes/Components/Control/Player/PlayerController.tscn" id="14_ghpqs"]
+[ext_resource type="Script" path="res://Character/FlankingComponent.gd" id="15_ra2t7"]
 
 [sub_resource type="CapsuleShape2D" id="1"]
 radius = 18.0
@@ -33,11 +34,13 @@ shape = SubResource("1")
 [node name="MovementComponent" parent="." instance=ExtResource("2_vl4rm")]
 
 [node name="DodgeComponent" parent="." instance=ExtResource("3_61uwl")]
+dodge_speed = 800.0
 dodge_mask = 4
 
 [node name="DodgeBarUI" parent="DodgeComponent" instance=ExtResource("4_k04xu")]
 
 [node name="HealthComponent" parent="." instance=ExtResource("5_0mn8g")]
+invulnerable = true
 
 [node name="HealthBarUI" parent="HealthComponent" instance=ExtResource("6_uy2pf")]
 
@@ -46,15 +49,18 @@ position = Vector2(0, -35)
 
 [node name="CharacterSkin" parent="." instance=ExtResource("8_fye5t")]
 dodge_ref = NodePath("../DodgeComponent")
+player_controller_ref = NodePath("../PlayerController")
 movement_ref = NodePath("../MovementComponent")
 health_ref = NodePath("../HealthComponent")
 
 [node name="WeaponManager" parent="." instance=ExtResource("9_xma41")]
-preset_weapons = Array[PackedScene]([ExtResource("10_awyn0")])
+preset_weapons = Array[PackedScene]([ExtResource("10_rabeb")])
 
 [node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
 collision_mask = 8
 script = ExtResource("11_c3xmh")
+type_mask = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2(1, -1)
@@ -65,7 +71,15 @@ shape = SubResource("2")
 [node name="DamageTextUI" parent="." instance=ExtResource("12_dd10i")]
 damage_text = ExtResource("13_bmsbg")
 
-[node name="PlayerControllerComponent" parent="." instance=ExtResource("14_ghpqs")]
+[node name="PlayerController" parent="." instance=ExtResource("14_ghpqs")]
 movement_ref = NodePath("../MovementComponent")
 dodge_ref = NodePath("../DodgeComponent")
 weapon_manager_ref = NodePath("../WeaponManager")
+current = true
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
+radius = 45.0
+
+[node name="FlankingComponent" type="Node2D" parent="."]
+script = ExtResource("15_ra2t7")
+collision_mask = 6

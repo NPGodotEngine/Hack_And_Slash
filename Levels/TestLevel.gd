@@ -5,6 +5,7 @@ extends Node2D
 func _ready() -> void:
 	for obj in get_tree().get_nodes_in_group("PlayerSpawner"):
 		obj.spawn()
+		
 
 	for obj in get_tree().get_nodes_in_group("EnemySpawner"):
 		obj.spawn()
@@ -12,6 +13,14 @@ func _ready() -> void:
 	await get_tree().process_frame
 	GameSaver.save_game_data()
 	GameSaver.load_game_data()
+	
+	# # test for ioslating player controller when many players in level
+	# var players = get_tree().get_nodes_in_group("Player")
+	# if not players.is_empty():
+	# 	var random = RandomNumberGenerator.new()
+	# 	var player: Node2D = players[random.randi_range(0, players.size()-1)]
+	# 	var player_controller: PlayerController = player.get_node("PlayerController")
+	# 	player_controller.is_player_control = true
 	
 	if test_weapon_name:
 		var test_wp: Weapon = ResourceLibrary.weapons[test_weapon_name].instantiate()

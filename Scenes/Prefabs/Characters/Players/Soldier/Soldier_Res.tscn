@@ -13,7 +13,7 @@
 [ext_resource type="Script" path="res://Scenes/Components/HitHurt/HurtBox.gd" id="11_xy6p7"]
 [ext_resource type="PackedScene" uid="uid://cvcnfm58je70e" path="res://Interface/UIMediators/Damage/DamageTextUI.tscn" id="12_ja6nb"]
 [ext_resource type="PackedScene" uid="uid://b4m4a3hj8q8hr" path="res://Interface/WorldUI/Damage/DamageLabel.tscn" id="13_850le"]
-[ext_resource type="PackedScene" uid="uid://cxr47rxftiaym" path="res://Scenes/Components/Control/Player/PlayerControllerComponent.tscn" id="14_awola"]
+[ext_resource type="PackedScene" uid="uid://cxr47rxftiaym" path="res://Scenes/Components/Control/Player/PlayerController.tscn" id="14_awola"]
 [ext_resource type="Script" path="res://Character/FlankingComponent.gd" id="15_oqtc3"]
 
 [sub_resource type="CapsuleShape2D" id="1"]
@@ -49,6 +49,7 @@ position = Vector2(0, -35)
 
 [node name="CharacterSkin" parent="." instance=ExtResource("8_h2krb")]
 dodge_ref = NodePath("../DodgeComponent")
+player_controller_ref = NodePath("../PlayerController")
 movement_ref = NodePath("../MovementComponent")
 health_ref = NodePath("../HealthComponent")
 
@@ -70,10 +71,11 @@ shape = SubResource("2")
 [node name="DamageTextUI" parent="." instance=ExtResource("12_ja6nb")]
 damage_text = ExtResource("13_850le")
 
-[node name="PlayerControllerComponent" parent="." instance=ExtResource("14_awola")]
+[node name="PlayerController" parent="." instance=ExtResource("14_awola")]
 movement_ref = NodePath("../MovementComponent")
 dodge_ref = NodePath("../DodgeComponent")
 weapon_manager_ref = NodePath("../WeaponManager")
+current = true
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
 radius = 45.0

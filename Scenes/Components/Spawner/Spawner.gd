@@ -27,6 +27,7 @@ func spawn() -> void:
 		var random_name_index = randi() % list.size()
 		
 		handle_spawn(list[random_name_index])
+	
 
 func handle_spawn(_resource_name:String) -> void:
 	pass
