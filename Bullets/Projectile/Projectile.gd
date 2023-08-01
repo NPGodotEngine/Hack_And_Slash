@@ -32,6 +32,11 @@ var _ignored_bodies: Array = []
 
 
 ## Override ##
+func _get_configuration_warnings() -> PackedStringArray:
+	if not super().is_empty():
+		return super()
+	return []
+
 func _init() -> void:
 	super()
 	bullet_type = Global.BulletType.PROJECTILE

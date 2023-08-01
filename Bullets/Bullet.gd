@@ -20,6 +20,9 @@ func _set_hit_damage(value:HitDamage) -> void:
         hit_damage = value
         _hit_damage_updated(hit_damage)
 
+func _get_configuration_warnings() -> PackedStringArray:
+    return []
+
 func _init() -> void:
     pass
 
