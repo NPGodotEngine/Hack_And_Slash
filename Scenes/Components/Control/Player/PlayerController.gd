@@ -200,4 +200,8 @@ func update_weapon_input() -> void:
 		_weapon_manager.execute_weapon_alt(get_global_mouse_position())
 	elif Input.is_action_just_released("secondary"):
 		_weapon_manager.cancel_weapon_alt_execution()
+	
+	# reload weapon
+	if Input.is_action_pressed("reload"):
+		_weapon_manager.reload_weapon()
 

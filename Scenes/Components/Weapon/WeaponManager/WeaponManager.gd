@@ -1,4 +1,4 @@
-# A class holde number of weapons
+## A class holde number of weapons
 class_name WeaponManager
 extends Node2D
 
@@ -15,18 +15,18 @@ signal switch_weapon(switch_weapon_context)
 
 @export var preset_weapons: Array[PackedScene] = []
 
-# Hold list of weapons 
+## Hold list of weapons 
 var weapon_slots: Array = []
 
 
-# Current index point to the weapon
-# assign a new index will inactive previous weapon
-# and active weapon at given index
-#
-# Change index simulate as switch weapon
+## Current index point to the weapon
+## assign a new index will inactive previous weapon
+## and active weapon at given index
+##
+## Change index simulate as switch weapon
 var current_weapon_index: int = DEFAULT_WEAPON_INDEX: set = set_current_weapon_index
 
-# Whether weapon manager is enabled
+## Whether weapon manager is enabled
 var _is_enabled: bool = true
 
 
@@ -135,9 +135,9 @@ func execute_weapon(fire_at:Vector2) -> void:
 	if weapon:
 		weapon.execute(fire_at)
 
-# Cancel current weapon's main fire
+## Cancel current weapon's main fire
 ##
-# Mainly for weapon requried warm up
+## Mainly for weapon requried warm up
 func cancel_weapon_execution() -> void:
 	if weapon_slots.size() <= 0 or current_weapon_index == DEFAULT_WEAPON_INDEX: 
 		return
@@ -160,7 +160,7 @@ func execute_weapon_alt(fire_at:Vector2) -> void:
 	if weapon:
 		weapon.execute_alt(fire_at)
 
-# Cancel current weapon's alternative fire 
+## Cancel current weapon's alternative fire 
 func cancel_weapon_alt_execution() -> void:
 	if weapon_slots.size() <= 0 or current_weapon_index == DEFAULT_WEAPON_INDEX: 
 		return
@@ -168,6 +168,16 @@ func cancel_weapon_alt_execution() -> void:
 	var weapon: Weapon = weapon_slots[current_weapon_index]
 	if weapon:
 		weapon.cancel_alt_execution()
+
+## Reload current weapon
+func reload_weapon() -> void:
+	if current_weapon_index == DEFAULT_WEAPON_INDEX:
+		return
+	
+	var weapon: Weapon = weapon_slots[current_weapon_index]
+	for child in weapon.get_children():
+		if child is Ammo:
+			(child as Ammo).reload_ammo()
 
 # Get weapon by index
 ##
@@ -178,9 +188,9 @@ func get_weapon_by(index:int):
 		
 	return weapon_slots[index]
 
-# Add new weapon
+## Add new weapon
 ##
-# `make_current`: `true` make new weapon as current weapon
+## `make_current`: `true` make new weapon as current weapon
 func add_weapon(new_weapon, make_current:bool=false) -> void:
 	if not new_weapon is Weapon:
 		push_error("%s is not a type of Weapon" % new_weapon.name)
@@ -194,9 +204,9 @@ func add_weapon(new_weapon, make_current:bool=false) -> void:
 	else:
 		(new_weapon as Weapon).inactive()
 
-# Remove a weapon
+## Remove a weapon
 ##
-# `index`: index of weapon to remove
+## `index`: index of weapon to remove
 func remove_weapon_by(index:int) -> void:
 	index = wrapi(index, 0, weapon_slots.size() - 1)
 	var weapon: Weapon = weapon_slots[index]
@@ -206,11 +216,11 @@ func remove_weapon_by(index:int) -> void:
 	if index <= current_weapon_index:
 		set_current_weapon_index(current_weapon_index)
 
-# Enable weapon manager
+## Enable weapon manager
 ##
-# Eanble weapon manager only active the weapon
-# whose index is current weapon index that remain
-# unchanged after disable weapon manager
+## Eanble weapon manager only active the weapon
+## whose index is current weapon index that remain
+## unchanged after disable weapon manager
 func enable_weapon_manager() -> void:
 	_is_enabled = true
 
@@ -219,11 +229,11 @@ func enable_weapon_manager() -> void:
 		var weapon: Weapon = weapon_slots[current_weapon_index]
 		weapon.active()
 
-# Diable weapon manager
+## Diable weapon manager
 ##
-# When weapon manager is disabled
-# all weapons all be inactive and
-# current weapon index is remain unchanged
+## When weapon manager is disabled
+## all weapons all be inactive and
+## current weapon index is remain unchanged
 func disable_weapon_manager() -> void:
 	_is_enabled = false
 

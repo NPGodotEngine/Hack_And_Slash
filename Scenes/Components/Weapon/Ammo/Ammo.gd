@@ -185,6 +185,9 @@ func reload_ammo() -> void:
 	# don't reload if no ammo in ammo bag
 	if _round_in_ammo_bag <= 0: return
 
+	# don't reload if infinite ammo
+	if infinite_ammo: return
+
 	# begin reloading process
 	_is_reloading = true
 	_reload_timer.start(reload_duration)
