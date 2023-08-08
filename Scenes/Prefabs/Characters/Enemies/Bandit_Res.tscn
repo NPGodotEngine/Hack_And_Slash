@@ -83,6 +83,10 @@ unique_name_in_owner = true
 
 [node name="M4A1" parent="WeaponPlaceholder" instance=ExtResource("7_grikx")]
 
+[node name="ProjectileAmmo" parent="WeaponPlaceholder/M4A1" index="5"]
+infinite_ammo = true
+max_round_per_clip = 30
+
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 8
@@ -206,4 +210,5 @@ angle_offset = -90.0
 [node name="WaitForArrive" type="Node" parent="BeehaveTree/Either/MoveToPositionAlert"]
 script = ExtResource("29_e7lsd")
 
+[editable path="WeaponPlaceholder/M4A1"]
 [editable path="Vision"]

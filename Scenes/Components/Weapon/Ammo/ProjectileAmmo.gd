@@ -3,12 +3,14 @@ class_name ProjectileAmmo
 extends Ammo
 
 
-# Consume a projectile bullet
-# return a projectile bullet object
-# this also set following bullet properties
-# `speed`
-# `life span`
-# `penetration chance`
+## Consume a projectile bullet
+## return a projectile bullet object or null
+## if no ammo in clip
+## @
+## this also set following bullet properties
+## `speed`
+## `life span`
+## `penetration chance`
 func consume_ammo() -> Projectile:
 	if _is_reloading or _round_left == 0:
 		return null
@@ -23,8 +25,8 @@ func consume_ammo() -> Projectile:
 
 	if not self.infinite_ammo:
 		_set_round_left(_round_left - 1)
-
-	if _round_left == 0:
-		reload_ammo()
+		# auto reload if no ammo in clip
+		if _round_left == 0:
+			reload_ammo()
 
 	return bullet

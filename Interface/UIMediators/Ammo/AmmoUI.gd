@@ -35,19 +35,29 @@ func _ready() -> void:
 	_weapon.connect("weapon_attributes_updated", Callable(self, "on_weapon_attributes_updated"))
 	_ammo.connect("ammo_count_updated", Callable(self, "_on_ammo_count_updated"))
 	_ammo.connect("ammo_depleted", Callable(self, "_on_ammo_count_updated"))
+	_ammo.connect("ammo_bag_updated", Callable(self, "_on_ammo_bag_count_updated"))
+	_ammo.connect("ammo_bag_depleted", Callable(self, "_on_ammo_bag_count_updated"))
 
 func on_weapon_active(_wp:Weapon) -> void:
 	UIEvents.emit_signal("show_player_ammo_ui")
-	update_ammo_ui(_ammo._round_left, _ammo.rounds_per_clip)
+	update_ammo_bag_ui(_ammo._round_in_ammo_bag)
+	update_ammo_ui(_ammo._round_left)
 
 func on_weapon_inactive(_wp:Weapon) -> void:
 	UIEvents.emit_signal("hide_player_ammo_ui")
 
 func on_weapon_attributes_updated(_wp:Weapon) -> void:
-	update_ammo_ui(_ammo._round_left, _ammo.rounds_per_clip)
+	update_ammo_bag_ui(_ammo._round_in_ammo_bag)
+	update_ammo_ui(_ammo._round_left)
 
 func _on_ammo_count_updated(ammo_context:Ammo.AmmoContext) -> void:
-	update_ammo_ui(ammo_context.updated_ammo_count, ammo_context.round_per_clip)
+	update_ammo_ui(ammo_context.updated_ammo_count)
 
-func update_ammo_ui(ammo_count:int, max_ammo_count:int) -> void:
-	UIEvents.emit_signal("player_ammo_updated", ammo_count, max_ammo_count)
+func _on_ammo_bag_count_updated(ammo_bag_context:Ammo.AmmoBagContext) -> void:
+	update_ammo_bag_ui(ammo_bag_context.updated_ammo_bag_count)
+
+func update_ammo_ui(ammo_count:int) -> void:
+	UIEvents.emit_signal("player_ammo_updated", ammo_count)
+
+func update_ammo_bag_ui(ammo_count:int) -> void:
+	UIEvents.emit_signal("player_ammo_bag_update", ammo_count)

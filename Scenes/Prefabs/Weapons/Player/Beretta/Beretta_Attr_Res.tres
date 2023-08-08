@@ -13,3 +13,4 @@ spread_radius = 5.0
 trigger_duration = 0.8
 reload_duration = 0.6
 round_per_clip = 17
+max_ammo = 200

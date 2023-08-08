@@ -97,6 +97,9 @@ func _on_trigger_pulled() -> void:
 
 		# consume an ammo
 		var bullet: Projectile = projectile_ammo.consume_ammo()
+		if not bullet:
+			return
+			
 		Global.add_to_scene_tree(bullet, true, "Map")
 
 		# configure bullet
@@ -181,7 +184,8 @@ func apply_weapon_attributes(attributes:WeaponAttributes) -> void:
 	_radius_spread.spread_radius = attributes.spread_radius
 	_trigger.trigger_duration = attributes.trigger_duration
 	_ammo.reload_duration = attributes.reload_duration
-	_ammo.rounds_per_clip = attributes.round_per_clip
+	_ammo.max_ammo = attributes.max_ammo
+	_ammo.max_round_per_clip = attributes.round_per_clip
 
 	super(attributes)
 

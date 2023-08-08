@@ -28,4 +28,7 @@ extends Resource
 @export var reload_duration: float = 1.0
 
 ## Round per clip
-@export var round_per_clip: int = 30
+@export_range(1, 100000) var round_per_clip: int = 30
+
+## Round for ammo bag (max ammo)
+@export_range(1, 100000) var max_ammo: int = 200

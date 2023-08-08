@@ -59,10 +59,10 @@ func _on_weapon_active(_target_weapon:Weapon) -> void:
 func on_weapon_inactive(_target_weapon:Weapon) -> void:
 	_crosshair.hide()   
 
-func _on_begin_reloading(_ammo_context) -> void:
+func _on_begin_reloading() -> void:
 	_crosshair.hide()
 
-func _on_end_reloading(_ammo_context) -> void:
+func _on_end_reloading() -> void:
 	_crosshair.show()
 
 func _exit_tree() -> void:

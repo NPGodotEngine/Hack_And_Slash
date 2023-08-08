@@ -16,6 +16,8 @@ func _on_trigger_pulled() -> void:
 	var shotgun_ammo: ShotgunAmmo = _ammo as ShotgunAmmo
 
 	var rounds: Array = shotgun_ammo.consume_ammo(rounds_per_shot)
+	if rounds.is_empty():
+		return
 	
 	# configure each bullets
 	for bullet in rounds:

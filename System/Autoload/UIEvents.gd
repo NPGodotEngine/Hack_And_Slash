@@ -22,10 +22,13 @@ signal player_health_updated(health, max_health)
 # `duration`: duration of dodge
 signal player_dodge_updated(progress, duration)
 
-# Emit when player ammo count HUD need to be updated
-# `ammo_count`: current ammo count
-# `max_ammo_count`: ammo count at max
-signal player_ammo_updated(ammo_count, max_ammo_count)
+## Emit when player ammo count HUD need to be updated
+## `ammo_count`: current ammo count
+signal player_ammo_updated(ammo_count:int)
+
+## Emit when player ammo in ammo bag HUD need to be updated
+## `ammo_count`: current ammo count int ammo bag
+signal  player_ammo_bag_update(ammo_count:int)
 
 signal show_player_ammo_ui()
 signal hide_player_ammo_ui()

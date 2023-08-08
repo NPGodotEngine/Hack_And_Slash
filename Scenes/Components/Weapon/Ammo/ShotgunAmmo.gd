@@ -37,9 +37,9 @@ func consume_ammo(rounds_per_shot) -> Array:
 
     if not self.infinite_ammo:
         _set_round_left(_round_left - 1)
-
-    if _round_left == 0:
-        reload_ammo()
+        # auto reload if no ammo in clip
+        if _round_left == 0:
+            reload_ammo()
 
     return rounds
 

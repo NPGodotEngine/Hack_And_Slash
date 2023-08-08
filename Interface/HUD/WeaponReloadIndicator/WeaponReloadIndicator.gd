@@ -57,10 +57,10 @@ func _on_weapon_active(_target_weapon:Weapon) -> void:
 func on_weapon_inactive(_target_weapon:Weapon) -> void:
 	_reload_indicator.hide()
 
-func _on_begin_reloading(_ammo_context) -> void:
+func _on_begin_reloading() -> void:
 	_reload_indicator.animate_show()
 
-func _on_end_reloading(_ammo_context) -> void:
+func _on_end_reloading() -> void:
 	_reload_indicator.update_reload_progress(1.0, 1.0)
 	_reload_indicator.animate_hide()
 

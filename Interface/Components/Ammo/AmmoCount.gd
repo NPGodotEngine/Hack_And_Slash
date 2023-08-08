@@ -37,12 +37,15 @@ func set_max_ammo_count(value:int) -> void:
 
 func _ready() -> void:
 	UIEvents.connect("player_ammo_updated", Callable(self, "_on_player_ammo_updated"))
+	UIEvents.connect("player_ammo_bag_update", Callable(self, "_on_player_ammo_bag_updated"))
 	UIEvents.connect("hide_player_ammo_ui", Callable(self, "_on_hide_player_ammo_ui"))
 	UIEvents.connect("show_player_ammo_ui", Callable(self, "_on_show_player_ammo_ui"))
 
-func _on_player_ammo_updated(ammo_count_value:int, max_ammo_count_value:int) -> void:
+func _on_player_ammo_updated(ammo_count_value:int) -> void:
 	set_ammo_count(ammo_count_value)
-	set_max_ammo_count(max_ammo_count_value)
+	
+func _on_player_ammo_bag_updated(ammo_count_value:int) -> void:
+	set_max_ammo_count(ammo_count_value)
 
 func _on_show_player_ammo_ui() -> void:
 	self.show()

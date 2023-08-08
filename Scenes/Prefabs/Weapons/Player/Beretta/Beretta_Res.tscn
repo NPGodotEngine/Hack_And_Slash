@@ -50,7 +50,7 @@ bullet_speed = 1500.0
 bullet_life_span = 2.0
 bullet_penetration_chance = 0.3
 bullet_scene = ExtResource("5")
-rounds_per_clip = 17
+max_round_per_clip = 17
 reload_duration = 0.6
 
 [node name="MuzzleFlash" parent="." instance=ExtResource("6")]
