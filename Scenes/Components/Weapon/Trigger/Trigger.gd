@@ -7,7 +7,7 @@ extends Node
 
 
 
-# Emit when trigger pulled successful
+## Emit when trigger pulled successful
 signal trigger_pulled()
 
 

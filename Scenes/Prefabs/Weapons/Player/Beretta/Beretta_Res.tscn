@@ -27,6 +27,7 @@ trigger = NodePath("AutoTrigger")
 ammo = NodePath("ProjectileAmmo")
 fire_points = [NodePath("FirePoint")]
 muzzle_flash = NodePath("MuzzleFlash")
+firemode = 1
 weapon_attributes = ExtResource("2")
 
 [node name="RangedDamageComponent" parent="." instance=ExtResource("9")]

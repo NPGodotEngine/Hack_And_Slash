@@ -82,6 +82,7 @@ health_ref = NodePath("../HealthComponent")
 unique_name_in_owner = true
 
 [node name="M4A1" parent="WeaponPlaceholder" instance=ExtResource("7_grikx")]
+firemode = null
 
 [node name="ProjectileAmmo" parent="WeaponPlaceholder/M4A1" index="5"]
 infinite_ammo = true
@@ -116,6 +117,9 @@ unique_name_in_owner = true
 angle_deg = 120
 ray_count = 20
 collision_layer_mask = 7
+
+[node name="VisionConeRenderer" parent="Vision" index="0"]
+color = Color(0.43, 0.93, 0.28, 0.1)
 
 [node name="Blackboard" type="Node" parent="."]
 script = ExtResource("12_qutf1")

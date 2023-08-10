@@ -2,6 +2,11 @@
 class_name ProjectileWeapon
 extends Weapon
 
+enum FireMode {
+	AUTO,
+	SEMI_AUTO,
+}
+
 # warning-ignore-all: RETURN_VALUE_DISCARDED
 
 ## Emit when a bullet instantiated
@@ -15,9 +20,10 @@ signal on_bullet_instantiated(bullet)
 @export var radius_spread: NodePath
 @export var trigger: NodePath
 @export var ammo: NodePath
-@export var fire_points: Array # (Array, NodePath)
+@export var fire_points: Array
 @export var muzzle_flash: NodePath
 @export var muzzle_flash_duration: float = 0.1
+@export var firemode: FireMode = FireMode.AUTO
 
 @onready var _accuracy: AccuracyComponent = get_node_or_null(accuracy)
 @onready var _ranged_damage: RangedDamageComponent = get_node_or_null(ranged_damage)
@@ -27,6 +33,11 @@ signal on_bullet_instantiated(bullet)
 @onready var _ammo: Ammo = get_node_or_null(ammo)
 @onready var _fire_points: Array = get_fire_points()
 @onready var _muzzle_flash: MuzzleFlash = get_node_or_null(muzzle_flash)
+
+## Whether weapon is released fire button
+## @
+## Only work when weapon is in semi auto fire mode
+var _semi_auto_released: bool = true
 	
 
 func _get_configuration_warnings() -> PackedStringArray:
@@ -156,10 +167,21 @@ func get_fire_points() -> Array:
 
 func execute(fire_at:Vector2) -> void:
 	super(fire_at)
-	_trigger.pull_trigger()
+
+	match firemode:
+		FireMode.AUTO:
+			_trigger.pull_trigger()
+		FireMode.SEMI_AUTO:
+			if _semi_auto_released:
+				_semi_auto_released = false
+				_trigger.pull_trigger()
 
 func cancel_execution() -> void:
 	super()
+
+	match firemode:
+		FireMode.SEMI_AUTO:
+			_semi_auto_released = true
 
 func execute_alt(fire_at:Vector2) -> void:
 	super(fire_at)
