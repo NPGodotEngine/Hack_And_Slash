@@ -29,7 +29,7 @@ func _on_trigger_pulled() -> void:
 		var muzzle_position = (point as Marker2D).global_position
 
 		for bullet in rounds:
-			Global.add_to_scene_tree(bullet, true, "Map")
+			Global.add_to_scene_tree(bullet, true, Global.GN_MAP)
 
 			var spread_point: Vector2 = _radius_spread.get_random_spread_point(current_fire_position)
 			

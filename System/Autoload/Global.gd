@@ -1,22 +1,13 @@
 extends Node
 
-# Weapon module type
-##
-# `TRIGGER` gun trigger
-# `AMMO` gun ammo
-# `Receiver` gun Receiver
-# `ALT` fun alternative fire
-enum WeaponModuleType {
-	TRIGGER = 1,
-	AMMO = 2,
-	ALT = 4
-}
-
 # Bullet type
 enum BulletType {
 	PROJECTILE = 1,
 	BEAM = 2
 }
+
+## Group name `Map`
+const GN_MAP = "Map"
 
 # Add object to current scene tree
 ##

@@ -3,7 +3,7 @@ extends Spawner
 
 func handle_spawn(resource_name) -> void:
 	var mob: Mob = ResourceLibrary.enemy_characters[resource_name].instantiate()
-	Global.add_to_scene_tree(mob, true, "Map")
+	Global.add_to_scene_tree(mob, true, Global.GN_MAP)
 
 	if not mob.is_inside_tree():
 		await mob.ready

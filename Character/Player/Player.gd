@@ -34,7 +34,7 @@ func _on_dodge_finished() -> void:
 
 func _on_display_dodge_particles(particles_effect:DodgeComponent.DodgeParticlesEffect) -> void:
 	particles_effect.particles.global_position = global_position
-	Global.add_to_scene_tree(particles_effect.particles, true, "Map")
+	Global.add_to_scene_tree(particles_effect.particles, true, Global.GN_MAP)
 
 func _on_progress_updated(progress_context:ExpComponent.ProgressContext) -> void:
 	print("level up %f -> %f / %f" % [progress_context.previous_progress, 

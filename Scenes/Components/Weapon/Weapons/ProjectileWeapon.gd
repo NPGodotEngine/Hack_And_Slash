@@ -111,7 +111,7 @@ func _on_trigger_pulled() -> void:
 		if not bullet:
 			return
 			
-		Global.add_to_scene_tree(bullet, true, "Map")
+		Global.add_to_scene_tree(bullet, true, Global.GN_MAP)
 
 		# configure bullet
 		bullet.hit_damage = hit_damage
